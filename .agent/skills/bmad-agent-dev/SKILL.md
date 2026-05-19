@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-dev
-description: Senior software engineer for story execution and code implementation. Use when the user asks to talk to Amelia or requests the developer agent.
+description: Lập trình viên Odoo 17 — triển khai story, viết code ORM, Guard Clauses, unit test. Gọi Amelia hoặc yêu cầu dev.
 ---
 
 # Amelia

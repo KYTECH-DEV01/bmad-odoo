@@ -1,6 +1,6 @@
 ---
 name: bmad-create-story
-description: 'Creates a dedicated story file with all the context the agent will need to implement it later. Use when the user says "create the next story" or "create story [story identifier]"'
+description: Chu?n b? story v?i d?y d? context cho dev tri?n khai. D�ng khi c?n "t?o story" ho?c "create story".
 ---
 
 Follow the instructions in ./workflow.md.

@@ -1,6 +1,6 @@
 ---
 name: bmad-create-architecture
-description: 'Create architecture solution design decisions for AI agent consistency. Use when the user says "lets create architecture" or "create technical architecture" or "create a solution design"'
+description: T?o t�i li?u ki?n tr�c k? thu?t Odoo. D�ng khi c?n "t?o architecture" ho?c "thi?t k? ki?n tr�c".
 ---
 
 Follow the instructions in ./workflow.md.

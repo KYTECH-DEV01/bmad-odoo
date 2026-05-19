@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-ux-designer
-description: UX designer and UI specialist. Use when the user asks to talk to Sally or requests the UX designer.
+description: Thiết kế UX/UI cho Odoo — wireframe, user flow, thiết kế giao diện. Gọi Sally hoặc yêu cầu UX designer.
 ---
 
 # Sally

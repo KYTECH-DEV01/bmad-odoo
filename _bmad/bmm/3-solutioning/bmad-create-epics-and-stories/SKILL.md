@@ -1,6 +1,6 @@
 ---
 name: bmad-create-epics-and-stories
-description: 'Break requirements into epics and user stories. Use when the user says "create the epics and stories list"'
+description: Chia yêu c?u thành epics và user stories. Dùng khi c?n "t?o epics" ho?c "create stories".
 ---
 
 Follow the instructions in ./workflow.md.

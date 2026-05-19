@@ -1,6 +1,6 @@
 ---
 name: bmad-sprint-planning
-description: 'Generate sprint status tracking from epics. Use when the user says "run sprint planning" or "generate sprint plan"'
+description: L?p k? ho?ch sprint t? epics. Dùng khi c?n "sprint planning" ho?c "l?p sprint".
 ---
 
 Follow the instructions in ./workflow.md.

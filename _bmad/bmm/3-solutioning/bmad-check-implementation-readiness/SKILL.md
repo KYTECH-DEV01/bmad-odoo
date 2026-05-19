@@ -1,6 +1,6 @@
 ---
 name: bmad-check-implementation-readiness
-description: 'Validate PRD, UX, Architecture and Epics specs are complete. Use when the user says "check implementation readiness".'
+description: Ki?m tra PRD, UX, Architecture, Epics dã s?n sàng tri?n khai. Dùng khi c?n "check readiness".
 ---
 
 Follow the instructions in ./workflow.md.

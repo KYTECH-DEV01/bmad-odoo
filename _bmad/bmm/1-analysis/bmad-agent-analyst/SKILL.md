@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-analyst
-description: Strategic business analyst and requirements expert. Use when the user asks to talk to Mary or requests the business analyst.
+description: Chuyên gia phân tích nghiệp vụ Odoo — nghiên cứu thị trường, phân tích yêu cầu, viết user stories. Gọi Mary hoặc yêu cầu BA.
 ---
 
 # Mary

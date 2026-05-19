@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-qa
-description: QA engineer for test automation and coverage. Use when the user asks to talk to Quinn or requests the QA engineer.
+description: Kỹ sư QA Odoo — tạo test tự động, kiểm thử edge cases, boundary testing. Gọi Quinn hoặc yêu cầu QA.
 ---
 
 # Quinn

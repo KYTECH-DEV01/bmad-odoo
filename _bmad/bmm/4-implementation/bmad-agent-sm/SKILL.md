@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-sm
-description: Scrum master for sprint planning and story preparation. Use when the user asks to talk to Bob or requests the scrum master.
+description: Scrum Master Odoo — lập kế hoạch sprint, chuẩn bị story, quản lý tiến độ. Gọi Bob hoặc yêu cầu SM.
 ---
 
 # Bob

@@ -1,6 +1,6 @@
 ---
 name: bmad-retrospective
-description: 'Post-epic review to extract lessons and assess success. Use when the user says "run a retrospective" or "lets retro the epic [epic]"'
+description: Retro cu?i epic — rút bài h?c, dánh giá thành công. Dùng khi c?n "retrospective" ho?c "retro".
 ---
 
 Follow the instructions in ./workflow.md.

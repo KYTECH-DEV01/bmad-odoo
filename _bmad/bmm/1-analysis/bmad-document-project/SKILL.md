@@ -1,6 +1,6 @@
 ---
 name: bmad-document-project
-description: 'Document brownfield projects for AI context. Use when the user says "document this project" or "generate project docs"'
+description: Phân tích d? án có s?n, sinh tài li?u cho AI. Dùng khi c?n "document project" ho?c "t?o tài li?u d? án".
 ---
 
 Follow the instructions in ./workflow.md.

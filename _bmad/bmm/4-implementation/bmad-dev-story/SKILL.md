@@ -1,6 +1,6 @@
 ---
 name: bmad-dev-story
-description: 'Execute story implementation following a context filled story spec file. Use when the user says "dev this story [story file]" or "implement the next story in the sprint plan"'
+description: Tri?n khai story theo spec — vi?t code + test Odoo 17. Dùng khi c?n "dev story" ho?c "implement story".
 ---
 
 Follow the instructions in ./workflow.md.

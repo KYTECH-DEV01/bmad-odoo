@@ -1,6 +1,6 @@
 ---
 name: bmad-create-prd
-description: 'Create a PRD from scratch. Use when the user says "lets create a product requirements document" or "I want to create a new PRD"'
+description: T?o tài li?u yêu c?u s?n ph?m (PRD) t? d?u. Dùng khi c?n "t?o PRD" ho?c "create PRD".
 ---
 
 Follow the instructions in ./workflow.md.

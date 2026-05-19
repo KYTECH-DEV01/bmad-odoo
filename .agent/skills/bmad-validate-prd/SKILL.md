@@ -1,6 +1,6 @@
 ---
 name: bmad-validate-prd
-description: 'Validate a PRD against standards. Use when the user says "validate this PRD" or "run PRD validation"'
+description: Ki?m tra PRD theo chu?n ch?t lu?ng. D�ng khi c?n "validate PRD" ho?c "ki?m tra PRD".
 ---
 
 Follow the instructions in ./workflow.md.

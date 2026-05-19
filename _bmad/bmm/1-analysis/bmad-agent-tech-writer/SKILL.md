@@ -1,6 +1,6 @@
 ---
 name: bmad-agent-tech-writer
-description: Technical documentation specialist and knowledge curator. Use when the user asks to talk to Paige or requests the tech writer.
+description: Chuyên gia viết tài liệu kỹ thuật — tạo docs, sơ đồ Mermaid, kiểm tra chuẩn tài liệu. Gọi Paige hoặc yêu cầu tech writer.
 ---
 
 # Paige

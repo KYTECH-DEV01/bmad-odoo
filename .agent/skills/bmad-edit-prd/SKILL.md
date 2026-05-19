@@ -1,6 +1,6 @@
 ---
 name: bmad-edit-prd
-description: 'Edit an existing PRD. Use when the user says "edit this PRD".'
+description: Ch?nh s?a PRD hi?n c�. D�ng khi c?n "s?a PRD" ho?c "edit PRD".
 ---
 
 Follow the instructions in ./workflow.md.

@@ -1,6 +1,6 @@
 ---
 name: bmad-domain-research
-description: 'Conduct domain and industry research. Use when the user says wants to do domain research for a topic or industry'
+description: Nghi�n c?u chuy�n s�u linh v?c nghi?p v?. D�ng khi c?n "nghi�n c?u domain" ho?c "domain research".
 ---
 
 Follow the instructions in ./workflow.md.
