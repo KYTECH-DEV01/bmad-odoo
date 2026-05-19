@@ -14,10 +14,12 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
+const WORKSPACE_ROOT = path.resolve(PROJECT_ROOT, '..'); // Parent: d:\Odoo
 const BMM_DIR = path.join(PROJECT_ROOT, '_bmad', 'bmm');
 const TARGET_DIRS = [
-  path.join(PROJECT_ROOT, '.agent', 'skills'),
-  path.join(PROJECT_ROOT, '.claude', 'skills'),
+  path.join(WORKSPACE_ROOT, '.agent', 'skills'),   // Antigravity (workspace root)
+  path.join(PROJECT_ROOT, '.agent', 'skills'),      // Antigravity (bmad-odoo local)
+  path.join(PROJECT_ROOT, '.claude', 'skills'),     // Claude Code
 ];
 
 function findSkillFiles(dir) {
