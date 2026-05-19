@@ -1,84 +1,56 @@
+#!/usr/bin/env node
+
 /**
- * BMAD-Odoo
- * BMAD Framework mở rộng cho phát triển Odoo ERP
- * 
- * @author Dũng Xuân
+ * Convoke – Vortex Pattern
+ * Product discovery through Contextualize, Empathize, Externalize, and Systematize streams.
+ *
+ * This is a CLI-first package. Use the bin commands:
+ *   npx -p convoke-agents convoke-install-vortex  – Install all Vortex agents (primary)
+ *   npx -p convoke-agents convoke-install        – Install all agents (umbrella alias)
+ *   npx -p convoke-agents convoke-update          – Check for and apply updates
+ *   npx -p convoke-agents convoke-version         – Show installed vs latest version
+ *   npx -p convoke-agents convoke-doctor          – Diagnose installation issues
+ *
  * @license MIT
- * @homepage https://github.com/phamdungtk/bmad-odoo
  */
 
 const path = require('path');
-const fs = require('fs');
+const { AGENTS } = require('./scripts/update/lib/agent-registry');
 
-/**
- * Get the path to a specific agent file
- * @param {string} agentName - Name of the agent (e.g., 'analyst', 'dev', 'pm')
- * @returns {string} Absolute path to the agent file
- */
-function getAgentPath(agentName) {
-    return path.join(__dirname, 'bmm', 'agents', `${agentName}.md`);
+function getPackageInfo() {
+  const pkg = require(path.join(__dirname, 'package.json'));
+  return {
+    name: pkg.name,
+    version: pkg.version,
+    description: pkg.description
+  };
 }
 
-/**
- * Get the path to a specific workflow file
- * @param {string} workflowPath - Relative path to the workflow (e.g., '1-analysis/analyze-process.md')
- * @returns {string} Absolute path to the workflow file
- */
-function getWorkflowPath(workflowPath) {
-    return path.join(__dirname, 'bmm', 'workflows', workflowPath);
+if (require.main === module) {
+  const info = getPackageInfo();
+  const BOLD = '\x1b[1m';
+  const RESET = '\x1b[0m';
+  const CYAN = '\x1b[36m';
+  const GREEN = '\x1b[32m';
+  const GRAY = '\x1b[90m';
+
+  console.log('');
+  console.log(`${BOLD}${info.name}${RESET} v${info.version}`);
+  console.log(info.description);
+  console.log('');
+  console.log(`${GREEN}Agents:${RESET}`);
+  for (const agent of AGENTS) {
+    const padded = agent.name.padEnd(5);
+    console.log(`  ${padded}${CYAN}${agent.icon}${RESET} – ${agent.title}`);
+  }
+  console.log('');
+  console.log(`${GREEN}Commands:${RESET}`);
+  console.log(`  ${CYAN}npx -p convoke-agents convoke-install-vortex${RESET}  Install all Vortex agents`);
+  console.log(`  ${CYAN}npx -p convoke-agents convoke-install${RESET}         Install all agents ${GRAY}(alias)${RESET}`);
+  console.log(`  ${CYAN}npx -p convoke-agents convoke-update${RESET}          Check for updates`);
+  console.log(`  ${CYAN}npx -p convoke-agents convoke-version${RESET}         Show version info`);
+  console.log(`  ${CYAN}npx -p convoke-agents convoke-doctor${RESET}          Diagnose issues`);
+  console.log('');
 }
 
-/**
- * Get the path to the Odoo knowledge base
- * @returns {string} Absolute path to the knowledge base file
- */
-function getKnowledgeBasePath() {
-    return path.join(__dirname, 'bmm', 'data', 'odoo-knowledge-base.md');
-}
-
-/**
- * Get the main config file path
- * @returns {string} Absolute path to config.yaml
- */
-function getConfigPath() {
-    return path.join(__dirname, 'bmm', 'config.yaml');
-}
-
-/**
- * List all available agents
- * @returns {string[]} Array of agent names
- */
-function listAgents() {
-    const agentsDir = path.join(__dirname, 'bmm', 'agents');
-    return fs.readdirSync(agentsDir)
-        .filter(file => file.endsWith('.md'))
-        .map(file => file.replace('.md', ''));
-}
-
-/**
- * Get package info
- * @returns {object} Package information
- */
-function getInfo() {
-    return {
-        name: 'bmad-odoo',
-        version: require('./package.json').version,
-        agents: listAgents(),
-        paths: {
-            root: __dirname,
-            agents: path.join(__dirname, 'bmm', 'agents'),
-            workflows: path.join(__dirname, 'bmm', 'workflows'),
-            config: path.join(__dirname, 'bmm', 'config.yaml'),
-            knowledgeBase: path.join(__dirname, 'bmm', 'data', 'odoo-knowledge-base.md')
-        }
-    };
-}
-
-module.exports = {
-    getAgentPath,
-    getWorkflowPath,
-    getKnowledgeBasePath,
-    getConfigPath,
-    listAgents,
-    getInfo
-};
+module.exports = { getPackageInfo };

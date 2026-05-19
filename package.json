@@ -1,57 +1,101 @@
 {
-    "name": "bmad-odoo",
-    "version": "1.0.9",
-    "description": "BMAD Framework mở rộng cho phát triển Odoo ERP - 10 AI Agents, 44+ Workflows, hỗ trợ tiếng Việt",
-    "main": "index.js",
-    "bin": {
-        "bmad-odoo-setup": "./scripts/setup-cli.js"
-    },
-    "scripts": {
-        "postinstall": "node scripts/postinstall.js",
-        "setup": "node scripts/setup-cli.js"
-    },
-    "keywords": [
-        "bmad",
-        "bmad-module",
-        "odoo",
-        "erp",
-        "ai-agents",
-        "development-framework",
-        "scrum",
-        "agile",
-        "business-analyst",
-        "architect",
-        "developer",
-        "vietnamese"
-    ],
-    "bmad": {
-        "type": "module",
-        "displayName": "BMAD-Odoo: Odoo ERP Development",
-        "shortName": "BMAD-Odoo",
-        "description": "10 AI Agents + 44 Workflows cho Odoo ERP",
-        "category": "development",
-        "language": "vietnamese"
-    },
-    "author": "Dũng Xuân",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/phamdungtk/bmad-odoo.git"
-    },
-    "homepage": "https://github.com/phamdungtk/bmad-odoo#readme",
-    "bugs": {
-        "url": "https://github.com/phamdungtk/bmad-odoo/issues"
-    },
-    "engines": {
-        "node": ">=18.0.0"
-    },
-    "files": [
-        "_config/",
-        "bmm/",
-        "core/",
-        "scripts/",
-        "README.md",
-        "LICENSE",
-        "CHANGELOG.md"
-    ]
+  "name": "convoke-agents",
+  "version": "4.0.0-rc.1",
+  "description": "Agent teams for complex systems, compatible with BMad Method",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "scripts/",
+    "_bmad/bme/_vortex/",
+    "_bmad/bme/_enhance/",
+    "_bmad/bme/_gyre/",
+    "_bmad/bme/_artifacts/",
+    "_bmad/bme/_portability/",
+    "_bmad/bme/_team-factory/",
+    ".claude-plugin/",
+    ".claude/skills/bmad-audit-skill-dirs/",
+    "INSTALLATION.md",
+    "UPDATE-GUIDE.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "src/"
+  ],
+  "bin": {
+    "convoke-install-vortex": "scripts/install-vortex-agents.js",
+    "convoke-install-gyre": "scripts/install-gyre-agents.js",
+    "convoke-install": "scripts/install-all-agents.js",
+    "convoke-update": "scripts/update/convoke-update.js",
+    "convoke-version": "scripts/update/convoke-version.js",
+    "convoke-migrate": "scripts/update/convoke-migrate.js",
+    "convoke-doctor": "scripts/convoke-doctor.js",
+    "convoke-register-skill": "scripts/convoke-register-skill.js",
+    "convoke-validate-marketplace": "scripts/audit/validate-marketplace.js",
+    "convoke-audit-skill-dirs": "scripts/audit/audit-skill-dirs.js",
+    "convoke-migrate-artifacts": "scripts/migrate-artifacts.js",
+    "convoke-portfolio": "scripts/lib/portfolio/portfolio-engine.js",
+    "convoke-export": "scripts/portability/convoke-export.js"
+  },
+  "scripts": {
+    "install:agents": "node scripts/install-all-agents.js",
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node scripts/test-runner.js tests/unit tests/team-factory tests/lib",
+    "test:p0": "node scripts/test-runner.js tests/p0",
+    "test:p0:gate": "npm run test:p0",
+    "test:integration": "node scripts/test-runner.js tests/integration",
+    "test:all": "npm test && npm run test:integration && npm run test:p0",
+    "test:coverage": "c8 node scripts/test-runner.js tests/unit tests/team-factory tests/lib tests/integration tests/p0",
+    "lint": "eslint scripts/ index.js tests/",
+    "docs:audit": "node scripts/docs-audit.js",
+    "badges": "node scripts/generate-badges-json.js",
+    "badges:check": "npm run badges && git diff --exit-code docs/badges.json",
+    "prepublishOnly": "npm run badges:check",
+    "archive": "node scripts/archive.js",
+    "check": "node scripts/convoke-check.js"
+  },
+  "keywords": [
+    "convoke-agents",
+    "bmad-enhanced",
+    "bmad",
+    "agents",
+    "lean-startup",
+    "validated-learning",
+    "vortex",
+    "contextualize",
+    "externalize",
+    "empathize",
+    "systematize",
+    "user-research",
+    "decision-making",
+    "mvp",
+    "product-strategy",
+    "ai-agents"
+  ],
+  "author": "Convoke Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amalik/convoke-agents.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amalik/convoke-agents/issues"
+  },
+  "homepage": "https://github.com/amalik/convoke-agents#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "convoke-agents": "^3.2.0",
+    "fs-extra": "^11.3.3",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
+    "@eslint/js": "^10.0.1",
+    "c8": "^10.1.3",
+    "eslint": "^10.0.0"
+  }
 }

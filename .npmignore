@@ -1,63 +1,35 @@
-# Dependencies
-node_modules/
+# The "files" field in package.json whitelists: index.js, scripts/,
+# _bmad/bme/_vortex/, and specific top-level docs. This .npmignore
+# only needs to handle edge cases within those whitelisted directories.
 
-# Git
+# Development files
 .git/
+.github/
+.vscode/
+.idea/
+*.log
+*.tmp
+
+# Test files (not in "files" whitelist, but belt-and-suspenders)
+tests/
+test/
+*.test.js
+*.spec.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git files
 .gitignore
 .gitattributes
 
-# IDE
-.vscode/
-.cursor/
-.idea/
+# Editor files
 *.swp
 *.swo
 *~
-
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Test files
-test/
-tests/
-__tests__/
-*.test.js
-*.spec.js
-coverage/
-
-# Development files
-.env
-.env.local
-.env.*.local
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build artifacts
-dist/
-build/
 *.tgz
 
-# Temporary files
-tmp/
-temp/
-.tmp/
-
-# Documentation sources (keep compiled docs)
-docs-src/
-
-# Example files (if any)
-examples/
-demos/
-
-# CI/CD (keep for reference in repo, exclude from package)
-.github/
-.gitlab-ci.yml
-.travis.yml
-
-# Note: scripts/ folder is INCLUDED because it contains:
-# - postinstall.js (runs on npm install)
-# - setup-cli.js (runs with npx bmad-odoo-setup)
+# Claude / Quint config
+.claude/
+_quint/

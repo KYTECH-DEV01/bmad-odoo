@@ -1,0 +1,14 @@
+{
+  "check-coverage": true,
+  "lines": 83,
+  "functions": 88,
+  "branches": 80,
+  "reporter": ["text", "text-summary"],
+  "include": ["scripts/**/*.js", "index.js"],
+  "exclude": [
+    "tests/**",
+    "node_modules/**",
+    "scripts/migration/format-conversion/**",
+    "scripts/audit/pf1-judge-calibration.js"
+  ]
+}

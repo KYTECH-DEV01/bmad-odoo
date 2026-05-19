@@ -1,471 +1,104 @@
-/**
- * BMAD-Odoo - Post-install Script
- * Tự động setup BMAD-Odoo cho project
- * 
- * Features:
- * - Cho phép chọn IDE (VS Code, Cursor, Antigravity...)
- * - Tự động tạo _bmad-odoo (symlink/copy)
- * - Tự động tạo _bmad-odoo-output
- * - Setup workflows vào .agent/workflows/
- */
+#!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
-const readline = require('readline');
+const fs = require('fs');
+const { AGENTS } = require('./update/lib/agent-registry');
+
+// Check if update system is available
+const versionDetectorPath = path.join(__dirname, 'update/lib/version-detector.js');
+const registryPath = path.join(__dirname, 'update/migrations/registry.js');
+
+const hasUpdateSystem = fs.existsSync(versionDetectorPath) && fs.existsSync(registryPath);
+
+// ANSI color codes
+const BOLD = '\x1b[1m';
+const RESET = '\x1b[0m';
+const CYAN = '\x1b[36m';
+const GREEN = '\x1b[32m';
+const YELLOW = '\x1b[33m';
+const RED = '\x1b[31m';
 
-// Colors for console output
-const colors = {
-    reset: '\x1b[0m',
-    bright: '\x1b[1m',
-    dim: '\x1b[2m',
-    green: '\x1b[32m',
-    yellow: '\x1b[33m',
-    blue: '\x1b[34m',
-    cyan: '\x1b[36m',
-    red: '\x1b[31m',
-    magenta: '\x1b[35m'
-};
-
-function log(message, color = colors.reset) {
-    console.log(`${color}${message}${colors.reset}`);
-}
-
-function logStep(step, message) {
-    console.log(`${colors.cyan}[${step}]${colors.reset} ${message}`);
-}
-
-function logSuccess(message) {
-    console.log(`${colors.green}✅ ${message}${colors.reset}`);
-}
-
-function logWarning(message) {
-    console.log(`${colors.yellow}⚠️  ${message}${colors.reset}`);
-}
-
-function logError(message) {
-    console.log(`${colors.red}❌ ${message}${colors.reset}`);
-}
-
-// IDE configurations
-const IDE_CONFIGS = {
-    vscode: {
-        name: 'VS Code',
-        workflowDir: '.vscode/workflows',
-        configFile: '.vscode/settings.json',
-        description: 'Visual Studio Code với extensions AI'
-    },
-    cursor: {
-        name: 'Cursor',
-        workflowDir: '.cursor/workflows',
-        configFile: '.cursor/settings.json',
-        description: 'Cursor AI IDE'
-    },
-    antigravity: {
-        name: 'Antigravity (Gemini)',
-        workflowDir: '.agent/workflows',
-        configFile: '.agent/config.json',
-        description: 'Google Gemini Antigravity Agent'
-    },
-    windsurf: {
-        name: 'Windsurf',
-        workflowDir: '.windsurf/workflows',
-        configFile: '.windsurf/settings.json',
-        description: 'Windsurf AI IDE'
-    },
-    all: {
-        name: 'Tất cả IDEs',
-        description: 'Setup cho tất cả IDEs trên'
-    }
-};
-
-// Get project root from node_modules
-function getProjectRoot() {
-    let currentDir = __dirname;
-
-    for (let i = 0; i < 5; i++) {
-        currentDir = path.dirname(currentDir);
-        const packageJsonPath = path.join(currentDir, 'package.json');
-
-        if (fs.existsSync(packageJsonPath)) {
-            try {
-                const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-                if (pkg.name !== 'bmad-odoo') {
-                    return currentDir;
-                }
-            } catch (e) {
-                // Continue searching
-            }
-        }
-    }
-
-    return null;
-}
-
-// Create readline interface for user input
-function createReadlineInterface() {
-    return readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-}
-
-// Ask user a question
-function askQuestion(rl, question) {
-    return new Promise((resolve) => {
-        rl.question(question, (answer) => {
-            resolve(answer.trim());
-        });
-    });
-}
-
-// Create _bmad-odoo symlink or copy
-function createBmadOdooFolder(projectRoot, packageRoot) {
-    const targetPath = path.join(projectRoot, '_bmad-odoo');
-
-    if (fs.existsSync(targetPath)) {
-        logWarning(`_bmad-odoo đã tồn tại, bỏ qua...`);
-        return true;
-    }
-
-    try {
-        // Try to create symlink first (requires admin on Windows)
-        fs.symlinkSync(packageRoot, targetPath, 'junction');
-        logSuccess(`Đã tạo symlink: _bmad-odoo -> node_modules/bmad-odoo`);
-        return true;
-    } catch (symlinkError) {
-        // Fallback: copy the folder
-        try {
-            copyFolderRecursive(packageRoot, targetPath, ['node_modules', '.git', '*.tgz']);
-            logSuccess(`Đã copy: _bmad-odoo`);
-            return true;
-        } catch (copyError) {
-            logError(`Không thể tạo _bmad-odoo: ${copyError.message}`);
-            return false;
-        }
-    }
-}
-
-// Copy folder recursively
-function copyFolderRecursive(source, target, excludePatterns = []) {
-    if (!fs.existsSync(target)) {
-        fs.mkdirSync(target, { recursive: true });
-    }
-
-    const items = fs.readdirSync(source);
-
-    for (const item of items) {
-        // Check exclusions
-        const shouldExclude = excludePatterns.some(pattern => {
-            if (pattern.includes('*')) {
-                const regex = new RegExp(pattern.replace(/\*/g, '.*'));
-                return regex.test(item);
-            }
-            return item === pattern;
-        });
-
-        if (shouldExclude) continue;
-
-        const sourcePath = path.join(source, item);
-        const targetPath = path.join(target, item);
-        const stat = fs.statSync(sourcePath);
-
-        if (stat.isDirectory()) {
-            copyFolderRecursive(sourcePath, targetPath, excludePatterns);
-        } else {
-            fs.copyFileSync(sourcePath, targetPath);
-        }
-    }
-}
-
-// Create _bmad-odoo-output folder structure
-function createOutputFolder(projectRoot) {
-    const outputPath = path.join(projectRoot, '_bmad-odoo-output');
-    const subfolders = [
-        'planning-artifacts',
-        'implementation-artifacts',
-        'test-artifacts',
-        'documentation'
-    ];
-
-    if (!fs.existsSync(outputPath)) {
-        fs.mkdirSync(outputPath, { recursive: true });
-    }
-
-    for (const subfolder of subfolders) {
-        const subfolderPath = path.join(outputPath, subfolder);
-        if (!fs.existsSync(subfolderPath)) {
-            fs.mkdirSync(subfolderPath, { recursive: true });
-        }
-    }
-
-    // Create .gitkeep files
-    for (const subfolder of subfolders) {
-        const gitkeepPath = path.join(outputPath, subfolder, '.gitkeep');
-        if (!fs.existsSync(gitkeepPath)) {
-            fs.writeFileSync(gitkeepPath, '');
-        }
-    }
-
-    // Create README for output folder
-    const readmePath = path.join(outputPath, 'README.md');
-    if (!fs.existsSync(readmePath)) {
-        fs.writeFileSync(readmePath, `# BMAD-Odoo Output
-
-Thư mục này chứa các artifacts được tạo bởi BMAD-Odoo agents.
-
-## Cấu trúc
-
-- \`planning-artifacts/\` - Product briefs, PRDs, Architecture docs
-- \`implementation-artifacts/\` - Epics, Stories, Technical specs  
-- \`test-artifacts/\` - Test plans, Test cases
-- \`documentation/\` - Module docs, User guides
-
-## Lưu ý
-
-Các file trong thư mục này được tạo tự động bởi AI agents.
-Bạn có thể commit chúng vào git để theo dõi tiến độ dự án.
-`);
-    }
-
-    logSuccess(`Đã tạo: _bmad-odoo-output/`);
-    return true;
-}
-
-// Create workflow files for a specific IDE
-function createWorkflowsForIDE(projectRoot, packageRoot, ideConfig, ideName) {
-    const workflowDir = path.join(projectRoot, ideConfig.workflowDir);
-
-    if (!fs.existsSync(workflowDir)) {
-        fs.mkdirSync(workflowDir, { recursive: true });
-    }
-
-    const agents = [
-        { name: 'analyst', desc: 'Business Analyst (Sofia) - Phân tích quy trình' },
-        { name: 'architect', desc: 'Technical Architect (Antonio) - Thiết kế kiến trúc' },
-        { name: 'dev', desc: 'Developer (Carlos) - Phát triển code Odoo' },
-        { name: 'pm', desc: 'Product Manager (Maria) - Quản lý sản phẩm' },
-        { name: 'sm', desc: 'Scrum Master (Diego) - Quản lý Sprint' },
-        { name: 'tea', desc: 'Test Architect (Elena) - Thiết kế test' },
-        { name: 'ux-designer', desc: 'UX Designer (Sally) - Thiết kế UX' },
-        { name: 'quick-flow-solo-dev', desc: 'Quick Flow Dev (Barry) - Phát triển nhanh' },
-        { name: 'tech-writer', desc: 'Tech Writer (Paige) - Tài liệu hóa' }
-    ];
-
-    let created = 0;
-
-    for (const agent of agents) {
-        const workflowPath = path.join(workflowDir, `bmad-odoo-agents-${agent.name}.md`);
-
-        // Check if target workflow already exists
-        if (fs.existsSync(workflowPath)) continue;
-
-        const content = `---
-name: '${agent.name}'
-description: '${agent.desc}'
----
-
-You must fully embody this agent's persona and follow all activation instructions exactly as specified. NEVER break character until given an exit command.
-
-<agent-activation CRITICAL="TRUE">
-1. LOAD the FULL agent file from @_bmad-odoo/bmm/agents/${agent.name}.md
-2. READ its entire contents - this contains the complete agent persona, menu, and instructions
-3. Execute ALL activation steps exactly as written in the agent file
-4. Follow the agent's persona and menu system precisely
-5. Stay in character throughout the session
-</agent-activation>
-`;
-
-        fs.writeFileSync(workflowPath, content);
-        created++;
-    }
-
-    // Create party-mode workflow
-    const partyModePath = path.join(workflowDir, 'bmad-odoo-workflows-party-mode.md');
-    if (!fs.existsSync(partyModePath)) {
-        fs.writeFileSync(partyModePath, `---
-name: 'party-mode'
-description: 'Orchestrates group discussions between all BMAD-Odoo agents'
----
-
-You must fully embody this workflow and follow all instructions exactly as specified.
-
-<workflow-activation CRITICAL="TRUE">
-1. LOAD the FULL workflow file from @_bmad-odoo/core/workflows/party-mode/party-mode.md
-2. READ its entire contents - this contains the complete workflow steps and instructions
-3. Execute ALL workflow steps exactly as written
-4. Facilitate multi-agent collaboration as specified
-</workflow-activation>
-`);
-        created++;
-    }
-
-    if (created > 0) {
-        logSuccess(`Đã tạo ${created} workflows cho ${ideConfig.name}`);
-    } else {
-        logWarning(`Workflows cho ${ideConfig.name} đã tồn tại`);
-    }
-
-    return created;
-}
-
-// Interactive setup
-async function interactiveSetup(projectRoot, packageRoot) {
-    const rl = createReadlineInterface();
-
-    log('\n╔════════════════════════════════════════════════════════════╗', colors.cyan);
-    log('║          🚀 BMAD-Odoo Interactive Setup                     ║', colors.cyan);
-    log('╚════════════════════════════════════════════════════════════╝\n', colors.cyan);
-
-    log('Chọn IDE bạn đang sử dụng:\n', colors.bright);
-    log('  1. VS Code          - Visual Studio Code với extensions AI', colors.reset);
-    log('  2. Cursor           - Cursor AI IDE', colors.reset);
-    log('  3. Antigravity      - Google Gemini Antigravity Agent', colors.reset);
-    log('  4. Windsurf         - Windsurf AI IDE', colors.reset);
-    log('  5. Tất cả           - Setup cho tất cả IDEs\n', colors.reset);
-
-    const choice = await askQuestion(rl, `${colors.yellow}Nhập số (1-5) [mặc định: 3]: ${colors.reset}`);
-
-    const ideMapping = {
-        '1': 'vscode',
-        '2': 'cursor',
-        '3': 'antigravity',
-        '4': 'windsurf',
-        '5': 'all',
-        '': 'antigravity' // Default
-    };
-
-    const selectedIde = ideMapping[choice] || 'antigravity';
-
-    rl.close();
-
-    log(`\n📌 Đã chọn: ${IDE_CONFIGS[selectedIde].name}\n`, colors.green);
-
-    // Step 1: Create _bmad-odoo
-    logStep('1/3', 'Tạo thư mục _bmad-odoo...');
-    createBmadOdooFolder(projectRoot, packageRoot);
-
-    // Step 2: Create _bmad-odoo-output
-    logStep('2/3', 'Tạo thư mục _bmad-odoo-output...');
-    createOutputFolder(projectRoot);
-
-    // Step 3: Create workflows for selected IDE(s)
-    logStep('3/3', 'Tạo workflow files...');
-
-    if (selectedIde === 'all') {
-        for (const [ideName, ideConfig] of Object.entries(IDE_CONFIGS)) {
-            if (ideName !== 'all') {
-                createWorkflowsForIDE(projectRoot, packageRoot, ideConfig, ideName);
-            }
-        }
-    } else {
-        createWorkflowsForIDE(projectRoot, packageRoot, IDE_CONFIGS[selectedIde], selectedIde);
-    }
-
-    printSuccessMessage(selectedIde);
-}
-
-// Non-interactive setup (for CI/CD or when stdin is not available)
-function autoSetup(projectRoot, packageRoot) {
-    log('\n╔════════════════════════════════════════════════════════════╗', colors.cyan);
-    log('║          🚀 BMAD-Odoo Auto Setup                           ║', colors.cyan);
-    log('╚════════════════════════════════════════════════════════════╝\n', colors.cyan);
-
-    // Default to Antigravity
-    logStep('1/3', 'Tạo thư mục _bmad-odoo...');
-    createBmadOdooFolder(projectRoot, packageRoot);
-
-    logStep('2/3', 'Tạo thư mục _bmad-odoo-output...');
-    createOutputFolder(projectRoot);
-
-    logStep('3/3', 'Tạo workflow files cho Antigravity...');
-    createWorkflowsForIDE(projectRoot, packageRoot, IDE_CONFIGS.antigravity, 'antigravity');
-
-    printSuccessMessage('antigravity');
-
-    log(`\n💡 Để setup cho IDE khác, chạy: npx bmad-odoo-setup\n`, colors.blue);
-}
-
-// Print success message
-function printSuccessMessage(selectedIde) {
-    log('\n╔════════════════════════════════════════════════════════════╗', colors.green);
-    log('║          ✅ BMAD-Odoo Setup Hoàn Tất!                       ║', colors.green);
-    log('╚════════════════════════════════════════════════════════════╝\n', colors.green);
-
-    log('📂 Cấu trúc đã tạo:', colors.bright);
-    log('   _bmad-odoo/              → Symlink/copy của package', colors.reset);
-    log('   _bmad-odoo-output/       → Thư mục output cho artifacts', colors.reset);
-
-    if (selectedIde === 'all') {
-        log('   .vscode/workflows/       → Workflows cho VS Code', colors.reset);
-        log('   .cursor/workflows/       → Workflows cho Cursor', colors.reset);
-        log('   .agent/workflows/        → Workflows cho Antigravity', colors.reset);
-        log('   .windsurf/workflows/     → Workflows cho Windsurf', colors.reset);
-    } else {
-        const ideConfig = IDE_CONFIGS[selectedIde];
-        log(`   ${ideConfig.workflowDir}/  → Workflows cho ${ideConfig.name}`, colors.reset);
-    }
-
-    log('\n📋 Các slash commands có sẵn:', colors.bright);
-    log('   /analyst    - Business Analyst (Sofia)', colors.reset);
-    log('   /architect  - Technical Architect (Antonio)', colors.reset);
-    log('   /dev        - Developer (Carlos)', colors.reset);
-    log('   /pm         - Product Manager (Maria)', colors.reset);
-    log('   /sm         - Scrum Master (Diego)', colors.reset);
-    log('   /tea        - Test Architect (Elena)', colors.reset);
-    log('   /ux-designer - UX Designer (Sally)', colors.reset);
-    log('   /quick-flow-solo-dev - Quick Flow Dev (Barry)', colors.reset);
-    log('   /tech-writer - Tech Writer (Paige)', colors.reset);
-    log('   /bmad-core-workflows-party-mode - Multi-agent mode\n', colors.reset);
-
-    log('📖 Xem thêm: _bmad-odoo/README.md\n', colors.blue);
-}
-
-// Main function
 async function main() {
-    console.log('\n🚀 BMAD-Odoo postinstall script starting...\n');
+  console.log('');
+  console.log(`${BOLD}Convoke installed!${RESET}`);
+  console.log('');
 
-    const projectRoot = getProjectRoot();
-    const packageRoot = path.join(__dirname, '..');
+  // If update system available, check for upgrades
+  if (hasUpdateSystem) {
+    const versionDetector = require('./update/lib/version-detector');
+    const registry = require('./update/migrations/registry');
 
-    console.log(`📂 Package root: ${packageRoot}`);
-    console.log(`📂 Project root: ${projectRoot || 'NOT FOUND'}\n`);
+    const { findProjectRoot, compareVersions } = require('./update/lib/utils');
+    const projectRoot = findProjectRoot();
 
-    if (!projectRoot) {
-        logWarning('Không tìm thấy project root. Bỏ qua auto-setup.');
-        logWarning('Bạn có thể setup thủ công bằng lệnh: npx bmad-odoo-setup\n');
-        process.exit(0);
+    const currentVersion = versionDetector.getCurrentVersion(projectRoot);
+    const targetVersion = versionDetector.getTargetVersion();
+    const scenario = versionDetector.detectInstallationScenario(projectRoot);
+
+    // Fresh install
+    if (scenario === 'fresh' || !currentVersion) {
+      const agentNames = AGENTS.map(a => a.name).join(' + ');
+      console.log('To install agents into your project, run:');
+      console.log('');
+      console.log(`  ${CYAN}npx -p convoke-agents convoke-install${RESET}  - Install all agents (${agentNames})`);
+      console.log('');
+      return;
     }
 
-    // Check if running interactively
-    // Force interactive if called via bmad-odoo-setup CLI (BMAD_PROJECT_ROOT is set)
-    // or if stdin is a TTY
-    const isCalledViaSetupCli = !!process.env.BMAD_PROJECT_ROOT;
-    const isInteractive = isCalledViaSetupCli || process.stdin.isTTY;
-
-    console.log(`🔧 Interactive mode: ${isInteractive ? 'YES' : 'NO (using auto-setup)'}`);
-    if (isCalledViaSetupCli) {
-        console.log(`   (Called via bmad-odoo-setup CLI)`);
+    // Already up to date
+    if (currentVersion === targetVersion) {
+      console.log(`${GREEN}✓ Convoke is up to date! (v${currentVersion})${RESET}`);
+      console.log('');
+      return;
     }
+
+    // Upgrade detected
+    if (compareVersions(currentVersion, targetVersion) < 0) {
+      console.log(`${YELLOW}${BOLD}⚠ UPGRADE DETECTED${RESET}`);
+      console.log('');
+      console.log(`  Current version: ${RED}${currentVersion}${RESET}`);
+      console.log(`  New version:     ${GREEN}${targetVersion}${RESET}`);
+      console.log('');
+
+      // Check for breaking changes
+      const breakingChanges = registry.getBreakingChanges(currentVersion);
+      if (breakingChanges.length > 0) {
+        console.log(`${RED}${BOLD}  ⚠ Breaking changes detected!${RESET}`);
+        console.log('');
+        console.log('  Breaking changes:');
+        breakingChanges.forEach(change => {
+          console.log(`${YELLOW}    - ${change}${RESET}`);
+        });
+        console.log('');
+      }
+
+      console.log('To preview changes without applying:');
+      console.log(`  ${CYAN}npx -p convoke-agents convoke-update --dry-run${RESET}`);
+      console.log('');
+      console.log('To apply the update:');
+      console.log(`  ${CYAN}npx -p convoke-agents convoke-update${RESET}`);
+      console.log('');
+      console.log(`${BOLD}Your data will be backed up automatically before any changes.${RESET}`);
+      console.log('');
+      return;
+    }
+
+    // Downgrade (shouldn't happen normally)
+    if (compareVersions(currentVersion, targetVersion) > 0) {
+      console.log(`${YELLOW}Note: Package version (${targetVersion}) is older than installed version (${currentVersion})${RESET}`);
+      console.log('');
+      return;
+    }
+  } else {
+    // Fallback to original message if update system not available
+    const agentNames = AGENTS.map(a => a.name).join(' + ');
+    console.log('To install agents into your project, run:');
     console.log('');
-
-    try {
-        if (isInteractive) {
-            await interactiveSetup(projectRoot, packageRoot);
-        } else {
-            autoSetup(projectRoot, packageRoot);
-        }
-    } catch (error) {
-        logError(`Lỗi trong quá trình setup: ${error.message}`);
-        console.error(error.stack);
-        logWarning('Bạn có thể setup thủ công bằng lệnh: npx bmad-odoo-setup\n');
-        process.exit(0); // Don't fail npm install
-    }
+    console.log(`  ${CYAN}npx -p convoke-agents convoke-install${RESET}  - Install all agents (${agentNames})`);
+    console.log('');
+  }
 }
 
-// Run the script
-main().catch((error) => {
-    logError(`Lỗi fatal: ${error.message}`);
-    console.error(error.stack);
-    logWarning('Bạn có thể setup thủ công bằng lệnh: npx bmad-odoo-setup\n');
-    process.exit(0); // Don't fail npm install
+main().catch(error => {
+  console.error('Error in postinstall:', error.message);
 });

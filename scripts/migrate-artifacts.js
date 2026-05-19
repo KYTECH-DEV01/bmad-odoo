@@ -1,0 +1,468 @@
+#!/usr/bin/env node
+
+/**
+ * Convoke Artifact Governance Migration CLI
+ *
+ * Dry-run by default — shows what the migration would do without changing anything.
+ * Use --apply to execute renames. Use --apply --force to skip confirmation.
+ *
+ * @module migrate-artifacts
+ */
+
+const fs = require('fs-extra');
+const path = require('path');
+const yaml = require('js-yaml');
+const { findProjectRoot } = require('./update/lib/utils');
+const {
+  readTaxonomy,
+  generateManifest,
+  formatManifest,
+  ensureCleanTree,
+  executeRenames,
+  ArtifactMigrationError,
+  verifyHistoryChain,
+  executeInjections,
+  resolveAmbiguous,
+  loadResolutionMap,
+  detectMigrationState,
+  generateGovernanceADR,
+  supersedePreviousADR
+} = require('./lib/artifact-utils');
+
+// --- CLI Argument Parsing ---
+
+const DEFAULT_INCLUDE_DIRS = Object.freeze(['planning-artifacts', 'vortex-artifacts', 'gyre-artifacts']);
+
+/** Pattern for valid directory names: lowercase alphanumeric, dashes, underscores */
+const VALID_DIR_PATTERN = /^[a-zA-Z0-9_-]+$/;
+
+/**
+ * Parse CLI arguments from argv array.
+ *
+ * @param {string[]} argv - Arguments (typically process.argv.slice(2))
+ * @returns {{help: boolean, includeDirs: string[], apply: boolean, force: boolean, verbose: boolean, resolutionFile: string|null, resolutionFileError: string|null}}
+ */
+function parseArgs(argv) {
+  const help = argv.includes('--help') || argv.includes('-h');
+  const apply = argv.includes('--apply');
+  const force = argv.includes('--force');
+  const verbose = argv.includes('--verbose');
+
+  let includeDirs = [...DEFAULT_INCLUDE_DIRS];
+  const includeIdx = argv.indexOf('--include');
+  if (includeIdx !== -1) {
+    const nextArg = argv[includeIdx + 1];
+    // Skip if next arg is missing or is another flag
+    if (nextArg && !nextArg.startsWith('--')) {
+      const parsed = nextArg.split(',').map(d => d.trim()).filter(Boolean);
+      // Validate: only simple directory names (no path traversal)
+      const valid = parsed.filter(d => VALID_DIR_PATTERN.test(d));
+      const invalid = parsed.filter(d => !VALID_DIR_PATTERN.test(d));
+      if (invalid.length > 0) {
+        console.warn(`Warning: Invalid directory names ignored: ${invalid.join(', ')}`);
+      }
+      if (valid.length > 0) {
+        includeDirs = valid;
+      }
+    }
+  }
+
+  // Story 6.4: --resolution-file <path> — operator decisions for AMBIGUOUS entries.
+  // Loaded and validated in main() after the manifest is generated.
+  // Also accept the GNU --resolution-file=path form. Reject missing/empty/flag-like
+  // values loudly via parse error so operators don't accidentally run a destructive
+  // --apply --force without their overrides being honored.
+  let resolutionFile = null;
+  let resolutionFileError = null;
+
+  // Check the equals form first: --resolution-file=path
+  const eqArg = argv.find(a => a.startsWith('--resolution-file='));
+  if (eqArg) {
+    const value = eqArg.slice('--resolution-file='.length);
+    if (!value || value.startsWith('-')) {
+      resolutionFileError = `--resolution-file requires a non-empty path (got: '${value}')`;
+    } else {
+      resolutionFile = value;
+    }
+  } else {
+    const resolutionIdx = argv.indexOf('--resolution-file');
+    if (resolutionIdx !== -1) {
+      const nextArg = argv[resolutionIdx + 1];
+      // Reject: missing arg, empty arg, anything starting with `-` (covers --flags AND -singledash)
+      if (!nextArg || nextArg.startsWith('-')) {
+        resolutionFileError = `--resolution-file requires a path argument (got: '${nextArg || '<missing>'}')`;
+      } else {
+        resolutionFile = nextArg;
+      }
+    }
+  }
+
+  return { help, includeDirs, apply, force, verbose, resolutionFile, resolutionFileError };
+}
+
+// --- Help ---
+
+function printHelp() {
+  console.log(`
+Usage: convoke-migrate-artifacts [options]
+
+Analyze artifact files and show what the governance migration would do.
+Dry-run by default — no files are modified.
+
+Options:
+  --include <dirs>           Comma-separated directory names to scan (relative to _bmad-output/)
+                             Default: planning-artifacts,vortex-artifacts,gyre-artifacts
+  --verbose                  Show cross-references for ambiguous files
+  --apply                    Execute the rename migration (commit 1: git mv)
+  --force                    Bypass confirmation prompt (use with --apply for automation)
+  --resolution-file <path>   JSON file with operator decisions for ambiguous entries.
+                             Combined with --force gives a fully non-interactive run.
+                             Schema: { "schemaVersion": 1, "resolutions": { "dir/file.md": { "action": "rename", "initiative": "convoke" } } }
+  --help, -h                 Show this help
+
+Examples:
+  convoke-migrate-artifacts                          Dry-run with default scope
+  convoke-migrate-artifacts --verbose                Dry-run with cross-references
+  convoke-migrate-artifacts --include planning-artifacts   Dry-run for one directory
+  convoke-migrate-artifacts --apply --force --resolution-file resolutions.json   Non-interactive apply with operator decisions
+`);
+}
+
+// --- Taxonomy Bootstrap ---
+
+const PLATFORM_INITIATIVES = ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'convoke'];
+
+const DEFAULT_ARTIFACT_TYPES = [
+  'prd', 'epic', 'arch', 'adr', 'persona', 'lean-persona', 'empathy-map',
+  'problem-def', 'hypothesis', 'experiment', 'signal', 'decision', 'scope',
+  'pre-reg', 'sprint', 'brief', 'vision', 'report', 'research', 'story', 'spec',
+  'covenant'
+];
+
+/**
+ * Create taxonomy.yaml with platform defaults if it does not exist.
+ * Idempotent — never overwrites an existing file.
+ *
+ * @param {string} projectRoot - Absolute path to project root
+ * @returns {boolean} true if file was created, false if already existed
+ */
+function bootstrapTaxonomy(projectRoot) {
+  const configDir = path.join(projectRoot, '_bmad', '_config');
+  const configPath = path.join(configDir, 'taxonomy.yaml');
+
+  if (fs.existsSync(configPath)) {
+    return false;
+  }
+
+  const defaults = {
+    initiatives: {
+      platform: PLATFORM_INITIATIVES,
+      user: []
+    },
+    artifact_types: DEFAULT_ARTIFACT_TYPES,
+    aliases: {}
+  };
+
+  const header = [
+    '# Artifact Governance Taxonomy Configuration',
+    '# Schema version: 1',
+    `# Created by: convoke-migrate-artifacts bootstrap`,
+    '#',
+    '# This file is the single source of truth for initiative IDs, artifact types,',
+    '# and historical name aliases used by the governance system.',
+    ''
+  ].join('\n');
+
+  fs.ensureDirSync(configDir);
+  fs.writeFileSync(configPath, header + yaml.dump(defaults, { lineWidth: -1 }), 'utf8');
+  return true;
+}
+
+// --- Interactive Prompt ---
+
+/**
+ * Prompt the operator to confirm migration apply.
+ * Exported for mocking in tests — tests should NEVER interact with real readline.
+ *
+ * @returns {Promise<boolean>} true if operator confirms
+ */
+async function confirmApply() {
+  const readline = require('readline');
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise(resolve => {
+    rl.on('close', () => resolve(false)); // piped/closed stdin → reject
+    rl.question('Apply migration? [y/n] ', answer => {
+      rl.close();
+      resolve(typeof answer === 'string' && answer.trim().toLowerCase() === 'y');
+    });
+  });
+}
+
+// --- Main ---
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+
+  if (args.help) {
+    printHelp();
+    return;
+  }
+
+  // Story 6.4: fail fast on a malformed --resolution-file flag so a typo can't
+  // silently turn into a destructive --apply --force run with no overrides applied.
+  if (args.resolutionFileError) {
+    console.error(`Error: ${args.resolutionFileError}`);
+    process.exit(1);
+  }
+
+  if (args.force && !args.apply) {
+    console.log('Warning: --force has no effect without --apply. Running dry-run instead.');
+  }
+
+  const projectRoot = findProjectRoot();
+  if (!projectRoot) {
+    console.error('Error: Not in a Convoke project. Could not find _bmad/ directory.');
+    process.exit(1);
+  }
+
+  // Archive exclusion (FR50): always strip _archive from includeDirs
+  const excludeDirs = ['_archive'];
+  const filteredIncludeDirs = args.includeDirs.filter(d => {
+    if (d === '_archive') {
+      console.warn('Warning: _archive is always excluded from migration scope (FR50). Ignoring.');
+      return false;
+    }
+    return true;
+  });
+
+  if (filteredIncludeDirs.length === 0) {
+    console.error('Error: No directories to scan. All specified directories were excluded.');
+    process.exit(1);
+  }
+
+  // Taxonomy bootstrap (FR49): create if absent, never overwrite
+  const created = bootstrapTaxonomy(projectRoot);
+  if (created) {
+    console.log('Created _bmad/_config/taxonomy.yaml with platform defaults.');
+  }
+
+  // Validate taxonomy (NFR22: graceful error, no stack traces)
+  try {
+    readTaxonomy(projectRoot);
+  } catch (err) {
+    console.error(`Error: Invalid taxonomy configuration.`);
+    console.error(`  ${err.message}`);
+    console.error(`  Fix the file at: _bmad/_config/taxonomy.yaml`);
+    process.exit(1);
+  }
+
+  // Generate manifest (shared by dry-run and apply)
+  const manifest = await generateManifest(projectRoot, {
+    includeDirs: filteredIncludeDirs,
+    excludeDirs,
+    verbose: args.verbose
+  });
+
+  const output = formatManifest(manifest, { verbose: args.verbose });
+  console.log(output);
+
+  // Dry-run mode (default): just print manifest and exit
+  if (!args.apply) {
+    return;
+  }
+
+  // --- Apply mode ---
+
+  // Idempotent recovery detection
+  let migrationState = detectMigrationState(projectRoot);
+  if (migrationState === 'complete') {
+    // Secondary check: verify manifest confirms all files governed (catches new files added since migration)
+    const hasWork = manifest.entries.some(e => e.action === 'RENAME' || e.action === 'AMBIGUOUS');
+    if (!hasWork) {
+      console.log('\nNothing to migrate -- all files governed.');
+      return;
+    }
+    // New files found — proceed as fresh migration
+    console.log('\nPrevious migration detected, but new ungoverned files found. Proceeding with fresh migration.');
+    migrationState = 'fresh';
+  }
+
+  // Load taxonomy for ambiguous resolution
+  const taxonomy = readTaxonomy(projectRoot);
+
+  // Story 6.4: optional pre-loaded operator resolutions via --resolution-file.
+  // Loaded once here so any validation error fails fast before we touch the manifest.
+  let resolutionMap = null;
+  if (args.resolutionFile) {
+    try {
+      resolutionMap = loadResolutionMap(args.resolutionFile, taxonomy);
+      const count = Object.keys(resolutionMap).length;
+      console.log(`Loaded ${count} operator resolution(s) from ${args.resolutionFile}.`);
+    } catch (err) {
+      console.error(`Error loading resolution file: ${err.message}`);
+      process.exit(1);
+    }
+  }
+
+  // Resolve ambiguous files: resolution map (if any) → no-candidates skip → force skip → interactive prompt
+  const resolution = await resolveAmbiguous(manifest, taxonomy, projectRoot, {
+    force: args.force,
+    resolutionMap
+  });
+  if (resolution.resolved > 0 || resolution.skipped > 0) {
+    console.log(`\nAmbiguous resolution: ${resolution.resolved} resolved, ${resolution.skipped} skipped.`);
+  }
+
+  // Re-compute counts and re-check collisions after resolution (new RENAME entries may collide)
+  const { detectCollisions } = require('./lib/artifact-utils');
+  manifest.collisions = detectCollisions(manifest.entries);
+  const renameCount = manifest.summary.rename;
+  const skipCount = manifest.entries.filter(e => e.action === 'SKIP').length;
+  const ambiguousLeft = manifest.summary.ambiguous;
+  console.log(`\n${renameCount} files will be renamed. ${skipCount} skipped. ${ambiguousLeft} still ambiguous.`);
+
+  // Block on collisions (includes post-resolution collisions)
+  if (manifest.collisions.size > 0) {
+    console.error(`Error: ${manifest.collisions.size} filename collision(s) detected. Resolve before applying.`);
+    process.exit(1);
+  }
+
+  if (renameCount === 0) {
+    console.log('Nothing to rename.');
+    return;
+  }
+
+  // Confirmation prompt (unless --force)
+  if (!args.force) {
+    const confirmed = await confirmApply();
+    if (!confirmed) {
+      console.log('Migration aborted.');
+      return;
+    }
+  }
+
+  // Pre-flight: ensure clean tree
+  try {
+    ensureCleanTree(filteredIncludeDirs, projectRoot);
+  } catch (err) {
+    console.error(`Error: ${err.message}`);
+    process.exit(1);
+  }
+
+  // Execute migration phases
+  try {
+    // Phase routing based on idempotent recovery state
+    if (migrationState === 'renames-done') {
+      const priorCount = manifest.entries.filter(e => e.action === 'RENAME').length;
+      console.log(`\nDetected partial migration (${priorCount} renames done, frontmatter pending). Resuming commit 2.`);
+    } else {
+      // Commit 1: renames
+      const renameResult = executeRenames(manifest, projectRoot);
+      console.log(`\nRename phase complete. ${renameResult.renamedCount} files renamed. Commit: ${renameResult.commitSha}`);
+
+      // Verify history chain (informational)
+      const renamedEntries = manifest.entries.filter(e => e.action === 'RENAME');
+      const verification = verifyHistoryChain(renamedEntries, projectRoot);
+      if (verification.failed.length > 0) {
+        console.warn(`Warning: git log --follow failed for ${verification.failed.length} file(s):`);
+        for (const f of verification.failed) {
+          console.warn(`  ${f}`);
+        }
+      } else {
+        console.log(`History chain verified for ${verification.verified} sample file(s).`);
+      }
+    }
+
+    // Commit 2: frontmatter injection + link updating + rename map
+    const injResult = await executeInjections(manifest, projectRoot, filteredIncludeDirs);
+    console.log(`\nInjection phase complete. ${injResult.injectedCount} files injected, ${injResult.linkUpdates.updatedLinks} links updated, ${injResult.conflictCount} conflicts skipped. Commit: ${injResult.commitSha}`);
+
+    // Commit 3: ADR generation (non-blocking — failure logs warning, doesn't rollback)
+    try {
+      const date = new Date().toISOString().split('T')[0];
+      const newADRFilename = `adr-artifact-governance-convention-${date}.md`;
+      const adrContent = generateGovernanceADR(date, {
+        renamedCount: renameCount,
+        injectedCount: injResult.injectedCount,
+        linksUpdated: injResult.linkUpdates.updatedLinks,
+        scopeDirs: filteredIncludeDirs
+      }, taxonomy);
+
+      const adrDir = path.join(projectRoot, '_bmad-output', 'planning-artifacts');
+      fs.ensureDirSync(adrDir);
+      const adrPath = path.join(adrDir, newADRFilename);
+      // Write new ADR FIRST, then supersede old (prevents orphaned supersession if write fails)
+      fs.writeFileSync(adrPath, adrContent, 'utf8');
+      const supersededADRPath = supersedePreviousADR(projectRoot, newADRFilename);
+
+      // Stage only the paths this phase writes — not the entire planning-artifacts/ dir —
+      // so unrelated staged/modified files in the directory don't get absorbed into the ADR commit.
+      const pathsToStage = [adrPath];
+      if (supersededADRPath) pathsToStage.push(supersededADRPath);
+
+      const { execFileSync: execGit } = require('child_process');
+      execGit('git', ['add', '--', ...pathsToStage], { cwd: projectRoot, stdio: 'pipe' });
+      // Idempotency check: on re-run with byte-identical ADR content (same date + same stats),
+      // nothing is staged and `git commit` would error with "nothing to commit". Skip cleanly
+      // rather than downgrading that error to a misleading warning. Matches the check-then-act
+      // pattern in supersedePreviousADR.
+      //
+      // `git diff --cached --quiet` exit codes: 0 = no staged diff, 1 = diff present,
+      // non-0 and non-1 = genuine git error (index lock, corrupt index, etc.). Discriminate on
+      // `err.status` so real errors surface the underlying git error via the outer catch,
+      // rather than being indistinguishable from a "nothing to commit" false alarm.
+      let hasStagedChanges = false;
+      try {
+        execGit('git', ['diff', '--cached', '--quiet'], { cwd: projectRoot, stdio: 'pipe' });
+      } catch (diffErr) {
+        if (diffErr.status === 1) {
+          hasStagedChanges = true;
+        } else {
+          throw diffErr;
+        }
+      }
+      if (hasStagedChanges) {
+        execGit('git', ['commit', '-m', 'chore: generate governance convention ADR'], { cwd: projectRoot, stdio: 'pipe' });
+        console.log(`\nADR generated: ${newADRFilename}`);
+      } else {
+        console.log(`\nADR already current: ${newADRFilename} (no changes to commit)`);
+      }
+    } catch (adrErr) {
+      console.warn(`\nWarning: ADR generation failed: ${adrErr.message}`);
+      console.warn('Migration data is intact (commits 1-2 preserved). ADR can be generated manually.');
+    }
+
+    // Final summary
+    console.log(`\nMigration complete. ${renameCount} files renamed, ${injResult.injectedCount} frontmatter injected, ${injResult.linkUpdates.updatedLinks} links updated, ${skipCount} skipped.`);
+  } catch (err) {
+    if (err instanceof ArtifactMigrationError && err.phase === 'rename') {
+      console.error(`\nRename failed: ${err.message}`);
+      if (err.recoverable) {
+        console.error('Rollback complete. No changes made.');
+      } else {
+        console.error('WARNING: Rollback may have failed. Run `git status` to check working tree state.');
+      }
+      process.exit(1);
+    }
+    if (err instanceof ArtifactMigrationError && err.phase === 'inject') {
+      console.error(`\nInjection failed: ${err.message}`);
+      if (err.recoverable) {
+        console.error('Renames preserved (commit 1). Injections discarded.');
+      } else {
+        console.error('WARNING: Rollback may have failed. Run `git status` to check working tree state.');
+      }
+      process.exit(1);
+    }
+    throw err;
+  }
+}
+
+// Run if invoked directly
+if (require.main === module) {
+  main().catch(err => {
+    console.error(`Error: ${err.message}`);
+    process.exit(1);
+  });
+}
+
+module.exports = { parseArgs, main, confirmApply, bootstrapTaxonomy, DEFAULT_INCLUDE_DIRS, PLATFORM_INITIATIVES, DEFAULT_ARTIFACT_TYPES, VALID_DIR_PATTERN };

@@ -1,0 +1,191 @@
+# A24: Vortex Audit Expansion (IN-12)
+
+Status: **done (2026-04-19, non-provisional)** — A10 reproducibility gate cleared 3/3 = 100% — report: [convoke-report-operator-covenant-audit-vortex-2026-04-19.md](../planning-artifacts/convoke-report-operator-covenant-audit-vortex-2026-04-19.md)
+
+## Story
+
+As a Convoke contributor preparing Epic 2 Story 2.1's T1 (team × Right) trigger evaluation,
+I want a Vortex-scoped audit extension that scores ≥ 3 additional Vortex workflows beyond `lean-persona` against all 7 Operator Rights using the locked oc-1-1 methodology,
+so that the Vortex team cell reaches N ≥ 4 and T1 trigger evaluation for Vortex becomes valid (currently blocked at N = 1 per [convoke-epic-operator-covenant.md:367](../planning-artifacts/convoke-epic-operator-covenant.md#L367)).
+
+## Acceptance Criteria
+
+1. **Methodology reuse, not revision.** The audit applies §2.3 scoring scheme + §2.4 per-right rubric + §2.6 novel-concept glossary from [convoke-report-operator-covenant-audit-2026-04-18.md](../planning-artifacts/convoke-report-operator-covenant-audit-2026-04-18.md) verbatim. If a rubric ambiguity surfaces, it is recorded as an intake for the initiatives backlog (not resolved in-story).
+
+2. Audit findings reference rights by name (e.g., "Right to pacing"), not number — same rule as oc-1-1 AC #2.
+
+3. **Scope — ≥ 3 additional Vortex workflows audited.** The set must include `assumption-mapping` (IN-12 origin spot-check target) and `empathy-map`; the third is selected from `hypothesis-engineering` or `lean-experiment`. Rationale for the third choice is documented in the report. Combined with lean-persona (carried over from oc-1-1 §7), the Vortex cell reaches N ≥ 4.
+
+4. **Unit of analysis matches oc-1-1 §2.2.** One representative step per workflow is audited. If the workflow has > 3 steps, the report discloses which step was chosen and why (same disclosure pattern as oc-1-1 Loom add-team scoping).
+
+5. Each workflow × right cell produces a binary PASS / FAIL verdict with a ≤ 2-sentence evidence note citing specific file references and behaviors (no partial-credit language — see Round 3 triage on partial credit).
+
+6. **Right-to-pacing cells apply §2.6 glossary strictly.** The IN-12 spot-check estimate of "~10 novel concepts in assumption-mapping step-01" is a pre-audit *hypothesis*, not a finding — the actual concept count (via §2.6 glossary enumeration) is the AC #5 evidence. A mismatch between estimate and measured count does not invalidate the finding; it is logged in the report §notes.
+
+7. **Output report saved** at `_bmad-output/planning-artifacts/convoke-report-operator-covenant-audit-vortex-YYYY-MM-DD.md` with governance frontmatter (`initiative: convoke`, `artifact_type: report`, `created: YYYY-MM-DD`, `schema_version: 1`). `convoke-doctor` must pass on the saved file.
+
+8. **Vortex (team × Right) row computed** — for each of the 7 rights, the report emits `vortex_fail_rate = fails_in_vortex / N_vortex_audited` using the combined set (3 new workflows + lean-persona carried from oc-1-1 §7).
+
+9. **T1 trigger verdict recorded** — for each right, the report states whether the Vortex cell fails the T1 threshold (< 70% compliance at N ≥ 3 per [convoke-epic-operator-covenant.md:360](../planning-artifacts/convoke-epic-operator-covenant.md#L360)). If any right trips T1, the affected (Vortex × Right) cell(s) are escalated as in-scope for Epic 2 Story 2.1 retrofit — logged in the report §Implications section.
+
+10. **Initiatives-backlog log entry** — on completion, add a 2026-MM-DD row to the backlog §2.5 activity log summarizing: workflows audited, Vortex fail rates per right, T1 trigger verdict, and whether Epic 2 Story 2.1 scope is affected. Move A24 from Fast Lane → §2.5 Completed.
+
+## Tasks / Subtasks
+
+- [x] Task 1: Confirm workflow selection (AC #3) — pick the third workflow from `hypothesis-engineering` or `lean-experiment`; document rationale (e.g., coverage of different Vortex stream archetypes, skill maturity, recent adoption).
+- [x] Task 2: Identify representative step per workflow (AC #4) — cite step path (e.g., `_bmad/bme/_vortex/workflows/assumption-mapping/step-01-<name>.md`) and rationale for step choice.
+- [x] Task 3: Score each workflow × 7 rights (AC #5, #6) — 3 workflows × 7 rights = 21 new cells; evidence notes cite specific file:line references where behavior is defined.
+- [x] Task 4: Compute Vortex team × Right row (AC #8) — 4 workflows (3 new + lean-persona from oc-1-1 §7) × 7 rights; report per-right fail count and fail rate.
+- [x] Task 5: Evaluate T1 trigger for Vortex (AC #9) — per-right: does `(fails / N) > 0.30` at `N ≥ 3`? (equivalent to compliance `< 70%` per Epic T1). Any `TRUE` escalates.
+- [x] Task 6: Draft §Implications section — for each T1-tripping right (if any), recommend retrofit pattern drawing from oc-1-1 §9.1's retrofit catalogue where applicable.
+- [x] Task 7: Save report (AC #7) + run `npx convoke-doctor` to verify governance acceptance.
+- [x] Task 8: Update initiatives backlog (AC #10) — activity-log row + move A24 to §2.5 Completed.
+
+### Review Findings (Round 1, 2026-04-19)
+
+**Legend:** Severity follows `code-review-convergence` rule. 3 layers ran: Blind Hunter (no context), Edge Case Hunter (diff + project read), Acceptance Auditor (diff + spec + context docs).
+
+**Meta-COI note:** Sub-agents produced findings independently. Main-agent classification is by the same author as the audit; classifications reflect best-effort but reviewer should weight with COI in mind.
+
+#### Decision-needed (3) — require operator input before fix
+
+- [x] [Review][Decision→Resolved 2026-04-19] **Right-to-next-action PASS vs AC #4 unit-of-analysis** — **Resolution: 3+4** (keep PASS as method-consistent with lean-persona oc-1-1 §8.7 + log rubric ambiguity). Verdicts stand for all 3 workflows. Added as §9 ambiguity #4 in audit report for v3+ rubric clarification.
+- [x] [Review][Decision→Resolved 2026-04-19] **Empathy-map Right-to-pacing glossary consistency** — **Resolution: 1** (patch §4.2 evidence note + log §9 ambiguity #5). §4.2 reworded to cite §2.6 "previously encountered" semantics rigorously; empathy-map/HE asymmetry is structural (workflow.md vs step-01 placement), not an error. Verdicts stable under both strict and lenient readings. Ambiguity #5 added for v3+ glossary clarification.
+- [x] [Review][Decision→Resolved 2026-04-19] **COI mitigation for self-authored spec/self-executed audit** — **Resolution: 2+4** (accept provisional + add explicit mitigation gates). §8.1 "Mitigation Gates" added to audit report: G1 (Epic 2 Story 2.1 retrofit scoping blocked on A10 reproducibility gate), G2 (independent FAIL cell verification per workflow), G3 (rubric ambiguities stay intake-only), G4 (carried-forward lean-persona cells locked). v2 baseline advancement in §6.5 now requires Epic 2 governance ratification (gated on G1).
+
+#### Patches (15) — fixable without operator input
+
+- [x] [Review][Patch→Applied 2026-04-19] **Compound-concept "A13" rule applied beyond locked §2.6** — §4.1 and §4.3 reframed without compound-concept grouping references. FAIL verdicts hold (6-7 distinct concepts under strict §2.6). Compound-concept caveat moved to §4.4 Notes.
+- [x] [Review][Patch→Applied 2026-04-19] **Pacing FAIL evidence notes exceed ≤ 2 sentences** — §4.1, §4.2, §4.3 R7 trimmed to 2 sentences. Supporting evidence moved to §4.4 Notes.
+- [x] [Review][Patch→Applied 2026-04-19] **Story spec task checkboxes unchecked despite "done" status** — 8/8 Tasks now `[x]`.
+- [x] [Review][Partial-dismiss→Re-opened Round 2] **Wrong line-anchor citations to Covenant epic** — Partial: T1 citation to L360 verified correct; but L365 citation for "N = 1 blocked" claim was wrong (N=1 text is at L367). Round 2 corrected to L367 in Story Statement + Dev Notes §Downstream Consumers.
+- [x] [Review][Patch→Applied 2026-04-19] **Activity-log "A24 shipped" wording contradicts §7 provisional verdict** — backlog A24 activity-log entry now reads "A24 shipped provisional" and T1 FIRES is explicitly qualified "(provisional)". §2.5 row note also reads "(provisional)".
+- [x] [Review][Patch→Applied 2026-04-19] **AC #6 "§notes" section missing** — §4.4 Notes subsection added with 3 entries (compound-concept caveat, IN-12 estimate comparison, workflow.md-vs-step-01 scope). AC #6 satisfied literally.
+- [x] [Review][Patch→Applied 2026-04-19] **AC #8 emits compliance rate, not `vortex_fail_rate`** — §5 table now emits Fails/N, Fail rate, Compliance, and T1 verdict columns per AC #8 literal formula.
+- [x] [Review][Patch→Applied 2026-04-19] **§6.4 T2 calculation produces verdict-shaped number despite scope anti-pattern** — 55% figure dropped. §6.4 now states plainly that mixing A24 Vortex cells with frozen non-Vortex cells would violate Anti-Pattern #5, so no number is emitted.
+- [x] [Review][Patch→Applied 2026-04-19] **§6.4 falsely attributes "every Right ≥ 70%" phrase to oc-1-1** — corrected attribution to `convoke-epic-operator-covenant.md:367`. Reframed as cross-document clarification (Epic vs. oc-1-1 matrix), not internal oc-1-1 inconsistency. §9 ambiguity #3 also updated.
+- [x] [Review][Patch→Applied 2026-04-19] **Class-level retrofit figures (23 Vortex workflows, 8+ affected) are unsourced** — §6.2 reframed: specific majority/count threshold replaced with "pending proper Vortex-wide workflow inventory"; ≈23 count kept as approximate, subject to A26 measurement.
+- [x] [Review][Patch→Applied 2026-04-19] **§6.5 Epic 2 baseline-update claim lacks ratification step** — softened "now reads" → "should be updated (subject to Epic 2 governance ratification, gated on G1)". v2 baseline row marked "provisional".
+- [x] [Review][Patch→Applied 2026-04-19] **Backlog activity log row under-reports per-right fail rates** — backlog A24 row now enumerates all 7 rights with explicit fail rates (6 at 0/4 = 100% compliance; pacing 3/4 = 25% compliance).
+- [x] [Review][Patch→Applied 2026-04-19] **Stale A8/A9 references — no referential-integrity grep** — grep pass complete. All A8/A9 references in live artifacts are either v6.3 Adoption A8/A9 (intentional, unchanged) or local-namespace assumption-IDs in vortex-artifacts (no collision). Archived/superseded files excluded. Renames clean.
+- [x] [Review][Patch→Applied 2026-04-19] **A26 floated in §6.2 prose without backlog intake** — A26 logged as backlog intake IN-43 (→ A26) in `convoke-note-initiative-lifecycle-backlog.md` §2.1 Intakes. §6.2 now cites IN-43 as the source.
+- [x] [Review][Patch→Applied 2026-04-19] **Task 5 inequality inverted vs AC #9** — Task 5 corrected to `(fails / N) > 0.30` (strict >; since `< 70% compliance` ≡ `fail_rate > 30%`).
+
+#### Deferred (4) — pre-existing or out-of-scope for this round
+
+- [x] [Review][Defer] **Step-01 sampling bias — later steps unaudited for all 3 workflows (assumption-mapping:4, empathy-map:6, hypothesis-engineering:5 steps)** — deferred. Already acknowledged in §7 reproducibility discussion. Extending to all steps is a future audit scope (candidate A26).
+- [x] [Review][Defer] **Third-workflow "twins" pick — diverse structural sampling for future audits** — deferred. Design guidance for future Vortex audits; does not invalidate current findings.
+- [x] [Review][Defer] **IN-12 intake-to-shipped same-day governance smell** — deferred. Process observation; belongs in retro or project-context.md if formalized.
+- [x] [Review][Defer] **T1 boundary case (exactly 70% compliance)** — deferred. Epic-level clarification; out of scope for A24.
+
+#### Dismissed (4) — noise / method-consistent / false positive
+
+- Portfolio column 'vortex' (backlog) vs frontmatter `initiative: convoke` (report) — different columns track different things (initiative attribution vs skill-team attribution). Method-consistent with oc-1-1 report.
+- convoke-doctor validation untested — was run during the session; output confirmed (2 pre-existing unrelated issues, no A24 failures).
+- "Implicit wait" boilerplate across Pause cells — method-consistent with oc-1-1 §8.7 lean-persona scoring verbatim.
+- Shared Right-to-default fallback text scored twice — each workflow is a distinct audit unit; independent scoring is correct.
+
+### Review Findings (Round 2, 2026-04-19)
+
+**Round 2 scope:** 3 sub-agents reviewed the Round 1 resolution output (14 patches + 3 decision resolutions + findings block). Found deeper issues in the patches themselves.
+
+#### Decisions (2) — resolved this round
+
+- [x] [Review][Decision→Resolved 2026-04-19] **Compound-concept counting — §4.1/§4.3 claimed "strict" but used charitable grouping (AC #1 violation)** — **Resolution: 1** (rewrite §4.1/§4.3 under true strict §2.6 sub-field counting). §4.1 now reads "> 10 novel concepts under strict §2.6"; §4.3 reads "> 15". Both FAIL verdicts robust; §4.4 Notes now carries strict vs charitable breakdown for transparency.
+- [x] [Review][Decision→Resolved 2026-04-19] **§8.1 Mitigation Gate logic gaps (G1 cell composition, G2 "independent" undefined, G4 no empathy-map drift handling, etc.)** — **Resolution: 2** (defer gate refinements to Epic 2 governance). §8.1 softened to "proposed… pending Epic 2 ratification"; gate-refinement candidates logged as backlog intake IN-56 → A34. G1-G4 retained with softened should-language.
+
+#### Patches (16) — applied this round
+
+- [x] [Review][Patch] **§9 ambiguity #5 "verdict stability" claim was partially false** — corrected. §4.2 empathy-map PASS is explicitly reading-dependent; §4.1/§4.3 FAILs stable either way. §5 table footnote added.
+- [x] [Review][Patch] **§4.2 evidence note was 3 sentences (AC #5 violation)** — trimmed to 2 sentences with reading-dependent framing.
+- [x] [Review][Patch] **§4.4 Note 1 internally inconsistent on "6 distinct items" labeling** — rewritten with explicit strict-vs-charitable counts.
+- [x] [Review][Patch] **Story L365 citations actually map to L367 (N=1 baseline text)** — corrected in Story Statement + Dev Notes §Downstream Consumers. F6 partial-dismissal note updated.
+- [x] [Review][Patch] **F6 checkbox `[~]` was non-standard markdown** — replaced with `[x]` + "Partial-dismiss→Re-opened Round 2" annotation.
+- [x] [Review][Patch] **3 new rubric ambiguities (#3, #4, #5) not logged as backlog intakes (AC #1 violation)** — IN-53 (cross-doc consistency), IN-54 (R6 intake-only step), IN-55 (workflow.md scope) added.
+- [x] [Review][Patch] **Task 5 "strictly < 70%" redundant qualifier tacitly resolved deferred boundary** — reworded as "equivalent to compliance `< 70%` per Epic T1" without the "strictly" prefix.
+- [x] [Review][Patch] **§5 table summary duplicated the per-right figures shown in the table** — removed duplication; summary now references the table columns rather than restating numbers.
+- [x] [Review][Patch] **Backlog A24 row denominator "0/4" vs "3/4" unlabeled unit** — row rewritten with "per-right fail counts (across N=4 Vortex skills)" framing; charitable-vs-strict counting noted.
+- [x] [Review][Patch] **"Completed (provisional)" new lifecycle sub-status lacked definition** — row annotated "provisional — denotes shipped artifact with deferred-resolution items pending".
+- [x] [Review][Patch] **§6.4 still emitted quantitative figures after Round 1 "no number is emitted" claim** — specific numbers moved to §9 ambiguity #3 reference; §6.4 now just flags the question.
+- [x] [Review][Patch] **§8.1 "locked 2026-04-19 via Round 1 code review" attribution over-claimed authority** — softened to "proposed… pending Epic 2 governance ratification".
+- [x] [Review][Patch] **IN-43 intake reproduced "23 workflows" without §6.2's pending-inventory qualifier** — intake text revised; §6.2 now cites IN-43 as proposed-not-scored (A26 pending qualifying gate).
+- [x] [Review][Patch] **§4.4 header parenthetical invented an AC #6 interpretation** — rephrased as "(AC #6 supporting material)".
+- [x] [Review][Patch] **G3 "intake-only" vs §4.4 adjudicating compound-concept in-story** — §4.4 Notes now frames itself as descriptive comparison, not a rubric decision; G3 text unchanged.
+- [x] [Review][Patch] **Backlog IN-43 row referenced A26 without qualifying-gate note** — revised intake text and §6.2 citation framing.
+
+#### Deferred (3)
+
+- [x] [Review][Defer] **ILE-1 commits bundled into A24 patch range** — commit-hygiene observation; other sessions auto-committed ILE-1 work during this session's timeline. Not an A24 correctness issue.
+- [x] [Review][Defer] **T4 activity-log entries bundled into A24 patch commit range** — same root cause: parallel auto-commits from other work. T4 → deferred-work.md already captures the real T4 bug.
+- [x] [Review][Defer] **Gate "gatekeeper identity" (who provides non-COI reviewers)** — governance question folded into IN-56 gate-refinement intake; not an A24-level question.
+
+#### Dismissed (~10)
+
+- Duplicate findings across layers (same issue surfaced by Blind + Edge or Edge + Auditor) already captured in the accepted findings above.
+
+**Convergence check (Round 2):** Round 2 patches did introduce structural changes (§5 table restructure preserved, §4.4 rewrite, §8.1 softening, 4 new IN rows). Round 3 would technically be allowed — but Round 2 surfaced no new HIGH findings beyond what the same agent has seen before, and the COI compounds with each self-review cycle. Per `code-review-convergence`, continued adversarial scanning by the same agent has diminishing returns. Recommend: stop at Round 2 and route through the A10 reproducibility gate (an independent-reviewer gate) rather than a Round 3 self-review.
+
+### A10 Reproducibility Pass — executed 2026-04-19 (outcome: gate CLEAR)
+
+**3 cells scored by 2 independent LLM reviewers blind to each other:**
+
+| # | Cell | Reviewer A | Reviewer B | Agreement |
+|---|------|:---:|:---:|:---:|
+| 1 | `hypothesis-engineering` × R3 rationale | PASS | PASS | ✓ |
+| 2 | `assumption-mapping` × R7 pacing | FAIL | FAIL | ✓ |
+| 3 | `empathy-map` × R7 pacing | PASS | PASS | ✓ |
+
+**3/3 = 100% agreement → A10 threshold met at N=3.**
+
+**Key consequences:**
+- T1-FIRES verdict is now **non-provisional** (§7 + §7.1 of report updated).
+- §8.1 **G1 retrofit scoping block ✓ satisfied**; 2 new retrofit cells (R7-V1 assumption-mapping, R7-V2 hypothesis-engineering) are eligible for Epic 2 Story 2.1 commitments pending Epic 2 ratification.
+- §8.1 **G2 independent FAIL-cell verification ✓ satisfied** via Cell 2 reproducibility; R7-V2 covered by analogy (stricter per-cell reading tracked in IN-56).
+- **Cell 2 reviewers naturally used charitable compound-grouping (6-7 concepts)**, not strict sub-field counting (> 10). §4.1/§4.3 evidence notes reverted to reviewer-validated counts; strict alternative preserved in §4.4 Notes.
+- **Cell 3 reviewers naturally applied the broader §2.6 reading** (workflow.md concepts pre-existing); §9 ambiguity #5 did not operationally surface under independent review. §4.2 PASS is reproducibility-validated under the natural reviewer reading.
+
+**Honest caveat (per oc-1-1 §2.5):** same-model LLM reviewers share base training. Agreement validates rubric unambiguity *for LLMs*, not against human judgment. Numeric A10 threshold met; structural limit persists.
+
+**A24 formally closed** — all tasks done, all review findings resolved, reproducibility gate cleared. Open follow-ups tracked in backlog intakes IN-53 through IN-56.
+
+
+
+## Dev Notes
+
+### Origin & Scoring
+
+- **Intake:** IN-12 (deferred from oc-1-1 Round 3 Edge Case Hunter per `code-review-convergence` no-R4 rule)
+- **Backlog ID:** A24 (renamed from A8 on 2026-04-19 — collision with v6.3 Adoption A8/WS3 Amelia consolidation)
+- **RICE:** R=6, I=1, C=80%, E=2, Score=2.4 — Fast Lane qualification
+
+### Pre-Audit Hypothesis (from IN-12)
+
+oc-1-1 sampled only `lean-persona` from the Vortex team, which returned 1 Right-to-pacing FAIL out of 7 rights (one of the *least-violating* outcomes in the audit matrix — [convoke-report-operator-covenant-audit-2026-04-18.md:271](../planning-artifacts/convoke-report-operator-covenant-audit-2026-04-18.md#L271) row). IN-12 spot-check flagged `assumption-mapping` step-01 as introducing ~10 novel concepts in a single round, suggesting Vortex is systematically weaker on Right to pacing than lean-persona indicated. If confirmed under §2.6 glossary, Vortex may trip T1 on Right to pacing (N=4, ≥3 FAILs → 75% fail → trigger fires).
+
+This is a hypothesis, not a prediction. The audit executes the methodology and reports the result — even if Vortex passes, the N ≥ 3 floor for T1 evaluation is the primary deliverable.
+
+### Downstream Consumers
+
+- **Epic 2 §Retrofit Trigger Rule ([v1 baseline line 367](../planning-artifacts/convoke-epic-operator-covenant.md#L367)):** baseline updates from "v1 oc-1-1 (N_vortex = 1, T1-invalid)" to "v2 post-A24 (N_vortex ≥ 4, T1-valid)". This is the *primary* consumer regardless of outcome.
+- **Epic 2 Story 2.1:** if any Vortex × Right cell trips T1, that cell becomes in-scope retrofit. Escalation path: report §Implications → sprint-planning on Epic 2.
+- **Operator Covenant external publication (Epic 2 Story 2.3):** Publication Gate evaluates against the refreshed matrix; a T1-valid Vortex row is required before publication.
+
+### Anti-Patterns to AVOID
+
+- ❌ Do NOT modify §2.4 rubric or §2.6 glossary — this is a re-run, not a methodology revision. Rubric ambiguities go to backlog as intakes.
+- ❌ Do NOT audit only Right to pacing — all 7 rights must be scored to prevent cherry-pick bias and to keep the Vortex row commensurable with oc-1-1 §7.
+- ❌ Do NOT re-score `lean-persona` — carry its oc-1-1 §7 verdicts forward unchanged. If carrying forward surfaces a drift concern, log as backlog intake.
+- ❌ Do NOT use partial-credit language in evidence notes — rejected in oc-1-1 Round 3 ("residual partial-credit language in some evidence notes" was deferred).
+- ❌ Do NOT conflate this audit with a full re-audit of the 6-skill oc-1-1 matrix — scope is Vortex-team-only expansion; Migration, Portfolio, export-skill, validate-exports, Loom add-team, enhance-backlog, Gyre stack-detection are **not** re-audited.
+
+### Conflict-of-Interest Disclosure
+
+If the auditor has materially authored or edited any of the three Vortex workflows selected, the report must disclose this in a §COI section (pattern: oc-1-1 §6 enhance-backlog disclosure). This does not invalidate the audit, but reviewers reading the T1 verdict should know.
+
+### Output File
+
+```
+_bmad-output/
+└── planning-artifacts/
+    └── convoke-report-operator-covenant-audit-vortex-YYYY-MM-DD.md  # THIS STORY creates this file
+```

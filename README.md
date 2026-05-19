@@ -1,729 +1,542 @@
-# BMAD-Odoo - User Guide
+<div align="center">
 
-[![npm version](https://img.shields.io/npm/v/bmad-odoo.svg)](https://www.npmjs.com/package/bmad-odoo)
-[![npm downloads](https://img.shields.io/npm/dm/bmad-odoo.svg)](https://www.npmjs.com/package/bmad-odoo)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+```
+ ██████╗ ██████╗ ███╗   ██╗██╗   ██╗ ██████╗ ██╗  ██╗███████╗
+ ██╔════╝██╔═══██╗████╗  ██║██║   ██║██╔═══██╗██║ ██╔╝██╔════╝
+ ██║     ██║   ██║██╔██╗ ██║██║   ██║██║   ██║█████╔╝ █████╗
+ ██║     ██║   ██║██║╚██╗██║╚██╗ ██╔╝██║   ██║██╔═██╗ ██╔══╝
+ ╚██████╗╚██████╔╝██║ ╚████║ ╚████╔╝ ╚██████╔╝██║  ██╗███████╗
+ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝   ╚═════╝ ╚═╝  ╚═╝╚══════╝
+                Agent teams for complex systems
+```
 
-> **BMAD Framework extension for Odoo ERP development**
+[![Teams](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.teams&label=teams&color=blueviolet)](#teams)
+[![Agents](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.agents&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.workflows&label=workflows&color=success)](docs/agents.md)
+[![Skills](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.skills&label=skills&color=orange)](_bmad/_config/skill-manifest.csv)
+[![Version](https://img.shields.io/npm/v/convoke-agents?color=blue&label=version)](https://www.npmjs.com/package/convoke-agents)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+</div>
+
+Convoke extends AI agents with two types of installable modules: **Teams** bring new agents for a domain, **Skills** add new capabilities to existing agents. Install them independently or combine them.
+
+> **Authoring a Convoke skill?** Required reading first: [The Convoke Operator Covenant](_bmad-output/planning-artifacts/convoke-covenant-operator.md) — one axiom and seven Operator Rights every Convoke skill must honor. The Covenant exists because operator-facing UX is an architectural concern in agent systems, not a styling concern; skills that violate it erode operator trust across the skill ecosystem, not just on their own surface.
+
+| Team | Domain |
+|------|--------|
+| **Vortex** | Product discovery — from user insight to evidence-based decisions |
+| **Gyre** | Production readiness — from stack detection to gap analysis |
+
+### What's New in 3.3
+
+- **Convoke Operator Covenant** — one axiom ("*the operator is the resolver*") and seven Operator Rights every Convoke skill must honor. Reproducibility-validated governance contract with a published baseline audit and Compliance Checklist.
+- **Opt out of agents you don't need** — new `excluded_agents: []` field in Vortex and Gyre configs; `convoke-update` honors exclusions end-to-end. Non-breaking.
+- **Update-time changelog surfacing** — `convoke-update` shows "What's New" before confirming the refresh.
+- See the [CHANGELOG](CHANGELOG.md) for the full release details
 
 ---
 
-## 📋 Table of Contents
+## Vortex — Product Discovery Team
 
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Detailed Guide](#-detailed-guide)
-4. [Common Commands](#-common-commands)
-5. [Use Cases](#-use-cases)
-6. [Configuration](#configuration)
-7. [Agents](#agents)
-8. [Workflows](#workflows)
-9. [Work Process](#work-process)
-10. [Directory Structure](#directory-structure)
-11. [Troubleshooting](#-troubleshooting)
-12. [FAQ](#-faq)
-13. [References](#references)
+**Specialist agents guide you from insight to evidence and back again — a continuous discovery loop, not a one-shot checklist**
+
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_vortex/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_vortex/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
+
+Vortex guides you through seven discovery streams — from understanding your users to interpreting production signals — so you can make evidence-based decisions before, during, and after you build. Each stream builds on the previous one's findings, and when gaps appear, the system routes you back to fill them.
+
+```
+                         7 Streams · 7 Agents
+
+  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
+  │     Isla    │──▶│     Mila    │──▶│     Liam    │──▶│     Wade    │
+  │  Empathize  │   │ Synthesize  │   │ Hypothesize │   │ Externalize │
+  └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘
+         ▲                                                       │
+         │                                                       │
+         │                                                       ▼
+  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐            │
+  │     Emma    │◀──│     Max     │◀──│     Noah    │◀───────────┘
+  │Contextualize│   │ Systematize │   │  Sensitize  │
+  └─────────────┘   └─────────────┘   └─────────────┘
+         │                 │                 │
+         └─────────────────┴─────────────────┘
+          ▶ Start at Emma · back to any stream
+```
+
+*Each workflow ends with a Compass routing to whichever stream needs attention — you can start or return to any agent.*
+
+| Agent | Stream | What they do |
+|-------|--------|-------------|
+| **Emma** 🎯 | Contextualize | Frame the right problem — personas, product vision, scope |
+| **Isla** 🔍 | Empathize | Understand users — empathy maps, interviews, discovery research |
+| **Mila** 🔬 | Synthesize | Converge research into clear problem definitions |
+| **Liam** 💡 | Hypothesize | Turn problems into testable hypotheses and experiments |
+| **Wade** 🧪 | Externalize | Test assumptions with MVPs, experiments, and prototypes |
+| **Noah** 📡 | Sensitize | Interpret production signals, user behavior, and engagement patterns |
+| **Max** 🧭 | Systematize | Capture learnings and decide: pivot, patch, or persevere |
+
+<details>
+<summary>22 Vortex Workflows</summary>
+
+- Assumption Mapping
+- Behavior Analysis
+- Contextualize Scope
+- Empathy Map
+- Experiment Design
+- Hypothesis Engineering
+- Lean Experiment
+- Lean Persona
+- Learning Card
+- MVP
+- Pattern Mapping
+- Pivot Patch Persevere
+- Pivot Resynthesis
+- Product Vision
+- Production Monitoring
+- Proof of Concept
+- Proof of Value
+- Research Convergence
+- Signal Interpretation
+- User Discovery
+- User Interview
+- Vortex Navigation
+
+</details>
+
+### What Agents Produce
+
+Here's a sample of real output from a busy parents meal planning project — each excerpt is from the [full 7-agent journey example](_bmad-output/journey-examples/busy-parents-7-agent-journey.md).
+
+#### Emma 🎯 Contextualize
+
+Emma frames the right problem. Here's the Job-to-be-Done she produced:
+
+> **Job-to-be-Done:** Eliminate the daily 5:30 PM dinner decision so I can feed my family well without the mental load of planning, shopping, and deciding under time pressure.
+>
+> **Riskiest Assumptions:**
+> 1. Decision fatigue — not cooking skill or ingredient access — is the primary barrier to weeknight dinner success
+> 2. Parents would trust and act on an externally-provided dinner suggestion rather than needing to choose themselves
+> 3. "Good enough" nutrition is an acceptable standard — parents aren't seeking perfection, they're seeking relief from guilt
+
+#### Liam 💡 Hypothesize
+
+Liam turns problems into testable ideas. Here's one of three hypotheses he produced:
+
+> **Hypothesis 1: The Pre-Commute Decision Eliminator**
+>
+> We believe that busy parents will act on a single dinner suggestion delivered at 4:00 PM within 3 minutes because the decision burden — not cooking — is their primary barrier, and an earlier intervention catches them before the anxiety spiral begins.
+>
+> **Riskiest Assumption:** Parents will trust and act on an automated suggestion without second-guessing. Research shows they want "someone to tell me what to make" — but "someone" may need to be a trusted person, not an algorithm.
+
+#### Max 🧭 Systematize
+
+Max captures what you learned and decides what to do next:
+
+> **Recommendation: PATCH** (iterate on timing, don't pivot direction)
+>
+> The core hypothesis is validated. The product direction (decision elimination via single suggestion) is correct. The timing mechanism needs refinement — shift from fixed 4:00 PM delivery to adaptive delivery based on each user's observed engagement pattern.
+>
+> **Three Actions:**
+> 1. **Implement adaptive timing** — shift the push notification to match each user's observed engagement window.
+> 2. **Route to Isla for timing investigation** — qualitative research on why users engage at 3:15 PM. Is it anxiety relief, logistical planning, or habit?
+> 3. **Test willingness to pay immediately** — the mechanism works, but we have no commercial validation. Run a landing page test with pricing before further product investment.
+
+**[See the full 7-agent journey example →](_bmad-output/journey-examples/busy-parents-7-agent-journey.md)**
+
+For detailed workflow descriptions, see the [Agent Guide](docs/agents.md) and individual user guides: [Emma](_bmad/bme/_vortex/guides/EMMA-USER-GUIDE.md) | [Isla](_bmad/bme/_vortex/guides/ISLA-USER-GUIDE.md) | [Mila](_bmad/bme/_vortex/guides/MILA-USER-GUIDE.md) | [Liam](_bmad/bme/_vortex/guides/LIAM-USER-GUIDE.md) | [Wade](_bmad/bme/_vortex/guides/WADE-USER-GUIDE.md) | [Noah](_bmad/bme/_vortex/guides/NOAH-USER-GUIDE.md) | [Max](_bmad/bme/_vortex/guides/MAX-USER-GUIDE.md)
 
 ---
 
-## Introduction
+## Gyre — Production Readiness Team
 
-**BMAD-Odoo** is an extended framework from BMAD (Brian's Method for AI Development), specifically customized for Odoo ERP development and deployment.
+**Specialist agents assess whether your project is ready to ship — detect your stack, model what "ready" means, find what's missing, and refine together**
 
-### Key Features
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_gyre/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_gyre/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
 
-- 🤖 **10 AI Agents** specialized for each role in Odoo projects
-- 📝 **44 Workflows** covering the entire development lifecycle
-- 🇻🇳 **Full Vietnamese support**
-- 📚 **Knowledge Base** with integrated Odoo knowledge
-- ⚙️ **Auto-setup** automatically configures workflows on installation
+Most teams ship to production without knowing if they're actually ready — missing SLOs, incomplete observability, unreviewed deployment strategies. Gyre analyzes your project's filesystem, builds a capabilities model tailored to your specific tech stack, and surfaces what's absent. No generic checklists — every finding is contextual to your project.
+
+```
+                    4 Agents · 4 Contracts
+
+  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
+  │    Scout    │──▶│    Atlas    │──▶│    Lens     │──▶│    Coach    │
+  │   Detect    │   │   Model     │   │   Analyze   │   │   Review    │
+  │   Stack     │   │   Capabil.  │   │   Gaps      │   │   Refine    │
+  └─────────────┘   └──────▲──────┘   └─────────────┘   └──────┬──────┘
+                           │                                   │
+                           └────────────── GC4 ────────────────┘
+                                       feedback
+```
+
+*Linear pipeline with a feedback loop. Coach amendments feed back to Atlas — the model improves with every review.*
+
+| Agent | Role | What they do |
+|-------|------|-------------|
+| **Scout** 🔎 | Detect | Scan filesystem artifacts to classify your tech stack — language, containers, CI/CD, observability, cloud provider |
+| **Atlas** 📐 | Model | Generate a capabilities manifest using industry standards (DORA, OpenTelemetry, Google PRR) and web search |
+| **Lens** 🔬 | Analyze | Compare capabilities against what actually exists — surface absences, compound risks, severity-prioritized findings |
+| **Coach** 🏋️ | Review | Walk through findings conversationally — amend the model, capture feedback, track progress over time |
+
+<details>
+<summary>7 Gyre Workflows</summary>
+
+- Full Analysis (end-to-end pipeline)
+- Stack Detection
+- Model Generation
+- Gap Analysis
+- Model Review
+- Delta Report
+- Accuracy Validation
+
+</details>
+
+### What Gyre Produces
+
+Gyre writes structured artifacts to `.gyre/` in your project root — safe to commit, containing technology categories only (no file contents, paths, or secrets):
+
+- **Stack Profile** (`.gyre/stack-profile.yaml`) — classified tech stack with detection confidence
+- **Capabilities Manifest** (`.gyre/capabilities.yaml`) — 20+ capabilities across observability, deployment, reliability, and security
+- **Findings Report** (`.gyre/findings.yaml`) — absence-based findings tagged by severity, confidence, and source
+- **Feedback Log** (`.gyre/feedback.yaml`) — team amendments that persist and improve the model over time
+
+**Three modes:** *Crisis* (first run, full pipeline), *Anticipation* (re-analysis with cached model), *Regeneration* (fresh model rebuild).
+
+**Delta tracking:** Run Gyre after making improvements to see what you've resolved — findings are tagged [NEW], [CARRIED], or resolved.
+
+User guides: [Scout](_bmad/bme/_gyre/guides/SCOUT-USER-GUIDE.md) | [Atlas](_bmad/bme/_gyre/guides/ATLAS-USER-GUIDE.md) | [Lens](_bmad/bme/_gyre/guides/LENS-USER-GUIDE.md) | [Coach](_bmad/bme/_gyre/guides/COACH-USER-GUIDE.md)
 
 ---
 
-## Installation
+## Extending Convoke
 
-### Requirements
+### Team Factory
 
-- Node.js 18+
-- Odoo 16.0+ or 17.0
-- Supported AI IDE (Antigravity/Gemini, Cursor, VS Code, Windsurf)
+Create fully-wired, BMAD-compliant teams through a guided workflow — zero post-creation fixes.
 
-### Method 1: Install from NPM (Recommended)
+```
+/bmad-team-factory
+```
+
+The factory guides you through composition pattern selection (Independent or Sequential), agent scope definition with overlap detection, contract design, and integration wiring. Decision state is persisted as a spec file for resume and express mode. Output passes the same validation as native teams.
+
+Three capabilities:
+- **Create Team** — build a new team from scratch with full integration
+- **Add Agent** — extend an existing team with a new agent
+- **Add Skill** — give an existing agent a new workflow
+
+### Portability — Export Skills Anywhere
+
+Take any BMAD skill and export it to a standalone, LLM-agnostic format that works outside Claude Code:
 
 ```bash
-# In your Odoo project directory
-npm install bmad-odoo
+npx convoke-export bmad-brainstorming --output ./exported
 ```
 
-**Post-install behavior:**
+The export engine transforms skill workflows into self-contained instruction documents, then generates platform-specific adapter files:
 
-- **Interactive terminal**: Automatically prompts for IDE selection
-- **Non-interactive (CI/CD)**: Auto-setup with Antigravity (default)
-- **Manual setup**: Run `npx bmad-odoo-setup` anytime
+| Platform | Adapter output (written inside the export target) |
+|----------|---------------|
+| Claude | `{target}/CLAUDE.md` commands |
+| GitHub Copilot | `{target}/.github/copilot-instructions.md` |
+| Cursor | `{target}/.cursor/rules/` |
+
+Skills are classified by tier: **standalone** skills export cleanly, **light-deps** skills include dependency notes, and **pipeline** skills (multi-step orchestration) are flagged as non-portable.
+
+Four skills support the workflow: `bmad-export-skill` (export), `bmad-validate-exports` (validate), `bmad-generate-catalog` (catalog README), `bmad-seed-catalog` (full catalog repo).
+
+### Enhance — Agent Skills
+
+Skills give existing agents new workflows — installed via menu patching, not agent modification. The first skill adds RICE-scored backlog management to the PM agent:
 
 ```
-Choose your IDE:
-  1. VS Code          - Visual Studio Code with AI extensions
-  2. Cursor           - Cursor AI IDE
-  3. Antigravity      - Google Gemini Antigravity Agent
-  4. Windsurf         - Windsurf AI IDE
-  5. All              - Setup for all IDEs
+                    Initiatives Backlog
 
-Enter number (1-5) [default: 3]:
+  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
+  │  [T] Triage │   │  [R] Review │   │  [C] Create │
+  │  Ingest new │   │   Rescore   │   │  Bootstrap  │
+  │  findings   │   │  existing   │   │ from scratch│
+  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘
+         │                 │                 │
+         ▼                 ▼                 ▼
+  ┌──────────────────────────────────────────────────┐
+  │          initiatives-backlog.md                  │
+  │   RICE-scored · Categorized · Change-tracked     │
+  └──────────────────────────────────────────────────┘
 ```
 
-**Package will automatically create:**
-- ✅ `_bmad-odoo/` directory (symlink or copy from `node_modules/`)
-- ✅ `_bmad-odoo-output/` directory with subdirectory structure for artifacts
-- ✅ Workflows in `.agent/workflows/` (or your chosen IDE)
-- ✅ Slash commands: `/analyst`, `/dev`, `/pm`, ...
+Activate from the PM agent menu or directly: `/bmad-enhance-initiatives-backlog`
 
-### Re-run Setup (if needed)
-
-```bash
-# If you want to change IDE or re-setup
-npx bmad-odoo-setup
-```
-
-### Method 2: Manual Installation
-
-```bash
-# Clone repository
-git clone https://github.com/phamdungtk/bmad-odoo.git
-
-# Copy to node_modules
-cp -r bmad-odoo node_modules/
-
-# Run setup
-cd bmad-odoo
-npm run setup
-```
+The [Enhance Guide](_bmad/bme/_enhance/guides/ENHANCE-GUIDE.md) documents the complete pattern for building your own skills.
 
 ---
 
+## Quick Start
 
-## Configuration
+### Prerequisites
 
-### Main Configuration File
+- Node.js 18+ or Bun
+- Git
+- Claude Code or Claude.ai
 
-Edit the `bmm/config.yaml` file:
+### Install
 
-```yaml
-# User information
-user_name: "Your Name"
-communication_language: "Vietnamese"
-
-# Output directory
-output_folder: "_bmad-odoo-output"
-planning_artifacts: "_bmad-odoo-output/planning"
-implementation_artifacts: "_bmad-odoo-output/implementation"
-
-# Odoo configuration
-odoo:
-  version: "17.0"
-  edition: "community"           # community or enterprise
-  customModulesPath: "addons_custom"
-  oca_path: "addons_oca"
-```
-
----
-
-## 🚀 Detailed Guide
-
-### Step 1: Install Package
+**Everything (Vortex + Gyre):**
 
 ```bash
-# Navigate to your Odoo project directory
-cd D:\MyOdooProject
-
-# Initialize package.json if not already present
-npm init -y
-
-# Install bmad-odoo
-npm install bmad-odoo
+npm install convoke-agents@latest
+npx convoke-install
 ```
 
-**Result:**
-```
-+ bmad-odoo@1.0.0
-added 1 package
-```
-
-### Step 2: Interactive Setup (Automatic)
-
-Right after installation, **post-install script will run automatically**:
-
-```
-╔════════════════════════════════════════════════════════════╗
-║          🚀 BMAD-Odoo Interactive Setup                     ║
-╚════════════════════════════════════════════════════════════╝
-
-Choose your IDE:
-
-  1. VS Code          - Visual Studio Code with AI extensions
-  2. Cursor           - Cursor AI IDE
-  3. Antigravity      - Google Gemini Antigravity Agent
-  4. Windsurf         - Windsurf AI IDE
-  5. All              - Setup for all IDEs
-
-Enter number (1-5) [default: 3]:
-```
-
-**Enter number and press Enter:**
-```bash
-3  # Choose Antigravity (or your IDE)
-```
-
-### Step 3: Setup Process (Automatic)
-
-Script will automatically execute:
-
-```
-📌 Selected: Antigravity (Gemini)
-
-[1/3] Creating _bmad-odoo directory...
-✅ Created symlink: _bmad-odoo -> node_modules/bmad-odoo
-
-[2/3] Creating _bmad-odoo-output directory...
-✅ Created: _bmad-odoo-output/
-
-[3/3] Creating workflow files...
-✅ Created 10 workflows for Antigravity (Gemini)
-
-╔════════════════════════════════════════════════════════════╗
-║          ✅ BMAD-Odoo Setup Complete!                       ║
-╚════════════════════════════════════════════════════════════╝
-```
-
-### Step 4: Verify Created Structure
+**Vortex only:**
 
 ```bash
-# Check project directory
-ls -la
+npm install convoke-agents@latest
+npx convoke-install-vortex
 ```
 
-**Structure after setup:**
-```
-MyOdooProject/
-├── node_modules/
-│   └── bmad-odoo/          # Original package from npm
-├── _bmad-odoo/             # ✨ Symlink/copy for easy access
-├── _bmad-odoo-output/      # ✨ Output directory for artifacts
-│   ├── planning-artifacts/
-│   ├── implementation-artifacts/
-│   ├── test-artifacts/
-│   └── documentation/
-├── .agent/                 # ✨ Workflows for Antigravity
-│   └── workflows/
-│       ├── bmad-odoo-agents-analyst.md
-│       ├── bmad-odoo-agents-architect.md
-│       ├── bmad-odoo-agents-dev.md
-│       ├── bmad-odoo-agents-pm.md
-│       ├── bmad-odoo-agents-sm.md
-│       ├── bmad-odoo-agents-tea.md
-│       ├── bmad-odoo-agents-ux-designer.md
-│       ├── bmad-odoo-agents-quick-flow-solo-dev.md
-│       ├── bmad-odoo-agents-tech-writer.md
-│       └── bmad-odoo-workflows-party-mode.md
-└── package.json
-```
-
-### Step 5: Using Agents
-
-Open your AI IDE (Antigravity/Gemini, Cursor, etc.) and type:
+**Gyre only:**
 
 ```bash
-/analyst          # Activate Business Analyst (Sofia)
-/architect        # Activate Technical Architect (Antonio)
-/dev              # Activate Developer (Carlos)
-/pm               # Activate Product Manager (Maria)
-/sm               # Activate Scrum Master (Diego)
-/tea              # Activate Test Architect (Elena)
-/ux-designer      # Activate UX Designer (Sally)
-/quick-flow-solo-dev  # Activate Quick Flow Dev (Barry)
-/tech-writer      # Activate Tech Writer (Paige)
+npm install convoke-agents@latest
+npx convoke-install-gyre
 ```
 
----
+Something not working? Run `npx convoke-doctor` or check the [FAQ](docs/faq.md).
 
-## 🔧 Common Commands
+### Personalize
 
-### Re-run Setup (Change IDE or Add IDE)
+Open `_bmad/bme/_vortex/config.yaml` (or `_bmad/bme/_gyre/config.yaml`) and replace `{user}` with your name. Agents use this to personalize their interactions.
 
-If you want to:
-- Switch to another IDE
-- Add workflows for new IDE
-- Re-setup from scratch
+### Activate an Agent
+
+**Claude Code (skills)**
+
+```
+# Vortex
+/bmad-agent-bme-contextualization-expert          # Emma  🎯
+/bmad-agent-bme-discovery-empathy-expert          # Isla  🔍
+/bmad-agent-bme-research-convergence-specialist   # Mila  🔬
+/bmad-agent-bme-hypothesis-engineer               # Liam  💡
+/bmad-agent-bme-lean-experiments-specialist        # Wade  🧪
+/bmad-agent-bme-production-intelligence-specialist # Noah  📡
+/bmad-agent-bme-learning-decision-expert           # Max   🧭
+
+# Gyre
+/bmad-agent-bme-stack-detective                    # Scout 🔎
+/bmad-agent-bme-model-curator                      # Atlas 📐
+/bmad-agent-bme-readiness-analyst                  # Lens  🔬
+/bmad-agent-bme-review-coach                       # Coach 🏋️
+```
+
+**Claude Code (terminal) / Other AI assistants**
 
 ```bash
-# Run interactive setup
-npx bmad-odoo-setup
+# Vortex
+cat _bmad/bme/_vortex/agents/contextualization-expert.md    # Emma  🎯
+# ... (see user guides for full list)
 
-# Or
-npm run setup
+# Gyre
+cat _bmad/bme/_gyre/agents/stack-detective.md               # Scout 🔎
+cat _bmad/bme/_gyre/agents/model-curator.md                 # Atlas 📐
+cat _bmad/bme/_gyre/agents/readiness-analyst.md             # Lens  🔬
+cat _bmad/bme/_gyre/agents/review-coach.md                  # Coach 🏋️
 ```
 
-**Script will ask for IDE again and create workflows for it.**
+**Claude.ai** — Open any agent file and paste its contents into your conversation.
 
-### View Package Information
+**How activation works:** Each agent is a markdown file containing a full persona, menu system, and workflow instructions. When Claude reads the file, it adopts that agent's expertise and presents you with an interactive menu. Pick a workflow from the menu and follow the guided steps.
 
-```bash
-# View installed version
-npm list bmad-odoo
+### Your First 15 Minutes
 
-# View information from npm
-npm view bmad-odoo
+1. **Personalize** — edit the config.yaml for your chosen team and replace `{user}` with your name
+2. **Pick a starting point:**
+   - **Vortex:** Activate Emma → select **Lean Persona** from the menu → follow the guided steps
+   - **Gyre:** Activate Scout → select **Full Analysis** from the menu → walk through the pipeline
+3. **Find your artifact** — outputs are saved in `_bmad-output/vortex-artifacts/` or `.gyre/`
+4. **Follow the Compass** — each workflow ends with a routing suggestion for which agent to use next
 
-# View all available versions
-npm view bmad-odoo versions
-```
-
-### Update Package
-
-```bash
-# Update to latest version
-npm update bmad-odoo
-
-# Or reinstall with specific version
-npm install bmad-odoo@latest
-```
-
-### Remove and Reinstall
-
-```bash
-# Remove package and created directories
-npm uninstall bmad-odoo
-rm -rf _bmad-odoo _bmad-odoo-output .agent/workflows
-
-# Reinstall
-npm install bmad-odoo
-```
-
----
-
-## 💡 Use Cases
-
-### Case 1: Developing New Odoo Module
-
-```bash
-# 1. Install bmad-odoo
-npm install bmad-odoo
-
-# 2. Activate Business Analyst to analyze requirements
-/analyst
-> AP  # Choose [AP] Analyze Process
-
-# 3. Activate Architect for design
-/architect
-> CO  # Choose [CO] Create Odoo Addon
-
-# 4. Activate Developer to code
-/dev
-> DS  # Choose [DS] Dev Story
-```
-
-### Case 2: Team Setup (Multi-IDE)
-
-```bash
-# Install package
-npm install bmad-odoo
-
-# During setup, choose option 5 (All)
-# Script will create workflows for:
-# - VS Code (.vscode/workflows/)
-# - Cursor (.cursor/workflows/)
-# - Antigravity (.agent/workflows/)
-# - Windsurf (.windsurf/workflows/)
-
-# Team members using different IDEs can all work
-```
-
-### Case 3: CI/CD Integration
-
-If installing in CI/CD (non-interactive):
-
-```bash
-# Script will automatically choose Antigravity (default)
-npm install bmad-odoo
-
-# Or set environment variable (if supported later)
-BMAD_IDE=cursor npm install bmad-odoo
-```
-
----
-
-## Configuration
-
-### Main Configuration File
-
-Edit the `_bmad-odoo/bmm/config.yaml` file:
-
-```yaml
-# User information
-user_name: "Your Name"
-communication_language: "Vietnamese"
-
-# Output directory
-output_folder: "_bmad-odoo-output"
-planning_artifacts: "_bmad-odoo-output/planning-artifacts"
-implementation_artifacts: "_bmad-odoo-output/implementation-artifacts"
-
-# Odoo configuration
-odoo:
-  version: "17.0"
-  edition: "community"           # community or enterprise
-  customModulesPath: "addons_custom"
-  oca_path: "addons_oca"
-```
-
----
-
-## Agents
-
-### Agent List
-
-| Agent | Name | Role | Slash Command |
-|-------|------|------|---------------|
-| 💼 Sofia | Business Analyst | Process analysis, gap analysis | `/analyst` |
-| 🏗️ Antonio | Technical Architect | Module architecture design | `/architect` |
-| 💻 Carlos | Developer | Odoo code development | `/dev` |
-| 📊 Maria | Product Manager | Product management, PRD creation | `/pm` |
-| 🏃 Diego | Scrum Master | Sprint, story management | `/sm` |
-| 🧪 Elena | Test Architect | Test case design | `/tea` |
-| 🎨 Sally | UX Designer | UX design for Odoo views | `/ux-designer` |
-| ⚡ Barry | Quick Flow Dev | Rapid development | `/quick-flow-solo-dev` |
-| 📝 Paige | Tech Writer | Module documentation | `/tech-writer` |
-| 🎯 Master | BMAD-Odoo Master | Overall coordination | (auto) |
-
-### How to Activate Agent
+### What Gets Installed
 
 ```
-/analyst    # Activate Sofia - Business Analyst
-/dev        # Activate Carlos - Developer
-/pm         # Activate Maria - Product Manager
+your-project/
+├── _bmad/bme/
+│   ├── _vortex/              # Team: Product Discovery
+│   │   ├── agents/           # 7 agent definition files
+│   │   ├── workflows/        # 22 workflows
+│   │   ├── contracts/        # Handoff contracts (HC1-HC5 artifact, HC6-HC10 routing)
+│   │   ├── guides/           # User guides (all 7 agents)
+│   │   └── config.yaml       # Configuration
+│   ├── _gyre/                # Team: Production Readiness
+│   │   ├── agents/           # 4 agent definition files
+│   │   ├── workflows/        # 7 workflows
+│   │   ├── contracts/        # Artifact contract schemas (GC1-GC4)
+│   │   ├── guides/           # User guides (all 4 agents)
+│   │   └── config.yaml       # Configuration
+│   ├── _enhance/             # Skill: Agent Capability Upgrades
+│   │   ├── workflows/        # Skill workflows (initiatives-backlog)
+│   │   ├── extensions/       # Agent menu patch descriptors
+│   │   ├── guides/           # Module author guide
+│   │   └── config.yaml       # Configuration
+│   ├── _portability/         # Skill: Export skills to other platforms
+│   │   └── skills/           # Export, validate, catalog, seed workflows
+│   ├── _team-factory/        # Skill: Create new BMAD-compliant teams
+│   │   └── lib/              # Factory generators and validators
+│   └── _artifacts/           # Skill: Artifact governance & portfolio
+│       └── workflows/        # Migrate artifacts, portfolio status
+└── _bmad-output/
+    ├── vortex-artifacts/     # Vortex generated artifacts
+    └── gyre-artifacts/       # Gyre generated artifacts
 ```
 
 ---
 
-## Workflows
+## How It Fits with BMAD Core
 
-### Workflow Categories
+Convoke handles **discovery, validation, and readiness**. BMAD Core handles **implementation**.
 
-#### 1. Analysis
-| Workflow | Description |
+```
+Convoke Modules                            BMAD Core
+┌──────────────────────────────┐          ┌──────────────────────┐
+│ Teams                        │          │                      │
+│   Vortex (Product Discovery) │ ──────>  │ PM → Architect → Dev │
+│   Gyre (Prod. Readiness)     │ <──────  │ "Let's build it"     │
+│                              │          │                      │
+│ Skills                       │  signals │                      │
+│   Enhance (Agent Upgrades)   │ ──────>  │                      │
+│                              │          │                      │
+└──────────────────────────────┘          └──────────────────────┘
+```
+
+Teams and Skills are peer module types — both installable, both independent. Convoke works standalone or as an extension — no BMAD Method installation required.
+
+---
+
+## Updating
+
+```bash
+npm install convoke-agents@latest         # Get the latest package
+npx convoke-version                       # Check current version
+npx convoke-update --dry-run              # Preview changes
+npx convoke-update                        # Apply update (auto-backup)
+npx convoke-doctor                        # Diagnose issues
+```
+
+Your data in `_bmad-output/` and `.gyre/` is never touched. Automatic backups are created before every update.
+
+> **Important:** `npm install convoke-agents` (without `@latest`) won't cross major version boundaries. If you're on v2.x, you must use `npm install convoke-agents@latest` to get v3.x.
+
+See [UPDATE-GUIDE.md](UPDATE-GUIDE.md) for migration paths and troubleshooting.
+
+---
+
+## Documentation
+
+| Document | Description |
 |----------|-------------|
-| `analyze-process` | Analyze Odoo business processes |
-| `gap-analysis` | Requirements gap analysis |
-| `create-product-brief` | Create Product Brief |
-| `create-odoo-product-brief` | Create Product Brief for Odoo |
-| `research` | Market/technical research |
-
-#### 2. Planning
-| Workflow | Description |
-|----------|-------------|
-| `create-odoo-addon` | Design new Odoo Addon |
-| `create-odoo-epic` | Create development Epic |
-| `create-odoo-prd` | Create Odoo PRD |
-| `create-odoo-ux-design` | Design Odoo views UX |
-| `plan-odoo-migration` | Plan migration |
-| `create-ux-design` | Create general UX design |
-| `prd` | Create Product Requirements Doc |
-
-#### 3. Solutioning
-| Workflow | Description |
-|----------|-------------|
-| `create-architecture` | Design architecture |
-| `create-epics-and-stories` | Create Epics & Stories |
-| `check-implementation-readiness` | Check implementation readiness |
-| `enhance-existing-system` | Enhance existing system |
-| `quick-addon` | Quick addon creation |
-
-#### 4. Implementation
-| Workflow | Description |
-|----------|-------------|
-| `dev-story` | Execute Dev Story |
-| `code-review` | Code review |
-| `create-next-story` | Create next Story |
-| `rapid-brownfield` | Rapid brownfield development |
-| `sprint-planning` | Sprint planning |
-| `sprint-status` | Sprint status |
-| `correct-course` | Course correction |
-| `retrospective` | Retrospective meeting |
-
-#### 5. Testing
-| Workflow | Description |
-|----------|-------------|
-| `odoo-test-design` | Odoo test design |
-| `test-design` | Test design |
-| `test-review` | Test review |
-| `automate` | Test automation |
-
-#### 6. Documentation
-| Workflow | Description |
-|----------|-------------|
-| `document-odoo` | Document Odoo module |
-| `document-project` | Document project |
-| `generate-project-context` | Generate project context |
+| [Agent Guide](docs/agents.md) | Detailed agent descriptions, workflows, and positioning |
+| [BMAD Compatibility](docs/BMAD-METHOD-COMPATIBILITY.md) | Compatibility matrix with BMAD Method versions |
+| [Testing](docs/testing.md) | Automated test suite, CI pipeline, and agent test results |
+| [Development Guide](docs/development.md) | Architecture, building agents, and contributing |
+| [FAQ](docs/faq.md) | Common questions about the framework |
+| [CHANGELOG](CHANGELOG.md) | Complete version history |
+| [UPDATE-GUIDE](UPDATE-GUIDE.md) | Migration paths and update troubleshooting |
 
 ---
 
-## Work Process
+## Roadmap
 
-### New Odoo Addon Development Process
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    DEVELOPMENT PROCESS                       │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  1. ANALYSIS                                                │
-│     └─▶ /analyst → [AP] Analyze process                    │
-│     └─▶ /analyst → [GA] Gap Analysis                       │
-│                                                              │
-│  2. PLANNING                                                │
-│     └─▶ /pm → [OPB] Create Odoo Product Brief              │
-│     └─▶ /pm → [OPR] Create Odoo PRD                        │
-│     └─▶ /pm → [CE] Create Epic                             │
-│                                                              │
-│  3. DESIGN                                                  │
-│     └─▶ /architect → [CO] Design Addon                     │
-│     └─▶ /ux-designer → [OUX] Design UX Views               │
-│                                                              │
-│  4. IMPLEMENTATION                                          │
-│     └─▶ /sm → [CS] Create Story                            │
-│     └─▶ /dev → [DS] Dev Story                              │
-│     └─▶ /dev → [CR] Code Review                            │
-│                                                              │
-│  5. TESTING                                                 │
-│     └─▶ /tea → [OTD] Design Odoo Test                      │
-│                                                              │
-│  6. DOCUMENTATION                                           │
-│     └─▶ /tech-writer → [OD] Document Odoo Module           │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Example: Analyzing Sales Process
-
-```bash
-# Step 1: Activate Business Analyst
-/analyst
-
-# Step 2: Choose menu [AP] Analyze process
-> AP
-
-# Step 3: Workflow will guide through steps:
-#   - Gather basic information
-#   - Analyze current state
-#   - Identify pain points
-#   - Map to Odoo modules
-#   - Propose solutions
-```
+- **v1.x** — Vortex foundation: 7 agents, 22 workflows, update system, CI/CD
+- **v2.0** — Product renamed to Convoke. CLI commands: `convoke-*`. Package: `convoke-agents`
+- **v2.x** — Enhance module (Skills architecture, RICE initiatives-backlog), Gyre team (production readiness, 4 agents), Team Factory
+- **v3.x** — Artifact governance, portfolio intelligence, portability system (export to Claude/Copilot/Cursor), 1,123 tests
+- **Next** — Forge (domain knowledge extraction for enterprise brownfield engagements)
+- **Future** — Additional teams, Forge-Gyre integration, cross-team workflows
 
 ---
 
-## Directory Structure
+## Contributing
 
-```
-_bmad-odoo/
-├── _config/                    # Manifest files
-│   ├── agent-manifest.csv
-│   └── workflow-manifest.csv
-├── bmm/                        # BMAD Method Materials
-│   ├── agents/                 # 9 Agent definitions
-│   │   ├── analyst.md
-│   │   ├── architect.md
-│   │   ├── dev.md
-│   │   ├── pm.md
-│   │   ├── sm.md
-│   │   ├── tea.md
-│   │   ├── ux-designer.md
-│   │   ├── quick-flow-solo-dev.md
-│   │   └── tech-writer.md
-│   ├── config.yaml             # Main configuration
-│   ├── data/
-│   │   └── odoo-knowledge-base.md
-│   ├── teams/
-│   │   └── default-team.md
-│   ├── testarch/               # Test architecture
-│   │   └── odoo-test-design/
-│   └── workflows/              # 44 workflows
-│       ├── 1-analysis/
-│       ├── 2-plan-workflows/
-│       ├── 3-solutioning/
-│       ├── 4-implementation/
-│       ├── bmad-quick-flow/
-│       ├── document-odoo/
-│       ├── document-project/
-│       ├── excalidraw-diagrams/
-│       ├── generate-project-context/
-│       ├── testarch/
-│       └── workflow-status/
-├── core/                       # Core components
-│   ├── agents/
-│   │   └── bmad-odoo-master.md
-│   └── workflows/
-│       └── party-mode/
-└── README.md                   # This file
-```
+We welcome contributions in these areas:
+
+- **Agents** — New domain-specialized agents, workflow improvements
+- **Teams** — New team modules via the Team Factory
+- **Testing** — Edge cases, performance testing
+- **Documentation** — Tutorials, translations, video walkthroughs
+
+**Have feedback?** Found a quality issue, want a missing capability, or have a general comment about an agent? Open an issue and select the **Agent/Workflow Feedback** template.
+
+See the [Development Guide](docs/development.md) for architecture details and agent development patterns.
 
 ---
 
-## 🔧 Troubleshooting
+## License
 
-### Error: "Cannot find module 'bmad-odoo'"
+MIT License — see [LICENSE](LICENSE)
 
-**Cause:** Package not installed or installed in wrong location
+## Acknowledgments
 
-**Solution:**
-```bash
-# Check if bmad-odoo is in package.json
-cat package.json | grep bmad-odoo
+- [BMAD Method v6.0.0](https://github.com/bmad-code-org) — Foundation for agent architecture
+- [Innovation Vortex](https://unfix.com/innovation-vortex) — Pattern from the [unFIX model](https://unfix.com/) by [Jurgen Appelo](https://jurgenappelo.com/)
+- Claude (Anthropic) — AI reasoning and agent development
 
-# Reinstall
-npm install bmad-odoo
+### Agents
 
-# Verify
-npm list bmad-odoo
-```
+Every agent below contributed to the design, implementation, testing, or documentation of this release.
 
-### Error: "Permission denied" when creating symlink
+**Core**
+- BMad Master 🧙 — Orchestration and agent coordination
 
-**Cause:** Windows requires admin rights to create symlinks
+**BMM — BMAD Method Module**
+- Mary 📊 Analyst — Requirements analysis and product briefs
+- Winston 🏗️ Architect — Architecture decisions and technical design
+- Amelia 💻 Dev — Implementation and code delivery
+- John 📋 PM — Product management and PRD creation
+- Barry 🚀 Quick Flow — Rapid solo development
+- Quinn 🧪 QA — Quality assurance and test validation
+- Bob 🏃 SM — Sprint management and retrospectives
+- Paige 📚 Tech Writer — Documentation and editorial review
+- Sally 🎨 UX Designer — User experience design
 
-**Solution:**
-Script automatically falls back to copying folder. No action needed.
+**BME — Vortex Pattern Agents**
+- Emma 🎯 Contextualize — Problem framing and product vision
+- Isla 🔍 Empathize — User research and empathy mapping
+- Mila 🔬 Synthesize — Research convergence and problem definition
+- Liam 💡 Hypothesize — Hypothesis engineering and assumption mapping
+- Wade 🧪 Externalize — Lean experiments and MVP testing
+- Noah 📡 Sensitize — Production intelligence and signal interpretation
+- Max 🧭 Systematize — Learning capture and pivot/persevere decisions
 
-**Check:**
-```bash
-# Check if _bmad-odoo is a symlink
-ls -la _bmad-odoo
+**BME — Gyre Pattern Agents**
+- Scout 🔎 Stack Detective — Technology stack detection and classification
+- Atlas 📐 Model Curator — Contextual capabilities manifest generation
+- Lens 🔬 Readiness Analyst — Absence detection and cross-domain correlation
+- Coach 🏋️ Review Coach — Guided review, amendment, and feedback capture
 
-# If symlink: lrwxrwxrwx ... _bmad-odoo -> node_modules/bmad-odoo
-# If copy: drwxr-xr-x ... _bmad-odoo
-```
+**CIS — Creative & Innovation Strategies**
+- Carson 🧠 Brainstorming Coach — Creative ideation facilitation
+- Dr. Quinn 🔬 Problem Solver — Systematic problem-solving
+- Maya 🎨 Design Thinking Coach — Human-centered design
+- Victor ⚡ Innovation Strategist — Business model innovation
+- Caravaggio 🎨 Presentation Master — Visual communication
+- Sophia 📖 Storyteller — Narrative and storytelling
 
-### Error: Post-install not running
+**BMB — BMAD Builder Module**
+- Bond 🤖 Agent Builder — Agent creation and configuration
+- Morgan 🏗️ Module Builder — Module architecture
+- Wendy 🔄 Workflow Builder — Workflow design and validation
 
-**Cause:** npm config or running with `--ignore-scripts`
-
-**Solution:**
-```bash
-# Run manually
-npx bmad-odoo-setup
-
-# Or
-npm run setup
-```
-
-### Error: Workflows not appearing in IDE
-
-**Cause:** 
-- IDE not reloaded
-- Workflows created in wrong folder
-
-**Solution:**
-```bash
-# 1. Check if workflows are created
-ls .agent/workflows  # Antigravity
-ls .cursor/workflows # Cursor
-ls .vscode/workflows # VS Code
-
-# 2. If not present, re-run setup
-npx bmad-odoo-setup
-
-# 3. Reload IDE
-# - Antigravity: Refresh browser
-# - Cursor: Cmd/Ctrl + Shift + P → "Reload Window"
-# - VS Code: Cmd/Ctrl + Shift + P → "Reload Window"
-```
-
-### Error: Output folder not created
-
-**Solution:**
-```bash
-# Create manually
-mkdir -p _bmad-odoo-output/{planning-artifacts,implementation-artifacts,test-artifacts,documentation}
-
-# Or re-run setup
-npx bmad-odoo-setup
-```
-
-### Want to change IDE after setup
-
-**Solution:**
-```bash
-# Re-run setup and choose new IDE
-npx bmad-odoo-setup
-
-# Or choose "All" to have workflows for multiple IDEs
-```
+**TEA — Test Engineering & Architecture**
+- Murat 🧪 Test Architect — Test framework, CI pipeline, and quality gates
 
 ---
 
-## ❓ FAQ
+<div align="center">
 
-**Q: Can I use multiple IDEs simultaneously?**
+**Discover what has to be discovered. Ship what's ready to ship.**
 
-A: Yes! Choose option 5 (All) during setup, or run `npx bmad-odoo-setup` multiple times with different IDEs.
+[Get Started](#quick-start) | [Agents](docs/agents.md) | [Docs](#documentation) | [Roadmap](#roadmap)
 
-**Q: What's the difference between _bmad-odoo and node_modules/bmad-odoo?**
-
-A: 
-- `node_modules/bmad-odoo`: Original package from npm
-- `_bmad-odoo`: Symlink (or copy) for easy access, avoiding long path typing
-
-**Q: Can I commit _bmad-odoo-output to git?**
-
-A: Yes! This folder contains artifacts (PRD, architecture docs, stories) created by agents. Committing them helps team track progress.
-
-**Q: How to update to new version?**
-
-A: `npm update bmad-odoo` or `npm install bmad-odoo@latest`
-
-**Q: Does this package work offline?**
-
-A: After installation, the package works offline (no internet needed). Internet only required for initial `npm install`.
-
-**Q: Can I customize the config?**
-
-A: Yes! Edit `_bmad-odoo/bmm/config.yaml` to change output folder, Odoo version, and other settings.
-
----
-
-## References
-
-### Important Files
-
-| File | Description |
-|------|-------------|
-| `_bmad-odoo/bmm/config.yaml` | Main configuration |
-| `_bmad-odoo/bmm/data/odoo-knowledge-base.md` | Odoo knowledge |
-| `_bmad-odoo-output/` | Artifacts directory |
-| `.agent/workflows/` | Workflows for Antigravity |
-
-### Links
-
-- [NPM Package](https://www.npmjs.com/package/bmad-odoo)
-- [GitHub Repository](https://github.com/phamdungtk/bmad-odoo)
-- [BMAD Framework (original)](https://github.com/bmadcode/BMAD-METHOD)
-- [Odoo Documentation](https://www.odoo.com/documentation)
-- [OCA Guidelines](https://github.com/OCA/odoo-community.org)
-
----
-
-## Support
-
-If you encounter issues:
-
-1. **Check installation**: `npm list bmad-odoo`
-2. **Re-run setup**: `npx bmad-odoo-setup`
-3. **See Troubleshooting** above
-4. **Report issue**: [GitHub Issues](https://github.com/phamdungtk/bmad-odoo/issues)
-
----
-
-**Version:** 1.0.0  
-**Updated:** 2026-01-02  
-**Language:** English  
-**License:** MIT
+</div>
