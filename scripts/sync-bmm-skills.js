@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * BMAD Odoo — Sync BMM Skills to .claude/skills/
+ * BMAD Odoo — Sync BMM Skills to .agent/skills/ and .claude/skills/
  * 
  * Scans _bmad/bmm/ for all SKILL.md files and creates
- * corresponding skill wrapper directories in .claude/skills/
- * so Antigravity/Claude Code can discover and activate them.
+ * corresponding skill wrapper directories in both:
+ *   - .agent/skills/  (Antigravity)
+ *   - .claude/skills/ (Claude Code)
  *
  * Usage: node scripts/sync-bmm-skills.js
  */
@@ -14,7 +15,10 @@ const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const BMM_DIR = path.join(PROJECT_ROOT, '_bmad', 'bmm');
-const SKILLS_DIR = path.join(PROJECT_ROOT, '.claude', 'skills');
+const TARGET_DIRS = [
+  path.join(PROJECT_ROOT, '.agent', 'skills'),
+  path.join(PROJECT_ROOT, '.claude', 'skills'),
+];
 
 function findSkillFiles(dir) {
   const results = [];
@@ -31,16 +35,13 @@ function findSkillFiles(dir) {
   return results;
 }
 
-function syncSkills() {
-  console.log('BMAD Odoo — Sync BMM Skills\n');
+function syncToTarget(skillFiles, skillsDir) {
+  const dirLabel = path.relative(PROJECT_ROOT, skillsDir);
 
-  // Ensure .claude/skills/ exists
-  if (!fs.existsSync(SKILLS_DIR)) {
-    fs.mkdirSync(SKILLS_DIR, { recursive: true });
+  // Ensure target dir exists
+  if (!fs.existsSync(skillsDir)) {
+    fs.mkdirSync(skillsDir, { recursive: true });
   }
-
-  const skillFiles = findSkillFiles(BMM_DIR);
-  console.log(`Found ${skillFiles.length} SKILL.md files in _bmad/bmm/\n`);
 
   let created = 0;
   let updated = 0;
@@ -48,25 +49,21 @@ function syncSkills() {
 
   for (const skillPath of skillFiles) {
     const skillDirName = path.basename(path.dirname(skillPath));
-    const targetDir = path.join(SKILLS_DIR, skillDirName);
+    const targetDir = path.join(skillsDir, skillDirName);
     const targetFile = path.join(targetDir, 'SKILL.md');
 
-    // Read source content
     const sourceContent = fs.readFileSync(skillPath, 'utf-8');
 
-    // Check if already exists and is identical
     if (fs.existsSync(targetFile)) {
       const existingContent = fs.readFileSync(targetFile, 'utf-8');
       if (existingContent === sourceContent) {
         skipped++;
         continue;
       }
-      // Content differs — update
       fs.writeFileSync(targetFile, sourceContent);
       console.log(`  ✓ Updated: ${skillDirName}`);
       updated++;
     } else {
-      // Create new
       if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true });
       }
@@ -76,8 +73,23 @@ function syncSkills() {
     }
   }
 
-  console.log(`\nDone! Created: ${created}, Updated: ${updated}, Unchanged: ${skipped}`);
-  console.log(`Total skills in .claude/skills/: ${fs.readdirSync(SKILLS_DIR).length}`);
+  const totalSkills = fs.readdirSync(skillsDir).length;
+  console.log(`  → ${dirLabel}: Created ${created}, Updated ${updated}, Unchanged ${skipped} (Total: ${totalSkills})\n`);
+}
+
+function syncSkills() {
+  console.log('BMAD Odoo — Sync BMM Skills\n');
+
+  const skillFiles = findSkillFiles(BMM_DIR);
+  console.log(`Found ${skillFiles.length} SKILL.md files in _bmad/bmm/\n`);
+
+  for (const targetDir of TARGET_DIRS) {
+    const label = path.relative(PROJECT_ROOT, targetDir).replace(/\\/g, '/');
+    console.log(`── Syncing to ${label} ──`);
+    syncToTarget(skillFiles, targetDir);
+  }
+
+  console.log('Done!');
 }
 
 syncSkills();
