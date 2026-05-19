@@ -19,20 +19,21 @@
 
 </div>
 
-BMAD Odoo extends AI agents with two types of installable modules: **Teams** bring new agents for a domain, **Skills** add new capabilities to existing agents. Install them independently or combine them.
+BMAD Odoo là framework AI Agent chuyên dụng cho phát triển **Odoo 17**, tích hợp kiến thức BA (Business Analysis) và Dev ORM vào mọi agent. Agents tự động load kiến thức Guard Clauses, State Machine, Command API, và Lean ORM patterns khi kích hoạt.
 
-> **Authoring a BMAD Odoo skill?** Required reading first: [The BMAD Odoo Operator Covenant](_bmad-output/planning-artifacts/bmad-covenant-operator.md) — one axiom and seven Operator Rights every BMAD Odoo skill must honor. The Covenant exists because operator-facing UX is an architectural concern in agent systems, not a styling concern; skills that violate it erode operator trust across the skill ecosystem, not just on their own surface.
+> **📘 [Hướng dẫn Tiếng Việt](HUONG-DAN.md)** — Tổng quan đầy đủ về BMAD Odoo, quy trình 4 pha, và cách sử dụng từng agent.
 
 | Team | Domain |
 |------|--------|
 | **Vortex** | Product discovery — from user insight to evidence-based decisions |
 | **Gyre** | Production readiness — from stack detection to gap analysis |
 
-### What's New in 3.3
+### What's New in 4.0
 
-- **BMAD Odoo Operator Covenant** — one axiom ("*the operator is the resolver*") and seven Operator Rights every BMAD Odoo skill must honor. Reproducibility-validated governance contract with a published baseline audit and Compliance Checklist.
-- **Opt out of agents you don't need** — new `excluded_agents: []` field in Vortex and Gyre configs; `bmad-update` honors exclusions end-to-end. Non-breaking.
-- **Update-time changelog surfacing** — `bmad-update` shows "What's New" before confirming the refresh.
+- **Odoo 17 Domain Knowledge** — BA agents load `odoo-ba-knowledge.md` (state machines, user stories, access control). Dev agents load `odoo-dev-orm-knowledge.md` (Guard Clauses, Command API, N+1 prevention, view modifiers).
+- **8 agents wired** — Analyst, PM, SM, Architect, Dev, QA, Quick Dev, and Vortex Emma auto-load Odoo knowledge on activation.
+- **BMAD Odoo Operator Covenant** — one axiom and seven Operator Rights every skill must honor.
+- **Full rebrand** — All CLI commands, scripts, and references updated from Convoke to BMAD Odoo.
 - See the [CHANGELOG](CHANGELOG.md) for the full release details
 
 ---
@@ -41,8 +42,8 @@ BMAD Odoo extends AI agents with two types of installable modules: **Teams** bri
 
 **Specialist agents guide you from insight to evidence and back again — a continuous discovery loop, not a one-shot checklist**
 
-[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
 
 Vortex guides you through seven discovery streams — from understanding your users to interpreting production signals — so you can make evidence-based decisions before, during, and after you build. Each stream builds on the previous one's findings, and when gaps appear, the system routes you back to fill them.
 
@@ -153,8 +154,8 @@ For detailed workflow descriptions, see the [Agent Guide](docs/agents.md) and in
 
 **Specialist agents assess whether your project is ready to ship — detect your stack, model what "ready" means, find what's missing, and refine together**
 
-[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
 
 Most teams ship to production without knowing if they're actually ready — missing SLOs, incomplete observability, unreviewed deployment strategies. Gyre analyzes your project's filesystem, builds a capabilities model tailored to your specific tech stack, and surfaces what's absent. No generic checklists — every finding is contextual to your project.
 
@@ -362,33 +363,35 @@ cat _bmad/bme/_gyre/agents/review-coach.md                  # Coach 🏋️
 
 ```
 your-project/
-├── _bmad/bme/
-│   ├── _vortex/              # Team: Product Discovery
-│   │   ├── agents/           # 7 agent definition files
-│   │   ├── workflows/        # 22 workflows
-│   │   ├── contracts/        # Handoff contracts (HC1-HC5 artifact, HC6-HC10 routing)
-│   │   ├── guides/           # User guides (all 7 agents)
-│   │   └── config.yaml       # Configuration
-│   ├── _gyre/                # Team: Production Readiness
-│   │   ├── agents/           # 4 agent definition files
-│   │   ├── workflows/        # 7 workflows
-│   │   ├── contracts/        # Artifact contract schemas (GC1-GC4)
-│   │   ├── guides/           # User guides (all 4 agents)
-│   │   └── config.yaml       # Configuration
-│   ├── _enhance/             # Skill: Agent Capability Upgrades
-│   │   ├── workflows/        # Skill workflows (initiatives-backlog)
-│   │   ├── extensions/       # Agent menu patch descriptors
-│   │   ├── guides/           # Module author guide
-│   │   └── config.yaml       # Configuration
-│   ├── _portability/         # Skill: Export skills to other platforms
-│   │   └── skills/           # Export, validate, catalog, seed workflows
-│   ├── _team-factory/        # Skill: Create new BMAD-compliant teams
-│   │   └── lib/              # Factory generators and validators
-│   └── _artifacts/           # Skill: Artifact governance & portfolio
-│       └── workflows/        # Migrate artifacts, portfolio status
+├── _bmad/
+│   ├── _memory/                  # 🧠 Agent Knowledge Base
+│   │   ├── odoo-ba-knowledge.md  # BA: state machines, user stories, edge cases
+│   │   └── odoo-dev-orm-knowledge.md  # Dev: Guard Clauses, Command API, ORM
+│   ├── bme/
+│   │   ├── _vortex/              # Team: Product Discovery
+│   │   │   ├── agents/           # 7 agent definition files
+│   │   │   ├── workflows/        # 22 workflows
+│   │   │   ├── contracts/        # Handoff contracts (HC1-HC5, HC6-HC10)
+│   │   │   └── guides/           # User guides (all 7 agents)
+│   │   ├── _gyre/                # Team: Production Readiness
+│   │   │   ├── agents/           # 4 agent definition files
+│   │   │   ├── workflows/        # 7 workflows
+│   │   │   ├── contracts/        # Artifact contract schemas (GC1-GC4)
+│   │   │   └── guides/           # User guides (all 4 agents)
+│   │   ├── _enhance/             # Skill: Agent Capability Upgrades
+│   │   ├── _portability/         # Skill: Export skills to other platforms
+│   │   ├── _team-factory/        # Skill: Create new teams
+│   │   └── _artifacts/           # Skill: Artifact governance
+│   └── bmm/                      # 📋 BMAD Method Module (4-phase workflow)
+│       ├── 1-analysis/           # Analyst, Tech Writer
+│       ├── 2-plan-workflows/     # PM, UX Designer
+│       ├── 3-solutioning/        # Architect
+│       └── 4-implementation/     # Dev, QA, SM, Quick Dev
 └── _bmad-output/
-    ├── vortex-artifacts/     # Vortex generated artifacts
-    └── gyre-artifacts/       # Gyre generated artifacts
+    ├── planning-artifacts/       # PRD, Architecture, Epics
+    ├── implementation-artifacts/ # Sprint plans, stories
+    ├── vortex-artifacts/         # Discovery outputs
+    └── gyre-artifacts/           # Readiness reports
 ```
 
 ---
@@ -436,6 +439,9 @@ See [UPDATE-GUIDE.md](UPDATE-GUIDE.md) for migration paths and troubleshooting.
 
 | Document | Description |
 |----------|-------------|
+| [📘 Hướng dẫn Tiếng Việt](HUONG-DAN.md) | Tổng quan BMAD Odoo, quy trình 4 pha, cách sử dụng |
+| [Odoo BA Knowledge](_bmad/_memory/odoo-ba-knowledge.md) | Kiến thức BA: state machines, user stories, edge cases |
+| [Odoo Dev ORM Knowledge](_bmad/_memory/odoo-dev-orm-knowledge.md) | Kiến thức Dev: Guard Clauses, Command API, Lean ORM |
 | [Agent Guide](docs/agents.md) | Detailed agent descriptions, workflows, and positioning |
 | [BMAD Compatibility](docs/BMAD-METHOD-COMPATIBILITY.md) | Compatibility matrix with BMAD Method versions |
 | [Testing](docs/testing.md) | Automated test suite, CI pipeline, and agent test results |
@@ -449,11 +455,12 @@ See [UPDATE-GUIDE.md](UPDATE-GUIDE.md) for migration paths and troubleshooting.
 ## Roadmap
 
 - **v1.x** — Vortex foundation: 7 agents, 22 workflows, update system, CI/CD
-- **v2.0** — Product renamed to BMAD Odoo. CLI commands: `bmad-*`. Package: `bmad-odoo`
-- **v2.x** — Enhance module (Skills architecture, RICE initiatives-backlog), Gyre team (production readiness, 4 agents), Team Factory
-- **v3.x** — Artifact governance, portfolio intelligence, portability system (export to Claude/Copilot/Cursor), 1,123 tests
-- **Next** — Forge (domain knowledge extraction for enterprise brownfield engagements)
-- **Future** — Additional teams, Forge-Gyre integration, cross-team workflows
+- **v2.0** — CLI commands: `bmad-*`. Package: `bmad-odoo`
+- **v2.x** — Enhance module, Gyre team (4 agents), Team Factory
+- **v3.x** — Artifact governance, portfolio intelligence, portability (export to Claude/Copilot/Cursor)
+- **v4.0** ← **Current** — Full Odoo rebrand, Odoo 17 BA + Dev ORM knowledge wired into 8 agents, Vietnamese docs
+- **Next** — Odoo-specific agents (Accounting, Inventory, HR), Forge (domain knowledge extraction)
+- **Future** — Cross-team workflows, Odoo module scaffolding agent
 
 ---
 
