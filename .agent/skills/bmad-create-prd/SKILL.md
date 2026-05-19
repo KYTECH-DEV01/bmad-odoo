@@ -1,6 +1,6 @@
 ---
 name: bmad-create-prd
-description: T?o t�i li?u y�u c?u s?n ph?m (PRD) t? d?u. D�ng khi c?n "t?o PRD" ho?c "create PRD".
+description: Tạo tài liệu yêu cầu sản phẩm (PRD) từ đầu. Dùng khi cần "tạo PRD" hoặc "create PRD".
 ---
 
 Follow the instructions in ./workflow.md.

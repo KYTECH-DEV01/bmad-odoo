@@ -1,6 +1,6 @@
 ---
 name: bmad-retrospective
-description: Retro cu?i epic — rút bài h?c, dánh giá thành công. Dùng khi c?n "retrospective" ho?c "retro".
+description: Retro cuá»‘i epic â€” rÃºt bÃ i há»c, Ä‘Ã¡nh giÃ¡ thÃ nh cÃ´ng. DÃ¹ng khi cáº§n "retrospective" hoáº·c "retro".
 ---
 
 Follow the instructions in ./workflow.md.

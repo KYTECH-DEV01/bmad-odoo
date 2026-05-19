@@ -1,6 +1,6 @@
 ---
 name: bmad-domain-research
-description: Nghi�n c?u chuy�n s�u linh v?c nghi?p v?. D�ng khi c?n "nghi�n c?u domain" ho?c "domain research".
+description: Nghiên cứu chuyên sâu lĩnh vực nghiệp vụ. Dùng khi cần "nghiên cứu domain" hoặc "domain research".
 ---
 
 Follow the instructions in ./workflow.md.

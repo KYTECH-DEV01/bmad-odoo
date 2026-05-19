@@ -1,6 +1,6 @@
 ---
 name: bmad-correct-course
-description: �i?u ch?nh hu?ng di khi c� thay d?i l?n gi?a sprint. D�ng khi c?n "correct course" ho?c "d?i hu?ng".
+description: Điều chỉnh hướng đi khi có thay đổi lớn giữa sprint. Dùng khi cần "correct course" hoặc "đổi hướng".
 ---
 
 Follow the instructions in ./workflow.md.

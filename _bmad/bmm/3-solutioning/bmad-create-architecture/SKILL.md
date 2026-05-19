@@ -1,6 +1,6 @@
 ---
 name: bmad-create-architecture
-description: T?o t�i li?u ki?n tr�c k? thu?t Odoo. D�ng khi c?n "t?o architecture" ho?c "thi?t k? ki?n tr�c".
+description: Tạo tài liệu kiến trúc kỹ thuật Odoo. Dùng khi cần "tạo architecture" hoặc "thiết kế kiến trúc".
 ---
 
 Follow the instructions in ./workflow.md.

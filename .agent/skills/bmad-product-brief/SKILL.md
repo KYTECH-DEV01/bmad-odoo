@@ -1,6 +1,6 @@
 ---
 name: bmad-product-brief
-description: T?o ho?c c?p nh?t product brief qua kh�m ph� c� hu?ng d?n. D�ng khi c?n "t?o product brief".
+description: Tạo hoặc cập nhật product brief qua khám phá có hướng dẫn. Dùng khi cần "tạo product brief".
 ---
 
 # Create Product Brief

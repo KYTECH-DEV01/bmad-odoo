@@ -1,6 +1,6 @@
 ---
 name: bmad-create-ux-design
-description: Thi?t k? UX patterns v� d?c t? giao di?n. D�ng khi c?n "t?o UX design" ho?c "thi?t k? UX".
+description: Thiết kế UX patterns và đặc tả giao diện. Dùng khi cần "tạo UX design" hoặc "thiết kế UX".
 ---
 
 Follow the instructions in ./workflow.md.

@@ -1,6 +1,6 @@
 ---
 name: bmad-edit-prd
-description: Ch?nh s?a PRD hi?n c�. D�ng khi c?n "s?a PRD" ho?c "edit PRD".
+description: Chỉnh sửa PRD hiện có. Dùng khi cần "sửa PRD" hoặc "edit PRD".
 ---
 
 Follow the instructions in ./workflow.md.

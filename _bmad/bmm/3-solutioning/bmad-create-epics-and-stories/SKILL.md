@@ -1,6 +1,6 @@
 ---
 name: bmad-create-epics-and-stories
-description: Chia y�u c?u th�nh epics v� user stories. D�ng khi c?n "t?o epics" ho?c "create stories".
+description: Chia yêu cầu thành epics và user stories. Dùng khi cần "tạo epics" hoặc "create stories".
 ---
 
 Follow the instructions in ./workflow.md.

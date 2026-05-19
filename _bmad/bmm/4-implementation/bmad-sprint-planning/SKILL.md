@@ -1,6 +1,6 @@
 ---
 name: bmad-sprint-planning
-description: L?p k? ho?ch sprint t? epics. D�ng khi c?n "sprint planning" ho?c "l?p sprint".
+description: Lập kế hoạch sprint từ epics. Dùng khi cần "sprint planning" hoặc "lập sprint".
 ---
 
 Follow the instructions in ./workflow.md.
