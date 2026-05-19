@@ -6,7 +6,7 @@ agents:
   - team-factory
 workflows:
   - add-team
-version: 1.0.0
+version: 4.0.0-rc.1
 user_name: '{user}'
 communication_language: en
 party_mode_enabled: true

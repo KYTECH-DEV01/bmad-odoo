@@ -1,5 +1,5 @@
 name: enhance
-version: 1.0.0
+version: 4.0.0-rc.1
 description: "Enhance module — capability upgrades for existing BMAD agents"
 workflows:
   - name: initiatives-backlog
