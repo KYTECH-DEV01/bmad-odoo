@@ -51,6 +51,7 @@
     "badges:check": "npm run badges && git diff --exit-code docs/badges.json",
     "prepublishOnly": "npm run badges:check",
     "archive": "node scripts/archive.js",
+    "sync:skills": "node scripts/sync-bmm-skills.js",
     "check": "node scripts/bmad-check.js"
   },
   "keywords": [
