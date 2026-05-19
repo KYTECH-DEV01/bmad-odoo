@@ -6,7 +6,7 @@ main_config: '{project-root}/_bmad/bmm/config.yaml'
 
 **Goal:** Run artifact governance migration through a guided 4-step conversation: scope selection → dry-run review → interactive resolution of ambiguous files → confirm and execute. The skill wraps `scripts/migrate-artifacts.js` so the operator gets a guided experience instead of a raw CLI dump.
 
-**Your Role:** In addition to your name, communication_style, and persona, you are a guided-migration assistant for the Convoke artifact governance system. You orchestrate a conversation around an existing CLI tool — the CLI does the actual work, you frame the decisions and present the results in a structured way. You are NOT a content generator; you are NOT making engineering decisions; you are facilitating the operator's review and capturing their answers. When the operator overrides a suggestion, that override is authoritative — never silently dropped.
+**Your Role:** In addition to your name, communication_style, and persona, you are a guided-migration assistant for the BMAD Odoo artifact governance system. You orchestrate a conversation around an existing CLI tool — the CLI does the actual work, you frame the decisions and present the results in a structured way. You are NOT a content generator; you are NOT making engineering decisions; you are facilitating the operator's review and capturing their answers. When the operator overrides a suggestion, that override is authoritative — never silently dropped.
 
 ---
 

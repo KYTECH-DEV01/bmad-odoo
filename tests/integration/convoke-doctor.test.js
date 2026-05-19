@@ -6,7 +6,7 @@ const os = require('os');
 const { runScript, PACKAGE_ROOT } = require('../helpers');
 const pkg = require('../../package.json');
 
-const doctorScript = path.join(PACKAGE_ROOT, 'scripts/convoke-doctor.js');
+const doctorScript = path.join(PACKAGE_ROOT, 'scripts/bmad-doctor.js');
 // Fixtures below use `pkg.version` for config `version:` fields so they
 // track package.json automatically — satisfies project-context.md rule
 // "no-hardcoded-versions". The "version mismatch" test deliberately uses
@@ -17,7 +17,7 @@ function runDoctor(cwd) {
   return runScript(doctorScript, [], { cwd });
 }
 
-describe('convoke-doctor: no project root', () => {
+describe('bmad-doctor: no project root', () => {
   let tmpDir;
 
   before(async () => {
@@ -35,7 +35,7 @@ describe('convoke-doctor: no project root', () => {
   });
 });
 
-describe('convoke-doctor: missing config', () => {
+describe('bmad-doctor: missing config', () => {
   let tmpDir;
 
   before(async () => {
@@ -56,7 +56,7 @@ describe('convoke-doctor: missing config', () => {
   });
 });
 
-describe('convoke-doctor: invalid config YAML', () => {
+describe('bmad-doctor: invalid config YAML', () => {
   let tmpDir;
 
   before(async () => {
@@ -81,7 +81,7 @@ describe('convoke-doctor: invalid config YAML', () => {
   });
 });
 
-describe('convoke-doctor: missing agent files', () => {
+describe('bmad-doctor: missing agent files', () => {
   let tmpDir;
 
   before(async () => {
@@ -108,7 +108,7 @@ describe('convoke-doctor: missing agent files', () => {
   });
 });
 
-describe('convoke-doctor: empty agent files', () => {
+describe('bmad-doctor: empty agent files', () => {
   let tmpDir;
 
   before(async () => {
@@ -142,7 +142,7 @@ describe('convoke-doctor: empty agent files', () => {
   });
 });
 
-describe('convoke-doctor: stale migration lock', () => {
+describe('bmad-doctor: stale migration lock', () => {
   let tmpDir;
 
   before(async () => {
@@ -175,7 +175,7 @@ describe('convoke-doctor: stale migration lock', () => {
   });
 });
 
-describe('convoke-doctor: version mismatch', () => {
+describe('bmad-doctor: version mismatch', () => {
   let tmpDir;
 
   before(async () => {
@@ -202,7 +202,7 @@ describe('convoke-doctor: version mismatch', () => {
   });
 });
 
-describe('convoke-doctor: corrupt migration lock', () => {
+describe('bmad-doctor: corrupt migration lock', () => {
   let tmpDir;
 
   before(async () => {
@@ -232,7 +232,7 @@ describe('convoke-doctor: corrupt migration lock', () => {
   });
 });
 
-describe('convoke-doctor: excluded_agents (U8)', () => {
+describe('bmad-doctor: excluded_agents (U8)', () => {
   let tmpDir;
   const EXCLUDED_ID = 'production-intelligence-specialist';
 
@@ -304,7 +304,7 @@ describe('convoke-doctor: excluded_agents (U8)', () => {
 // but the exit-code wiring in `main()` needs an integration guard — if a
 // future refactor swaps the `!c.passed && !c.softWarning` filter back to
 // `!c.passed`, unit tests stay green while the regression reaches production.
-describe('convoke-doctor: governance softWarning exit-code (Story v63-2-2 H1)', () => {
+describe('bmad-doctor: governance softWarning exit-code (Story v63-2-2 H1)', () => {
   let tmpDir;
 
   before(async () => {

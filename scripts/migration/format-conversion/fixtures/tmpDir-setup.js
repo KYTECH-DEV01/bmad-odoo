@@ -22,7 +22,7 @@ const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
 
-const TMP_DIR_PREFIX = 'convoke-i97-';
+const TMP_DIR_PREFIX = 'bmad-odoo-i97-';
 
 // ─── Public API ─────────────────────────────────────────────────────
 
@@ -34,7 +34,7 @@ const TMP_DIR_PREFIX = 'convoke-i97-';
  *
  * @param {Object} [options]
  * @param {string} [options.prefix] Override the default tmp dir prefix
- *                                   (e.g. 'convoke-parity-' for parity tests).
+ *                                   (e.g. 'bmad-odoo-parity-' for parity tests).
  * @returns {{ tmpDir: string, cleanup: () => void }}
  */
 function setupTmpDir(options = {}) {

@@ -1,7 +1,7 @@
 /**
  * ag-7-2 (I31): Doctor skill-wrapper validation tests
  *
- * Verifies that `convoke-doctor` detects partial installs where the source
+ * Verifies that `bmad-doctor` detects partial installs where the source
  * tree was copied but `.claude/skills/{wrapperName}/SKILL.md` is missing.
  *
  * Closes I31 (rank #12 in backlog, RICE 3.2).
@@ -13,7 +13,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const os = require('os');
 
-const { loadSkillManifest, checkModuleSkillWrappers } = require('../../scripts/convoke-doctor');
+const { loadSkillManifest, checkModuleSkillWrappers } = require('../../scripts/bmad-doctor');
 
 const ARTIFACTS_MANIFEST_ROWS = [
   'canonicalId,name,description,module,path,install_to_bmad,tier,intent,dependencies',
@@ -23,7 +23,7 @@ const ARTIFACTS_MANIFEST_ROWS = [
 ];
 
 async function setupTempProject() {
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-doctor-test-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-doctor-test-'));
   // Seed skill-manifest.csv with the standard rows
   await fs.ensureDir(path.join(tmpDir, '_bmad/_config'));
   await fs.writeFile(
@@ -131,7 +131,7 @@ describe('ag-7-2: checkModuleSkillWrappers — missing Artifacts wrapper', () =>
     assert.equal(result.passed, false);
     assert.match(result.error, /Missing skill wrapper for bmad-migrate-artifacts/);
     assert.match(result.error, /\.claude\/skills\/bmad-migrate-artifacts\/SKILL\.md/);
-    assert.equal(result.fix, 'Run convoke-update to regenerate skill wrappers');
+    assert.equal(result.fix, 'Run bmad-update to regenerate skill wrappers');
   });
 });
 
@@ -263,7 +263,7 @@ describe('ag-7-2: loadSkillManifest — graceful degradation', () => {
   let originalWarn;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-doctor-no-manifest-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-doctor-no-manifest-'));
     originalWarn = console.warn;
     console.warn = () => {}; // silence the expected warning
   });

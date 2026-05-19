@@ -16,7 +16,7 @@ const { findProjectRoot } = require('../../scripts/update/lib/utils');
 // (Claude Code SKILL.md, Copilot copilot-instructions.md, Cursor <name>.md).
 
 const projectRoot = findProjectRoot();
-const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'convoke-export.js');
+const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'bmad-export.js');
 
 function makeTmpDir() {
   const dir = path.join(os.tmpdir(), `sp-5-2-${crypto.randomUUID()}`);

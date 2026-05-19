@@ -322,7 +322,7 @@ describe('renderCsv / readExistingCsv — round-trip', () => {
         skill_name: 'foo',
         bmm_agent: 'bmad-agent-pm',
         dependency_type: 'frontmatter',
-        source_module: 'convoke',
+        source_module: 'bmad-odoo',
         registered_by: 'auto-scan',
         registered_date: '2026-04-23',
       },
@@ -381,8 +381,8 @@ describe('_inferSourceModule — prefix rule (AC2)', () => {
     assert.equal(_inferSourceModule('bmad-testarch-framework'), 'testarch');
   });
 
-  it('convoke-* → convoke', () => {
-    assert.equal(_inferSourceModule('convoke-update'), 'convoke');
+  it('bmad-odoo-* → bmad-odoo', () => {
+    assert.equal(_inferSourceModule('bmad-update'), 'bmad-odoo');
   });
 
   it('wds-* → wds', () => {

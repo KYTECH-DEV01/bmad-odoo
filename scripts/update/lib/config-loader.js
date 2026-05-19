@@ -6,7 +6,7 @@ const yaml = require('yaml');
 const { execFileSync } = require('node:child_process');
 
 /**
- * Config Loader for Convoke (Story v63-1a-2)
+ * Config Loader for BMAD Odoo (Story v63-1a-2)
  *
  * Replaces the legacy `bmad-init` skill's load path with a direct-YAML utility.
  * Reads `_bmad/{moduleConfigPath}/config.yaml`, resolves the `{project-root}`
@@ -15,13 +15,13 @@ const { execFileSync } = require('node:child_process');
  * emits a deprecation warning and shells out to `bmad_init.py` (removed in 4.1).
  *
  * Scope — what this module does NOT do (intentional, see audit
- * _bmad-output/planning-artifacts/convoke-spec-bmad-init-behavior-audit.md):
+ * _bmad-output/planning-artifacts/bmad-spec-bmad-init-behavior-audit.md):
  *   - NO project-root detection (caller passes projectRoot; use findProjectRoot() from utils.js).
- *   - NO module.yaml reading (bootstrap concern, belongs to convoke-install).
+ *   - NO module.yaml reading (bootstrap concern, belongs to bmad-install).
  *   - NO config writing.
  *   - NO core/module merge logic (configs are already flat with core vars merged in).
  *   - NO CLI flags (`--all`, `--vars`, `--module`) — library API, not CLI.
- *   - NO `{user}` placeholder resolution (Convoke-bme activation convention handled by agents).
+ *   - NO `{user}` placeholder resolution (BMAD Odoo-bme activation convention handled by agents).
  *   - NO recursion into nested objects/arrays during `{project-root}` resolution (top-level strings only).
  *
  * @module scripts/update/lib/config-loader
@@ -39,7 +39,7 @@ const SUBPROCESS_MAX_BUFFER = 10 * 1024 * 1024; // 10 MB
 /**
  * Load a module's config.yaml from the v4 direct-load layout.
  *
- * @param {string} projectRoot - Absolute path to the Convoke project root (from findProjectRoot()).
+ * @param {string} projectRoot - Absolute path to the BMAD Odoo project root (from findProjectRoot()).
  *   Non-empty string required. Trailing separators are normalized away before resolution.
  * @param {string} moduleConfigPath - Module subdirectory under `_bmad/` (e.g. 'bme/_vortex',
  *   'core', 'bme/_enhance'). Non-empty relative string required. Absolute paths and paths
@@ -178,13 +178,13 @@ function _handleMissingConfig(normalizedRoot, moduleConfigPath, configPath) {
   if (fs.existsSync(legacyInitDir)) {
     console.warn(
       `${WARN_PREFIX} [DEPRECATED] bmad-init detected at ${legacyInitDir}. ` +
-      `Run 'convoke-update' to migrate to the v4 direct-load layout. ` +
-      `Support for bmad-init is removed in Convoke 4.1.`
+      `Run 'bmad-update' to migrate to the v4 direct-load layout. ` +
+      `Support for bmad-init is removed in BMAD Odoo 4.1.`
     );
     return _loadLegacyConfig(normalizedRoot, moduleConfigPath);
   }
   throw new Error(
-    `Config not found: ${configPath}. Run 'convoke-install' to bootstrap this project.`
+    `Config not found: ${configPath}. Run 'bmad-install' to bootstrap this project.`
   );
 }
 
@@ -197,7 +197,7 @@ function _handleMissingConfig(normalizedRoot, moduleConfigPath, configPath) {
  * for 4.0 per audit §5. If a future config ships nested strings with
  * `{project-root}`, extend this helper recursively as a separate change.
  *
- * Other placeholders (notably `{user}` in some Convoke-bme configs) are NOT
+ * Other placeholders (notably `{user}` in some BMAD Odoo-bme configs) are NOT
  * resolved here — they're activation-time conventions handled by the agent.
  *
  * @param {object} config - Parsed YAML object (plain JS dict).
@@ -219,7 +219,7 @@ function _resolveProjectRootPlaceholder(config, projectRoot) {
 /**
  * Load config via the legacy `bmad-init` Python script — backwards-compat
  * fallback for pre-4.0 installs. Invoked only when the v4 config.yaml is
- * missing but `_bmad/core/bmad-init/` is still present. Removed in Convoke 4.1.
+ * missing but `_bmad/core/bmad-init/` is still present. Removed in BMAD Odoo 4.1.
  *
  * **Pattern 3 exception:** this helper consumes the legacy script's stdout as
  * JSON; it does NOT use `yaml.parseDocument` because the Python loader already
@@ -241,7 +241,7 @@ function _resolveProjectRootPlaceholder(config, projectRoot) {
  * @throws {Error} If python3 is missing (ENOENT), subprocess exits non-zero, script is missing,
  *   stdout is not parseable JSON, top-level JSON is not an object, or the
  *   `SUBPROCESS_TIMEOUT_MS` timeout expires. Error messages always include a
- *   `"run convoke-update"` hint — if the fallback breaks, the operator must migrate.
+ *   `"run bmad-update"` hint — if the fallback breaks, the operator must migrate.
  */
 function _loadLegacyConfig(projectRoot, moduleConfigPath) {
   const bmadInitPath = path.join(
@@ -251,7 +251,7 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
   if (!fs.existsSync(bmadInitPath)) {
     throw new Error(
       `bmad-init directory present but script missing at ${bmadInitPath}. ` +
-      `Run 'convoke-update' to repair or migrate off bmad-init.`
+      `Run 'bmad-update' to repair or migrate off bmad-init.`
     );
   }
 
@@ -270,14 +270,14 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
   } catch (err) {
     if (err && err.code === 'ENOENT') {
       throw new Error(
-        `python3 not found on PATH. Install Python 3 or run 'convoke-update' to migrate off bmad-init.`,
+        `python3 not found on PATH. Install Python 3 or run 'bmad-update' to migrate off bmad-init.`,
         { cause: err }
       );
     }
     if (err && err.signal === 'SIGTERM') {
       throw new Error(
         `Legacy bmad-init fallback exceeded ${SUBPROCESS_TIMEOUT_MS / 1000}s timeout. ` +
-        `Run 'convoke-update' to migrate off bmad-init.`,
+        `Run 'bmad-update' to migrate off bmad-init.`,
         { cause: err }
       );
     }
@@ -286,7 +286,7 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
     if (err && err.signal) {
       throw new Error(
         `Legacy bmad-init fallback killed by signal ${err.signal}. ` +
-        `Run 'convoke-update' to migrate off bmad-init.`,
+        `Run 'bmad-update' to migrate off bmad-init.`,
         { cause: err }
       );
     }
@@ -294,7 +294,7 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
     const statusInfo = err && err.status != null ? ` (exit ${err.status})` : '';
     throw new Error(
       `Legacy bmad-init fallback failed${statusInfo}: ${stderrText || (err && err.message) || 'unknown error'}. ` +
-      `Run 'convoke-update' to migrate off bmad-init.`,
+      `Run 'bmad-update' to migrate off bmad-init.`,
       { cause: err }
     );
   }
@@ -305,7 +305,7 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
   } catch (err) {
     throw new Error(
       `Legacy bmad-init fallback returned non-JSON stdout: ${err.message}. ` +
-      `Run 'convoke-update' to migrate off bmad-init.`,
+      `Run 'bmad-update' to migrate off bmad-init.`,
       { cause: err }
     );
   }
@@ -313,7 +313,7 @@ function _loadLegacyConfig(projectRoot, moduleConfigPath) {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error(
       `Legacy bmad-init fallback returned non-object value. ` +
-      `Run 'convoke-update' to migrate off bmad-init.`
+      `Run 'bmad-update' to migrate off bmad-init.`
     );
   }
 

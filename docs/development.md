@@ -1,6 +1,6 @@
 # Development Guide
 
-Architecture overview, agent development patterns, and contribution guidelines for Convoke.
+Architecture overview, agent development patterns, and contribution guidelines for BMAD Odoo.
 
 ---
 
@@ -92,7 +92,7 @@ See: [Emma Reference Implementation](../_bmad-output/_archive/exploratory/emma-r
 ## Project Structure
 
 ```
-Convoke/
+BMAD Odoo/
 ├── _bmad/bme/
 │   ├── _vortex/             # Team: Product Discovery (7 agents, 22 workflows)
 │   ├── _gyre/               # Team: Production Readiness (4 agents, 7 workflows)
@@ -104,7 +104,7 @@ Convoke/
 │   ├── install-vortex-agents.js
 │   ├── install-gyre-agents.js
 │   ├── install-all-agents.js
-│   ├── convoke-doctor.js
+│   ├── bmad-doctor.js
 │   └── update/
 │       ├── lib/             # Update system modules
 │       └── migrations/      # Migration registry + delta files
@@ -113,7 +113,7 @@ Convoke/
 │   ├── integration/         # Integration tests
 │   └── p0/                  # P0 gate tests (release quality)
 ├── docs/                    # Documentation (you're here)
-├── package.json             # convoke-agents
+├── package.json             # bmad-odoo
 ├── CHANGELOG.md             # Version history
 └── UPDATE-GUIDE.md          # Migration documentation
 ```

@@ -1,7 +1,7 @@
 ---
 name: 'step-t-04-update'
 description: 'Validate backlog structure, log every finding as an Intake in §2.1, append qualified items to their lanes, update Change Log, and present completion summary'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/backlog-format-spec.md'
 workflowFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md'
 ---

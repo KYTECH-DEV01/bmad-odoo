@@ -18,7 +18,7 @@ const MINIMAL_PM_MD = `<agent>
 </agent>`;
 
 async function setupProject() {
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-u8-excl-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-u8-excl-'));
   await createValidInstallation(tmpDir);
 
   const pmDir = path.join(tmpDir, '_bmad/bmm/agents');

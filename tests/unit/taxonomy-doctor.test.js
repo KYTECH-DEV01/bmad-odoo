@@ -4,13 +4,13 @@ const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
 const yaml = require('js-yaml');
-const { checkTaxonomy } = require('../../scripts/convoke-doctor');
+const { checkTaxonomy } = require('../../scripts/bmad-doctor');
 
 describe('checkTaxonomy', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-doc-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-doc-'));
   });
 
   after(async () => {

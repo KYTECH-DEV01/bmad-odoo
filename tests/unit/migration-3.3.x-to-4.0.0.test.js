@@ -14,7 +14,7 @@ const MIGRATION_PATH = '../../scripts/update/migrations/3.3.x-to-4.0.0';
 // --- Fixture helpers ---
 
 function makeTmpProject() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'convoke-mig-4.0-'));
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'bmad-odoo-mig-4.0-'));
 }
 
 /**
@@ -104,7 +104,7 @@ function defaultSkillMdWithBmadInit(module, agentName) {
 
 // Doctor output shapes the text parser consumes.
 const CLEAN_DOCTOR_OUTPUT = [
-  'Running convoke-doctor...',
+  'Running bmad-doctor...',
   '',
   '  ✓ Module present',
   '    Basics fine',
@@ -114,7 +114,7 @@ const CLEAN_DOCTOR_OUTPUT = [
 ].join('\n');
 
 const ONE_NEW_FINDING_DOCTOR_OUTPUT = [
-  'Running convoke-doctor...',
+  'Running bmad-doctor...',
   '',
   '  ✓ Module present',
   '  ✗ New failure after migration',
@@ -381,7 +381,7 @@ describe('3.3.x-to-4.0.0 — Phase 4 deprecation banner (AC5)', () => {
 
     assert.equal(r.bannerAdded, true);
     const updated = fs.readFileSync(path.join(tmp, '_bmad/core/bmad-init/SKILL.md'), 'utf8');
-    assert.match(updated, /> ⚠️ \*\*DEPRECATED in Convoke 4\.0\*\*/);
+    assert.match(updated, /> ⚠️ \*\*DEPRECATED in BMAD Odoo 4\.0\*\*/);
     // Original body preserved
     assert.match(updated, /# bmad-init/);
     assert.match(updated, /Original body\./);
@@ -390,8 +390,8 @@ describe('3.3.x-to-4.0.0 — Phase 4 deprecation banner (AC5)', () => {
   it('is idempotent when banner already present (sentinel-detected)', async () => {
     // Idempotency now uses the stable HTML-comment sentinel (survives banner
     // wording changes). Fixture includes the sentinel.
-    const sentinel = '<!-- convoke:deprecation-banner:bmad-init -->';
-    const banner = `${sentinel}\n> ⚠️ **DEPRECATED in Convoke 4.0** — already here`;
+    const sentinel = '<!-- bmad-odoo:deprecation-banner:bmad-init -->';
+    const banner = `${sentinel}\n> ⚠️ **DEPRECATED in BMAD Odoo 4.0** — already here`;
     seedPreV4Project(tmp, {
       canonicalEntries: [{ file: '_bmad/bmm/a/SKILL.md', module: 'bmm', agentName: 'a' }],
       bmadInitContent: `---\nname: bmad-init\n---\n\n${banner}\n\n# bmad-init\n`,
@@ -444,7 +444,7 @@ describe('3.3.x-to-4.0.0 — Phase 5 doctor diff (AC6)', () => {
     });
     // Simulate chalk/ANSI-colored output: the ✗ marker is wrapped in red.
     const coloredDoctor = [
-      'Running convoke-doctor...',
+      'Running bmad-doctor...',
       '',
       '  [31m✗[0m Check with color',
       '    Detail line',
@@ -516,7 +516,7 @@ describe('3.3.x-to-4.0.0 — preview() (AC7)', () => {
     assert.ok(r.actions.length >= 3);
     assert.ok(r.actions.some(a => /2 upstream-BMAD SKILL\.md/.test(a)), 'action should cite canonical count');
     assert.ok(r.actions.some(a => /deprecation banner/.test(a)));
-    assert.ok(r.actions.some(a => /convoke-doctor/.test(a)));
+    assert.ok(r.actions.some(a => /bmad-doctor/.test(a)));
 
     const snapshotAfter = fs.readdirSync(tmp);
     assert.deepEqual(snapshotBefore, snapshotAfter, 'preview() must not mutate filesystem');
@@ -739,7 +739,7 @@ describe('3.3.x-to-4.0.0 — robustness (1A.5)', () => {
         'SKILL.md should still be v4-rewritten (no regression from state-file loss)');
 
       const bannerContent = fs.readFileSync(path.join(tmp, '_bmad/core/bmad-init/SKILL.md'), 'utf8');
-      const bannerCount = (bannerContent.match(/convoke:deprecation-banner:bmad-init/g) || []).length;
+      const bannerCount = (bannerContent.match(/bmad-odoo:deprecation-banner:bmad-init/g) || []).length;
       assert.equal(bannerCount, 1, 'deprecation banner must NOT be duplicated after state-file loss');
 
       // Second run should report Phase 3 skipped all files (pattern not found) and Phase 4 no-op.

@@ -66,8 +66,8 @@ dir/old.md -> dir/new.md
   Line 2: "..."
   Line 3: "..."
   Git author: Name (date)
-  Suggested: convoke (source: folder-default, confidence: low)
-  REVIEW SUGGESTION: Accept 'convoke' or specify initiative
+  Suggested: bmad-odoo (source: folder-default, confidence: low)
+  REVIEW SUGGESTION: Accept 'bmad-odoo' or specify initiative
 [!] dir/file.md -> ??? (ambiguous -- type: prd, initiative unknown)
   Line 1: "..."
   ACTION REQUIRED: Specify initiative for this file

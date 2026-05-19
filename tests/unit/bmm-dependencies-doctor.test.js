@@ -9,7 +9,7 @@ const os = require('os');
 const {
   checkBmmDependencies,
   BMM_DRIFT_SUMMARY_THRESHOLD,
-} = require('../../scripts/convoke-doctor');
+} = require('../../scripts/bmad-doctor');
 
 const {
   CSV_HEADER,

@@ -236,7 +236,7 @@ function writeResults(resultsPath, allResults, judgeModel, gate, totalApiCalls, 
   const wallClockSeconds = (endTime - startTime) / 1000;
 
   const frontmatter = {
-    initiative: 'convoke',
+    initiative: 'bmad-odoo',
     artifact_type: 'validation-results',
     story: 'v63-4-2-create-pf1-validation-battery-harness',
     gate_verdict: gate.verdict,

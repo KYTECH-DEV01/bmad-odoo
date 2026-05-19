@@ -1,5 +1,5 @@
 ---
-initiative: convoke
+initiative: bmad-odoo
 artifact_type: playbook
 qualifier: host-framework-sync
 created: '2026-04-27'
@@ -12,7 +12,7 @@ winston_signoff_status: pending
 
 > **STATUS: OUTLINE — INCOMPLETE**
 >
-> This playbook is an OUTLINE shipped via [Story 5A.2](../_bmad-output/implementation-artifacts/v63-5a-2-create-strategic-adr-and-playbook-outline.md) (Convoke 4.0 Sprint 1). Sections (a) Release Class Definition, (b) Trigger Criteria, and (c) Workstream Template Outline ship complete. **Sections (d) Validation Battery Reference and (e) Known Pitfalls + Winston sign-off are pending [Story 5B.3](../_bmad-output/planning-artifacts/convoke-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).**
+> This playbook is an OUTLINE shipped via [Story 5A.2](../_bmad-output/implementation-artifacts/v63-5a-2-create-strategic-adr-and-playbook-outline.md) (BMAD Odoo 4.0 Sprint 1). Sections (a) Release Class Definition, (b) Trigger Criteria, and (c) Workstream Template Outline ship complete. **Sections (d) Validation Battery Reference and (e) Known Pitfalls + Winston sign-off are pending [Story 5B.3](../_bmad-output/planning-artifacts/bmad-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).**
 >
 > **DO NOT use this outline alone as a release template.** Release execution requires the completed playbook. Future maintainers attempting `host_framework_sync v6.4+` adoption MUST verify `winston_signoff_status: signed-off` in frontmatter (and absence of HTML-comment hand-off markers — see Story 5B.3 hand-off pattern below) before proceeding.
 
@@ -20,20 +20,20 @@ winston_signoff_status: pending
 
 ## (a) Release Class Definition
 
-A `host_framework_sync` release is a **coordinated platform alignment release** in which Convoke adopts an upstream framework's new major version. Convoke's runtime, agent skills, and distribution mechanics are derived from BMAD METHOD (the upstream "host framework"); when BMAD ships a major version (v6.3 → v6.4 → v7.0 …), Convoke's downstream-of-BMAD positioning per [`adr-bmad-coupling-v4.0.md`](adr/adr-bmad-coupling-v4.0.md) requires a coordinated re-sync.
+A `host_framework_sync` release is a **coordinated platform alignment release** in which BMAD Odoo adopts an upstream framework's new major version. BMAD Odoo's runtime, agent skills, and distribution mechanics are derived from BMAD METHOD (the upstream "host framework"); when BMAD ships a major version (v6.3 → v6.4 → v7.0 …), BMAD Odoo's downstream-of-BMAD positioning per [`adr-bmad-coupling-v4.0.md`](adr/adr-bmad-coupling-v4.0.md) requires a coordinated re-sync.
 
 **What's in scope for a `host_framework_sync` release:**
 
-- **Migration of existing user installs** from the prior Convoke version (BMAD-Nx-coupled) to the new Convoke version (BMAD-N+1-coupled). Filesystem-level migration is the primary user-facing surface.
+- **Migration of existing user installs** from the prior BMAD Odoo version (BMAD-Nx-coupled) to the new BMAD Odoo version (BMAD-N+1-coupled). Filesystem-level migration is the primary user-facing surface.
 - **Marketplace registration / re-registration** at upstream's plugin marketplace, if upstream introduced a new schema or contract for community modules.
 - **Distribution channel parity** (npm + marketplace + platform-agnostic exporters) verified across all supported channels.
-- **BMM / shared-config dependency-registry sweep** for any framework-level paths or conventions that changed upstream. The `bmm-dependencies.csv` registry is the surfacing mechanism; updates here gate `convoke-doctor`'s post-install validation.
+- **BMM / shared-config dependency-registry sweep** for any framework-level paths or conventions that changed upstream. The `bmm-dependencies.csv` registry is the surfacing mechanism; updates here gate `bmad-doctor`'s post-install validation.
 - **Behavioral-equivalence validation** against the prior release on a representative sample of agent skills (PF1 validation cycle), to confirm that the framework upgrade did not introduce regressions in operator-observable agent behavior.
 
 **What's NOT in scope for a `host_framework_sync` release:**
 
-- Net-new Convoke features (new agents, new workflows, new skills) unrelated to the framework alignment. Those land in feature releases (e.g., 4.1, 4.2 minor releases between `host_framework_sync` events).
-- Changes to Convoke's strategic posture toward BMAD coupling. Those revisions live in follow-on ADRs (`adr-bmad-coupling-v4.x.md`) per [Revalidation Trigger](adr/adr-bmad-coupling-v4.0.md#revalidation-trigger). The playbook executes the strategic bet; it does not re-bet.
+- Net-new BMAD Odoo features (new agents, new workflows, new skills) unrelated to the framework alignment. Those land in feature releases (e.g., 4.1, 4.2 minor releases between `host_framework_sync` events).
+- Changes to BMAD Odoo's strategic posture toward BMAD coupling. Those revisions live in follow-on ADRs (`adr-bmad-coupling-v4.x.md`) per [Revalidation Trigger](adr/adr-bmad-coupling-v4.0.md#revalidation-trigger). The playbook executes the strategic bet; it does not re-bet.
 
 **Why this is a named, reusable release class.** Per innovation hypothesis I1 (PRD `innovation-novel-patterns.md:11-30`), naming this release class makes it template-reusable: future BMAD major revs apply the playbook structure (this document) instead of reinventing the release plan from scratch. The hypothesis target is **≥50% content reuse** at v6.4, v7.0, and beyond.
 
@@ -44,17 +44,17 @@ A `host_framework_sync` release is a **coordinated platform alignment release** 
 A release qualifies as `host_framework_sync` when **one or more** of the following conditions is met (typically all three at once):
 
 1. **BMAD upstream major-version release.** A new BMAD major version drops (e.g., v6.4, v7.0). This is the canonical trigger.
-2. **Shared-infrastructure change.** Upstream changes affect Convoke's runtime contracts — config-loader format, skill-format spec, install-path conventions, BMM module structure, or `_bmad/_config/` schema. Detected via `convoke-doctor` BMM-dependency check + `bmm-dependencies.csv` diff.
-3. **Marketplace contract change.** Upstream changes the plugin marketplace's `registry-schema.yaml`, PluginResolver behavior, or community-tier requirements in ways that require Convoke's `convoke.yaml` registry entry to be re-authored or re-validated.
+2. **Shared-infrastructure change.** Upstream changes affect BMAD Odoo's runtime contracts — config-loader format, skill-format spec, install-path conventions, BMM module structure, or `_bmad/_config/` schema. Detected via `bmad-doctor` BMM-dependency check + `bmm-dependencies.csv` diff.
+3. **Marketplace contract change.** Upstream changes the plugin marketplace's `registry-schema.yaml`, PluginResolver behavior, or community-tier requirements in ways that require BMAD Odoo's `bmad-odoo.yaml` registry entry to be re-authored or re-validated.
 
 **Operational checklist (use this at trigger evaluation time):**
 
 - [ ] Has BMAD shipped a new major version? (`semver` major-bump on `bmad-method` npm package OR upstream repo.)
-- [ ] Does `convoke-doctor` BMM-dependency check report any changes vs the previous Convoke release?
+- [ ] Does `bmad-doctor` BMM-dependency check report any changes vs the previous BMAD Odoo release?
 - [ ] Does `validate-marketplace` report schema drift vs upstream `registry/registry-schema.yaml`?
 - [ ] Are there breaking changes to canonical agent skill format (SKILL.md structure, slash-command activation, frontmatter contract)?
 
-If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box 1** ticked AND boxes 2 + 3 + 4 are unticked (no shared-infra change, no marketplace contract change, no skill-format break), the release may be a minor `host_framework_track` (Convoke's prior version stays compatible; ship as a feature release with version-bump only).
+If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box 1** ticked AND boxes 2 + 3 + 4 are unticked (no shared-infra change, no marketplace contract change, no skill-format break), the release may be a minor `host_framework_track` (BMAD Odoo's prior version stays compatible; ship as a feature release with version-bump only).
 
 **Anti-vapor anchor (per PM5).** A release is not `host_framework_sync` because someone says it is — it qualifies because the trigger criteria above objectively apply. Conversely, a release that meets the criteria IS `host_framework_sync` even if maintainer bandwidth tempts skipping the playbook.
 
@@ -64,7 +64,7 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 ## (c) Workstream Template Outline
 
-> **The 5 workstreams below (WS1 / WS2 / WS3 / WS4 / WS5) are WORKED EXAMPLES from Convoke 4.0's actual structure** (BMAD v6.3 adoption). **Future releases will define their own workstreams based on what changed upstream.** Use this as a pattern-template:
+> **The 5 workstreams below (WS1 / WS2 / WS3 / WS4 / WS5) are WORKED EXAMPLES from BMAD Odoo 4.0's actual structure** (BMAD v6.3 adoption). **Future releases will define their own workstreams based on what changed upstream.** Use this as a pattern-template:
 > 1. Identify what changed upstream (using Trigger Criteria from Section (b)).
 > 2. Map each change to a workstream.
 > 3. For each workstream, define **purpose** + **2-3 template-tasks**.
@@ -73,7 +73,7 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 ### WS1 — Migration
 
-**Purpose.** Move existing Convoke installs from the prior framework version to the new one with empty filesystem diff per controlled fixture. The migration script is the primary user-facing surface during upgrade — its safety properties are load-bearing.
+**Purpose.** Move existing BMAD Odoo installs from the prior framework version to the new one with empty filesystem diff per controlled fixture. The migration script is the primary user-facing surface during upgrade — its safety properties are load-bearing.
 
 **Template tasks:**
 - Draft migration script per phase-pattern (Detect → Verify configs → Sweep targets → Deprecate prior surfaces → Doctor diff).
@@ -82,30 +82,30 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 ### WS2 — Marketplace
 
-**Purpose.** Maintain Convoke's presence in the upstream plugin marketplace, registering or re-registering with the new framework version's contract. This is Convoke's primary external distribution channel beyond npm.
+**Purpose.** Maintain BMAD Odoo's presence in the upstream plugin marketplace, registering or re-registering with the new framework version's contract. This is BMAD Odoo's primary external distribution channel beyond npm.
 
 **Template tasks:**
-- Author or update `convoke.yaml` registry-submission file to match upstream `registry/registry-schema.yaml`.
+- Author or update `bmad-odoo.yaml` registry-submission file to match upstream `registry/registry-schema.yaml`.
 - Open PR against upstream marketplace repo (`bmad-plugins-marketplace`); pass PluginResolver validation OR document Path-C manual schema-match per OP-4.
 - Capture PR open + validation evidence in story-level artifacts (PR link, validation log, M12a status).
 
 ### WS3 — Distribution
 
-**Purpose.** Verify Convoke installs cleanly across all supported distribution channels (npm + marketplace + platform-agnostic exporters → Claude Code + Copilot + Cursor adapters). Distribution-channel parity is the operationalization of "ships everywhere, starting with the BMAD marketplace."
+**Purpose.** Verify BMAD Odoo installs cleanly across all supported distribution channels (npm + marketplace + platform-agnostic exporters → Claude Code + Copilot + Cursor adapters). Distribution-channel parity is the operationalization of "ships everywhere, starting with the BMAD marketplace."
 
 **Template tasks:**
-- Test fresh `npm install` of new Convoke version on a clean sandbox.
+- Test fresh `npm install` of new BMAD Odoo version on a clean sandbox.
 - Test marketplace install path simulation (PluginResolver-equivalent) — verify file-set parity vs npm install.
 - Run platform-agnostic exporter on a representative skill batch; verify all adapters generate cleanly (no framework leaks; ready-to-drop format).
 
 ### WS4 — Dependencies
 
-**Purpose.** Sweep the BMM (or upstream-equivalent) dependency registry for any changes affecting Convoke. Updates to `bmm-dependencies.csv` (or successor) are the surfacing mechanism for "silent breakage becomes visible." `convoke-doctor` consumes the registry at install time.
+**Purpose.** Sweep the BMM (or upstream-equivalent) dependency registry for any changes affecting BMAD Odoo. Updates to `bmm-dependencies.csv` (or successor) are the surfacing mechanism for "silent breakage becomes visible." `bmad-doctor` consumes the registry at install time.
 
 **Template tasks:**
 - Run audit script (`audit-bmm-dependencies.js` or successor) against the new framework version.
-- Diff results vs prior Convoke release; classify changes (added / removed / renamed / behavior-changed dependencies).
-- Update `bmm-dependencies.csv` registry; verify `convoke-doctor` BMM-dependency check passes against the new state.
+- Diff results vs prior BMAD Odoo release; classify changes (added / removed / renamed / behavior-changed dependencies).
+- Update `bmm-dependencies.csv` registry; verify `bmad-doctor` BMM-dependency check passes against the new state.
 
 ### WS5 — Release Discipline
 
@@ -122,7 +122,7 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 <!-- TODO-5B3-SECTION-D: Validation Battery Reference -->
 
-**Pending [Story 5B.3](../_bmad-output/planning-artifacts/convoke-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).** Will cite Story 4.3 PF1 validation cycle ([`v63-4-3-execute-pf1-validation-cycle-record-compare-and-gate.md`](../_bmad-output/implementation-artifacts/v63-4-3-execute-pf1-validation-cycle-record-compare-and-gate.md)) + Story 4.4 drift snapshot ([`v63-4-4-create-drift-snapshot-workflow.md`](../_bmad-output/implementation-artifacts/v63-4-4-create-drift-snapshot-workflow.md)) as the validation infrastructure for behavioral equivalence at each `host_framework_sync` release. Includes drift threshold T (numeric, NFR30), 5-agent × 4-prompt × 3-judge-runs orchestration, and PASS/INVESTIGATE/FAIL gate semantics per [`convoke-arch-bmad-v6.3-adoption.md:362-368`](../_bmad-output/planning-artifacts/convoke-arch-bmad-v6.3-adoption.md).
+**Pending [Story 5B.3](../_bmad-output/planning-artifacts/bmad-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).** Will cite Story 4.3 PF1 validation cycle ([`v63-4-3-execute-pf1-validation-cycle-record-compare-and-gate.md`](../_bmad-output/implementation-artifacts/v63-4-3-execute-pf1-validation-cycle-record-compare-and-gate.md)) + Story 4.4 drift snapshot ([`v63-4-4-create-drift-snapshot-workflow.md`](../_bmad-output/implementation-artifacts/v63-4-4-create-drift-snapshot-workflow.md)) as the validation infrastructure for behavioral equivalence at each `host_framework_sync` release. Includes drift threshold T (numeric, NFR30), 5-agent × 4-prompt × 3-judge-runs orchestration, and PASS/INVESTIGATE/FAIL gate semantics per [`bmad-arch-bmad-v6.3-adoption.md:362-368`](../_bmad-output/planning-artifacts/bmad-arch-bmad-v6.3-adoption.md).
 
 ---
 
@@ -130,7 +130,7 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 <!-- TODO-5B3-SECTION-E: Known Pitfalls -->
 
-**Pending [Story 5B.3](../_bmad-output/planning-artifacts/convoke-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).** Will be populated from Convoke 4.0 retrospective in [Story 5B.2](../_bmad-output/planning-artifacts/convoke-epic-bmad-v6.3-adoption.md#story-5b2-run-retrospective-and-create-anti-pattern-registry). Anticipated lessons learned to surface (will refine post-retro):
+**Pending [Story 5B.3](../_bmad-output/planning-artifacts/bmad-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) (Sprint 5 close).** Will be populated from BMAD Odoo 4.0 retrospective in [Story 5B.2](../_bmad-output/planning-artifacts/bmad-epic-bmad-v6.3-adoption.md#story-5b2-run-retrospective-and-create-anti-pattern-registry). Anticipated lessons learned to surface (will refine post-retro):
 
 - Registry-pattern constraint discovery (Story 1A.4 — migration name `3.x` invalid; required parallel entries `3.0.x-to-4.0.0` / `3.1.x-to-4.0.0` / `3.2.x-to-4.0.0` thin wrappers for full chain coverage).
 - Path-C marketplace submission precedent (Story 3.3 — upstream had no community-tier CI at submission time; manual schema-match closed M12a per OP-4 framing).
@@ -143,7 +143,7 @@ If **≥2 boxes ticked**, this is a `host_framework_sync` release. If only **box
 
 <!-- TODO-5B3-SIGNOFF: Winston sign-off -->
 
-**Winston sign-off:** PENDING ([Story 5B.3](../_bmad-output/planning-artifacts/convoke-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) close).
+**Winston sign-off:** PENDING ([Story 5B.3](../_bmad-output/planning-artifacts/bmad-epic-bmad-v6.3-adoption.md#story-5b3-complete-playbook-and-ship-release-artifacts) close).
 
 **Hand-off contract for Story 5B.3 author.** Active hand-off markers are HTML comments in the form `<!-- (todo-tag-prefix)-SECTION-D -->`, `<!-- (todo-tag-prefix)-SECTION-E -->`, `<!-- (todo-tag-prefix)-SIGNOFF -->` in this playbook, plus `<!-- (todo-tag-prefix)-CHANGELOG-SIGNOFF -->` in `CHANGELOG.md`. The actual prefix is `TODO` followed by a dash and `5B3` followed by a dash; this prose deliberately omits the literal prefix to keep the discovery `grep` clean (a maintainer running the recommended grep must see ONLY the live markers, not narrative references to them). Recommended discovery commands (run from repo root):
 
@@ -157,6 +157,6 @@ Complete each marker block with the substantive content described above (section
 ## References
 
 - **Strategic-bet ADR (this playbook's parent decision):** [`adr/adr-bmad-coupling-v4.0.md`](adr/adr-bmad-coupling-v4.0.md)
-- **PRD (canonical source for FR31 + FR32 + M13 contracts):** [`../_bmad-output/planning-artifacts/convoke-prd-bmad-v6.3-adoption/index.md`](../_bmad-output/planning-artifacts/convoke-prd-bmad-v6.3-adoption/index.md) (sharded; entry point)
-- **Innovation hypothesis I1 (playbook reusability target):** [`../_bmad-output/planning-artifacts/convoke-prd-bmad-v6.3-adoption/innovation-novel-patterns.md`](../_bmad-output/planning-artifacts/convoke-prd-bmad-v6.3-adoption/innovation-novel-patterns.md)
-- **Sprint 1 experiments (empirical floor for the strategic bet):** [`../_bmad-output/planning-artifacts/convoke-note-sprint-1-experiments.md`](../_bmad-output/planning-artifacts/convoke-note-sprint-1-experiments.md)
+- **PRD (canonical source for FR31 + FR32 + M13 contracts):** [`../_bmad-output/planning-artifacts/bmad-prd-bmad-v6.3-adoption/index.md`](../_bmad-output/planning-artifacts/bmad-prd-bmad-v6.3-adoption/index.md) (sharded; entry point)
+- **Innovation hypothesis I1 (playbook reusability target):** [`../_bmad-output/planning-artifacts/bmad-prd-bmad-v6.3-adoption/innovation-novel-patterns.md`](../_bmad-output/planning-artifacts/bmad-prd-bmad-v6.3-adoption/innovation-novel-patterns.md)
+- **Sprint 1 experiments (empirical floor for the strategic bet):** [`../_bmad-output/planning-artifacts/bmad-note-sprint-1-experiments.md`](../_bmad-output/planning-artifacts/bmad-note-sprint-1-experiments.md)

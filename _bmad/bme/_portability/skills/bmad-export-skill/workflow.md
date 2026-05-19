@@ -35,9 +35,9 @@ Use the project root to construct the command. Default output: `./exported-skill
 
 | Mode | Command |
 |---|---|
-| Single skill | `node scripts/portability/convoke-export.js <name> --output <path>` |
-| Tier batch | `node scripts/portability/convoke-export.js --tier <N> --output <path>` |
-| All | `node scripts/portability/convoke-export.js --all --output <path>` |
+| Single skill | `node scripts/portability/bmad-export.js <name> --output <path>` |
+| Tier batch | `node scripts/portability/bmad-export.js --tier <N> --output <path>` |
+| All | `node scripts/portability/bmad-export.js --all --output <path>` |
 
 Add `--dry-run` if the user requested a preview.
 
@@ -57,7 +57,7 @@ Parse the command output and exit code:
 - Report: "Skill `<name>` was not found in the manifest. Check the spelling or run `/bmad-help` to see available skills."
 
 **Exit 3 — Tier not supported:**
-- Report: "Tier 3 (pipeline) skills cannot be exported — they require the full Convoke framework."
+- Report: "Tier 3 (pipeline) skills cannot be exported — they require the full BMAD Odoo framework."
 
 **Exit 4 — Partial failure (batch):**
 - Count `✅` and `❌` lines

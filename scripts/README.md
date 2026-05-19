@@ -1,6 +1,6 @@
-# Convoke Installation Scripts
+# BMAD Odoo Installation Scripts
 
-This directory contains npm-based installation scripts for Convoke agents.
+This directory contains npm-based installation scripts for BMAD Odoo agents.
 
 ## Available Scripts
 
@@ -64,7 +64,7 @@ Runs automatically after `npm install` to display installation instructions.
 ## Installation Flow
 
 ```
-npm install convoke
+npm install bmad-odoo
        ↓
 postinstall.js runs
        ↓

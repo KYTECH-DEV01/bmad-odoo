@@ -2,7 +2,7 @@
 name: 'step-c-03-qualify'
 description: 'Qualifying gate for Create mode — walk gathered intakes, assign Lane + Portfolio + RICE per intake (or keep raw)'
 nextStepFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/steps-c/step-c-04-generate.md'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/rice-scoring-guide.md'
 processFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/lifecycle-process-spec.md'
 advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.md'

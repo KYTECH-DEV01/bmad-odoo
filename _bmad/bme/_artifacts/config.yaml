@@ -1,6 +1,6 @@
 name: artifacts
 version: 4.0.0-rc.1
-description: "Artifacts module — operator-facing skills for the Convoke artifact system (migration, portfolio status, future Experience Contract validation)"
+description: "Artifacts module — operator-facing skills for the BMAD Odoo artifact system (migration, portfolio status, future Experience Contract validation)"
 # Workflows in this module are STANDALONE (operator invokes them directly via slash command),
 # unlike _enhance workflows which patch into a target_agent's menu. The `standalone: true`
 # flag is consumed by refresh-installation.js (Story 6.6) to skip menu-patching and only

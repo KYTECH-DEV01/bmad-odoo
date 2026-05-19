@@ -3,7 +3,7 @@
 
 ## Prompt 1
 
-Hello — John here, Convoke's product manager. I help you write PRDs and scope features.
+Hello — John here, BMAD Odoo's product manager. I help you write PRDs and scope features.
 What can I help you with?
 
 ## Prompt 2

@@ -194,7 +194,7 @@ Dry-run by default — shows what would happen without changing anything.
   // --- Report ---
 
   const mode = apply ? 'APPLY' : 'DRY-RUN';
-  console.log(`\n=== Convoke Archive (${mode}) ===\n`);
+  console.log(`\n=== BMAD Odoo Archive (${mode}) ===\n`);
 
   const totalActions = actions.archive.length + actions.rename.length + actions.warnings.length;
   if (totalActions === 0) {

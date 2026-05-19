@@ -7,7 +7,7 @@ const { refreshInstallation } = require('./lib/refresh-installation');
 const { findProjectRoot } = require('./lib/utils');
 
 /**
- * Convoke Migrate CLI
+ * BMAD Odoo Migrate CLI
  * Manual migration control for advanced users
  */
 
@@ -18,7 +18,7 @@ async function main() {
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
     console.error('');
-    console.error(chalk.red('Not in a Convoke project. Could not find _bmad/ directory.'));
+    console.error(chalk.red('Not in a BMAD Odoo project. Could not find _bmad/ directory.'));
     console.error('');
     process.exit(1);
   }
@@ -39,7 +39,7 @@ async function main() {
     console.error('');
     console.error(chalk.red(`Migration '${migrationName}' not found.`));
     console.error('');
-    console.error('Run ' + chalk.cyan('npx -p convoke-agents convoke-migrate') + ' to see available migrations.');
+    console.error('Run ' + chalk.cyan('npx -p bmad-odoo bmad-migrate') + ' to see available migrations.');
     console.error('');
     process.exit(1);
   }
@@ -152,10 +152,10 @@ function showAvailableMigrations() {
     console.log('');
   });
 
-  console.log('Usage: ' + chalk.cyan('npx -p convoke-agents convoke-migrate <migration-name>'));
+  console.log('Usage: ' + chalk.cyan('npx -p bmad-odoo bmad-migrate <migration-name>'));
   console.log('');
   console.log(chalk.yellow('Warning: Manual migrations bypass safety checks.'));
-  console.log(chalk.yellow('         Use ' + chalk.cyan('npx -p convoke-agents convoke-update') + ' for normal updates.'));
+  console.log(chalk.yellow('         Use ' + chalk.cyan('npx -p bmad-odoo bmad-update') + ' for normal updates.'));
   console.log('');
 }
 

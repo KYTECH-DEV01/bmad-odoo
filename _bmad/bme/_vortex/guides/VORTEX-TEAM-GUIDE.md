@@ -1,7 +1,7 @@
 # The Vortex Deep Dive — Product Discovery from Context to Decision
 
 **Team:** Vortex Pattern (7 Agents, 22 Workflows, 10 Handoff Contracts)
-**Module:** Convoke (bme)
+**Module:** BMAD Odoo (bme)
 **Version:** 3.0.4
 **Last Updated:** 2026-04-05
 

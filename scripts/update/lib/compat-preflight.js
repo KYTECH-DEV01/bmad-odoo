@@ -4,8 +4,8 @@
  * @module scripts/update/lib/compat-preflight
  *
  * Story v63-3-2 (Epic 3 / FR23): runtime BMAD-version compatibility
- * preflight check. Called from `convoke-install`, `convoke-install-gyre`,
- * and `convoke-update` entry points BEFORE any filesystem writes.
+ * preflight check. Called from `bmad-install`, `bmad-install-gyre`,
+ * and `bmad-update` entry points BEFORE any filesystem writes.
  *
  * Detection strategy (Decision 1, pinned in story spec):
  *   1. Read `node_modules/bmad-method/package.json` `version` field.
@@ -14,9 +14,9 @@
  *   4. If absent / unparseable / missing version field: yellow WARNING
  *      "BMAD core not detected" — exit 0 (best-effort detection).
  *
- * Critical caveat: Convoke does NOT depend on `bmad-method` in its own
+ * Critical caveat: BMAD Odoo does NOT depend on `bmad-method` in its own
  * package.json (it's a parallel BMAD extension, not a dependent), so the
- * absent-package WARNING is the ONLY path that fires on Convoke's own dev
+ * absent-package WARNING is the ONLY path that fires on BMAD Odoo's own dev
  * machine + most CI runners. Live smoke (Task 8.4) verifies the WARNING
  * appears; mocked node_modules fixtures verify the version-present
  * branches.
@@ -132,7 +132,7 @@ function runCompatPreflight(projectRoot) {
     return { detected: true, version: probe.version, warning: null };
   }
 
-  const msg = `BMAD ${probe.version} detected; Convoke 4.0 requires >= ${REQUIRED_BMAD_VERSION}. Upgrade BMAD core: npm install ${BMAD_PACKAGE_NAME}@latest`;
+  const msg = `BMAD ${probe.version} detected; BMAD Odoo 4.0 requires >= ${REQUIRED_BMAD_VERSION}. Upgrade BMAD core: npm install ${BMAD_PACKAGE_NAME}@latest`;
   process.stderr.write(chalk.yellow(`  ⚠ ${msg}\n`));
   return { detected: true, version: probe.version, warning: msg };
 }

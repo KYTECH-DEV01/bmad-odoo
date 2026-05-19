@@ -7,7 +7,7 @@ const { AGENT_IDS, WORKFLOW_NAMES } = require('./agent-registry');
 const { assertVersion } = require('./utils');
 
 /**
- * Config Merger for Convoke
+ * Config Merger for BMAD Odoo
  * Smart YAML merging preserving user settings
  *
  * ag-7-1 (I29): mergeConfig now returns a sentinel-tagged structure that carries
@@ -17,7 +17,7 @@ const { assertVersion } = require('./utils');
  * caller that passes a bare object.
  */
 
-const MERGED_DOC_SENTINEL = Symbol.for('convoke.config-merger.docMerged');
+const MERGED_DOC_SENTINEL = Symbol.for('bmad-odoo.config-merger.docMerged');
 
 /**
  * Read `excluded_agents` from a module's config.yaml without going through the

@@ -10,7 +10,7 @@ const { execFileSync } = require('node:child_process');
  *
  * BREAKING change. Rewrites 18 upstream-BMAD SKILL.md activation blocks from
  * `bmad-init`-invoking pattern to v4 direct-YAML-load pattern. Marks bmad-init
- * deprecated. Validates via convoke-doctor JSON diff.
+ * deprecated. Validates via bmad-doctor JSON diff.
  *
  * Five phases (see story v63-1a-4 spec for full details):
  *   1. Detect — is this a pre-v4 install?
@@ -34,17 +34,17 @@ const BMAD_INIT_SKILL_MD_RELATIVE = '_bmad/core/bmad-init/SKILL.md';
 
 // The HTML-comment sentinel is the stable idempotency marker — survives banner
 // wording changes (e.g., a 4.1 rephrase) so we never accidentally double-insert.
-const DEPRECATION_BANNER_SENTINEL = '<!-- convoke:deprecation-banner:bmad-init -->';
+const DEPRECATION_BANNER_SENTINEL = '<!-- bmad-odoo:deprecation-banner:bmad-init -->';
 const DEPRECATION_BANNER =
   DEPRECATION_BANNER_SENTINEL + '\n' +
-  '> ⚠️ **DEPRECATED in Convoke 4.0** — this skill is retained for one-version ' +
+  '> ⚠️ **DEPRECATED in BMAD Odoo 4.0** — this skill is retained for one-version ' +
   "backwards-compat only. The config-loading path has moved to direct-YAML reads " +
   'via `scripts/update/lib/config-loader.js`. `bmad-init` will be removed in ' +
-  'Convoke 4.1.';
+  'BMAD Odoo 4.1.';
 
 const V4_ACTIVATION_TEMPLATE = [
   '1. **Load config** — Read `{project-root}/_bmad/{module}/config.yaml` directly. Do NOT invoke the deprecated `bmad-init` skill.',
-  '   - If the config file is missing or unreadable, STOP and display: "Config error: `_bmad/{module}/config.yaml` could not be loaded. Run `convoke-install` to bootstrap."',
+  '   - If the config file is missing or unreadable, STOP and display: "Config error: `_bmad/{module}/config.yaml` could not be loaded. Run `bmad-install` to bootstrap."',
   '   - Store all fields as session variables: `{user_name}`, `{communication_language}`, plus any module-specific vars.',
   '   - VERIFY required fields (`user_name`, `communication_language`) are present; STOP with an error if any are missing.',
 ].join('\n');
@@ -58,7 +58,7 @@ module.exports = {
   description:
     'v6.3 direct-load migration: rewrites 18 upstream-BMAD SKILL.md activation blocks ' +
     'from bmad-init invocation to v4 direct-YAML-load. Marks bmad-init deprecated. ' +
-    'Validates via convoke-doctor diff.',
+    'Validates via bmad-doctor diff.',
 
   async preview(projectRoot) {
     // migration-runner.js calls preview() with no args per existing contract;
@@ -125,10 +125,10 @@ module.exports = {
     // Phase 5 — Doctor diff (fail-soft)
     const phase5 = _phase5_doctorDiff(projectRoot);
     if (phase5.newFindings.length === 0) {
-      changes.push('Phase 5: convoke-doctor clean — no new findings after migration');
+      changes.push('Phase 5: bmad-doctor clean — no new findings after migration');
     } else {
       changes.push(
-        `Phase 5: convoke-doctor found ${phase5.newFindings.length} NEW finding(s) ` +
+        `Phase 5: bmad-doctor found ${phase5.newFindings.length} NEW finding(s) ` +
         `after migration (non-blocking warnings, see state file for details)`
       );
     }
@@ -143,7 +143,7 @@ function _previewActionsWithCount(count) {
   return [
     `Rewrite ${count} upstream-BMAD SKILL.md activation blocks using the v4 direct-YAML-load template (FM2-1 template-based, not substring replace)`,
     `Insert a deprecation banner at the top of ${BMAD_INIT_SKILL_MD_RELATIVE} (bmad-init is retained one-version for backwards-compat; removed in 4.1)`,
-    `Run convoke-doctor before + after and diff findings; new findings are reported as warnings (fail-soft per NFR9)`,
+    `Run bmad-doctor before + after and diff findings; new findings are reported as warnings (fail-soft per NFR9)`,
     `Write migration progress to ${STATE_FILE_RELATIVE} after each phase for basic resume safety (full resume/idempotency coverage lands in Story 1A.5)`,
   ];
 }
@@ -194,7 +194,7 @@ function _phase1_detect(projectRoot) {
 
 async function _phase2_verifyConfigs(projectRoot) {
   // Story 1A.5 AC3 option B: skip Phase 2 when an earlier invocation already
-  // completed it. Avoids re-running convoke-doctor on every resume (5–30s saved
+  // completed it. Avoids re-running bmad-doctor on every resume (5–30s saved
   // per attempt). Trade-off: Phase 5 diff uses the cached baseline — if the
   // environment changed between runs, stale findings may sneak through.
   // Operators who want a fresh baseline delete the state file before re-running.
@@ -369,7 +369,7 @@ function _phase5_doctorDiff(projectRoot) {
 
   if (newFindings.length > 0) {
     console.warn(
-      `[3.3.x-to-4.0.0] WARN: Phase 5 detected ${newFindings.length} new convoke-doctor ` +
+      `[3.3.x-to-4.0.0] WARN: Phase 5 detected ${newFindings.length} new bmad-doctor ` +
       `finding(s) after migration. These are non-blocking warnings — review post-run:`
     );
     for (const finding of newFindings) {
@@ -395,7 +395,7 @@ function _phase5_doctorDiff(projectRoot) {
  *
  * Intentionally does NOT allow `.claude/skills/` (FR8 names it as a broader
  * invariant, but this migration only rewrites SOURCE files under `_bmad/` —
- * installed `.claude/skills/` files are regenerated by `convoke-install` /
+ * installed `.claude/skills/` files are regenerated by `bmad-install` /
  * `refreshInstallation`, not by this migration).
  *
  * @param {string} absPath - Write target (may be relative or unresolved).
@@ -510,7 +510,7 @@ function _insertBannerAfterFrontmatter(content, banner) {
 
 function _runDoctor(projectRoot) {
   try {
-    const stdout = execFileSync('npx', ['-p', 'convoke-agents', 'convoke-doctor'], {
+    const stdout = execFileSync('npx', ['-p', 'bmad-odoo', 'bmad-doctor'], {
       cwd: projectRoot,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -527,27 +527,27 @@ function _runDoctor(projectRoot) {
     const hasStdout = err && err.stdout !== undefined && err.stdout !== null;
     if (err && err.code === 'ENOENT') {
       throw new Error(
-        `convoke-doctor unavailable: ${err.code} (${err.path || 'npx'} not on PATH). ` +
+        `bmad-doctor unavailable: ${err.code} (${err.path || 'npx'} not on PATH). ` +
         `Migration cannot capture a reliable doctor baseline.`,
         { cause: err }
       );
     }
     if (err && (err.signal === 'SIGTERM' || err.code === 'ETIMEDOUT')) {
       throw new Error(
-        `convoke-doctor timed out (60s) — migration cannot capture a reliable baseline.`,
+        `bmad-doctor timed out (60s) — migration cannot capture a reliable baseline.`,
         { cause: err }
       );
     }
     if (err && err.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
       throw new Error(
-        `convoke-doctor output exceeded maxBuffer (10 MB). ` +
+        `bmad-doctor output exceeded maxBuffer (10 MB). ` +
         `Migration cannot capture a reliable baseline.`,
         { cause: err }
       );
     }
     if (!hasStdout) {
       throw new Error(
-        `convoke-doctor failed with no stdout (${(err && err.code) || 'unknown'}). ` +
+        `bmad-doctor failed with no stdout (${(err && err.code) || 'unknown'}). ` +
         `Migration cannot capture a reliable baseline.`,
         { cause: err }
       );
@@ -558,7 +558,7 @@ function _runDoctor(projectRoot) {
 }
 
 /**
- * Parse convoke-doctor text output into `{findings: [{name, message}]}`.
+ * Parse bmad-doctor text output into `{findings: [{name, message}]}`.
  * Extracts lines starting with `✗` (failures) and normalizes them.
  *
  * The doctor doesn't currently support `--json`; we parse the human-readable

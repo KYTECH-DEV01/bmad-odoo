@@ -1,6 +1,6 @@
 # Backlog Format Specification
 
-Reference document for the **Convoke Initiative Lifecycle & Backlog** format. Loaded by the workflow during file write operations to ensure output matches the canonical structure defined by the lifecycle process.
+Reference document for the **BMAD Odoo Initiative Lifecycle & Backlog** format. Loaded by the workflow during file write operations to ensure output matches the canonical structure defined by the lifecycle process.
 
 All output must be standard markdown — no proprietary extensions, HTML embeds, or tool-specific syntax.
 
@@ -8,9 +8,9 @@ All output must be standard markdown — no proprietary extensions, HTML embeds,
 
 ## File Identity
 
-**Canonical filename:** `convoke-note-initiative-lifecycle-backlog.md`
-**Canonical location:** `{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md`
-**Supersedes:** `convoke-note-initiatives-backlog.md` (archived 2026-04-15 to `_archive/superseded/`)
+**Canonical filename:** `bmad-note-initiative-lifecycle-backlog.md`
+**Canonical location:** `{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md`
+**Supersedes:** `bmad-note-initiatives-backlog.md` (archived 2026-04-15 to `_archive/superseded/`)
 
 ---
 
@@ -20,14 +20,14 @@ Every backlog file begins with YAML frontmatter:
 
 ```yaml
 ---
-initiative: convoke
+initiative: bmad-odoo
 artifact_type: note
 qualifier: initiative-lifecycle-backlog
 created: 'YYYY-MM-DD'
 schema_version: 1
 status: draft | active
 origin: '<short origin description>'
-supersedes: convoke-note-initiatives-backlog.md
+supersedes: bmad-note-initiatives-backlog.md
 ---
 ```
 
@@ -40,7 +40,7 @@ The `created` date is set on first write and never changed thereafter.
 The file uses this exact structure. Sections must appear in this order.
 
 ```
-# Convoke Initiative Lifecycle & Backlog              (H1 — title)
+# BMAD Odoo Initiative Lifecycle & Backlog              (H1 — title)
 
 ## Part 1: Lifecycle Process                           (H2 — process definition, semi-static)
 ### 1.1 Intake                                         (H3)
@@ -105,7 +105,7 @@ The file uses this exact structure. Sections must appear in this order.
 - `Description`: One-line summary of the broken behavior + intended fix scope.
 - `R`, `I`, `C`, `E`: RICE component scores. Impact often hardcoded high (2–3) when user-facing.
 - `Score`: Composite, one decimal place.
-- `Portfolio`: Portfolio attachment (convoke, vortex, gyre, forge, bmm, enhance, loom, helm, or new).
+- `Portfolio`: Portfolio attachment (bmad-odoo, vortex, gyre, forge, bmm, enhance, loom, helm, or new).
 - `Status`: `Open`, `In Fix`, `In Review`, `Shipped`.
 - `Dependencies`: Comma-separated upstream item IDs (any lane). Use `—` when none. See Dependency Notation rules below.
 - `Linked Follow-up`: Reference to a Fast Lane or Initiative item if the bug spawned deeper work.

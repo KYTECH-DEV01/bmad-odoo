@@ -13,7 +13,7 @@ const registry = require('../migrations/registry');
 const { WORKFLOW_NAMES } = require('./agent-registry');
 
 /**
- * Migration Runner for Convoke
+ * Migration Runner for BMAD Odoo
  * Core orchestration: executes migration deltas, refreshes installation, handles backups and rollback.
  */
 
@@ -30,7 +30,7 @@ async function runMigrations(fromVersion, options = {}) {
   // Resolve project root
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    throw new Error('Not in a Convoke project. Could not find _bmad/ directory.');
+    throw new Error('Not in a BMAD Odoo project. Could not find _bmad/ directory.');
   }
 
   console.log('');
@@ -241,7 +241,7 @@ async function previewMigrations(migrations) {
   console.log(chalk.gray('  - Update user guides (with .bak backup)'));
   console.log('');
   console.log(chalk.green('To apply these changes, run:'));
-  console.log(chalk.cyan('  npx -p convoke-agents convoke-update'));
+  console.log(chalk.cyan('  npx -p bmad-odoo bmad-update'));
   console.log('');
 
   return { success: true, dryRun: true, previews };
@@ -324,7 +324,7 @@ async function createMigrationLog(projectRoot, fromVersion, toVersion, results, 
 
   const logFile = path.join(logsDir, `migration-${Date.now()}.log`);
   const logContent = [
-    `Convoke Migration Log`,
+    `BMAD Odoo Migration Log`,
     `Date: ${new Date().toISOString()}`,
     `From Version: ${fromVersion}`,
     `To Version: ${toVersion}`,
@@ -349,7 +349,7 @@ async function createErrorLog(projectRoot, fromVersion, toVersion, error, backup
 
   const logFile = path.join(logsDir, `migration-error-${Date.now()}.log`);
   const logContent = [
-    `Convoke Migration Error Log`,
+    `BMAD Odoo Migration Error Log`,
     `Date: ${new Date().toISOString()}`,
     `From Version: ${fromVersion}`,
     `To Version: ${toVersion}`,
@@ -362,7 +362,7 @@ async function createErrorLog(projectRoot, fromVersion, toVersion, error, backup
     backupMetadata ? `Backup: ${backupMetadata.backup_dir}` : 'No backup created',
     backupMetadata ? 'Status: ROLLED BACK' : 'Status: FAILED (no backup)',
     '',
-    'Please report this issue at: https://github.com/amalik/convoke-agents/issues'
+    'Please report this issue at: https://github.com/KYTECH-DEV01/bmad-odoo/issues'
   ].join('\n');
 
   await fs.writeFile(logFile, logContent, 'utf8');
@@ -391,7 +391,7 @@ async function runRefreshOnly(fromVersion, options = {}) {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    throw new Error('Not in a Convoke project. Could not find _bmad/ directory.');
+    throw new Error('Not in a BMAD Odoo project. Could not find _bmad/ directory.');
   }
 
   // 1. Acquire lock

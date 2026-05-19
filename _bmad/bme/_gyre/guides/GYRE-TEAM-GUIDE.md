@@ -1,7 +1,7 @@
 # The Gyre Deep Dive — Production Readiness Discovery
 
 **Team:** Gyre Pattern (4 Agents, 7 Workflows, 4 Handoff Contracts)
-**Module:** Convoke (bme)
+**Module:** BMAD Odoo (bme)
 **Version:** 1.0.0
 **Last Updated:** 2026-04-05
 

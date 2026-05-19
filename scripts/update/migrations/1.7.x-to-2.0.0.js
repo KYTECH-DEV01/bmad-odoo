@@ -3,8 +3,8 @@
 /**
  * Migration: 1.7.x -> current version (v2.0.0)
  * No-op delta - all file updates handled by refreshInstallation().
- * Product rename: BMAD-Enhanced -> Convoke.
- * CLI commands renamed from bmad-* to convoke-*.
+ * Product rename: BMAD-Enhanced -> BMAD Odoo.
+ * CLI commands renamed from bmad-* to bmad-*.
  * Internal _bmad/ directory structure preserved.
  */
 
@@ -16,9 +16,9 @@ module.exports = {
   async preview() {
     return {
       actions: [
-        'Product renamed from BMAD-Enhanced to Convoke',
-        'npm package: bmad-enhanced -> convoke-agents',
-        'CLI commands renamed: bmad-install-vortex-agents -> convoke-install-vortex, bmad-install-agents -> convoke-install, bmad-update -> convoke-update, bmad-version -> convoke-version, bmad-migrate -> convoke-migrate, bmad-doctor -> convoke-doctor',
+        'Product renamed from BMAD-Enhanced to BMAD Odoo',
+        'npm package: bmad-enhanced -> bmad-odoo',
+        'CLI commands renamed: bmad-install-vortex-agents -> bmad-install-vortex, bmad-install-agents -> bmad-install, bmad-update -> bmad-update, bmad-version -> bmad-version, bmad-migrate -> bmad-migrate, bmad-doctor -> bmad-doctor',
         'Internal _bmad/ directory structure preserved (no data loss)',
         'No version-specific changes needed (refresh handles all updates)'
       ]

@@ -8,7 +8,7 @@ version: 2.0.0
 
 # Initiative Lifecycle Backlog Workflow
 
-Manage the **Convoke Initiative Lifecycle & Backlog** — a three-lane (Bug / Fast / Initiative) model with a qualifying gate (Vortex, John, or Winston). Transforms unstructured findings into logged intakes, routes them through qualification, and keeps RICE scores calibrated across lanes over time.
+Manage the **BMAD Odoo Initiative Lifecycle & Backlog** — a three-lane (Bug / Fast / Initiative) model with a qualifying gate (Vortex, John, or Winston). Transforms unstructured findings into logged intakes, routes them through qualification, and keeps RICE scores calibrated across lanes over time.
 
 ## Workflow Structure
 
@@ -33,11 +33,11 @@ Loads the current backlog, lets you pick which lane(s) to walk (Bug / Fast / Ini
 ### [C] Create — Bootstrap New Lifecycle Backlog
 Generates a new lifecycle backlog file from scratch: Part 1 (canonical lifecycle process) verbatim from template + empty Part 2 lanes. Optionally gather initial intakes and run the qualifying gate on them.
 - **Steps:** Initialize & guard overwrite > Gather intakes (optional) > Qualify (optional) > Generate file
-- **When to use:** Starting a new project or creating a fresh backlog for a new domain. Existing Convoke backlog was bootstrapped on 2026-04-12.
+- **When to use:** Starting a new project or creating a fresh backlog for a new domain. Existing BMAD Odoo backlog was bootstrapped on 2026-04-12.
 
 ## Output
 
-**Artifact:** `{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md`
+**Artifact:** `{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md`
 **Templates:**
 - `templates/backlog-format-spec.md` — canonical file structure and table formats
 - `templates/lifecycle-process-spec.md` — canonical Part 1 content (Create mode only)
@@ -93,7 +93,7 @@ The **qualifying gate** is the decision point in Triage and Create modes where i
 
 The qualifier assigns:
 - **Lane:** Bug / Fast / Initiative (per §1.3 of lifecycle-process-spec.md)
-- **Portfolio:** convoke, vortex, gyre, forge, bmm, enhance, loom, helm — or new (John+Winston decision)
+- **Portfolio:** bmad-odoo, vortex, gyre, forge, bmm, enhance, loom, helm — or new (John+Winston decision)
 - **RICE:** Reach × Impact × Confidence / Effort (per rice-scoring-guide.md)
 
 **Default lane when uncertain:** Fast Lane. Can be promoted later if scope grows.

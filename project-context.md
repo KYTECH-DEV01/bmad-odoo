@@ -1,8 +1,8 @@
-# Convoke Project Context
+# BMAD Odoo Project Context
 
 Rules and conventions that BMAD dev agents and contributors must follow when working in this repository. These are encoded here (not just in retros) so that the dev agent reads them before writing code.
 
-> **Authoring a new skill, workflow, or agent under `_bmad/bme/`?** Before anything else, read [The Convoke Operator Covenant](_bmad-output/planning-artifacts/convoke-covenant-operator.md) — one axiom and seven Operator Rights every Convoke skill must honor — and self-check against the [Covenant Compliance Checklist](_bmad-output/planning-artifacts/convoke-spec-covenant-compliance-checklist.md). The rule is `covenant-compliance-for-convoke-skills` below. Covenant compliance is an architectural concern, not a styling concern: it's what makes a `_bmad/bme/` skill a *Convoke* skill rather than a generic one.
+> **Authoring a new skill, workflow, or agent under `_bmad/bme/`?** Before anything else, read [The BMAD Odoo Operator Covenant](_bmad-output/planning-artifacts/bmad-covenant-operator.md) — one axiom and seven Operator Rights every BMAD Odoo skill must honor — and self-check against the [Covenant Compliance Checklist](_bmad-output/planning-artifacts/bmad-spec-covenant-compliance-checklist.md). The rule is `covenant-compliance-for-bmad-skills` below. Covenant compliance is an architectural concern, not a styling concern: it's what makes a `_bmad/bme/` skill a *BMAD Odoo* skill rather than a generic one.
 
 ---
 
@@ -12,7 +12,7 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Operational check.** Every call to `tests/helpers.js::runScript` must pass `{ cwd: tmpDir }` — where `tmpDir` is created in a `before()` hook, populated with the minimum state the test requires, and cleaned up in `after()`. Bare `runScript(script)` calls (no cwd) are forbidden.
 
-**Why.** Tests that couple assertions to live repo state turn any drift — a README typo, a config version bump mid-PR, a banner rename, a new doc finding — into a CI failure across every Node version simultaneously. The failure appears as "CI is flaky" when it is actually *correctly* reporting that the test's implicit assumption about the project state no longer holds. This class of failure has bitten Convoke multiple times (see `tests/unit/docs-audit.test.js` pre-fix, `tests/integration/cli-entry-points.test.js` pre-fix, `tests/integration/postinstall.test.js:11-21` pre-fix — all fixed 2026-04-11).
+**Why.** Tests that couple assertions to live repo state turn any drift — a README typo, a config version bump mid-PR, a banner rename, a new doc finding — into a CI failure across every Node version simultaneously. The failure appears as "CI is flaky" when it is actually *correctly* reporting that the test's implicit assumption about the project state no longer holds. This class of failure has bitten BMAD Odoo multiple times (see `tests/unit/docs-audit.test.js` pre-fix, `tests/integration/cli-entry-points.test.js` pre-fix, `tests/integration/postinstall.test.js:11-21` pre-fix — all fixed 2026-04-11).
 
 **How to apply.**
 
@@ -30,7 +30,7 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Statement.** Never hardcode version strings in source code. Always read via `getPackageVersion()` from `scripts/update/lib/utils.js`.
 
-**Why.** Convoke's update/migration system depends on a single source of truth for the current package version (`package.json`). Hardcoded versions rot silently and cause update logic to compare against stale values.
+**Why.** BMAD Odoo's update/migration system depends on a single source of truth for the current package version (`package.json`). Hardcoded versions rot silently and cause update logic to compare against stale values.
 
 **How to apply.** When you need the current version, `require('../../package.json').version` or use the `getPackageVersion()` helper. If you find an existing hardcoded version string, replace it.
 
@@ -61,24 +61,24 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 ## Rule: namespace-decision-for-new-skills
 
-**Statement.** Every new skill or workflow story must include a "Namespace decision" section in its spec, explaining whether the skill lives under Convoke's `_bmad/bme/` namespace or upstream BMAD's namespace, and why.
+**Statement.** Every new skill or workflow story must include a "Namespace decision" section in its spec, explaining whether the skill lives under BMAD Odoo's `_bmad/bme/` namespace or upstream BMAD's namespace, and why.
 
-**Why.** Convoke is an extension of BMAD Method, and keeping the boundaries clean prevents accidental upstream contamination and makes future merges tractable. See `feedback_namespace_audit.md` in auto-memory.
+**Why.** BMAD Odoo is an extension of BMAD Method, and keeping the boundaries clean prevents accidental upstream contamination and makes future merges tractable. See `feedback_namespace_audit.md` in auto-memory.
 
 **How to apply.** Include the section in the story. If the choice isn't obvious (mixed-namespace work, refactoring that crosses the boundary), escalate to the user before coding.
 
 ---
 
-## Rule: covenant-compliance-for-convoke-skills
+## Rule: covenant-compliance-for-bmad-skills
 
-**Statement.** Before authoring a new skill, workflow, or agent under `_bmad/bme/` (Convoke's owned namespace), the author must read [The Convoke Operator Covenant](_bmad-output/planning-artifacts/convoke-covenant-operator.md) and self-check the deliverable against the [Covenant Compliance Checklist](_bmad-output/planning-artifacts/convoke-spec-covenant-compliance-checklist.md) before marking the story ready-for-review.
+**Statement.** Before authoring a new skill, workflow, or agent under `_bmad/bme/` (BMAD Odoo's owned namespace), the author must read [The BMAD Odoo Operator Covenant](_bmad-output/planning-artifacts/bmad-covenant-operator.md) and self-check the deliverable against the [Covenant Compliance Checklist](_bmad-output/planning-artifacts/bmad-spec-covenant-compliance-checklist.md) before marking the story ready-for-review.
 
-**Why.** The Covenant encodes one axiom ("the operator is the resolver") and seven Operator Rights that distinguish a Convoke skill from a generic skill. Authoring without consulting it produces skills that look structurally correct but violate the operator-experience standard the rest of the ecosystem relies on. The baseline audit (2026-04-18) found 10 violations across 56 cells (~82% compliance) in existing skills — all of them introduced by authors who never had the Covenant to consult. Making the Covenant required reading at the point of authorship is how we stop adding new violations while we retrofit the old ones.
+**Why.** The Covenant encodes one axiom ("the operator is the resolver") and seven Operator Rights that distinguish a BMAD Odoo skill from a generic skill. Authoring without consulting it produces skills that look structurally correct but violate the operator-experience standard the rest of the ecosystem relies on. The baseline audit (2026-04-18) found 10 violations across 56 cells (~82% compliance) in existing skills — all of them introduced by authors who never had the Covenant to consult. Making the Covenant required reading at the point of authorship is how we stop adding new violations while we retrofit the old ones.
 
 **How to apply.**
 - **Authoring a new `_bmad/bme/` skill or workflow.** Read the Covenant before you start. When drafting the deliverable, satisfy the Checklist's OC-R0 enumeration precondition first (record the full 3-layer interaction surface — workflow.md + all step files + all invoked scripts/CLIs), then work through OC-R1 through OC-R7 and confirm each either PASSes or has a declared N/A variant with rationale. Cells answered against an incompletely-enumerated surface are invalid per OC-R0.
 - **Reviewing a `_bmad/bme/` skill PR.** Check whether the author ran the Checklist. If the diff introduces new operator-facing behavior (prompts, errors, output formats, decision points), verify the relevant Right's compliance — cite the specific OC-Rn rule in the review comment, not a generic "improve UX" note.
-- **Exception: upstream BMAD contributions.** Skills contributed upstream (`_bmad/core/`, `_bmad/bmm/`, `_bmad/bmb/`, etc.) are out of scope for the Covenant — it's a Convoke-specific standard, not a BMAD Method requirement. If the skill is genuinely upstream-appropriate (see `namespace-decision-for-new-skills`), the Covenant does not apply.
+- **Exception: upstream BMAD contributions.** Skills contributed upstream (`_bmad/core/`, `_bmad/bmm/`, `_bmad/bmb/`, etc.) are out of scope for the Covenant — it's a BMAD Odoo-specific standard, not a BMAD Method requirement. If the skill is genuinely upstream-appropriate (see `namespace-decision-for-new-skills`), the Covenant does not apply.
 - **Reference, not boilerplate.** Cite the Covenant by its display name and link, with a sentence explaining *why* compliance matters for the surface in question. "See the Covenant" with no rationale violates OC-R3 (the Right to rationale that the Covenant itself encodes).
 
 ---
@@ -142,11 +142,11 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Statement.** When a new capability enters the qualifying gate (§1.2 of the initiative lifecycle), and the question is "what form should this take?" — run it through the Capability Evaluation Framework decision tree before assigning a lane or committing to a form factor.
 
-**Reference document.** `_bmad-output/planning-artifacts/convoke-note-capability-evaluation-framework.md` — contains the 3-tier model (Skill → Agent → Team), decision tree, promotion/demotion triggers, and overlap analysis template.
+**Reference document.** `_bmad-output/planning-artifacts/bmad-note-capability-evaluation-framework.md` — contains the 3-tier model (Skill → Agent → Team), decision tree, promotion/demotion triggers, and overlap analysis template.
 
-**Input feed.** Friction logs from consulting engagements (`_bmad-output/planning-artifacts/convoke-note-friction-log-template.md`). No capability gets built without friction log evidence — vision is not demand.
+**Input feed.** Friction logs from consulting engagements (`_bmad-output/planning-artifacts/bmad-note-friction-log-template.md`). No capability gets built without friction log evidence — vision is not demand.
 
-**Why.** Convoke's ecosystem grows through Enhance skills (Tier 1), new agents in existing teams (Tier 2), and new teams (Tier 3). Building at the wrong tier wastes effort (over-engineering) or creates shallow tools (under-engineering). The framework prevents both by requiring evidence-based tier selection and providing bidirectional promotion/demotion triggers.
+**Why.** BMAD Odoo's ecosystem grows through Enhance skills (Tier 1), new agents in existing teams (Tier 2), and new teams (Tier 3). Building at the wrong tier wastes effort (over-engineering) or creates shallow tools (under-engineering). The framework prevents both by requiring evidence-based tier selection and providing bidirectional promotion/demotion triggers.
 
 **How to apply.**
 - At the qualifying gate: if the intake describes a new capability (not a bug, not a point fix), check whether the form factor question is relevant. If yes, run the decision tree from the framework doc.
@@ -160,7 +160,7 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Statement.** Tests and deliverables that assert or report counts (number of agents, skills, findings, taxonomy entries, etc.) must derive those counts from the authoritative source data at runtime — never hardcode them.
 
-**Why.** Hardcoded counts rot silently. Adding an agent, a taxonomy entry, or a skill changes the real count but not the assertion. The test passes when it should fail. This class of bug has bitten Convoke across multiple initiatives: agent counts in validator tests, taxonomy entry counts in migration tests, skill counts in portability tests — all required fixing after the underlying data grew. SP Epic 5 retro A1.
+**Why.** Hardcoded counts rot silently. Adding an agent, a taxonomy entry, or a skill changes the real count but not the assertion. The test passes when it should fail. This class of bug has bitten BMAD Odoo across multiple initiatives: agent counts in validator tests, taxonomy entry counts in migration tests, skill counts in portability tests — all required fixing after the underlying data grew. SP Epic 5 retro A1.
 
 **How to apply.**
 - In tests: compute expected counts from the source (registry arrays, manifest files, config entries) — e.g., `AGENTS.length + GYRE_AGENTS.length` instead of `12`.
@@ -227,7 +227,7 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Statement.** Before starting implementation of any Bug Lane, Fast Lane, or Initiative Lane item qualified more than **3 calendar days ago**, OR when parallel tracks have been active since qualification **regardless of age**, run a four-check pre-flight. An item whose pre-flight returns yellow/red must be re-qualified or re-scoped before work begins.
 
-**Why.** Parallel work tracks silently drift backlog items. On 2026-04-19 alone, Convoke's lifecycle backlog absorbed three distinct drift events in a single session: (1) a Vortex audit initiative shipped in a sibling session while the main session worked on unrelated test infrastructure — overlapping file paths that would have caused re-discovery if the main session had then picked an adjacent item; (2) deferrals from a Covenant adoption-surface story were triaged by a prior session using a different IN-ID space than the current session, caught only because the Triage workflow has built-in overlap detection; (3) most instructively, four intakes were logged with lane-ID pointers but the corresponding Fast Lane rows were never materialized — a partial-write that remained invisible until a human eyeballed the backlog and noticed. Without a systematic pre-flight, each of these drift classes cascades: operators pick up already-shipped work, re-triage duplicates, implement against rotted file anchors, or build against semantically-obsolete rubrics.
+**Why.** Parallel work tracks silently drift backlog items. On 2026-04-19 alone, BMAD Odoo's lifecycle backlog absorbed three distinct drift events in a single session: (1) a Vortex audit initiative shipped in a sibling session while the main session worked on unrelated test infrastructure — overlapping file paths that would have caused re-discovery if the main session had then picked an adjacent item; (2) deferrals from a Covenant adoption-surface story were triaged by a prior session using a different IN-ID space than the current session, caught only because the Triage workflow has built-in overlap detection; (3) most instructively, four intakes were logged with lane-ID pointers but the corresponding Fast Lane rows were never materialized — a partial-write that remained invisible until a human eyeballed the backlog and noticed. Without a systematic pre-flight, each of these drift classes cascades: operators pick up already-shipped work, re-triage duplicates, implement against rotted file anchors, or build against semantically-obsolete rubrics.
 
 **How to apply.** Relationship to sibling rules: **Check #3 is a pickup-time application of `spec-verify-referenced-files`** (the existing rule covers authoring + story-ready gates; this rule covers backlog-pickup time). Don't double-execute — if a recent `spec-verify-referenced-files` run passed and the cited files haven't changed since, treat Check #3 as already-satisfied. Run four checks before coding:
 
@@ -242,7 +242,7 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 - **RED** (any check found definitive drift per the examples above) — re-qualify the item via `[R] Review mode` in `bmad-enhance-initiatives-backlog`, or if obsolete, move the row to §2.5 Absorbed per `backlog-format-spec.md` (never delete outright — every removal becomes a §2.5 entry).
 
 **Scope exemptions.**
-- **Age exemption:** items qualified within the last 3 calendar days are exempt from the date-triggered arm — pre-flight on fresh work is theater. Threshold rationale: Convoke's observed drift-to-surface lag from parallel sessions has been ≤24h in practice (3× multiplier gives reviewer-latency slack). Revise if evidence shifts.
+- **Age exemption:** items qualified within the last 3 calendar days are exempt from the date-triggered arm — pre-flight on fresh work is theater. Threshold rationale: BMAD Odoo's observed drift-to-surface lag from parallel sessions has been ≤24h in practice (3× multiplier gives reviewer-latency slack). Revise if evidence shifts.
 - **Parallel-tracks trigger has no age exemption** — if a sibling session was active between qualification and pickup, run the pre-flight regardless of item age. "Active" = commits or backlog edits from a different session since the item's qualification timestamp.
 - **Trigger-blocked exemption:** items whose Dependencies column lists an explicit trigger criterion (e.g., "blocked-on: X ships") defer the pre-flight *until the trigger fires*. At unblock-time, the pre-flight runs against the **full elapsed window** from original qualification — not a fresh clock. This is deliberate: the accumulated drift is exactly what the check is catching.
 - **No-cited-surface exemption:** items with neither file anchors nor dependency references nor ID references in the Description (e.g., external-setup tasks like `gh auth` or `NPM_TOKEN` setup) are exempt by construction — the four checks have no surface to examine. The exemption is structural, not a judgment call; if you can construct a surface, run the checks.
@@ -257,6 +257,6 @@ Rules and conventions that BMAD dev agents and contributors must follow when wor
 
 **Rule.** Runtime preflight checks (BMAD compatibility, environment sanity) emit yellow WARNINGs to stderr but exit 0 — never block the install/update flow. Operators see the WARNING but the operation continues.
 
-**Why.** Story v63-3-2 (FR23) shipped the first preflight in `scripts/update/lib/compat-preflight.js`. Detection is best-effort: Convoke is a *parallel* BMAD extension installed side-by-side, not a dependent — `node_modules/bmad-method/` is absent in the canonical Convoke dev tree, so the absent-package WARNING is the primary path that fires. False-positive hard-blocks would trap operators with legitimate non-standard installs (git-clone, monorepo, alternative distribution channels). Higher-fidelity gates ship in Story 3.3 (publish-gate) and Story 4.x (behavioral-equivalence) where the cost-benefit favors strict failure.
+**Why.** Story v63-3-2 (FR23) shipped the first preflight in `scripts/update/lib/compat-preflight.js`. Detection is best-effort: BMAD Odoo is a *parallel* BMAD extension installed side-by-side, not a dependent — `node_modules/bmad-method/` is absent in the canonical BMAD Odoo dev tree, so the absent-package WARNING is the primary path that fires. False-positive hard-blocks would trap operators with legitimate non-standard installs (git-clone, monorepo, alternative distribution channels). Higher-fidelity gates ship in Story 3.3 (publish-gate) and Story 4.x (behavioral-equivalence) where the cost-benefit favors strict failure.
 
 **How to apply.** Future preflight helpers (e.g., environment-preflight, dependency-preflight) MUST follow the same contract: stderr WARNING + exit 0 pass-through; never `process.exit(non-zero)`; never `throw` to the caller. Use `chalk.yellow(...)` so WARNING text stays under non-TTY (chalk auto-disables colors only). Live smoke against the dev tree MUST emit the WARNING — silent green is a fixture-or-gate bug, not a success signal.

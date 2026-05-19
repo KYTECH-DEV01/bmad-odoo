@@ -2,7 +2,7 @@
 name: 'step-t-03-qualify'
 description: 'Qualifying gate — assign Lane, Portfolio, and RICE score for each validated finding. Optional skip keeps the finding as a raw intake.'
 nextStepFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/steps-t/step-t-04-update.md'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/rice-scoring-guide.md'
 processFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/lifecycle-process-spec.md'
 advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.md'
@@ -62,7 +62,7 @@ Load `{templateFile}` (rice-scoring-guide.md) and internalize:
 
 Load `{processFile}` (lifecycle-process-spec.md) and internalize:
 - **§1.3 Three Lanes** — Bug / Fast / Initiative triggers and rules
-- **§1.4 Portfolio Attachment** — current taxonomy (convoke, vortex, gyre, forge, bmm, enhance, loom, helm) and growth rule
+- **§1.4 Portfolio Attachment** — current taxonomy (bmad-odoo, vortex, gyre, forge, bmm, enhance, loom, helm) and growth rule
 - **§1.6 RICE Scoring** — lane-specific scoring notes
 
 ### 2. Confirm Qualifier Role
@@ -101,7 +101,7 @@ Display:
 >
 > **Proposed qualification:**
 > - **Lane:** [proposed lane with brief rationale, e.g., "Fast Lane — single-module point fix"]
-> - **Portfolio:** [proposed portfolio, e.g., "convoke"]
+> - **Portfolio:** [proposed portfolio, e.g., "bmad-odoo"]
 > - **RICE:** R:[r] I:[i] C:[c]% E:[e] = [score]
 >   *[one-line RICE rationale]*
 >
@@ -118,7 +118,7 @@ Display:
 > - `L none` — Keep as raw intake (no lane, stays in §2.1 only)
 >
 > **Portfolio override:**
-> - `P [item]` — Set portfolio (convoke, vortex, gyre, forge, bmm, enhance, loom, helm, or a new portfolio)
+> - `P [item]` — Set portfolio (bmad-odoo, vortex, gyre, forge, bmm, enhance, loom, helm, or a new portfolio)
 > - `P new [name] — [rationale]` — Propose a new portfolio item (John+Winston decision per §1.4)
 >
 > **RICE adjustments:**

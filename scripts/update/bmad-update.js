@@ -10,12 +10,12 @@ const { readChangelogEntries } = require('./lib/changelog-reader');
 const { runCompatPreflight } = require('./lib/compat-preflight');
 // Story v63-2-3: post-upgrade governance gate. `checkBmmDependencies` is
 // lazy-required inside `_runPostUpgradeGate` (Round 1 R1-M2 fix) so a
-// load-time error in convoke-doctor can't abort convoke-update startup, and
+// load-time error in bmad-doctor can't abort bmad-update startup, and
 // non-gate exit paths (no-project / fresh / broken / downgrade) don't pay the
 // transitive import cost.
 
 /**
- * Convoke Update CLI
+ * BMAD Odoo Update CLI
  * Main update command for users
  */
 
@@ -88,19 +88,19 @@ function assessUpdate(projectRoot) {
  */
 function _runPostUpgradeGate(projectRoot) {
   try {
-    // Lazy-require (R1-M2): a load-time failure in convoke-doctor (syntax
-    // error, missing transitive dep) would abort convoke-update at startup if
+    // Lazy-require (R1-M2): a load-time failure in bmad-doctor (syntax
+    // error, missing transitive dep) would abort bmad-update at startup if
     // this were a top-level require. Inline-requiring inside the try/catch
     // ensures such failures fall through to the fail-soft warning branch.
     // Early exit paths (no-project, fresh, broken, etc.) also skip the import
     // cost entirely.
-    const { checkBmmDependencies } = require('../convoke-doctor');
+    const { checkBmmDependencies } = require('../bmad-doctor');
     // R2-M3: distinguish a wiring bug (missing / renamed export) from a scan
     // failure. Without this, a destructure-to-undefined throws `TypeError:
     // checkBmmDependencies is not a function` via the outer catch, which the
     // operator sees as "scan failed" — obscuring the real root cause.
     if (typeof checkBmmDependencies !== 'function') {
-      throw new Error('convoke-doctor does not export checkBmmDependencies (wiring bug, not scan failure)');
+      throw new Error('bmad-doctor does not export checkBmmDependencies (wiring bug, not scan failure)');
     }
     const findings = checkBmmDependencies(projectRoot);
     _printPostUpgradeGate(findings);
@@ -122,8 +122,8 @@ function _runPostUpgradeGate(projectRoot) {
 }
 
 /**
- * Render the gate's findings with convoke-doctor's visual conventions.
- * Intentionally NOT sharing `printResults` from convoke-doctor: the summary
+ * Render the gate's findings with bmad-doctor's visual conventions.
+ * Intentionally NOT sharing `printResults` from bmad-doctor: the summary
  * wording differs ("BMM registry consistent — no drift" vs "All N checks
  * passed"), and a shared helper would obscure the context-specific messaging.
  *
@@ -209,13 +209,13 @@ function _printPostUpgradeGate(findings) {
     console.log(chalk.green('  BMM registry consistent — no drift'));
   } else if (hardFailCount > 0 && softWarnCount > 0) {
     console.log(chalk.red(`  ${hardFailCount} issue(s) + ${softWarnCount} governance warning(s) surfaced`));
-    console.log(chalk.gray('  Run `convoke-doctor` for detailed governance checks.'));
+    console.log(chalk.gray('  Run `bmad-doctor` for detailed governance checks.'));
   } else if (hardFailCount > 0) {
     console.log(chalk.red(`  ${hardFailCount} issue(s) surfaced`));
-    console.log(chalk.gray('  Run `convoke-doctor` for detailed governance checks.'));
+    console.log(chalk.gray('  Run `bmad-doctor` for detailed governance checks.'));
   } else {
     console.log(chalk.yellow(`  ${softWarnCount} governance warning(s) surfaced (non-blocking)`));
-    console.log(chalk.gray('  Run `convoke-doctor` for detailed governance checks.'));
+    console.log(chalk.gray('  Run `bmad-doctor` for detailed governance checks.'));
   }
   console.log('');
 }
@@ -229,7 +229,7 @@ async function main() {
   // Header
   console.log('');
   console.log(chalk.bold.magenta('╔════════════════════════════════════════╗'));
-  console.log(chalk.bold.magenta('║   Convoke Update Manager               ║'));
+  console.log(chalk.bold.magenta('║   BMAD Odoo Update Manager               ║'));
   console.log(chalk.bold.magenta('╚════════════════════════════════════════╝'));
   console.log('');
 
@@ -242,9 +242,9 @@ async function main() {
 
   switch (assessment.action) {
     case 'no-project':
-      console.log(chalk.red('Not in a Convoke project. Could not find _bmad/ directory.'));
+      console.log(chalk.red('Not in a BMAD Odoo project. Could not find _bmad/ directory.'));
       console.log('');
-      console.log('Run: ' + chalk.cyan('npx -p convoke-agents convoke-install'));
+      console.log('Run: ' + chalk.cyan('npx -p bmad-odoo bmad-install'));
       console.log('');
       process.exit(1);
       break;
@@ -252,7 +252,7 @@ async function main() {
     case 'fresh':
       console.log(chalk.yellow('No previous installation detected.'));
       console.log('');
-      console.log('Run: ' + chalk.cyan('npx -p convoke-agents convoke-install'));
+      console.log('Run: ' + chalk.cyan('npx -p bmad-odoo bmad-install'));
       console.log('');
       process.exit(0);
       break;
@@ -260,7 +260,7 @@ async function main() {
     case 'broken':
       console.log(chalk.red('Installation appears incomplete or corrupted.'));
       console.log('');
-      console.log('Recommend running: ' + chalk.cyan('npx -p convoke-agents convoke-install'));
+      console.log('Recommend running: ' + chalk.cyan('npx -p bmad-odoo bmad-install'));
       console.log('');
       process.exit(1);
       break;
@@ -268,7 +268,7 @@ async function main() {
     case 'no-version':
       console.log(chalk.yellow('Could not detect current version.'));
       console.log('');
-      console.log('Run: ' + chalk.cyan('npx -p convoke-agents convoke-install'));
+      console.log('Run: ' + chalk.cyan('npx -p bmad-odoo bmad-install'));
       console.log('');
       process.exit(0);
       break;
@@ -277,7 +277,7 @@ async function main() {
       console.log(chalk.green(`✓ Already up to date! (v${assessment.currentVersion})`));
       console.log('');
       console.log(chalk.gray('If you expected a newer version, npx may be serving a cached copy.'));
-      console.log(chalk.gray('Run: ') + chalk.cyan('npx -p convoke-agents@latest convoke-update'));
+      console.log(chalk.gray('Run: ') + chalk.cyan('npx -p bmad-odoo@latest bmad-update'));
       console.log('');
       process.exit(0);
       break;
@@ -289,10 +289,10 @@ async function main() {
       console.log(`  Package version: ${assessment.targetVersion}`);
       console.log('');
       console.log(chalk.gray('This usually means npx is serving a cached older package.'));
-      console.log(chalk.gray('Run: ') + chalk.cyan('npx -p convoke-agents@latest convoke-update'));
+      console.log(chalk.gray('Run: ') + chalk.cyan('npx -p bmad-odoo@latest bmad-update'));
       console.log('');
       console.log(chalk.gray('If the issue persists, clear the cache and reinstall:'));
-      console.log(chalk.cyan('  npm cache clean --force && npm install convoke-agents@latest'));
+      console.log(chalk.cyan('  npm cache clean --force && npm install bmad-odoo@latest'));
       console.log('');
       console.log(chalk.yellow('If you intentionally want to downgrade:'));
       console.log('  1. Backup your installation');
@@ -382,7 +382,7 @@ async function main() {
       console.log(chalk.yellow(`  - ${change}`));
     });
     if (assessment.migrations.some(m => m.name && m.name.endsWith('-to-4.0.0'))) {
-      console.log(chalk.cyan('  Migration guide: https://github.com/amalik/convoke-agents/blob/main/docs/migration/3.x-to-4.0.md'));
+      console.log(chalk.cyan('  Migration guide: https://github.com/KYTECH-DEV01/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'));
     }
     console.log('');
   }

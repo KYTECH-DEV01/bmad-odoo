@@ -177,7 +177,7 @@ describe('audit-skill-dirs CLI (Story v63-3-2)', () => {
   it('--help wins over unknown flags (R2-M5 pattern)', async () => {
     const { exitCode, stdout } = await runScript(SCRIPT_PATH, ['--help', '--unknown-flag'], { cwd: PACKAGE_ROOT });
     assert.equal(exitCode, 0);
-    assert.ok(stdout.includes('convoke-audit-skill-dirs') && stdout.includes('Usage:'),
+    assert.ok(stdout.includes('bmad-audit-skill-dirs') && stdout.includes('Usage:'),
       `expected help text; got:\n${stdout}`);
   });
 

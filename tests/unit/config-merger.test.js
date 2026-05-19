@@ -78,7 +78,7 @@ describe('validateConfig', () => {
   });
 
   // Story v63-4-2b: regex extended to accept semver pre-release suffixes (e.g., 4.0.0-rc.1).
-  // Required for Convoke 4.0 RC release-engineering.
+  // Required for BMAD Odoo 4.0 RC release-engineering.
   it('accepts semver pre-release version (e.g., 4.0.0-rc.1)', () => {
     const config = {
       submodule_name: 'v', description: 'd', module: 'm',
@@ -336,7 +336,7 @@ describe('readExcludedAgents', () => {
   let capturedWarnings;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-excluded-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-excluded-'));
   });
 
   after(async () => {
@@ -415,7 +415,7 @@ describe('mergeConfig — excluded_agents (U8)', () => {
   let configPath;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-merge-excl-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-merge-excl-'));
     configPath = path.join(tmpDir, 'config.yaml');
   });
 

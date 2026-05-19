@@ -1,27 +1,27 @@
 <div align="center">
 
 ```
- ██████╗ ██████╗ ███╗   ██╗██╗   ██╗ ██████╗ ██╗  ██╗███████╗
- ██╔════╝██╔═══██╗████╗  ██║██║   ██║██╔═══██╗██║ ██╔╝██╔════╝
- ██║     ██║   ██║██╔██╗ ██║██║   ██║██║   ██║█████╔╝ █████╗
- ██║     ██║   ██║██║╚██╗██║╚██╗ ██╔╝██║   ██║██╔═██╗ ██╔══╝
- ╚██████╗╚██████╔╝██║ ╚████║ ╚████╔╝ ╚██████╔╝██║  ██╗███████╗
- ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝  ╚═══╝   ╚═════╝ ╚═╝  ╚═╝╚══════╝
-                Agent teams for complex systems
+ ██████╗ ███╗   ███╗ █████╗ ██████╗      ██████╗ ██████╗  ██████╗  ██████╗
+ ██╔══██╗████╗ ████║██╔══██╗██╔══██╗    ██╔═══██╗██╔══██╗██╔═══██╗██╔═══██╗
+ ██████╔╝██╔████╔██║███████║██║  ██║    ██║   ██║██║  ██║██║   ██║██║   ██║
+ ██╔══██╗██║╚██╔╝██║██╔══██║██║  ██║    ██║   ██║██║  ██║██║   ██║██║   ██║
+ ██████╔╝██║ ╚═╝ ██║██║  ██║██████╔╝    ╚██████╔╝██████╔╝╚██████╔╝╚██████╔╝
+ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝      ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝
+              Agent teams for Odoo development
 ```
 
-[![Teams](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.teams&label=teams&color=blueviolet)](#teams)
-[![Agents](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.agents&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.workflows&label=workflows&color=success)](docs/agents.md)
-[![Skills](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/docs/badges.json&query=$.skills&label=skills&color=orange)](_bmad/_config/skill-manifest.csv)
-[![Version](https://img.shields.io/npm/v/convoke-agents?color=blue&label=version)](https://www.npmjs.com/package/convoke-agents)
+[![Teams](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.teams&label=teams&color=blueviolet)](#teams)
+[![Agents](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.agents&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.workflows&label=workflows&color=success)](docs/agents.md)
+[![Skills](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.skills&label=skills&color=orange)](_bmad/_config/skill-manifest.csv)
+[![Version](https://img.shields.io/npm/v/bmad-odoo?color=blue&label=version)](https://www.npmjs.com/package/bmad-odoo)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 </div>
 
-Convoke extends AI agents with two types of installable modules: **Teams** bring new agents for a domain, **Skills** add new capabilities to existing agents. Install them independently or combine them.
+BMAD Odoo extends AI agents with two types of installable modules: **Teams** bring new agents for a domain, **Skills** add new capabilities to existing agents. Install them independently or combine them.
 
-> **Authoring a Convoke skill?** Required reading first: [The Convoke Operator Covenant](_bmad-output/planning-artifacts/convoke-covenant-operator.md) — one axiom and seven Operator Rights every Convoke skill must honor. The Covenant exists because operator-facing UX is an architectural concern in agent systems, not a styling concern; skills that violate it erode operator trust across the skill ecosystem, not just on their own surface.
+> **Authoring a BMAD Odoo skill?** Required reading first: [The BMAD Odoo Operator Covenant](_bmad-output/planning-artifacts/bmad-covenant-operator.md) — one axiom and seven Operator Rights every BMAD Odoo skill must honor. The Covenant exists because operator-facing UX is an architectural concern in agent systems, not a styling concern; skills that violate it erode operator trust across the skill ecosystem, not just on their own surface.
 
 | Team | Domain |
 |------|--------|
@@ -30,9 +30,9 @@ Convoke extends AI agents with two types of installable modules: **Teams** bring
 
 ### What's New in 3.3
 
-- **Convoke Operator Covenant** — one axiom ("*the operator is the resolver*") and seven Operator Rights every Convoke skill must honor. Reproducibility-validated governance contract with a published baseline audit and Compliance Checklist.
-- **Opt out of agents you don't need** — new `excluded_agents: []` field in Vortex and Gyre configs; `convoke-update` honors exclusions end-to-end. Non-breaking.
-- **Update-time changelog surfacing** — `convoke-update` shows "What's New" before confirming the refresh.
+- **BMAD Odoo Operator Covenant** — one axiom ("*the operator is the resolver*") and seven Operator Rights every BMAD Odoo skill must honor. Reproducibility-validated governance contract with a published baseline audit and Compliance Checklist.
+- **Opt out of agents you don't need** — new `excluded_agents: []` field in Vortex and Gyre configs; `bmad-update` honors exclusions end-to-end. Non-breaking.
+- **Update-time changelog surfacing** — `bmad-update` shows "What's New" before confirming the refresh.
 - See the [CHANGELOG](CHANGELOG.md) for the full release details
 
 ---
@@ -41,8 +41,8 @@ Convoke extends AI agents with two types of installable modules: **Teams** bring
 
 **Specialist agents guide you from insight to evidence and back again — a continuous discovery loop, not a one-shot checklist**
 
-[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_vortex/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_vortex/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_vortex/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
 
 Vortex guides you through seven discovery streams — from understanding your users to interpreting production signals — so you can make evidence-based decisions before, during, and after you build. Each stream builds on the previous one's findings, and when gaps appear, the system routes you back to fill them.
 
@@ -153,8 +153,8 @@ For detailed workflow descriptions, see the [Agent Guide](docs/agents.md) and in
 
 **Specialist agents assess whether your project is ready to ship — detect your stack, model what "ready" means, find what's missing, and refine together**
 
-[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_gyre/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/convoke-agents/main/_bmad/bme/_gyre/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
+[![Agents](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.agents.length&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/amalik/bmad-odoo/main/_bmad/bme/_gyre/config.yaml&query=$.workflows.length&label=workflows&color=success)](docs/agents.md)
 
 Most teams ship to production without knowing if they're actually ready — missing SLOs, incomplete observability, unreviewed deployment strategies. Gyre analyzes your project's filesystem, builds a capabilities model tailored to your specific tech stack, and surfaces what's absent. No generic checklists — every finding is contextual to your project.
 
@@ -210,7 +210,7 @@ User guides: [Scout](_bmad/bme/_gyre/guides/SCOUT-USER-GUIDE.md) | [Atlas](_bmad
 
 ---
 
-## Extending Convoke
+## Extending BMAD Odoo
 
 ### Team Factory
 
@@ -232,7 +232,7 @@ Three capabilities:
 Take any BMAD skill and export it to a standalone, LLM-agnostic format that works outside Claude Code:
 
 ```bash
-npx convoke-export bmad-brainstorming --output ./exported
+npx bmad-export bmad-brainstorming --output ./exported
 ```
 
 The export engine transforms skill workflows into self-contained instruction documents, then generates platform-specific adapter files:
@@ -286,25 +286,25 @@ The [Enhance Guide](_bmad/bme/_enhance/guides/ENHANCE-GUIDE.md) documents the co
 **Everything (Vortex + Gyre):**
 
 ```bash
-npm install convoke-agents@latest
-npx convoke-install
+npm install bmad-odoo@latest
+npx bmad-install
 ```
 
 **Vortex only:**
 
 ```bash
-npm install convoke-agents@latest
-npx convoke-install-vortex
+npm install bmad-odoo@latest
+npx bmad-install-vortex
 ```
 
 **Gyre only:**
 
 ```bash
-npm install convoke-agents@latest
-npx convoke-install-gyre
+npm install bmad-odoo@latest
+npx bmad-install-gyre
 ```
 
-Something not working? Run `npx convoke-doctor` or check the [FAQ](docs/faq.md).
+Something not working? Run `npx bmad-doctor` or check the [FAQ](docs/faq.md).
 
 ### Personalize
 
@@ -395,10 +395,10 @@ your-project/
 
 ## How It Fits with BMAD Core
 
-Convoke handles **discovery, validation, and readiness**. BMAD Core handles **implementation**.
+BMAD Odoo handles **discovery, validation, and readiness**. BMAD Core handles **implementation**.
 
 ```
-Convoke Modules                            BMAD Core
+BMAD Odoo Modules                            BMAD Core
 ┌──────────────────────────────┐          ┌──────────────────────┐
 │ Teams                        │          │                      │
 │   Vortex (Product Discovery) │ ──────>  │ PM → Architect → Dev │
@@ -410,23 +410,23 @@ Convoke Modules                            BMAD Core
 └──────────────────────────────┘          └──────────────────────┘
 ```
 
-Teams and Skills are peer module types — both installable, both independent. Convoke works standalone or as an extension — no BMAD Method installation required.
+Teams and Skills are peer module types — both installable, both independent. BMAD Odoo works standalone or as an extension — no BMAD Method installation required.
 
 ---
 
 ## Updating
 
 ```bash
-npm install convoke-agents@latest         # Get the latest package
-npx convoke-version                       # Check current version
-npx convoke-update --dry-run              # Preview changes
-npx convoke-update                        # Apply update (auto-backup)
-npx convoke-doctor                        # Diagnose issues
+npm install bmad-odoo@latest         # Get the latest package
+npx bmad-version                       # Check current version
+npx bmad-update --dry-run              # Preview changes
+npx bmad-update                        # Apply update (auto-backup)
+npx bmad-doctor                        # Diagnose issues
 ```
 
 Your data in `_bmad-output/` and `.gyre/` is never touched. Automatic backups are created before every update.
 
-> **Important:** `npm install convoke-agents` (without `@latest`) won't cross major version boundaries. If you're on v2.x, you must use `npm install convoke-agents@latest` to get v3.x.
+> **Important:** `npm install bmad-odoo` (without `@latest`) won't cross major version boundaries. If you're on v2.x, you must use `npm install bmad-odoo@latest` to get v3.x.
 
 See [UPDATE-GUIDE.md](UPDATE-GUIDE.md) for migration paths and troubleshooting.
 
@@ -449,7 +449,7 @@ See [UPDATE-GUIDE.md](UPDATE-GUIDE.md) for migration paths and troubleshooting.
 ## Roadmap
 
 - **v1.x** — Vortex foundation: 7 agents, 22 workflows, update system, CI/CD
-- **v2.0** — Product renamed to Convoke. CLI commands: `convoke-*`. Package: `convoke-agents`
+- **v2.0** — Product renamed to BMAD Odoo. CLI commands: `bmad-*`. Package: `bmad-odoo`
 - **v2.x** — Enhance module (Skills architecture, RICE initiatives-backlog), Gyre team (production readiness, 4 agents), Team Factory
 - **v3.x** — Artifact governance, portfolio intelligence, portability system (export to Claude/Copilot/Cursor), 1,123 tests
 - **Next** — Forge (domain knowledge extraction for enterprise brownfield engagements)

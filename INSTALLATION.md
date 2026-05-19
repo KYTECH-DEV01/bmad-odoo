@@ -1,8 +1,8 @@
 # Installation Guide
 
-Complete guide to installing Convoke agent teams into your project.
+Complete guide to installing BMAD Odoo agent teams into your project.
 
-- **Package:** `convoke-agents`
+- **Package:** `bmad-odoo`
 - **Version:** 3.0.0
 - **Last Updated:** 2026-03-24
 
@@ -14,7 +14,7 @@ Complete guide to installing Convoke agent teams into your project.
 - Git
 - Claude Code or Claude.ai
 
-Convoke works **standalone** or as an extension to [BMAD Method](https://github.com/bmadhub/bmad). No prior BMAD installation required.
+BMAD Odoo works **standalone** or as an extension to [BMAD Method](https://github.com/bmadhub/bmad). No prior BMAD installation required.
 
 ---
 
@@ -23,7 +23,7 @@ Convoke works **standalone** or as an extension to [BMAD Method](https://github.
 **Everything (Vortex + Gyre + Enhance):**
 
 ```bash
-npm install convoke-agents && npx -p convoke-agents convoke-install
+npm install bmad-odoo && npx -p bmad-odoo bmad-install
 ```
 
 All 11 agents (7 Vortex + 4 Gyre), the Enhance module, and all supporting files are installed and ready to use.
@@ -31,13 +31,13 @@ All 11 agents (7 Vortex + 4 Gyre), the Enhance module, and all supporting files 
 **Vortex only** (product discovery):
 
 ```bash
-npm install convoke-agents && npx -p convoke-agents convoke-install-vortex
+npm install bmad-odoo && npx -p bmad-odoo bmad-install-vortex
 ```
 
 **Gyre only** (production readiness):
 
 ```bash
-npm install convoke-agents && npx -p convoke-agents convoke-install-gyre
+npm install bmad-odoo && npx -p bmad-odoo bmad-install-gyre
 ```
 
 ---
@@ -48,14 +48,14 @@ npm install convoke-agents && npx -p convoke-agents convoke-install-gyre
 
 ```bash
 # Install into your project
-npm install convoke-agents
+npm install bmad-odoo
 
 # Install everything
-npx -p convoke-agents convoke-install
+npx -p bmad-odoo bmad-install
 
 # Or install individual teams
-npx -p convoke-agents convoke-install-vortex   # Product Discovery (7 agents)
-npx -p convoke-agents convoke-install-gyre     # Production Readiness (4 agents)
+npx -p bmad-odoo bmad-install-vortex   # Product Discovery (7 agents)
+npx -p bmad-odoo bmad-install-gyre     # Production Readiness (4 agents)
 ```
 
 ### Option 2: Clone from Source (Contributors Only)
@@ -63,8 +63,8 @@ npx -p convoke-agents convoke-install-gyre     # Production Readiness (4 agents)
 For contributors or developers who want to modify agents or contribute to the project. This sets up a development environment — not an end-user installation.
 
 ```bash
-git clone https://github.com/amalik/convoke-agents.git
-cd convoke-agents
+git clone https://github.com/KYTECH-DEV01/bmad-odoo.git
+cd bmad-odoo
 npm install
 ```
 
@@ -134,7 +134,7 @@ The config also includes auto-generated fields (`submodule_name`, `module`, `ver
 After installation, run diagnostics to confirm everything is in place:
 
 ```bash
-npx -p convoke-agents convoke-doctor
+npx -p bmad-odoo bmad-doctor
 ```
 
 Doctor validates all installed modules: agent files, skill wrappers, config files, and manifest entries — with actionable fix suggestions for each issue.
@@ -149,7 +149,7 @@ cat _bmad/bme/_vortex/agents/contextualization-expert.md    # Emma
 cat _bmad/bme/_gyre/agents/stack-detective.md               # Scout
 ```
 
-**Expected result:** The agent greets you by name and displays a numbered menu. If you see raw markdown instead, re-run `convoke-doctor` to diagnose.
+**Expected result:** The agent greets you by name and displays a numbered menu. If you see raw markdown instead, re-run `bmad-doctor` to diagnose.
 
 ---
 
@@ -158,14 +158,14 @@ cat _bmad/bme/_gyre/agents/stack-detective.md               # Scout
 Start with diagnostics — it catches most issues:
 
 ```bash
-npx -p convoke-agents convoke-doctor
+npx -p bmad-odoo bmad-doctor
 ```
 
 ### Permission denied errors
 
 ```bash
 chmod +x scripts/*.js
-npx -p convoke-agents convoke-install-vortex
+npx -p bmad-odoo bmad-install-vortex
 ```
 
 ### Config file already exists
@@ -174,7 +174,7 @@ The installer preserves your custom settings and only adds missing entries. To f
 
 ```bash
 rm -rf _bmad/bme/_vortex/    # or _gyre/ for Gyre
-npx -p convoke-agents convoke-install-vortex   # or convoke-install-gyre
+npx -p bmad-odoo bmad-install-vortex   # or bmad-install-gyre
 ```
 
 ### Installation succeeds but agents don't activate
@@ -182,7 +182,7 @@ npx -p convoke-agents convoke-install-vortex   # or convoke-install-gyre
 Check that files are in place:
 
 ```bash
-npx -p convoke-agents convoke-doctor
+npx -p bmad-odoo bmad-doctor
 ls -la _bmad/bme/_vortex/agents/
 ls -la _bmad/bme/_gyre/agents/
 ```
@@ -201,7 +201,7 @@ If missing, re-run the installer — it regenerates skill wrappers on every run.
 
 ## BMAD Method Compatibility
 
-Convoke works standalone — no BMAD Method installation is required.
+BMAD Odoo works standalone — no BMAD Method installation is required.
 
 If the BMAD Method is already installed in your project, the installer detects it automatically and logs confirmation. Both packages coexist in the `_bmad/` directory without conflict.
 
@@ -216,7 +216,7 @@ See [BMAD-METHOD-COMPATIBILITY.md](docs/BMAD-METHOD-COMPATIBILITY.md) for the fu
    - **Vortex:** Activate Emma → select **Lean Persona** from the menu → follow the guided steps
    - **Gyre:** Activate Scout → select **Full Analysis** from the menu → walk through the pipeline
 3. **Find your artifacts** — outputs are saved in `_bmad-output/vortex-artifacts/` or `.gyre/`
-4. **Check updates** — run `npx -p convoke-agents convoke-version` periodically
+4. **Check updates** — run `npx -p bmad-odoo bmad-version` periodically
 
 See the [Agent Guide](docs/agents.md) for detailed workflow descriptions. User guides are available for all 11 agents in their respective `guides/` directories.
 
@@ -224,7 +224,7 @@ See the [Agent Guide](docs/agents.md) for detailed workflow descriptions. User g
 
 ## Uninstallation
 
-Convoke doesn't provide an uninstall command. To remove:
+BMAD Odoo doesn't provide an uninstall command. To remove:
 
 ```bash
 # 1. Back up your generated artifacts first
@@ -243,7 +243,7 @@ rm -rf _bmad-output/vortex-artifacts/
 rm -rf _bmad-output/gyre-artifacts/
 
 # 4. Uninstall npm package
-npm uninstall convoke-agents
+npm uninstall bmad-odoo
 ```
 
 Your BMAD Method files (if any) remain untouched.

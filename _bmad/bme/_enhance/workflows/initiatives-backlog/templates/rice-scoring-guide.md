@@ -26,7 +26,7 @@ Use these questions to guide scoring for each factor. The goal is genuine strate
 
 | Score | Meaning |
 |-------|---------|
-| 10 | All users — every project that installs Convoke encounters this |
+| 10 | All users — every project that installs BMAD Odoo encounters this |
 | 7-9 | Most users — affects a common workflow or visible surface |
 | 4-6 | Some users — affects a specific use case or user segment |
 | 2-3 | Few users — niche scenario or advanced feature |
@@ -86,7 +86,7 @@ Use these questions to guide scoring for each factor. The goal is genuine strate
 
 ## Calibration Examples
 
-These examples are drawn from the existing Convoke backlog to anchor scoring consistency. Study the reasoning, not just the numbers — the goal is to understand *why* items scored as they did.
+These examples are drawn from the existing BMAD Odoo backlog to anchor scoring consistency. Study the reasoning, not just the numbers — the goal is to understand *why* items scored as they did.
 
 ### Low Tier (~0.2-0.5)
 
@@ -123,7 +123,7 @@ These examples are drawn from the existing Convoke backlog to anchor scoring con
 ### High Tier (~2.5+)
 
 **P4: "Enhance module"** — R:8 I:3 C:70% E:6 = **2.8**
-- Reach 8: New capability for every BMAD user with Convoke
+- Reach 8: New capability for every BMAD user with BMAD Odoo
 - Impact 3: Creates an entirely new value layer (multiplicative, not additive)
 - Confidence 70%: Architecture validated but user adoption uncertain
 - Effort 6: Multi-epic initiative with installer integration

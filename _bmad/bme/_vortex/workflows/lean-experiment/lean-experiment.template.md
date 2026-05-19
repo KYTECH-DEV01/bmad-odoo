@@ -25,5 +25,5 @@ status: {status}
 
 ---
 
-**Created with:** Convoke v2.0.0
+**Created with:** BMAD Odoo v2.0.0
 **Workflow:** lean-experiment

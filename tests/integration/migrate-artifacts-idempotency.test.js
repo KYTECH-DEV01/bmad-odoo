@@ -2,7 +2,7 @@
 
 // T4 — Migration idempotency CLI test.
 //
-// Verifies that running `convoke-migrate --apply --force` twice doesn't
+// Verifies that running `bmad-migrate --apply --force` twice doesn't
 // break state. `scripts/migrate-artifacts.js:278` (`detectMigrationState`)
 // implements idempotent recovery: if the previous migration is complete and
 // no new ungoverned files exist, the second run exits cleanly with
@@ -10,7 +10,7 @@
 //
 // Existing coverage: unit tests cover `parseArgs` and `detectMigrationState`
 // in isolation. This suite closes the gap at the CLI integration level:
-// the full `convoke-migrate` child-process flow against a real git repo.
+// the full `bmad-migrate` child-process flow against a real git repo.
 
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
@@ -43,16 +43,16 @@ function git(cwd, args) {
   );
 }
 
-// Seed a minimal Convoke-shaped project: git-initialized, one ungoverned
+// Seed a minimal BMAD Odoo-shaped project: git-initialized, one ungoverned
 // planning artifact using the legacy `type-initiative` convention that the
 // migration should rewrite to `initiative-type`.
 async function seedProject(tmpDir) {
   git(tmpDir, ['init', '-q']);
-  git(tmpDir, ['config', 'user.email', 'test@convoke.test']);
-  git(tmpDir, ['config', 'user.name', 'Convoke T4 Test']);
+  git(tmpDir, ['config', 'user.email', 'test@bmad-odoo.test']);
+  git(tmpDir, ['config', 'user.name', 'BMAD Odoo T4 Test']);
 
   // `findProjectRoot` walks up looking for a `_bmad/` dir — create it so the
-  // CLI recognizes the tmp dir as a Convoke project.
+  // CLI recognizes the tmp dir as a BMAD Odoo project.
   await fs.ensureDir(path.join(tmpDir, '_bmad'));
 
   const planning = path.join(tmpDir, '_bmad-output/planning-artifacts');
@@ -117,11 +117,11 @@ function assertNoUnexpectedWarnings(stderr, label) {
   );
 }
 
-describe('convoke-migrate CLI idempotency (T4)', () => {
+describe('bmad-migrate CLI idempotency (T4)', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-t4-migrate-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-t4-migrate-'));
     await seedProject(tmpDir);
   });
 

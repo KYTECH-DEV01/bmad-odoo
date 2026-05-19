@@ -6,7 +6,7 @@ const yaml = require('js-yaml');
  * Platform-canonical taxonomy defaults.
  * Mirrors migrate-artifacts.js constants (separate module boundary).
  */
-const PLATFORM_INITIATIVES = ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'convoke'];
+const PLATFORM_INITIATIVES = ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'bmad-odoo'];
 
 const DEFAULT_ARTIFACT_TYPES = [
   'prd', 'epic', 'arch', 'adr', 'persona', 'lean-persona', 'empathy-map',
@@ -27,7 +27,7 @@ const DEFAULT_ALIASES = {
 const TAXONOMY_HEADER = [
   '# Artifact Governance Taxonomy Configuration',
   '# Schema version: 1',
-  '# Managed by: convoke-update taxonomy merger',
+  '# Managed by: bmad-update taxonomy merger',
   '#',
   '# This file is the single source of truth for initiative IDs, artifact types,',
   '# and historical name aliases used by the governance system.',

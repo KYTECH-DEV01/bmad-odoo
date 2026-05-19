@@ -129,14 +129,14 @@ The installer adds an `<item>` tag to the target agent's menu:
 ```xml
 <item cmd="IB or fuzzy match on initiatives-backlog"
       exec="{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md">
-  [IB] 📦 Initiatives Backlog (Convoke Enhance)
+  [IB] 📦 Initiatives Backlog (BMAD Odoo Enhance)
 </item>
 ```
 
 **Conventions:**
 - `cmd`: Short code + fuzzy match phrase (e.g., `"SH or fuzzy match on sprint-health"`)
 - `exec`: Full path using `{project-root}/_bmad/...` form
-- Display label: `[CODE] 📦 [Name] (Convoke Enhance)` — the 📦 prefix and "(Convoke Enhance)" suffix identify enhanced menu items
+- Display label: `[CODE] 📦 [Name] (BMAD Odoo Enhance)` — the 📦 prefix and "(BMAD Odoo Enhance)" suffix identify enhanced menu items
 - The installer inserts the tag before `</menu>` in the target agent file
 
 **Max 2-3 items per agent.** More than that creates menu bloat and dilutes the agent's focus. If you need more capabilities, consider whether they belong as modes within an existing workflow rather than separate workflows.
@@ -153,7 +153,7 @@ target_agent: bmm/pm
 menu_items:
   - cmd: "IB or fuzzy match on initiatives-backlog"
     exec: "{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md"
-    label: "[IB] 📦 Initiatives Backlog (Convoke Enhance)"
+    label: "[IB] 📦 Initiatives Backlog (BMAD Odoo Enhance)"
 ```
 
 ---
@@ -201,7 +201,7 @@ workflows:
 This requires creating:
 - `workflows/sprint-health/workflow.md` + step files + templates
 - `extensions/bmm-sm.yaml` (extension descriptor)
-- Menu item: `[SH] 📦 Sprint Health Check (Convoke Enhance)` in `sm.md`
+- Menu item: `[SH] 📦 Sprint Health Check (BMAD Odoo Enhance)` in `sm.md`
 
 ---
 

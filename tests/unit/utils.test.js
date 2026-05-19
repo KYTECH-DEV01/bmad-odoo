@@ -49,7 +49,7 @@ describe('countUserDataFiles', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-test-'));
   });
 
   after(async () => {

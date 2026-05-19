@@ -225,10 +225,10 @@ describe('formatTerminal', () => {
 
   it('context fallback to lastArtifact when no nextAction', () => {
     const initiatives = [
-      { initiative: 'convoke', phase: { value: 'planning', confidence: 'inferred' }, status: { value: 'ongoing', confidence: 'inferred' }, lastArtifact: { file: 'convoke-prd.md', date: '2026-04-01' }, nextAction: { value: null, source: null } },
+      { initiative: 'bmad-odoo', phase: { value: 'planning', confidence: 'inferred' }, status: { value: 'ongoing', confidence: 'inferred' }, lastArtifact: { file: 'bmad-odoo-prd.md', date: '2026-04-01' }, nextAction: { value: null, source: null } },
     ];
     const output = formatTerminal(initiatives);
-    assert.ok(output.includes('Last: convoke-prd.md'));
+    assert.ok(output.includes('Last: bmad-prd.md'));
   });
 });
 
@@ -429,17 +429,17 @@ describe('attributeFile', () => {
     assert.equal(result.source, 'story-prefix');
   });
 
-  it('Story prefix: ag-6-3-foo.md → convoke', () => {
+  it('Story prefix: ag-6-3-foo.md → bmad-odoo', () => {
     const file = { filename: 'ag-6-3-portfolio.md', dir: 'implementation-artifacts' };
     const result = attributeFile(file, 'body', null, taxonomy);
-    assert.equal(result.initiative, 'convoke');
+    assert.equal(result.initiative, 'bmad-odoo');
     assert.equal(result.source, 'story-prefix');
   });
 
-  it('Folder default: planning-artifacts → convoke (last resort)', () => {
+  it('Folder default: planning-artifacts → bmad-odoo (last resort)', () => {
     const file = { filename: 'opaque.md', dir: 'planning-artifacts' };
     const result = attributeFile(file, 'body with no signal', null, taxonomy);
-    assert.equal(result.initiative, 'convoke');
+    assert.equal(result.initiative, 'bmad-odoo');
     assert.equal(result.source, 'folder-default');
   });
 
@@ -454,8 +454,8 @@ describe('attributeFile', () => {
 
   it('STORY_PREFIX_MAP and PORTFOLIO_FOLDER_DEFAULT_MAP are exported for inspection', () => {
     assert.equal(STORY_PREFIX_MAP.tf, 'loom');
-    assert.equal(STORY_PREFIX_MAP.ag, 'convoke');
-    assert.equal(PORTFOLIO_FOLDER_DEFAULT_MAP['planning-artifacts'], 'convoke');
+    assert.equal(STORY_PREFIX_MAP.ag, 'bmad-odoo');
+    assert.equal(PORTFOLIO_FOLDER_DEFAULT_MAP['planning-artifacts'], 'bmad-odoo');
   });
 });
 
@@ -518,7 +518,7 @@ describe('Story 6.3 — portfolio attribution improvements', () => {
 
 // --- Story 6.3: CLI output tests (Tests O, P, Q) ---
 
-describe('convoke-portfolio CLI output (Story 6.3)', () => {
+describe('bmad-portfolio CLI output (Story 6.3)', () => {
   const path = require('path');
   const { execFileSync } = require('child_process');
   const cliPath = path.join(__dirname, '..', '..', 'scripts', 'lib', 'portfolio', 'portfolio-engine.js');
@@ -558,6 +558,6 @@ describe('convoke-portfolio CLI output (Story 6.3)', () => {
     const output = runCli([]);
     // Story 6.3 AC8: when attributableButUngoverned > 0, output mentions migration
     assert.ok(output.includes('files attributable to existing initiatives'));
-    assert.ok(output.includes('run convoke-migrate-artifacts to govern them'));
+    assert.ok(output.includes('run bmad-migrate-artifacts to govern them'));
   });
 });

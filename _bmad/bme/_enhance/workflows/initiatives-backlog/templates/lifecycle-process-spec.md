@@ -1,6 +1,6 @@
 # Lifecycle Process Specification
 
-Canonical text for **Part 1: Lifecycle Process** in the Convoke Initiative Lifecycle & Backlog file. Create mode emits this verbatim. Triage/Review modes load it for context but never modify it.
+Canonical text for **Part 1: Lifecycle Process** in the BMAD Odoo Initiative Lifecycle & Backlog file. Create mode emits this verbatim. Triage/Review modes load it for context but never modify it.
 
 The text below the `---` marker is the verbatim Part 1 content. Do not edit it without coordinating with the lifecycle process governance — the same text appears in active backlog files and changing it requires migration.
 
@@ -44,7 +44,7 @@ The qualifying gate is the single decision point that determines what happens to
 - Vortex team can qualify intakes during discovery and ship spikes directly in a quick process
 - The qualifier assigns: lane, portfolio attachment, and initial RICE score
 - The qualifying decision is recorded with rationale
-- For capability-type intakes (new skill, agent, or team proposals): run the **Capability Evaluation Framework** decision tree (`convoke-note-capability-evaluation-framework.md`) to determine form factor (Skill → Agent → Team) before assigning a lane. Friction log evidence (`convoke-note-friction-log-template.md`) is the required input signal — vision is not demand.
+- For capability-type intakes (new skill, agent, or team proposals): run the **Capability Evaluation Framework** decision tree (`bmad-note-capability-evaluation-framework.md`) to determine form factor (Skill → Agent → Team) before assigning a lane. Friction log evidence (`bmad-note-friction-log-template.md`) is the required input signal — vision is not demand.
 
 **Gate output:** one of three lanes.
 
@@ -118,7 +118,7 @@ Every initiative attaches to a portfolio item. The portfolio item answers: "whic
 
 | Portfolio Item | Scope |
 |---------------|-------|
-| convoke | Core platform, CLI, update system, meta-infrastructure |
+| bmad-odoo | Core platform, CLI, update system, meta-infrastructure |
 | vortex | Discovery team (7 agents, Shiftup Innovation Vortex) |
 | gyre | Readiness team (contextual assessment) |
 | forge | Knowledge extraction team (brownfield capture) |
@@ -133,7 +133,7 @@ Every initiative attaches to a portfolio item. The portfolio item answers: "whic
 - Decision to create a new portfolio item is made by John + Winston
 - New items are logged with rationale
 
-**Fast Lane and Bug Lane items** also receive a portfolio attachment where applicable, for traceability. Items that are purely cross-cutting may use `convoke`.
+**Fast Lane and Bug Lane items** also receive a portfolio attachment where applicable, for traceability. Items that are purely cross-cutting may use `bmad-odoo`.
 
 ### 1.5 Pipeline Stages (Evolvable)
 

@@ -12,7 +12,7 @@
 // `.test.js` suffix.
 //
 // Why not `node --test <dir>`? Directory-argument recursion was added in Node 22.6.0;
-// Convoke's engines floor is `>=18.0.0`, so dir-args fail on Node 18/20. This helper
+// BMAD Odoo's engines floor is `>=18.0.0`, so dir-args fail on Node 18/20. This helper
 // is the Node-version-independent path until/unless the engines floor is bumped.
 // See IN-65 in the initiative-lifecycle backlog for the engines-bump follow-up.
 

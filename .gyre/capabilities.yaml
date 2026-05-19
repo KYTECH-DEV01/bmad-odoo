@@ -12,7 +12,7 @@ updated: 2026-03-25
 gyre_manifest:
   version: "1.0"
   generated_at: "2026-03-24T00:00:00Z"
-  stack_summary: "Node.js npm package (convoke-agents) — CLI toolkit with agent definitions, distributed via npm, CI/CD via GitHub Actions. Secondary Python stack (33% of codebase) powers builder/quality toolchain."
+  stack_summary: "Node.js npm package (bmad-odoo) — CLI toolkit with agent definitions, distributed via npm, CI/CD via GitHub Actions. Secondary Python stack (33% of codebase) powers builder/quality toolchain."
   capability_count: 29
   limited_coverage: false
   capabilities:
@@ -22,7 +22,7 @@ gyre_manifest:
       name: "Structured CLI Error Messages"
       description: "CLI commands produce actionable error messages with context (what failed, why, what to try). Users of npm CLI tools cannot inspect server logs — the terminal output IS the observability layer."
       source: "practice"
-      relevance: "convoke-* CLI commands are the user's primary interface. Poor error messages cause support burden and abandonment."
+      relevance: "bmad-odoo-* CLI commands are the user's primary interface. Poor error messages cause support burden and abandonment."
       amended: false
       removed: false
 
@@ -31,7 +31,7 @@ gyre_manifest:
       name: "Built-in Diagnostic Command"
       description: "A doctor/diagnostic command that validates installation health, checks file integrity, and reports environment details. Common in mature CLI tools (npm doctor, brew doctor)."
       source: "practice"
-      relevance: "convoke-doctor already exists — this capability validates that it covers installation integrity, version reporting, and environment checks."
+      relevance: "bmad-doctor already exists — this capability validates that it covers installation integrity, version reporting, and environment checks."
       amended: false
       removed: false
 
@@ -40,7 +40,7 @@ gyre_manifest:
       name: "Version Reporting for Troubleshooting"
       description: "CLI reports its own version consistently, enabling users and maintainers to correlate issues to specific releases. Version should be read from package.json, never hardcoded."
       source: "practice"
-      relevance: "convoke-version exists. Key rule: version must be read from package.json via getPackageVersion(), never hardcoded."
+      relevance: "bmad-version exists. Key rule: version must be read from package.json via getPackageVersion(), never hardcoded."
       amended: false
       removed: false
 
@@ -49,7 +49,7 @@ gyre_manifest:
       name: "Verbose/Debug Output Mode"
       description: "CLI commands support a verbose or debug flag that reveals internal operations (file copies, config merges, migration steps) for troubleshooting without modifying code."
       source: "practice"
-      relevance: "Update and migration operations (convoke-update, convoke-migrate) involve multi-step file operations where users need visibility into what changed."
+      relevance: "Update and migration operations (bmad-update, bmad-migrate) involve multi-step file operations where users need visibility into what changed."
       amended: false
       removed: false
 
@@ -58,7 +58,7 @@ gyre_manifest:
       name: "Post-Install Validation Reporting"
       description: "After install or update, validate that expected files exist and report results. Catches silent failures where file copy succeeds but content is wrong or incomplete."
       source: "reasoning"
-      relevance: "convoke-install copies agent definitions into user projects. Silent copy failures leave users with broken installations they discover late."
+      relevance: "bmad-install copies agent definitions into user projects. Silent copy failures leave users with broken installations they discover late."
       amended: false
       removed: false
 
@@ -86,7 +86,7 @@ gyre_manifest:
       name: "Test Coverage Measurement"
       description: "CI measures and reports test coverage (c8/istanbul). Coverage trends catch undertested areas before they become bug sources."
       source: "standard"
-      relevance: "c8 coverage is configured. Known debt exists (convoke-update.js at 29%, convoke-version.js at 56%). This capability tracks coverage health."
+      relevance: "c8 coverage is configured. Known debt exists (bmad-update.js at 29%, bmad-version.js at 56%). This capability tracks coverage health."
       amended: false
       removed: false
 
@@ -132,7 +132,7 @@ gyre_manifest:
       name: "Idempotent Install and Update Operations"
       description: "Running install or update multiple times produces the same result without corruption or duplication. Users re-run commands when unsure if they succeeded."
       source: "practice"
-      relevance: "convoke-install and convoke-update copy files into user projects. Re-runs must not create duplicates or corrupt existing customizations."
+      relevance: "bmad-install and bmad-update copy files into user projects. Re-runs must not create duplicates or corrupt existing customizations."
       amended: false
       removed: false
 
@@ -159,7 +159,7 @@ gyre_manifest:
       name: "Graceful Degradation on Missing Context"
       description: "CLI commands degrade gracefully when run outside a valid project context (no package.json, no _bmad/ directory) with clear error messages instead of stack traces."
       source: "reasoning"
-      relevance: "Users may run convoke-* commands from wrong directories. findProjectRoot() must handle this without cryptic errors."
+      relevance: "Users may run bmad-* commands from wrong directories. findProjectRoot() must handle this without cryptic errors."
       amended: false
       removed: false
 
@@ -243,7 +243,7 @@ gyre_manifest:
       name: "Agent Definition File Integrity Validation"
       description: "After install or update, agent markdown files are validated for required frontmatter fields (name, description), valid XML structure, and mandatory activation steps. Catches corrupted or incomplete agent definitions."
       source: "reasoning"
-      relevance: "Agent .md files are the runtime payload — a malformed agent file means a broken user experience. convoke-doctor validates agent count but not content integrity."
+      relevance: "Agent .md files are the runtime payload — a malformed agent file means a broken user experience. bmad-doctor validates agent count but not content integrity."
       amended: false
       removed: false
 
@@ -277,9 +277,9 @@ gyre_manifest:
     - id: "team-factory-output-validation"
       category: "reliability"
       name: "Team Factory Output Validation"
-      description: "Teams generated by the Team Factory pass convoke-doctor validation. Factory outputs (config.yaml, agent-manifest.csv, registry entries) are verified against the same standards as hand-crafted teams."
+      description: "Teams generated by the Team Factory pass bmad-doctor validation. Factory outputs (config.yaml, agent-manifest.csv, registry entries) are verified against the same standards as hand-crafted teams."
       source: "reasoning"
-      relevance: "Team Factory auto-generates configs, CSVs, and registry entries. If factory output doesn't match the format that convoke-doctor and refresh-installation expect, the generated team is silently broken."
+      relevance: "Team Factory auto-generates configs, CSVs, and registry entries. If factory output doesn't match the format that bmad-doctor and refresh-installation expect, the generated team is silently broken."
       amended: false
       removed: false
 

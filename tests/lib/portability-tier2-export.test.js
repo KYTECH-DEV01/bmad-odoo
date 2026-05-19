@@ -15,7 +15,7 @@ const { readManifest } = require('../../scripts/portability/manifest-csv');
 // companion-skill notes, and sidecar notes.
 
 const projectRoot = findProjectRoot();
-const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'convoke-export.js');
+const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'bmad-export.js');
 
 describe('Tier 2 Export (sp-5-1)', () => {
   it('Test 1: bmad-create-prd exports successfully with Template section', () => {

@@ -17,7 +17,7 @@ const { readManifest } = require('../../scripts/portability/manifest-csv');
 // output across all 5 tests. Uses a shared tmpdir cleaned up in afterAll.
 
 const projectRoot = findProjectRoot();
-const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'convoke-export.js');
+const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'bmad-export.js');
 
 const { FORBIDDEN_STRINGS } = require('../../scripts/portability/test-constants');
 

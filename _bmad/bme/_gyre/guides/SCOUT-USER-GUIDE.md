@@ -151,7 +151,7 @@ Scout surfaces secondary stacks as a warning and lets you confirm or override vi
 
 - **Agent:** Scout (Stack Detective)
 - **Module:** Gyre Pattern v1.0.0
-- **Pattern:** Convoke Agent Architecture
+- **Pattern:** BMAD Odoo Agent Architecture
 
 ---
 

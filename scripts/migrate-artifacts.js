@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Convoke Artifact Governance Migration CLI
+ * BMAD Odoo Artifact Governance Migration CLI
  *
  * Dry-run by default — shows what the migration would do without changing anything.
  * Use --apply to execute renames. Use --apply --force to skip confirmation.
@@ -104,7 +104,7 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`
-Usage: convoke-migrate-artifacts [options]
+Usage: bmad-migrate-artifacts [options]
 
 Analyze artifact files and show what the governance migration would do.
 Dry-run by default — no files are modified.
@@ -117,20 +117,20 @@ Options:
   --force                    Bypass confirmation prompt (use with --apply for automation)
   --resolution-file <path>   JSON file with operator decisions for ambiguous entries.
                              Combined with --force gives a fully non-interactive run.
-                             Schema: { "schemaVersion": 1, "resolutions": { "dir/file.md": { "action": "rename", "initiative": "convoke" } } }
+                             Schema: { "schemaVersion": 1, "resolutions": { "dir/file.md": { "action": "rename", "initiative": "bmad-odoo" } } }
   --help, -h                 Show this help
 
 Examples:
-  convoke-migrate-artifacts                          Dry-run with default scope
-  convoke-migrate-artifacts --verbose                Dry-run with cross-references
-  convoke-migrate-artifacts --include planning-artifacts   Dry-run for one directory
-  convoke-migrate-artifacts --apply --force --resolution-file resolutions.json   Non-interactive apply with operator decisions
+  bmad-migrate-artifacts                          Dry-run with default scope
+  bmad-migrate-artifacts --verbose                Dry-run with cross-references
+  bmad-migrate-artifacts --include planning-artifacts   Dry-run for one directory
+  bmad-migrate-artifacts --apply --force --resolution-file resolutions.json   Non-interactive apply with operator decisions
 `);
 }
 
 // --- Taxonomy Bootstrap ---
 
-const PLATFORM_INITIATIVES = ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'convoke'];
+const PLATFORM_INITIATIVES = ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'bmad-odoo'];
 
 const DEFAULT_ARTIFACT_TYPES = [
   'prd', 'epic', 'arch', 'adr', 'persona', 'lean-persona', 'empathy-map',
@@ -166,7 +166,7 @@ function bootstrapTaxonomy(projectRoot) {
   const header = [
     '# Artifact Governance Taxonomy Configuration',
     '# Schema version: 1',
-    `# Created by: convoke-migrate-artifacts bootstrap`,
+    `# Created by: bmad-migrate-artifacts bootstrap`,
     '#',
     '# This file is the single source of truth for initiative IDs, artifact types,',
     '# and historical name aliases used by the governance system.',
@@ -221,7 +221,7 @@ async function main() {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.error('Error: Not in a Convoke project. Could not find _bmad/ directory.');
+    console.error('Error: Not in a BMAD Odoo project. Could not find _bmad/ directory.');
     process.exit(1);
   }
 

@@ -1,6 +1,6 @@
-# Convoke Agents — Theoretical Foundations & References
+# BMAD Odoo — Theoretical Foundations & References
 
-> Comprehensive bibliography mapping the theoretical foundations of the Convoke Agents project.
+> Comprehensive bibliography mapping the theoretical foundations of the BMAD Odoo project.
 > Each reference is linked to the specific project component(s) it underpins.
 >
 > **Last updated:** April 2026
@@ -36,12 +36,12 @@
 
 ## 1. Multi-Agent Systems & AI Agent Architectures
 
-**Project relevance:** Core architecture of Convoke — Vortex (7 agents), Gyre (4 agents), Team Factory, handoff contracts, compass routing.
+**Project relevance:** Core architecture of BMAD Odoo — Vortex (7 agents), Gyre (4 agents), Team Factory, handoff contracts, compass routing.
 
 ### Foundational Theory
 
 - Wooldridge, M. J. (2002). *An Introduction to Multiagent Systems*. Wiley. ISBN: 9780470519460
-  — Defines agent autonomy, sociality, reactivity, and proactivity as core agent properties. Foundation for Convoke's agent design.
+  — Defines agent autonomy, sociality, reactivity, and proactivity as core agent properties. Foundation for BMAD Odoo's agent design.
 
 - Ferber, J. (1999). *Multi-Agent Systems: An Introduction to Distributed Artificial Intelligence*. Addison-Wesley. ISBN: 9780201360486
   — First comprehensive unified overview of MAS with organizational frameworks. Informs team composition patterns.
@@ -50,15 +50,15 @@
   — Contemporary reference covering learning, coordination, and communication in MAS.
 
 - Rao, A. S., & Georgeff, M. P. (1995). "BDI Agents: From Theory to Practice." *Proceedings of ICMAS-95*. AAAI.
-  — Belief-Desire-Intention architecture. Relevant to how Convoke agents maintain context (beliefs), goals (desires), and workflow execution (intentions).
+  — Belief-Desire-Intention architecture. Relevant to how BMAD Odoo agents maintain context (beliefs), goals (desires), and workflow execution (intentions).
 
 - FIPA — Foundation for Intelligent Physical Agents. (2003–2007). *FIPA Specifications*. http://www.fipa.org/
-  — Standardized Agent Communication Language (ACL), interaction protocols including Contract Net Protocol. Precursor to Convoke's handoff contract system.
+  — Standardized Agent Communication Language (ACL), interaction protocols including Contract Net Protocol. Precursor to BMAD Odoo's handoff contract system.
 
 ### LLM-Based Multi-Agent Frameworks (2023–2025)
 
 - Wu, Q., Bansal, G., Zhang, J., et al. (2023). "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation." *arXiv:2308.08155*. Accepted at ICLR 2024.
-  — Multi-agent conversation framework. Relevant to Convoke's conversable agent paradigm and handoff patterns.
+  — Multi-agent conversation framework. Relevant to BMAD Odoo's conversable agent paradigm and handoff patterns.
 
 - Hong, S., Zheng, M., Chen, J., et al. (2023). "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework." *arXiv:2308.00352*. Accepted at ICLR 2024.
   — Encodes human SOPs into agent interactions with role-based assembly line paradigm. Directly relevant to Vortex's stream-based specialization.
@@ -67,7 +67,7 @@
   — Software development lifecycle through specialized LLM agents. Comparable to BMAD Core's role-based development agents (Mary, Winston, Amelia, John).
 
 - Li, G., Hammoud, H. A. H., et al. (2023). "CAMEL: Communicative Agents for 'Mind' Exploration of Large Language Model Society." *arXiv:2303.17760*. Accepted at ICLR 2024.
-  — Role-playing and inception prompting for autonomous cooperation. Informs Convoke's agent persona design.
+  — Role-playing and inception prompting for autonomous cooperation. Informs BMAD Odoo's agent persona design.
 
 - Chen, W., Su, Y., Zhou, X., et al. (2023). "AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors." *arXiv:2308.10848*. Accepted at ICLR 2024.
   — Four-stage framework: Expert Recruitment, Collaborative Decision-Making, Action Execution, Evaluation. Parallels Vortex's compass-driven routing.
@@ -75,22 +75,22 @@
 ### Practitioner Frameworks
 
 - CrewAI. (2024). "Framework for orchestrating role-playing, autonomous AI agents." https://github.com/crewAIInc/crewAI
-  — Role-based orchestration with agent specialization by role/goal/backstory. Comparable design to Convoke's team composition.
+  — Role-based orchestration with agent specialization by role/goal/backstory. Comparable design to BMAD Odoo's team composition.
 
 - Chase, H. (2023–2025). "LangChain and LangGraph." https://blog.langchain.com/
   — Component abstraction (LangChain) and runtime orchestration (LangGraph). Reference architecture for agentic systems.
 
 - Yang, J., Jimenez, C. E., Wettig, A., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." *NeurIPS 2024*. arXiv:2405.15793.
-  — Demonstrates that agent-computer interface design dramatically affects LLM agent performance on software engineering tasks. Relevant to how Convoke shapes agent interaction surfaces.
+  — Demonstrates that agent-computer interface design dramatically affects LLM agent performance on software engineering tasks. Relevant to how BMAD Odoo shapes agent interaction surfaces.
 
 - Qian, C., et al. (2025). "ChatDev 2.0: Evolving Multi-Agent Collaboration for Software Development." *NeurIPS 2025*.
   — Extends ChatDev with evolving orchestration patterns, agent memory, and cross-session learning. Supports non-linear agent coordination beyond fixed pipelines.
 
 - Multi-institutional. (2026). "The Orchestration of Multi-Agent Systems: A Systematic Survey." *arXiv* (January 2026).
-  — Comprehensive taxonomy of MAS orchestration patterns: centralized, decentralized, hybrid, and adaptive. Directly relevant to Convoke's gravity-driven routing as an alternative to pipeline orchestration.
+  — Comprehensive taxonomy of MAS orchestration patterns: centralized, decentralized, hybrid, and adaptive. Directly relevant to BMAD Odoo's gravity-driven routing as an alternative to pipeline orchestration.
 
 - Multi-institutional. (2026). "Agentic AI: Architectures, Taxonomies, and Emerging Frameworks." *arXiv* (January 2026).
-  — Proposes unified taxonomy for agentic AI system design: perception, reasoning, action, memory, and multi-agent coordination layers. Reference for Convoke's architectural classification.
+  — Proposes unified taxonomy for agentic AI system design: perception, reasoning, action, memory, and multi-agent coordination layers. Reference for BMAD Odoo's architectural classification.
 
 ---
 
@@ -101,10 +101,10 @@
 ### Reasoning Architectures
 
 - Yao, S., Yu, D., Zhao, J., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." *arXiv:2210.03629*. Published at ICLR 2023.
-  — Thought-Action-Observation cycles. Foundation for how Convoke agents reason through workflow steps.
+  — Thought-Action-Observation cycles. Foundation for how BMAD Odoo agents reason through workflow steps.
 
 - Wei, J., Wang, X., Schuurmans, D., et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *arXiv:2201.11903*. Published at NeurIPS 2022.
-  — Intermediate reasoning step generation. Underpins structured reasoning in all Convoke agent prompts.
+  — Intermediate reasoning step generation. Underpins structured reasoning in all BMAD Odoo agent prompts.
 
 - Yao, S., et al. (2023). "Tree of Thoughts: Deliberate Problem Solving with Large Language Models." *NeurIPS 2023*. arXiv:2305.10601.
   — Exploration of reasoning paths with self-evaluation and backtracking. Relevant to Liam's hypothesis engineering branching.
@@ -115,19 +115,19 @@
 ### Communication & Handoff Protocols
 
 - Anthropic. (2024). "Building Effective AI Agents." https://www.anthropic.com/research/building-effective-agents
-  — Five foundational patterns: Prompt Chaining, Routing, Parallelization, Orchestrator-Workers, Evaluator-Optimizer. Direct influence on Convoke's architecture.
+  — Five foundational patterns: Prompt Chaining, Routing, Parallelization, Orchestrator-Workers, Evaluator-Optimizer. Direct influence on BMAD Odoo's architecture.
 
 - Anthropic. (2024). "Effective Context Engineering for AI Agents." https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
   — Context management for multi-agent collaboration. Relevant to handoff contract design.
 
 - Google Developers. (2024). "Agent-to-Agent Protocol (A2A)." https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/
-  — Task-centric inter-agent protocol with Agent Cards. Comparable to Convoke's handoff contracts as typed inter-agent interfaces.
+  — Task-centric inter-agent protocol with Agent Cards. Comparable to BMAD Odoo's handoff contracts as typed inter-agent interfaces.
 
 - Anthropic. (2024). "Model Context Protocol (MCP)." https://modelcontextprotocol.io/
-  — Standardized model-to-tool connectivity. Infrastructure layer for Convoke agent tool use.
+  — Standardized model-to-tool connectivity. Infrastructure layer for BMAD Odoo agent tool use.
 
 - Microsoft AutoGen Team. (2023). "AutoGen Handoff Pattern." https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/design-patterns/handoffs.html
-  — Explicit, versioned handoff mechanisms with structured JSON schemas. Closest existing parallel to Convoke's HC/GC contract system.
+  — Explicit, versioned handoff mechanisms with structured JSON schemas. Closest existing parallel to BMAD Odoo's HC/GC contract system.
 
 - Anthropic. (2024). "How we built our multi-agent research system." https://www.anthropic.com/engineering/multi-agent-research-system
   — Production case study on role definition, information flow, and feedback mechanisms in multi-agent systems.
@@ -141,10 +141,10 @@
   — Comparative analysis of emerging agent interoperability standards.
 
 - Cloud Security Alliance (CSA). (2024). *AI Agent Capability Framework*. https://cloudsecurityalliance.org/
-  — Structured maturity model for AI agent capabilities: perception, reasoning, planning, execution, collaboration. **Relevant to Convoke's asymmetric port maturity model (Levels 0–4) for domain perimeters.**
+  — Structured maturity model for AI agent capabilities: perception, reasoning, planning, execution, collaboration. **Relevant to BMAD Odoo's asymmetric port maturity model (Levels 0–4) for domain perimeters.**
 
 - Multi-institutional. (2025). "TRiSM for Agentic AI: Trust, Risk, and Security Management in Agentic Systems." *arXiv* (2025).
-  — Applies Gartner's AI TRiSM framework specifically to agentic AI: model-level trust, agent-level risk, system-level security. Relevant to governance as a cross-cutting concern in Convoke.
+  — Applies Gartner's AI TRiSM framework specifically to agentic AI: model-level trust, agent-level risk, system-level security. Relevant to governance as a cross-cutting concern in BMAD Odoo.
 
 ---
 
@@ -358,7 +358,7 @@
 ### Decision Frameworks
 
 - Ries, E. (2011). "Pivot or Persevere" in *The Lean Startup*. Crown Business.
-  — Original pivot-or-persevere framework. **Extended by Convoke to "Pivot, Patch, or Persevere" adding a middle-ground option.**
+  — Original pivot-or-persevere framework. **Extended by BMAD Odoo to "Pivot, Patch, or Persevere" adding a middle-ground option.**
 
 - Klein, G. (2007). "Performing a Project Premortem." *Harvard Business Review*, 85(9), 18–19.
   — Premortem technique for prospective hindsight. Relevant to assumption mapping's risk assessment.
@@ -366,13 +366,13 @@
 ### Lean Thinking & Flow Principles
 
 - Womack, J. P. & Jones, D. T. (1996). *Lean Thinking: Banish Waste and Create Wealth in Your Corporation*. Simon & Schuster. ISBN: 9780743249270
-  — Five lean principles: define value, map value streams, create flow, establish pull, pursue perfection. **Convoke's gravity model is a pull system; lean's waste taxonomy (overproduction, waiting, overprocessing, defects) provides design constraints for preventing platform-level waste as perimeters multiply.**
+  — Five lean principles: define value, map value streams, create flow, establish pull, pursue perfection. **BMAD Odoo's gravity model is a pull system; lean's waste taxonomy (overproduction, waiting, overprocessing, defects) provides design constraints for preventing platform-level waste as perimeters multiply.**
 
 - Ohno, T. (1988). *Toyota Production System: Beyond Large-Scale Production*. Productivity Press. ISBN: 9780915299140
-  — Original formulation of pull-based production, kanban, and the seven wastes. **Foundation for Convoke's flow-awareness principle: limiting how many perimeters activate simultaneously to prevent thrashing.**
+  — Original formulation of pull-based production, kanban, and the seven wastes. **Foundation for BMAD Odoo's flow-awareness principle: limiting how many perimeters activate simultaneously to prevent thrashing.**
 
 - Reinertsen, D. G. (2009). *The Principles of Product Development Flow: Second Generation Lean Product Development*. Celeritas Publishing. ISBN: 9781935401001
-  — Applies queueing theory and economic principles to product development. WIP limits, batch size reduction, cost of delay. **Most directly applicable lean text for Convoke: treats product development as a flow system with quantifiable economics, not a manufacturing process with physical constraints. Informs WIP governance and value stream visibility across perimeters.**
+  — Applies queueing theory and economic principles to product development. WIP limits, batch size reduction, cost of delay. **Most directly applicable lean text for BMAD Odoo: treats product development as a flow system with quantifiable economics, not a manufacturing process with physical constraints. Informs WIP governance and value stream visibility across perimeters.**
 
 ---
 
@@ -524,10 +524,10 @@
   — Hierarchical knowledge graph construction from unstructured text, enabling multi-hop reasoning over organizational knowledge.
 
 - Graph Praxis. (2025). "From Domain Expertise to Autonomous Agents: Introducing the Agentic Graph Framework." *Medium / Graph Praxis*. https://medium.com/graph-praxis/from-domain-expertise-to-autonomous-agents-introducing-the-agentic-graph-framework-0d97725c58b6
-  — Proposes knowledge graphs as the structural backbone for autonomous agent coordination — agents construct, traverse, and evolve graph structures rather than passing flat context. Extends GraphRAG from retrieval to continuous graph evolution. **Strengthens Convoke KE's ambition of maintaining organizational knowledge as a living graph.**
+  — Proposes knowledge graphs as the structural backbone for autonomous agent coordination — agents construct, traverse, and evolve graph structures rather than passing flat context. Extends GraphRAG from retrieval to continuous graph evolution. **Strengthens BMAD Odoo KE's ambition of maintaining organizational knowledge as a living graph.**
 
 - Paul, N. J. (2025). "Ontology-Driven Agents: The Missing Layer for Enterprise AI." *Medium*. https://medium.com/@nayan.j.paul/ontology-driven-agents-the-missing-layer-for-enterprise-ai-6d4b9182ee2b
-  — Argues that enterprise AI agents fail without a shared ontology — a formal representation of business entities, relationships, and rules. Without it, each agent carries its own interpretation of domain concepts. **Informs Convoke KE's role as ontology producer: a structured, versioned, governed knowledge layer that all other perimeters consume.**
+  — Argues that enterprise AI agents fail without a shared ontology — a formal representation of business entities, relationships, and rules. Without it, each agent carries its own interpretation of domain concepts. **Informs BMAD Odoo KE's role as ontology producer: a structured, versioned, governed knowledge layer that all other perimeters consume.**
 
 - Gromov, S. (2026). "The Semantic Layer Is Dead. Now It's an API for AI Agents." *Medium*. https://medium.com/@grom_65116/the-semantic-layer-is-dead-now-its-an-api-for-ai-agents-f91d48a0c74a
   — The semantic layer evolves from a BI convenience into an "interface of meaning" — a context-of-trust layer that constrains what agents are allowed to conclude from data. Agents don't need data access; they need access to *interpretation*. **Completes the KE output triad: ontology (what to define — Paul), graph (how to structure it — Graph Praxis), semantic API (how agents consume it — Gromov). Gives KE a clearer product vision: its output is an interpretive substrate, not just knowledge assets.**
@@ -543,7 +543,7 @@
 ### Encoding Tacit Knowledge for AI Consumption
 
 - Fowler, M. et al. (2026). "Encoding Team Standards." In *Patterns for Reducing Friction in AI-Assisted Development*. martinfowler.com. https://martinfowler.com/articles/reduce-friction-ai/encoding-team-standards.html
-  — Team standards governing AI coding assistants should be versioned infrastructure artifacts, not tribal knowledge. Tacit knowledge — what to generate, what to flag, what to reject — is the team's most valuable and most fragile asset; it transfers slowly and walks out the door when someone leaves. The act of creating machine-consumable instructions *is* the act of organizing tacit knowledge into explicit, prioritized checks. **Practitioner validation from Thoughtworks of Convoke KE's foundational premise: extraction and encoding are the same activity. Closes the KE loop: extract (Fowler) → structure (Graph Praxis) → define shared meaning (Paul) → expose as API (Gromov).**
+  — Team standards governing AI coding assistants should be versioned infrastructure artifacts, not tribal knowledge. Tacit knowledge — what to generate, what to flag, what to reject — is the team's most valuable and most fragile asset; it transfers slowly and walks out the door when someone leaves. The act of creating machine-consumable instructions *is* the act of organizing tacit knowledge into explicit, prioritized checks. **Practitioner validation from Thoughtworks of BMAD Odoo KE's foundational premise: extraction and encoding are the same activity. Closes the KE loop: extract (Fowler) → structure (Graph Praxis) → define shared meaning (Paul) → expose as API (Gromov).**
 
 - Fowler, M. et al. (2026). "Knowledge Priming." In *Patterns for Reducing Friction in AI-Assisted Development*. martinfowler.com. https://martinfowler.com/articles/reduce-friction-ai/knowledge-priming.html
   — Priming documents are first-class artifacts — the minimum context AI needs to generate aligned output. Treated with the same rigor as onboarding materials for new hires. **Maps to KE's knowledge curation capability: producing structured, maintained context packages that any consumer (human or agent) can use to act within organizational norms.**
@@ -552,29 +552,29 @@
 
 ## 17. Adaptive Systems, Entropy & Software Evolution
 
-**Project relevance:** Gravity model (non-linear lifecycle), entropy as cross-cutting force, asymmetric port maturity — the structural principles underlying Convoke's architecture.
+**Project relevance:** Gravity model (non-linear lifecycle), entropy as cross-cutting force, asymmetric port maturity — the structural principles underlying BMAD Odoo's architecture.
 
 ### Adaptive Cycles & Panarchy
 
 - Holling, C. S. (2001). "Understanding the Complexity of Economic, Ecological, and Social Systems." *Ecosystems*, 4(5), 390–405.
-  — Panarchy framework: systems cycle through exploitation → conservation → release → reorganization (r → K → Ω → α). **Primary theoretical grounding for Convoke's gravity model — perimeters gain and release priority through adaptive cycles rather than following a linear pipeline.**
+  — Panarchy framework: systems cycle through exploitation → conservation → release → reorganization (r → K → Ω → α). **Primary theoretical grounding for BMAD Odoo's gravity model — perimeters gain and release priority through adaptive cycles rather than following a linear pipeline.**
 
 - Gunderson, L. H. & Holling, C. S. (Eds.). (2002). *Panarchy: Understanding Transformations in Human and Natural Systems*. Island Press. ISBN: 9781559638579
-  — Comprehensive treatment of adaptive cycles across scales, showing how systems at different levels influence each other. Informs how Convoke perimeters at different maturity levels interact.
+  — Comprehensive treatment of adaptive cycles across scales, showing how systems at different levels influence each other. Informs how BMAD Odoo perimeters at different maturity levels interact.
 
 ### Entropy in Multi-Agent & Software Systems
 
 - Lehman, M. M. (1980). "Programs, Life Cycles, and Laws of Software Evolution." *Proceedings of the IEEE*, 68(9), 1060–1076.
-  — Eight laws of software evolution, especially: continuing change (systems must adapt or become progressively less satisfactory) and increasing complexity (entropy grows unless actively managed). **Foundation for Convoke's entropy as cross-cutting force.**
+  — Eight laws of software evolution, especially: continuing change (systems must adapt or become progressively less satisfactory) and increasing complexity (entropy grows unless actively managed). **Foundation for BMAD Odoo's entropy as cross-cutting force.**
 
 - Parunak, H. V. D. & Brueckner, S. (2001). "Entropy and Self-Organization in Multi-Agent Systems." *Proceedings of the Fifth International Conference on Autonomous Agents (AGENTS '01)*. ACM.
   — Applies thermodynamic entropy measures to multi-agent coordination. Shows how agent interactions can increase or decrease system entropy depending on organizational structure.
 
 - De Holan, P. M. & Phillips, N. (2004). "Remembrance of Things Past? The Dynamics of Organizational Forgetting." *Management Science*, 50(11), 1603–1613.
-  — Organizations can lose knowledge through accidental forgetting (failure to retain) or intentional unlearning. **Informs Convoke's entropy detection — knowledge decay is not just code rot but organizational memory loss.**
+  — Organizations can lose knowledge through accidental forgetting (failure to retain) or intentional unlearning. **Informs BMAD Odoo's entropy detection — knowledge decay is not just code rot but organizational memory loss.**
 
 - Dumitru, A. (2025). "The Second Law of AI: How Entropy Shapes Agentic Systems." *arXiv* (2025).
-  — Argues that multi-agent AI systems inherently tend toward disorder without active entropy management: coordination decay, context drift, capability degradation. **Directly validates Convoke's entropy dimension — every perimeter needs a "sensitize" function.**
+  — Argues that multi-agent AI systems inherently tend toward disorder without active entropy management: coordination decay, context drift, capability degradation. **Directly validates BMAD Odoo's entropy dimension — every perimeter needs a "sensitize" function.**
 
 - Storey, M. (2026). "How Generative and Agentic AI Shift Concern from Technical Debt to Cognitive Debt." https://margaretstorey.com/blog/2026/02/09/cognitive-debt/
   — As AI generates more code, human understanding erodes. (Also listed in Section 16.) **Cognitive debt as a specific manifestation of entropy in AI-augmented development.**
@@ -582,12 +582,12 @@
 ### Operationalized Entropy Management
 
 - Zakutnii, I. (2025). "Quint Code — Systems Thinking for Programmers." *Neural Stack (Substack)*. https://ivanzakutnii.substack.com/p/quint-code-systems-thinking-for-programmers / https://github.com/m0n0x41d/quint-code
-  — Decision engineering framework for AI coding agents, built on Levenchuk's First Principles Framework. Produces Decision Rationale Records (DRRs) — live artifacts with computed trust scores that degrade as evidence ages, expiry dates that trigger reviews, and rollback conditions. Evidence decay is explicit: every piece of evidence has a `valid_until` date; decisions auto-expire, becoming "questionable, not necessarily wrong, just unverified." Reasoning follows the ADI cycle (Abduction → Deduction → Induction). **The most concrete practitioner implementation of anti-entropy in an agentic context — operationalizes Lehman's continuing change law, Dumitru's second law, and De Holan's organizational forgetting into a working system. Directly informs how Convoke's "sensitize" function could work: artifacts with decay scores, automated staleness detection, and evidence-triggered review cycles.**
+  — Decision engineering framework for AI coding agents, built on Levenchuk's First Principles Framework. Produces Decision Rationale Records (DRRs) — live artifacts with computed trust scores that degrade as evidence ages, expiry dates that trigger reviews, and rollback conditions. Evidence decay is explicit: every piece of evidence has a `valid_until` date; decisions auto-expire, becoming "questionable, not necessarily wrong, just unverified." Reasoning follows the ADI cycle (Abduction → Deduction → Induction). **The most concrete practitioner implementation of anti-entropy in an agentic context — operationalizes Lehman's continuing change law, Dumitru's second law, and De Holan's organizational forgetting into a working system. Directly informs how BMAD Odoo's "sensitize" function could work: artifacts with decay scores, automated staleness detection, and evidence-triggered review cycles.**
 
 ### Non-Pipeline Orchestration
 
 - Thelosen, T. & Gillson, G. (2024–ongoing). *Gravity AI: Event-Driven Intelligence Platform*. https://www.gravity.ai/
-  — Event-driven platform that routes work based on evidence signals rather than fixed pipeline stages. **Practitioner precedent for Convoke's gravity model — priority shifts based on what the system knows, not where it sits in a sequence.**
+  — Event-driven platform that routes work based on evidence signals rather than fixed pipeline stages. **Practitioner precedent for BMAD Odoo's gravity model — priority shifts based on what the system knows, not where it sits in a sequence.**
 
 ---
 
@@ -598,7 +598,7 @@
 ### Mesh Patterns
 
 - Dehghani, Z. (2022). *Data Mesh: Delivering Data-Driven Value at Scale*. O'Reilly. ISBN: 9781492092391
-  — Four principles: domain-oriented ownership, data as a product, self-serve infrastructure, federated governance. **Primary analogy for Convoke's domain mesh.**
+  — Four principles: domain-oriented ownership, data as a product, self-serve infrastructure, federated governance. **Primary analogy for BMAD Odoo's domain mesh.**
 
 - Istio Project / Linkerd. (2017–ongoing). *Service Mesh Architecture*. https://istio.io/ / https://linkerd.io/
   — Sidecar proxy pattern separating infrastructure concerns from business logic. Observability, traffic management, security.
@@ -626,7 +626,7 @@
 ### Ontological Grounding for Agent Interoperability
 
 - Paul, N. J. (2025). "Ontology-Driven Agents: The Missing Layer for Enterprise AI." *Medium*. (Also listed in Section 16.)
-  — The shared ontology layer ensures domain modules speak the same language. **Defines what each port *means* at each maturity level in Convoke's asymmetric port maturity model — when DataOps talks to AgentOps, they share entity definitions.**
+  — The shared ontology layer ensures domain modules speak the same language. **Defines what each port *means* at each maturity level in BMAD Odoo's asymmetric port maturity model — when DataOps talks to AgentOps, they share entity definitions.**
 
 - Graph Praxis. (2025). "From Domain Expertise to Autonomous Agents: Introducing the Agentic Graph Framework." *Medium / Graph Praxis*. (Also listed in Section 16.)
   — Graph-based agent communication: agents exchange structured subgraphs representing context, assumptions, and intent. **Complements Broda's Agentic Mesh with an explicit graph-based communication substrate for the domain mesh.**
@@ -654,7 +654,7 @@
 ### Agentic Data & Domain-Level Autonomy
 
 - Multi-institutional. (2026). "Data Agents: A Survey on Levels of Agentic Autonomy in Data Engineering." *arXiv* (2026).
-  — Proposes autonomy levels for AI agents in data domains (from tool-assisted to fully autonomous). **Relevant to Convoke's asymmetric port maturity model — domain modules graduate from advisory (Level 1) to autonomous (Level 3–4).**
+  — Proposes autonomy levels for AI agents in data domains (from tool-assisted to fully autonomous). **Relevant to BMAD Odoo's asymmetric port maturity model — domain modules graduate from advisory (Level 1) to autonomous (Level 3–4).**
 
 ### Composable & Federated Architectures
 
@@ -704,7 +704,7 @@
 
 ## 21. Change Management & Organizational Transformation
 
-**Project relevance:** Proposed Catalyst module — governing and facilitating the transformation that Convoke's expansion creates.
+**Project relevance:** Proposed Catalyst module — governing and facilitating the transformation that BMAD Odoo's expansion creates.
 
 ### Classical Change Management
 
@@ -807,12 +807,12 @@
 
 ## 22. Prospective Research Directions
 
-The following areas represent theoretical domains where Convoke could be further enriched. These are flagged for future exploration.
+The following areas represent theoretical domains where BMAD Odoo could be further enriched. These are flagged for future exploration.
 
 ### Agent Architecture Evolution
 
 - **Agentic memory systems** — Long-term memory, retrieval-augmented generation for persistent agent context across sessions. Relevant to Vortex agents maintaining discovery state.
-- **Agent evaluation & benchmarking** — Standardized benchmarks for multi-agent system performance (AgentBench, GAIA). Relevant to measuring Convoke team effectiveness.
+- **Agent evaluation & benchmarking** — Standardized benchmarks for multi-agent system performance (AgentBench, GAIA). Relevant to measuring BMAD Odoo team effectiveness.
 - **Emergent behavior in agent teams** — How agent collaboration produces outcomes beyond individual capabilities. Theoretical grounding for Vortex's compass routing emergent properties.
 
 ### Discovery Theory

@@ -179,7 +179,7 @@ function renderSnapshot({ skills, baselineDir, postDir, date }) {
   // Frontmatter (8 keys per Decision 4)
   const lines = [
     '---',
-    'initiative: convoke',
+    'initiative: bmad-odoo',
     'artifact_type: drift-snapshot',
     'release_target: 4.0.0',
     `created: '${date}'`,
@@ -189,7 +189,7 @@ function renderSnapshot({ skills, baselineDir, postDir, date }) {
     `prompts_per_skill: ${PROMPTS_PER_SKILL}`,
     '---',
     '',
-    '# PF1 Drift Snapshot — Convoke 4.0',
+    '# PF1 Drift Snapshot — BMAD Odoo 4.0',
     '',
     'Side-by-side pre/post migration drift artifact (FR39 + NFR22 + NFR32). Retrospective observation only — NOT a release-blocking gate (see Story 4.3 for the M9 PF1 gate).',
     '',
@@ -251,7 +251,7 @@ function renderAdhocSnapshot({ inputPre, inputPost, date }) {
 
   const lines = [
     '---',
-    'initiative: convoke',
+    'initiative: bmad-odoo',
     'artifact_type: drift-snapshot',
     'release_target: 4.0.0',
     `created: '${date}'`,
@@ -261,7 +261,7 @@ function renderAdhocSnapshot({ inputPre, inputPost, date }) {
     `prompts_per_skill: ${PROMPTS_PER_SKILL}`,
     '---',
     '',
-    '# PF1 Drift Snapshot (ad-hoc) — Convoke 4.0',
+    '# PF1 Drift Snapshot (ad-hoc) — BMAD Odoo 4.0',
     '',
     `Side-by-side pre/post migration drift artifact for **${heading}** (ad-hoc pair mode per Story 4.4 AC4).`,
     '',

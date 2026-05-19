@@ -17,7 +17,7 @@
  *
  * Consumes:
  *   - The calibrated rubric at `_bmad-output/planning-artifacts/
- *     convoke-spec-personality-preservation-rubric.md`
+ *     bmad-spec-personality-preservation-rubric.md`
  *     (status: `calibrated` since 2026-04-29).
  *   - Existing baseline fixtures at `tests/migration/personality-preservation/
  *     fixtures/<agent-role>/baseline-fixed-prompt.json` and

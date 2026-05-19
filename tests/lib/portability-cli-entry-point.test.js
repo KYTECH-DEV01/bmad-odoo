@@ -13,11 +13,11 @@ const { readManifest } = require('../../scripts/portability/manifest-csv');
 
 // Story sp-2-3: CLI Entry Point
 //
-// Tests the convoke-export CLI by spawning it as a subprocess. All file
+// Tests the bmad-export CLI by spawning it as a subprocess. All file
 // outputs go to per-test tmpdirs that are cleaned up afterEach.
 
 const projectRoot = findProjectRoot();
-const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'convoke-export.js');
+const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'bmad-export.js');
 
 function runCli(args, options = {}) {
   return spawnSync('node', [CLI_PATH, ...args], {
@@ -39,7 +39,7 @@ function cleanupTmpDir(dir) {
   }
 }
 
-describe('convoke-export CLI (sp-2-3)', () => {
+describe('bmad-export CLI (sp-2-3)', () => {
   let tmpDir;
 
   afterEach(() => {
@@ -188,7 +188,7 @@ describe('convoke-export CLI (sp-2-3)', () => {
 // I50: `--quiet` / `-q` flag — suppress per-skill success + skip lines, keep
 // failures (stderr) + the single-line summary. Useful for CI / scripted
 // pipelines. Deferred through 4 SP-Epic retros; resolved 2026-04-19.
-describe('convoke-export CLI — --quiet flag (I50)', () => {
+describe('bmad-export CLI — --quiet flag (I50)', () => {
   const tmpDirs = [];
   afterEach(() => {
     while (tmpDirs.length) cleanupTmpDir(tmpDirs.pop());

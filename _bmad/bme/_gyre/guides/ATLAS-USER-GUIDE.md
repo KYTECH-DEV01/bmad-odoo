@@ -170,7 +170,7 @@ Atlas reads GC4 (Coach amendments) before regenerating. If amendments are missin
 
 - **Agent:** Atlas (Model Curator)
 - **Module:** Gyre Pattern v1.0.0
-- **Pattern:** Convoke Agent Architecture
+- **Pattern:** BMAD Odoo Agent Architecture
 
 ---
 

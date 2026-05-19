@@ -70,7 +70,7 @@ const GREP_EXCLUDE_DIRS = new Set([
 // This is intentional — real BMM agents are hyphen-rich (e.g. `bmad-agent-ux-designer`,
 // `bmad-agent-quick-flow-solo-dev`), so right-anchoring at the first hyphen
 // would under-detect. Matches are string-level, NOT validated against an
-// agent registry. Downstream consumers (convoke-doctor in Story 2.2) cross-
+// agent registry. Downstream consumers (bmad-doctor in Story 2.2) cross-
 // check each `bmm_agent` value against the real agent manifest and surface
 // any unknown name as a drift warning.
 const AGENT_INVOCATION_RE = /\bbmad-agent-[a-z0-9-]+/g;
@@ -501,7 +501,7 @@ function _findSkillDirectories(claudeSkillsRoot) {
  * checked before less-specific ones.
  *
  * @param {string} skillName
- * @returns {'bmm'|'bme'|'cis'|'testarch'|'convoke'|'wds'|'fpf'|'unknown'}
+ * @returns {'bmm'|'bme'|'cis'|'testarch'|'bmad-odoo'|'wds'|'fpf'|'unknown'}
  */
 function _inferSourceModule(skillName) {
   if (typeof skillName !== 'string' || !skillName) return 'unknown';
@@ -512,7 +512,7 @@ function _inferSourceModule(skillName) {
   // bmad-* fallback (upstream BMM: agents, workflows, skills like bmad-agent-pm,
   // bmad-create-prd, bmad-dev-story, etc.).
   if (skillName.startsWith('bmad-')) return 'bmm';
-  if (skillName.startsWith('convoke-')) return 'convoke';
+  if (skillName.startsWith('bmad-odoo-')) return 'bmad-odoo';
   if (skillName.startsWith('wds-')) return 'wds';
   // FPF skills: both "q-..." forms (q-query, q-actualize, q-decay, q-status, q-reset)
   // and "qN-..." numbered-phase forms (q0-init, q1-add, q2-verify, ...). Trailing

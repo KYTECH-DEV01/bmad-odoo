@@ -24,8 +24,8 @@ describe('1.7.x-to-2.0.0 migration', () => {
       assert.ok(Array.isArray(result.actions));
       assert.ok(result.actions.length >= 3, 'should have at least 3 actions');
       const joined = result.actions.join(' ');
-      assert.ok(joined.includes('Convoke') || joined.includes('BMAD-Enhanced'), 'should mention product rename');
-      assert.ok(joined.includes('convoke-') || joined.includes('CLI'), 'should mention CLI command renames');
+      assert.ok(joined.includes('BMAD Odoo') || joined.includes('BMAD-Enhanced'), 'should mention product rename');
+      assert.ok(joined.includes('bmad-odoo-') || joined.includes('CLI'), 'should mention CLI command renames');
       assert.ok(joined.includes('_bmad'), 'should mention _bmad/ directory preservation');
     });
   });

@@ -245,6 +245,6 @@ version: 1.0
 
 ---
 
-**Created with:** Convoke v2.0.0 - Vortex Pattern (Empathize Stream)
+**Created with:** BMAD Odoo v2.0.0 - Vortex Pattern (Empathize Stream)
 **Agent:** Isla (Discovery & Empathy Expert)
 **Workflow:** user-interview

@@ -417,7 +417,7 @@ function checkInternalNamingLeaks(content, filePath) {
 
 /**
  * Check for stale product brand references (bmad-enhanced / BMAD-Enhanced).
- * These should have been replaced with "convoke-agents" / "Convoke" during the rename.
+ * These should have been replaced with "bmad-odoo" / "BMAD Odoo" during the rename.
  *
  * @param {string} content - File content
  * @param {string} filePath - Relative file path (for reporting)
@@ -432,8 +432,8 @@ function checkStaleBrandReferences(content, filePath) {
     const line = lines[i];
     const lineNum = i + 1;
 
-    // Skip lines that document the rename transition (e.g., "bmad-enhanced → convoke-agents")
-    if (/→|->/.test(line) && /convoke/i.test(line)) continue;
+    // Skip lines that document the rename transition (e.g., "bmad-enhanced → bmad-odoo")
+    if (/→|->/.test(line) && /bmad-odoo/i.test(line)) continue;
 
     staleRe.lastIndex = 0;
     let m;
@@ -441,7 +441,7 @@ function checkStaleBrandReferences(content, filePath) {
       findings.push({
         file: filePath, line: lineNum,
         category: 'stale-brand-reference',
-        current: m[0], expected: 'Convoke (product renamed)',
+        current: m[0], expected: 'BMAD Odoo (product renamed)',
       });
     }
   }
@@ -460,7 +460,7 @@ function formatReport(findings) {
   if (findings.length === 0) {
     return [
       '',
-      chalk.green.bold('Convoke Docs Audit'),
+      chalk.green.bold('BMAD Odoo Docs Audit'),
       chalk.gray(`Registry: ${AGENTS.length} agents, ${WORKFLOWS.length} workflows`),
       '',
       chalk.green.bold(`\u2713 Docs audit passed \u2014 zero findings.`),
@@ -483,7 +483,7 @@ function formatReport(findings) {
 
   const lines = [
     '',
-    chalk.cyan.bold('Convoke Docs Audit Report'),
+    chalk.cyan.bold('BMAD Odoo Docs Audit Report'),
     chalk.gray(`Registry: ${AGENTS.length} agents, ${WORKFLOWS.length} workflows`),
     '',
   ];
@@ -525,7 +525,7 @@ async function runAudit(opts = {}) {
   const projectRoot = opts.projectRoot || findProjectRoot();
 
   if (!projectRoot) {
-    throw new Error('Could not find Convoke project root (_bmad/ directory)');
+    throw new Error('Could not find BMAD Odoo project root (_bmad/ directory)');
   }
 
   const allFindings = [];

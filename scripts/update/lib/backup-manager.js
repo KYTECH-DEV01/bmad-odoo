@@ -5,7 +5,7 @@ const path = require('path');
 const { countUserDataFiles } = require('./utils');
 
 /**
- * Backup Manager for Convoke
+ * Backup Manager for BMAD Odoo
  * Creates backups before migrations and restores on failure
  */
 

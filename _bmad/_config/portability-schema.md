@@ -14,7 +14,7 @@ The `tier` column declares the export complexity required to make a skill portab
 |-------|---------|-----------------|
 | `standalone` | Agent persona + instructions, no external file deps. | Copy + strip framework refs (Claude tool names, `bmad-init` calls, `Load step:` directives). Outputs a self-contained `instructions.md`. |
 | `light-deps` | Needs templates or config defaults to function. | Copy + inline referenced template content into `instructions.md`. Replace config references with inline placeholders. |
-| `pipeline` | Depends on prior artifacts (e.g., a story file from SM) or chained skills. | **NOT force-exported standalone.** The `dependencies` column documents prerequisites; the catalog notes the skill requires a full Convoke installation. |
+| `pipeline` | Depends on prior artifacts (e.g., a story file from SM) or chained skills. | **NOT force-exported standalone.** The `dependencies` column documents prerequisites; the catalog notes the skill requires a full BMAD Odoo installation. |
 
 ### Tier classification rules
 
@@ -106,7 +106,7 @@ The exporter uses this list to:
 - **tier:** `pipeline` — Amelia needs a story file produced by `bmad-create-story` to function. With no story file, the skill cannot proceed.
 - **intent:** `plan-your-work` — implements planned work (executing a story is a planning-driven activity).
 - **dependencies:** `bmad-create-story` (the upstream skill that produces the input artifact) and `config:implementation_artifacts` (where story files live).
-- **Export behavior:** **Not exported as standalone.** The catalog entry shows a "Requires full Convoke installation" badge and lists the prerequisite chain.
+- **Export behavior:** **Not exported as standalone.** The catalog entry shows a "Requires full BMAD Odoo installation" badge and lists the prerequisite chain.
 
 ---
 

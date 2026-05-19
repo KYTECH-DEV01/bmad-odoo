@@ -6,7 +6,7 @@
  * @module scripts/audit/audit-skill-dirs
  *
  * Story v63-3-2 (Epic 3 / NFR12 + NFR4): runtime audit over ALL
- * `.claude/skills/` directories (~98 on a typical Convoke install).
+ * `.claude/skills/` directories (~98 on a typical BMAD Odoo install).
  * Verifies every skill dir has a `SKILL.md` with v6.3-compliant
  * frontmatter (`name:` + `description:` non-empty strings).
  *
@@ -14,7 +14,7 @@
  * marketplace-pre-submission-scoped (7 Vortex paths only). This tool is
  * full-tree runtime validation; the two coexist as specialists.
  *
- * Bin entry: `convoke-audit-skill-dirs` (see package.json).
+ * Bin entry: `bmad-audit-skill-dirs` (see package.json).
  *
  * Hardening (per Story 3.1 R1/R2 patterns + Story 2.x precedents):
  *   - Pattern 1 module structure (shebang + `'use strict'` + `@module` +
@@ -273,17 +273,17 @@ function auditAllSkillDirs(projectRoot) {
 
 function renderHelp() {
   console.log('');
-  console.log(chalk.bold('convoke-audit-skill-dirs') + ' — runtime audit over all .claude/skills/ directories');
+  console.log(chalk.bold('bmad-audit-skill-dirs') + ' — runtime audit over all .claude/skills/ directories');
   console.log('');
   console.log('Usage:');
-  console.log('  convoke-audit-skill-dirs [options]');
+  console.log('  bmad-audit-skill-dirs [options]');
   console.log('');
   console.log('Options:');
   console.log('  --verbose, -v   Print per-dir pass/fail with info lines.');
   console.log('  --dry-run       Run all checks; exit 0 regardless of outcome (preview mode).');
   console.log('  --help, -h      Show this help.');
   console.log('');
-  console.log('Distinct from `convoke-validate-marketplace`, which is marketplace-submission-scoped.');
+  console.log('Distinct from `bmad-validate-marketplace`, which is marketplace-submission-scoped.');
   console.log('');
 }
 
@@ -358,7 +358,7 @@ function main(argv) {
   // active, downgrade unknown-flag rejection to a warning + exit 0 so
   // preview-mode operators aren't trapped by typos.
   // R2-D1: render each flag with JSON.stringify so empty/whitespace tokens
-  // (e.g., `convoke-audit-skill-dirs ""` from `$EMPTYVAR` expansion) are
+  // (e.g., `bmad-audit-skill-dirs ""` from `$EMPTYVAR` expansion) are
   // visible to the operator instead of disappearing into trailing space.
   if (flags.unknown.length > 0) {
     const rendered = flags.unknown.map(a => JSON.stringify(a)).join(' ');
@@ -374,8 +374,8 @@ function main(argv) {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.log(chalk.red('  ✗ Not inside a Convoke project (no _bmad/ directory found).'));
-    console.log(chalk.gray('    Run: npx -p convoke-agents convoke-install'));
+    console.log(chalk.red('  ✗ Not inside a BMAD Odoo project (no _bmad/ directory found).'));
+    console.log(chalk.gray('    Run: npx -p bmad-odoo bmad-install'));
     return 1;
   }
 

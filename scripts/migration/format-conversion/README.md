@@ -1,6 +1,6 @@
 # Migration Tooling — Format Conversion (v5/early-v6 → v6.3+)
 
-This directory hosts the harness infrastructure that powers per-agent format conversions for **Initiative I97** (BMAD v6.3+ Source Format Adoption / Convoke 4.0 packaging-contract). The tooling is **function-named** rather than initiative-named so I98 (Gyre marketplace structural compliance gap) and I99 (Team Factory marketplace structural compliance gap) inherit it without renaming or re-derivation per **NFR18**.
+This directory hosts the harness infrastructure that powers per-agent format conversions for **Initiative I97** (BMAD v6.3+ Source Format Adoption / BMAD Odoo 4.0 packaging-contract). The tooling is **function-named** rather than initiative-named so I98 (Gyre marketplace structural compliance gap) and I99 (Team Factory marketplace structural compliance gap) inherit it without renaming or re-derivation per **NFR18**.
 
 ## Scope
 
@@ -18,7 +18,7 @@ Read in this order:
 | [ADR-003](../../../_bmad-output/planning-artifacts/adr/i97/adr-003-verification-harness-architecture.md) | Three separate harnesses (parity / Covenant / personality) with shared fixture library — drives this directory's structure |
 | [ADR-004](../../../_bmad-output/planning-artifacts/adr/i97/adr-004-atomic-by-agent-commit-and-tooling-namespace.md) | Atomic-by-agent commit + this namespace's function-named rationale + NFR18 reusability |
 | [ADR-005](../../../_bmad-output/planning-artifacts/adr/i97/adr-005-covenant-baseline-validity-policy.md) | Covenant baseline-validity per-Right policy (matrix authored at Story 4.1) |
-| [Architecture document](../../../_bmad-output/planning-artifacts/convoke-arch-bmad-v63-source-format-adoption.md) | I97 architecture overview; § "Code Patterns" + § "Anti-Patterns" |
+| [Architecture document](../../../_bmad-output/planning-artifacts/bmad-arch-bmad-v63-source-format-adoption.md) | I97 architecture overview; § "Code Patterns" + § "Anti-Patterns" |
 
 ## Files
 
@@ -30,7 +30,7 @@ Read in this order:
 | `fixtures/isolated-install.js` | Shared utility for creating an isolated 4.x BMAD install in a tmpDir | All harnesses + per-agent test suites |
 | `parity-harness.js` | Parity test runner — identical menu codes / workflow paths / output filenames pre vs post (FR13–15) | `tests/integration/vortex-parity.test.js` (authored at Story 3.2) + per-agent stories |
 | `covenant-survival-harness.js` | Covenant audit re-runner — cell-level non-regression rule (FR17–20) per ADR-005 per-Right policy. **Per-Right matrix authored at Story 4.1**; until then, the harness expects the matrix as input and returns `{ status: 'no-matrix-supplied' }` if absent. | Story 4.2 (cell re-audit execution) + per-agent stories with Covenant cells |
-| `personality-harness.js` | Personality verification harness (FR21–23) — consumes the calibrated rubric at [`convoke-spec-personality-preservation-rubric.md`](../../../_bmad-output/planning-artifacts/convoke-spec-personality-preservation-rubric.md) and existing fixtures under [`tests/migration/personality-preservation/fixtures/<agent>/`](../../../tests/migration/personality-preservation/fixtures/) | Per-agent stories (Stories 2.1–2.7) for baseline-vs-post comparison |
+| `personality-harness.js` | Personality verification harness (FR21–23) — consumes the calibrated rubric at [`bmad-spec-personality-preservation-rubric.md`](../../../_bmad-output/planning-artifacts/bmad-spec-personality-preservation-rubric.md) and existing fixtures under [`tests/migration/personality-preservation/fixtures/<agent>/`](../../../tests/migration/personality-preservation/fixtures/) | Per-agent stories (Stories 2.1–2.7) for baseline-vs-post comparison |
 
 ## Smoke verification commands
 

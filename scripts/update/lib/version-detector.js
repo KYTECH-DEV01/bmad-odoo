@@ -6,7 +6,7 @@ const yaml = require('js-yaml');
 const { findProjectRoot, compareVersions, getPackageVersion } = require('./utils');
 
 /**
- * Version Detector for Convoke
+ * Version Detector for BMAD Odoo
  * Reliably detects current installed version and determines migration path
  */
 
@@ -194,7 +194,7 @@ function detectInstallationScenario(projectRoot) {
 
   // Mixed-shape drift: some agents in flat layout, some in skill-dir.
   // Indicates an in-progress migration (crash during R1-H2 cleanup, or
-  // operator interrupted convoke-update). R2-H6 returns 'partial' (not
+  // operator interrupted bmad-update). R2-H6 returns 'partial' (not
   // 'corrupted') so `refreshInstallation` is routed to auto-remediate on
   // next run — 'corrupted' would brick the operator by routing to manual
   // recovery even though `refreshInstallation` can finish the migration.

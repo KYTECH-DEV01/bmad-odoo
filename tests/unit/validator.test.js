@@ -483,7 +483,7 @@ describe('validateEnhanceModule', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-val-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-val-'));
   });
 
   after(async () => {
@@ -522,7 +522,7 @@ describe('validateEnhanceModule', () => {
   }
 
   it('passes with info when _enhance/ directory does not exist', async () => {
-    const emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-empty-'));
+    const emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-empty-'));
     const result = await validateEnhanceModule(emptyDir);
     assert.equal(result.passed, true);
     assert.ok(result.info && result.info.includes('not installed'));
@@ -530,7 +530,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('passes when all 6 checks pass', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-valid-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-valid-'));
     await createValidEnhance(dir);
     const result = await validateEnhanceModule(dir);
     assert.equal(result.passed, true);
@@ -539,7 +539,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when config.yaml is missing but _enhance/ dir exists', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-nocfg-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-nocfg-'));
     await fs.ensureDir(path.join(dir, '_bmad/bme/_enhance'));
     const result = await validateEnhanceModule(dir);
     assert.equal(result.passed, false);
@@ -548,7 +548,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when config.yaml is unparseable', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-badyaml-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-badyaml-'));
     const enhDir = path.join(dir, '_bmad/bme/_enhance');
     await fs.ensureDir(enhDir);
     await fs.writeFile(path.join(enhDir, 'config.yaml'), '{{{invalid', 'utf8');
@@ -559,7 +559,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when config.yaml is missing required fields', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-missingf-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-missingf-'));
     const enhDir = path.join(dir, '_bmad/bme/_enhance');
     await fs.ensureDir(enhDir);
     await fs.writeFile(path.join(enhDir, 'config.yaml'), yaml.dump({ name: 'test' }), 'utf8');
@@ -571,7 +571,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when workflow entry point file does not exist', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-noentry-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-noentry-'));
     const enhDir = path.join(dir, '_bmad/bme/_enhance');
     await fs.ensureDir(path.join(enhDir, 'workflows/initiatives-backlog'));
     const config = {
@@ -587,7 +587,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when menu patch not found in target agent file', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-nopatch-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-nopatch-'));
     await createValidEnhance(dir);
     // Overwrite pm.md without the patch
     await fs.writeFile(path.join(dir, '_bmad/bmm/agents/pm.md'), '<menu>\n    <item cmd="test">[T] Test</item>\n</menu>', 'utf8');
@@ -599,7 +599,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails when config references a workflow that has no directory', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-nodir-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-nodir-'));
     const enhDir = path.join(dir, '_bmad/bme/_enhance');
     await fs.ensureDir(enhDir);
     const config = {
@@ -614,7 +614,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('passes check 6 when skill wrapper exists', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-skill-ok-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-skill-ok-'));
     await createValidEnhance(dir);
     const result = await validateEnhanceModule(dir);
     assert.equal(result.passed, true);
@@ -623,7 +623,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('fails check 6 when skill wrapper is missing', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-skill-miss-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-skill-miss-'));
     await createValidEnhance(dir);
     // Remove skill wrapper
     await fs.remove(path.join(dir, '.claude/skills/bmad-enhance-initiatives-backlog'));
@@ -635,7 +635,7 @@ describe('validateEnhanceModule', () => {
   });
 
   it('reports multiple failures in single error string', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-multi-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-multi-'));
     const enhDir = path.join(dir, '_bmad/bme/_enhance');
     await fs.ensureDir(enhDir);
     // Config with workflow that has no entry file, no directory, and no agent file
@@ -687,7 +687,7 @@ describe('validateArtifactsModule', () => {
   }
 
   it('passes with info "not installed" when _artifacts/ does not exist', async () => {
-    const emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-empty-'));
+    const emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-empty-'));
     const result = await validateArtifactsModule(emptyDir);
     assert.equal(result.passed, true);
     assert.ok(result.info && result.info.includes('not installed'));
@@ -695,7 +695,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('fails when config.yaml is missing but _artifacts/ exists', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-nocfg-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-nocfg-'));
     await fs.ensureDir(path.join(dir, '_bmad/bme/_artifacts'));
     const result = await validateArtifactsModule(dir);
     assert.equal(result.passed, false);
@@ -704,7 +704,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('fails when config.yaml is unparseable', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-badyaml-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-badyaml-'));
     const artDir = path.join(dir, '_bmad/bme/_artifacts');
     await fs.ensureDir(artDir);
     await fs.writeFile(path.join(artDir, 'config.yaml'), '{{{invalid', 'utf8');
@@ -715,7 +715,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('fails when workflows array is missing or empty', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-nowfs-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-nowfs-'));
     const artDir = path.join(dir, '_bmad/bme/_artifacts');
     await fs.ensureDir(artDir);
     await fs.writeFile(path.join(artDir, 'config.yaml'), yaml.dump({ name: 'artifacts', version: '1.0.0' }), 'utf8');
@@ -726,7 +726,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('fails when workflow entry point file does not exist', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-noentry-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-noentry-'));
     const artDir = path.join(dir, '_bmad/bme/_artifacts');
     await fs.ensureDir(artDir);
     const config = {
@@ -742,7 +742,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('fails when skill wrapper SKILL.md is missing', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-nowrap-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-nowrap-'));
     await createValidArtifacts(dir);
     // Remove one skill wrapper
     await fs.remove(path.join(dir, '.claude/skills/bmad-portfolio-status'));
@@ -753,7 +753,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('passes when all checks pass', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-valid-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-valid-'));
     await createValidArtifacts(dir);
     const result = await validateArtifactsModule(dir);
     assert.equal(result.passed, true);
@@ -762,7 +762,7 @@ describe('validateArtifactsModule', () => {
   });
 
   it('aggregates multiple failures into a single error string', async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-multi-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-multi-'));
     await createValidArtifacts(dir);
     // Break BOTH workflows: remove portfolio wrapper and migrate entry point
     await fs.remove(path.join(dir, '.claude/skills/bmad-portfolio-status'));
@@ -783,7 +783,7 @@ describe('validateArtifactsModule', () => {
   it('skips wrapper/entry checks for non-standalone workflows', async () => {
     // Mirror the refresh-installation contract: non-standalone workflows are NOT
     // installed by section 6d, so the validator must NOT require their wrapper.
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-nonstd-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-nonstd-'));
     const artDir = path.join(dir, '_bmad/bme/_artifacts');
     await fs.ensureDir(artDir);
     const config = {

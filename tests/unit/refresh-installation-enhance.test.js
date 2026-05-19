@@ -34,7 +34,7 @@ const PM_MD_NO_MENU = `<agent>
  * Returns tmpDir path.
  */
 async function setupEnhanceTestDir() {
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-enh-inst-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-enh-inst-'));
   await createValidInstallation(tmpDir);
 
   // Create BMM pm.md (the Enhance menu patch target)
@@ -103,7 +103,7 @@ describe('refreshInstallation — Enhance menu patch', () => {
 
     const pmContent = fs.readFileSync(path.join(tmpDir, '_bmad/bmm/agents/pm.md'), 'utf8');
     assert.ok(pmContent.includes('initiatives-backlog'), 'pm.md should contain initiatives-backlog');
-    assert.ok(pmContent.includes('📦 Initiatives Backlog (Convoke Enhance)'), 'pm.md should contain the label');
+    assert.ok(pmContent.includes('📦 Initiatives Backlog (BMAD Odoo Enhance)'), 'pm.md should contain the label');
 
     // Tag should appear before </menu>
     const tagIdx = pmContent.indexOf('initiatives-backlog');
@@ -120,7 +120,7 @@ describe('refreshInstallation — Enhance menu patch', () => {
 
     assert.equal(pmAfterFirst, pmAfterSecond, 'pm.md should be identical after two runs');
     // The tag contains initiatives-backlog in both cmd and exec attrs — count the <item> tags instead
-    const itemMatches = pmAfterSecond.match(/Convoke Enhance/g);
+    const itemMatches = pmAfterSecond.match(/BMAD Odoo Enhance/g);
     assert.equal(itemMatches.length, 1, 'Should have exactly one Enhance menu item');
   });
 

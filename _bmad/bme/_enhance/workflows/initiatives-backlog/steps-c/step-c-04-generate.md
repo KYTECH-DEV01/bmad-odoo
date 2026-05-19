@@ -1,7 +1,7 @@
 ---
 name: 'step-c-04-generate'
 description: 'Generate the complete lifecycle backlog file — frontmatter, Part 1 verbatim from process spec, Part 2 lanes populated from qualified + raw intakes, Appendix, Change Log'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/backlog-format-spec.md'
 processFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/lifecycle-process-spec.md'
 workflowFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md'
@@ -67,14 +67,14 @@ Identify in `{processFile}` the **verbatim Part 1 text**: everything after the `
 
 ```yaml
 ---
-initiative: convoke
+initiative: bmad-odoo
 artifact_type: note
 qualifier: initiative-lifecycle-backlog
 created: 'YYYY-MM-DD'
 schema_version: 1
 status: draft
 origin: 'Create mode ([qualifier identity or raw-only], [date])'
-supersedes: convoke-note-initiatives-backlog.md
+supersedes: bmad-note-initiatives-backlog.md
 ---
 ```
 
@@ -83,7 +83,7 @@ supersedes: convoke-note-initiatives-backlog.md
 ### 3. Generate Title
 
 ```markdown
-# Convoke Initiative Lifecycle & Backlog
+# BMAD Odoo Initiative Lifecycle & Backlog
 
 **Created:** [current session date]
 **Origin:** Create mode ([qualifier identity])

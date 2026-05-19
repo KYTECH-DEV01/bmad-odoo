@@ -3,7 +3,7 @@
 /**
  * @module scripts/migration/format-conversion/fixtures/isolated-install
  *
- * Shared utility for creating an isolated 4.x BMAD/Convoke install in a tmpDir
+ * Shared utility for creating an isolated 4.x BMAD/BMAD Odoo install in a tmpDir
  * for harness tests. Honors the `test-fixture-isolation` rule (NFR4) — every
  * harness invocation runs against this isolated install rather than
  * PACKAGE_ROOT.
@@ -64,7 +64,7 @@ const COPY_OPTS = { dereference: true, errorOnExist: false, overwrite: true };
 // ─── Public API ─────────────────────────────────────────────────────
 
 /**
- * Create an isolated 4.x Convoke install in tmpDir.
+ * Create an isolated 4.x BMAD Odoo install in tmpDir.
  *
  * @param {Object} options
  * @param {string} options.tmpDir              Absolute path to an empty tmp

@@ -16,7 +16,7 @@ const {
 // --- Fixture helpers ---
 
 function makeTmpProject() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'convoke-audit-bmad-init-'));
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'bmad-odoo-audit-bmad-init-'));
 }
 
 /**
@@ -131,7 +131,7 @@ describe('scanBmadInitRefs — canonical vs candidate classification', () => {
   });
 
   it('excludes _bmad/bme/** agents from the output (AC9 regression guard)', () => {
-    // Convoke's own bme agents should NEVER appear — they already direct-load.
+    // BMAD Odoo's own bme agents should NEVER appear — they already direct-load.
     // This test ensures the scan doesn't accidentally start flagging them.
     writeSkillMd(tmp, 'bme/_vortex/agents/emma', {
       name: 'emma',
@@ -296,7 +296,7 @@ describe('scanBmadInitRefs — input validation', () => {
   });
 
   it('throws Error when _bmad/ does not exist under projectRoot', () => {
-    const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'convoke-audit-empty-'));
+    const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'bmad-odoo-audit-empty-'));
     try {
       assert.throws(() => scanBmadInitRefs(empty), /_bmad\/ not found/);
     } finally {

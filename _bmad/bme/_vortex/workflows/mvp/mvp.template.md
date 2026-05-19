@@ -35,6 +35,6 @@ version: 1.0
 
 ---
 
-**Created with:** Convoke v2.0.0 - Vortex Pattern (Externalize Stream)
+**Created with:** BMAD Odoo v2.0.0 - Vortex Pattern (Externalize Stream)
 **Agent:** Wade (Lean Experiments Specialist)
 **Workflow:** mvp

@@ -6,4 +6,4 @@ target_agent: bmm/pm
 menu_items:
   - cmd: "IB or fuzzy match on initiatives-backlog"
     exec: "{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md"
-    label: "[IB] 📦 Initiatives Backlog (Convoke Enhance)"
+    label: "[IB] 📦 Initiatives Backlog (BMAD Odoo Enhance)"

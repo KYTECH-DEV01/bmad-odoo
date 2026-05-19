@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Convoke Check — Local CI mirror.
+ * BMAD Odoo Check — Local CI mirror.
  *
  * Runs the same checks as .github/workflows/ci.yml so failures are caught
  * before push. Intended for use in dev-story step 9 and manual pre-push.
@@ -13,7 +13,7 @@
  *   4. Jest lib      (npx jest tests/lib/)
  *   5. Coverage      (npm run test:coverage)  [--skip-coverage to omit]
  *
- * @module convoke-check
+ * @module bmad-check
  */
 
 const { execSync } = require('child_process');
@@ -32,7 +32,7 @@ function run() {
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
-Usage: convoke-check [options]
+Usage: bmad-check [options]
 
 Runs the full CI-equivalent validation locally.
 
@@ -45,7 +45,7 @@ Options:
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.error('Error: Not in a Convoke project. Could not find _bmad/ directory.');
+    console.error('Error: Not in a BMAD Odoo project. Could not find _bmad/ directory.');
     process.exit(1);
   }
 
@@ -71,7 +71,7 @@ Options:
   }
 
   // Summary
-  console.log('\n=== Convoke Check Summary ===');
+  console.log('\n=== BMAD Odoo Check Summary ===');
   for (const r of results) {
     const icon = r.status === 'pass' ? 'PASS' : r.status === 'skipped' ? 'SKIP' : 'FAIL';
     console.log(`  [${icon}] ${r.name}`);

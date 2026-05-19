@@ -191,7 +191,7 @@ function writeEvidence(evidencePath, results, judgeModel, calibrationPassed, tot
   const created = new Date().toISOString().slice(0, 10);
 
   const frontmatter = {
-    initiative: 'convoke',
+    initiative: 'bmad-odoo',
     artifact_type: 'validation-evidence',
     story: 'v63-4-1-create-pf1-judge-prompt-and-calibration-test',
     calibration_passed: calibrationPassed,

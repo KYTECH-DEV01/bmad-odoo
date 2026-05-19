@@ -25,7 +25,7 @@ describe('runScript return-shape contract (I64)', () => {
   let failScript;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-i64-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-i64-'));
 
     // Hangs forever — used to exercise the timeout path.
     hangScript = path.join(tmpDir, 'hang.js');

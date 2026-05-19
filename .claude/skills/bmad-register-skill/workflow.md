@@ -1,22 +1,22 @@
 # Register custom BMM-dependent skill
 
-**Goal:** Register a custom skill in the BMM dependency registry so future `convoke-update` and `convoke-doctor` runs treat it as known governance state instead of surfacing it as an `unregistered-custom-skill` warning.
+**Goal:** Register a custom skill in the BMM dependency registry so future `bmad-update` and `bmad-doctor` runs treat it as known governance state instead of surfacing it as an `unregistered-custom-skill` warning.
 
-**Your role:** Conversational front-end for [`scripts/convoke-register-skill.js`](../../../scripts/convoke-register-skill.js). The skill wraps the CLI; the CLI owns all mutation logic (validation, atomic write, duplicate detection, post-write verification). Do NOT write to `_bmad/_config/bmm-dependencies.csv` from this workflow — keep mutation in the tested CLI path.
+**Your role:** Conversational front-end for [`scripts/bmad-register-skill.js`](../../../scripts/bmad-register-skill.js). The skill wraps the CLI; the CLI owns all mutation logic (validation, atomic write, duplicate detection, post-write verification). Do NOT write to `_bmad/_config/bmm-dependencies.csv` from this workflow — keep mutation in the tested CLI path.
 
-**Audience:** operators who have a custom skill under `.claude/skills/<name>/` that extends a BMM agent, typically triggered by a `convoke-doctor` warning.
+**Audience:** operators who have a custom skill under `.claude/skills/<name>/` that extends a BMM agent, typically triggered by a `bmad-doctor` warning.
 
 ---
 
 ## Phase 1 — Discovery
 
-Run `convoke-doctor` to see whether any unregistered custom skills already exist:
+Run `bmad-doctor` to see whether any unregistered custom skills already exist:
 
 ```bash
-node scripts/convoke-doctor.js
+node scripts/bmad-doctor.js
 ```
 
-**Non-zero exit handling:** if `convoke-doctor` exits non-zero due to **hard failures UNRELATED to BMM drift** (e.g., missing module, broken config, corrupt installation), STOP and surface the failure to the operator — do NOT proceed with registration until the environment is healthy. Governance **soft-warnings** (exit 0 with ⚠ findings in the BMM dependencies check) are expected and continue normally; those are exactly what we're here to address.
+**Non-zero exit handling:** if `bmad-doctor` exits non-zero due to **hard failures UNRELATED to BMM drift** (e.g., missing module, broken config, corrupt installation), STOP and surface the failure to the operator — do NOT proceed with registration until the environment is healthy. Governance **soft-warnings** (exit 0 with ⚠ findings in the BMM dependencies check) are expected and continue normally; those are exactly what we're here to address.
 
 Parse the output for any `⚠ BMM dependencies: [unregistered] <skill> → <agent>` lines (Story 2.2 finding category 2). Then:
 
@@ -27,7 +27,7 @@ Parse the output for any `⚠ BMM dependencies: [unregistered] <skill> → <agen
 
 ## Phase 2 — Collect fields
 
-Prompt the operator for the fields the CLI requires. Ask them one-by-one (or in a short block) and explain each. Expected fields (matching `scripts/convoke-register-skill.js --help`):
+Prompt the operator for the fields the CLI requires. Ask them one-by-one (or in a short block) and explain each. Expected fields (matching `scripts/bmad-register-skill.js --help`):
 
 | Field | Example | Notes |
 |-------|---------|-------|
@@ -59,10 +59,10 @@ Confirm with the operator before invoking the CLI in Phase 3.
 
 ## Phase 3 — Invoke the CLI
 
-Shell out to `scripts/convoke-register-skill.js` with the collected flags. Use `--yes` to skip the post-write verification round-trip (the CLI still runs the write atomically; `--yes` only suppresses the verification step for faster CI-style feedback).
+Shell out to `scripts/bmad-register-skill.js` with the collected flags. Use `--yes` to skip the post-write verification round-trip (the CLI still runs the write atomically; `--yes` only suppresses the verification step for faster CI-style feedback).
 
 ```bash
-node scripts/convoke-register-skill.js \
+node scripts/bmad-register-skill.js \
   --skill <name> \
   --agent <agent> \
   --type <type> \
@@ -94,7 +94,7 @@ Parse the CLI output:
 If more unregistered skills remain after a successful registration, ask whether to register the next one. When the operator is done, suggest a final sanity check:
 
 ```bash
-node scripts/convoke-doctor.js
+node scripts/bmad-doctor.js
 ```
 
 The BMM dependencies check should now show `✓ BMM dependencies: registry consistent` for the newly-registered skill(s) — closing the governance loop.

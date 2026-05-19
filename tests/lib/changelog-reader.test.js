@@ -14,7 +14,7 @@ describe('readChangelogEntries', () => {
   let changelogPath;
 
   before(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'convoke-changelog-'));
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bmad-odoo-changelog-'));
     changelogPath = path.join(tmpDir, 'CHANGELOG.md');
   });
 
@@ -264,13 +264,13 @@ describe('readChangelogEntries', () => {
   });
 });
 
-describe('printChangelog (convoke-update integration)', () => {
+describe('printChangelog (bmad-update integration)', () => {
   let originalLog;
   let captured;
   let printChangelog;
 
   before(() => {
-    printChangelog = require('../../scripts/update/convoke-update').printChangelog;
+    printChangelog = require('../../scripts/update/bmad-update').printChangelog;
   });
 
   beforeEach(() => {

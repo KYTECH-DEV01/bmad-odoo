@@ -2,7 +2,7 @@
 /**
  * seed-catalog-repo.js — Story sp-4-1
  *
- * Generates the complete convoke-skills-catalog repo content into a staging
+ * Generates the complete bmad-skills-catalog repo content into a staging
  * directory. Orchestrates the export engine, catalog generator, and README
  * builder into a single pipeline with built-in self-verification.
  *
@@ -22,7 +22,7 @@ const { findProjectRoot } = require('../update/lib/utils');
 const { readManifest } = require('./manifest-csv');
 const { exportSkill, loadSkillRow } = require('./export-engine');
 const { generateCatalog } = require('./catalog-generator');
-const { buildReadme } = require('./convoke-export');
+const { buildReadme } = require('./bmad-export');
 const { generateAdapters } = require('./generate-adapters');
 
 // =============================================================================
@@ -33,7 +33,7 @@ const { FORBIDDEN_STRINGS } = require('./test-constants');
 
 const MIT_LICENSE = `MIT License
 
-Copyright (c) 2026 Convoke Contributors
+Copyright (c) 2026 BMAD Odoo Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,17 +56,17 @@ SOFTWARE.
 
 const CONTRIBUTING_MD = `# Contributing
 
-The skills in this repository are **auto-generated** from the main [Convoke Agents](https://github.com/amalik/convoke-agents) repository. They are regenerated on each release.
+The skills in this repository are **auto-generated** from the main [BMAD Odoo](https://github.com/KYTECH-DEV01/bmad-odoo) repository. They are regenerated on each release.
 
 ## Important
 
 - **Do not edit skill files directly.** Your changes will be overwritten on the next regeneration.
-- To improve a skill's content, contribute to the source skill in the main Convoke repo.
-- To request a new skill or report an issue, [open an issue](https://github.com/amalik/convoke-agents/issues) on the main repo.
+- To improve a skill's content, contribute to the source skill in the main BMAD Odoo repo.
+- To request a new skill or report an issue, [open an issue](https://github.com/KYTECH-DEV01/bmad-odoo/issues) on the main repo.
 
 ## How skills are generated
 
-Each skill is exported from the Convoke framework using the \`convoke-export\` tool, which:
+Each skill is exported from the BMAD Odoo framework using the \`bmad-export\` tool, which:
 
 1. Reads the skill's source files (agent definition, workflow, step files)
 2. Transforms them into an LLM-agnostic \`instructions.md\` format
@@ -256,8 +256,8 @@ function verify(outputDir, expectedSkillCount) {
     failures.push('Root README.md missing');
   } else {
     const content = fs.readFileSync(rootReadme, 'utf8');
-    if (!content.includes('# Convoke Skills Catalog')) {
-      failures.push('Root README.md: missing "# Convoke Skills Catalog" heading');
+    if (!content.includes('# BMAD Odoo Skills Catalog')) {
+      failures.push('Root README.md: missing "# BMAD Odoo Skills Catalog" heading');
     }
   }
 
@@ -295,7 +295,7 @@ function printHelp() {
     [
       'Usage: seed-catalog-repo --output <path>',
       '',
-      'Generate the complete convoke-skills-catalog repo content into a staging directory.',
+      'Generate the complete bmad-skills-catalog repo content into a staging directory.',
       'Does NOT create a git repo or interact with GitHub.',
       '',
       'Options:',
@@ -314,7 +314,7 @@ function printHelp() {
       '  git init',
       '  git add -A',
       '  git commit -m "Initial catalog seed"',
-      '  gh repo create convoke-skills-catalog --public --source=. --push',
+      '  gh repo create bmad-skills-catalog --public --source=. --push',
       '',
     ].join('\n')
   );
@@ -415,7 +415,7 @@ function main() {
   console.log(`\nNext steps:`);
   console.log(`  cd ${outputDir}`);
   console.log(`  git init && git add -A && git commit -m "Initial catalog seed"`);
-  console.log(`  gh repo create convoke-skills-catalog --public --source=. --push`);
+  console.log(`  gh repo create bmad-skills-catalog --public --source=. --push`);
 
   return 0;
 }

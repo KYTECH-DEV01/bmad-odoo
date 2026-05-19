@@ -19,7 +19,7 @@ const {
 // of crashing the entire CLI.
 
 /**
- * convoke-doctor — Diagnose common Convoke installation issues.
+ * bmad-doctor — Diagnose common BMAD Odoo installation issues.
  *
  * Config-driven: discovers all modules by scanning _bmad/bme/ config.yaml
  * and validates file existence dynamically per module.
@@ -27,7 +27,7 @@ const {
 
 async function main() {
   console.log('');
-  console.log(chalk.cyan.bold('Convoke Doctor'));
+  console.log(chalk.cyan.bold('BMAD Odoo Doctor'));
   console.log(chalk.gray(`Package version: ${getPackageVersion()}`));
   console.log('');
 
@@ -51,7 +51,7 @@ async function main() {
       name: 'Module discovery',
       passed: false,
       error: 'No modules found — expected config.yaml files in _bmad/bme/*/',
-      fix: 'Run: npx -p convoke-agents convoke-install'
+      fix: 'Run: npx -p bmad-odoo bmad-install'
     });
     printResults(checks);
     process.exit(1);
@@ -159,7 +159,7 @@ function checkProjectRoot(projectRoot) {
     name: 'Project root',
     passed: false,
     error: 'Could not find _bmad/ directory',
-    fix: 'Run this command from inside a Convoke project, or run: npx -p convoke-agents convoke-install'
+    fix: 'Run this command from inside a BMAD Odoo project, or run: npx -p bmad-odoo bmad-install'
   };
 }
 
@@ -443,7 +443,7 @@ function checkModuleSkillWrappers(mod, projectRoot, manifestMap) {
       name: label,
       passed: false,
       error: failures.join('; '),
-      fix: 'Run convoke-update to regenerate skill wrappers'
+      fix: 'Run bmad-update to regenerate skill wrappers'
     };
   }
 
@@ -484,7 +484,7 @@ function checkAgentSkillWrappers(projectRoot, modules = []) {
       name: label,
       passed: false,
       error: failures.join('; '),
-      fix: 'Run convoke-update to regenerate agent skill wrappers'
+      fix: 'Run bmad-update to regenerate agent skill wrappers'
     };
   }
 
@@ -573,7 +573,7 @@ function checkVersionConsistency(projectRoot, modules) {
       name: 'Version consistency',
       passed: false,
       error: `Package: ${packageVersion}, ${mismatched.join(', ')}`,
-      fix: 'Run: npx -p convoke-agents convoke-update'
+      fix: 'Run: npx -p bmad-odoo bmad-update'
     };
   }
 
@@ -697,7 +697,7 @@ function _scanWithSuppressedStderr(projectRoot) {
 /**
  * Validate the BMM dependency registry as a standing health check (FR14).
  * Surfaces drift as fail-soft governance warnings (NFR9) — never hard-fails
- * convoke-doctor's exit code. Reuses Story 2.1's scan primitives; doctor is
+ * bmad-doctor's exit code. Reuses Story 2.1's scan primitives; doctor is
  * READ-ONLY and performs no writes.
  *
  * Four drift categories (Story 2.2 AC3):
@@ -926,7 +926,7 @@ function checkTaxonomy(projectRoot) {
       name: 'Taxonomy: file exists',
       passed: false,
       warning: 'taxonomy.yaml not found at _bmad/_config/taxonomy.yaml',
-      fix: 'Run convoke-migrate-artifacts or convoke-update to create it'
+      fix: 'Run bmad-migrate-artifacts or bmad-update to create it'
     });
     return results;
   }

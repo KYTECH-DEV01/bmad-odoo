@@ -18,7 +18,7 @@ This checklist is the **manual fixup contract** required by [ADR-002](../../../_
   - Role conveyance (D1 of the rubric — "what role does this agent identify as?")
   - Communication-style markers (D2 — characteristic phrasings, tone register, recognizable openers like Liam's "💡" or Wade's "🧪")
   - Principle adherence (D3 — explicit `<principle>` items that appear pre-migration)
-- [ ] **Cross-reference the 8 reviewer cues** documented in [`convoke-spec-personality-preservation-rubric.md`](../../../_bmad-output/planning-artifacts/convoke-spec-personality-preservation-rubric.md) § "Status":
+- [ ] **Cross-reference the 8 reviewer cues** documented in [`bmad-spec-personality-preservation-rubric.md`](../../../_bmad-output/planning-artifacts/bmad-spec-personality-preservation-rubric.md) § "Status":
   1. Meta-pattern awareness (all 7 agents demonstrate this — verify the converted agent retains it)
   2. Operator-preference vs principle-violation distinction (lean response style ≠ degraded principle adherence)
   3. Intellectual honesty as D3 component (specifically Liam — Bayesian concession example)

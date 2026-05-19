@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const yaml = require('js-yaml');
 const { spawn } = require('node:child_process');
 
-const { assessUpdate } = require('../../scripts/update/convoke-update');
+const { assessUpdate } = require('../../scripts/update/bmad-update');
 const {
   createTempDir,
   createValidInstallation,
@@ -14,7 +14,7 @@ const {
   PACKAGE_ROOT
 } = require('../helpers');
 
-const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/update/convoke-update.js');
+const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/update/bmad-update.js');
 
 /**
  * Run a script with input piped to stdin.
@@ -268,7 +268,7 @@ describe('assessUpdate', () => {
 
 // ─── main() CLI Integration Tests ─────────────────────────
 
-describe('convoke-update CLI (main)', () => {
+describe('bmad-update CLI (main)', () => {
 
   // ─── Scenario Tests ──────────────────────────────────
 
@@ -277,7 +277,7 @@ describe('convoke-update CLI (main)', () => {
     try {
       const { exitCode, stdout } = await runScript(SCRIPT_PATH, [], { cwd: tmpDir });
       assert.equal(exitCode, 1);
-      assert.ok(stdout.includes('Not in a Convoke project'), 'should mention missing project');
+      assert.ok(stdout.includes('Not in a BMAD Odoo project'), 'should mention missing project');
     } finally {
       await fs.remove(tmpDir);
     }
@@ -696,11 +696,11 @@ describe('convoke-update CLI (main)', () => {
     assert.ok(utilsSource.includes('path.dirname('), 'utils.js should use path.dirname');
     assert.ok(utilsSource.includes('path.parse('), 'utils.js should use path.parse');
 
-    // Verify convoke-update.js imports utils for path operations
+    // Verify bmad-update.js imports utils for path operations
     const updateSource = fs.readFileSync(SCRIPT_PATH, 'utf8');
     assert.ok(
       updateSource.includes("require('./lib/utils')"),
-      'convoke-update.js should import utils for path operations'
+      'bmad-update.js should import utils for path operations'
     );
   });
 
@@ -710,7 +710,7 @@ describe('convoke-update CLI (main)', () => {
     const tmpDir = await createTempDir('bmad-cli-');
     try {
       const { stdout } = await runScript(SCRIPT_PATH, [], { cwd: tmpDir });
-      assert.ok(stdout.includes('Convoke Update Manager'), 'should display header banner');
+      assert.ok(stdout.includes('BMAD Odoo Update Manager'), 'should display header banner');
     } finally {
       await fs.remove(tmpDir);
     }
@@ -761,7 +761,7 @@ describe('convoke-update CLI (main)', () => {
       );
       assert.ok(stdout.includes('BREAKING CHANGES'), 'should display breaking changes warning');
       assert.ok(
-        stdout.includes('https://github.com/amalik/convoke-agents/blob/main/docs/migration/3.x-to-4.0.md'),
+        stdout.includes('https://github.com/KYTECH-DEV01/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'),
         'should link the migration guide from breaking-changes output for 3.x→4.0 upgrade'
       );
     } finally {

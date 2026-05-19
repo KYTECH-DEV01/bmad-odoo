@@ -66,7 +66,7 @@ This skill is classified as **<tier>**. The three portability tiers are:
 
 - **standalone** — works out of the box. Just copy and use.
 - **light-deps** — includes inlined templates and config defaults. Just copy and use; no external setup.
-- **pipeline** — framework-internal or part of a multi-step chain. Requires the full Convoke installation. NOT portable.
+- **pipeline** — framework-internal or part of a multi-step chain. Requires the full BMAD Odoo installation. NOT portable.
 
 <!-- sp-3-1 will inject a link to the catalog repo's portability schema doc here when generating per-skill READMEs. The link is omitted from the template itself to avoid shipping a broken `<TODO>` token in every emitted README. -->
 

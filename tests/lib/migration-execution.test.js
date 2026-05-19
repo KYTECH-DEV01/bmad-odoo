@@ -234,7 +234,7 @@ describe('executeRenames integration', () => {
   let outputDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-rename-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-rename-'));
     outputDir = path.join(tmpDir, '_bmad-output', 'planning-artifacts');
     await fs.ensureDir(outputDir);
 
@@ -352,7 +352,7 @@ describe('updateLinks', () => {
   let outputDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-links-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-links-'));
     outputDir = path.join(tmpDir, '_bmad-output', 'planning-artifacts');
     await fs.ensureDir(outputDir);
   });
@@ -460,7 +460,7 @@ describe('executeInjections', () => {
   let outputDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-inject-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-inject-'));
     outputDir = path.join(tmpDir, '_bmad-output', 'planning-artifacts');
     await fs.ensureDir(outputDir);
     await fs.ensureDir(path.join(tmpDir, '_bmad', '_config'));
@@ -1212,7 +1212,7 @@ describe('detectMigrationState', () => {
 describe('generateGovernanceADR', () => {
   let generateGovernanceADR;
   const taxonomy = {
-    initiatives: { platform: ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'convoke'], user: [] },
+    initiatives: { platform: ['vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'bmad-odoo'], user: [] },
     artifact_types: ['prd', 'epic', 'arch', 'adr', 'persona', 'lean-persona', 'empathy-map', 'problem-def', 'hypothesis', 'experiment', 'signal', 'decision', 'scope', 'pre-reg', 'sprint', 'brief', 'vision', 'report', 'research', 'story', 'spec', 'note', 'covenant'],
     aliases: {},
   };
@@ -1240,7 +1240,7 @@ describe('generateGovernanceADR', () => {
   it('derives taxonomy counts and lists from the provided taxonomy', () => {
     const md = generateGovernanceADR('2026-04-06', {}, taxonomy);
     assert.ok(md.includes('## Taxonomy'));
-    assert.ok(md.includes('**Platform initiatives (8):** vortex, gyre, bmm, forge, helm, enhance, loom, convoke'));
+    assert.ok(md.includes('**Platform initiatives (8):** vortex, gyre, bmm, forge, helm, enhance, loom, bmad-odoo'));
     assert.ok(md.includes('**Artifact types (23):**'));
     assert.ok(md.includes('note, covenant'));
   });
@@ -1304,7 +1304,7 @@ describe('supersedePreviousADR', () => {
   });
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-adr-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-adr-'));
     const adrDir = path.join(tmpDir, '_bmad-output', 'planning-artifacts');
     await fs.ensureDir(adrDir);
 

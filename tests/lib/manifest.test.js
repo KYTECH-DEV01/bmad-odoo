@@ -439,7 +439,7 @@ describe('formatManifest', () => {
       newPath: null, initiative: null, artifactType: 'prd',
       confidence: 'low', source: 'unresolved', dir: 'planning-artifacts',
       contextClues: { firstLines: ['# Product Requirements Document'], gitAuthor: 'Amalik', gitDate: '2026-02-22' },
-      crossReferences: null, candidates: ['convoke', 'gyre'],
+      crossReferences: null, candidates: ['bmad-odoo', 'gyre'],
       collisionWith: null, frontmatterInitiative: null, fileInitiative: null,
     }]);
     const output = formatManifest(manifest);
@@ -448,7 +448,7 @@ describe('formatManifest', () => {
     assert.ok(output.includes('ambiguous'));
     assert.ok(output.includes('Line 1: "# Product Requirements Document"'));
     assert.ok(output.includes('Git author: Amalik'));
-    assert.ok(output.includes('Candidates: convoke, gyre'));
+    assert.ok(output.includes('Candidates: bmad-odoo, gyre'));
     assert.ok(output.includes('ACTION REQUIRED'));
   });
 
@@ -588,7 +588,7 @@ describe('formatManifest with Story 6.2 suggestions', () => {
           frontmatterInitiative: null,
           fileInitiative: null,
           action: 'AMBIGUOUS',
-          suggestedInitiative: 'convoke',
+          suggestedInitiative: 'bmad-odoo',
           suggestedFrom: 'folder-default',
           suggestedConfidence: 'low',
         },
@@ -597,7 +597,7 @@ describe('formatManifest with Story 6.2 suggestions', () => {
       summary: { total: 1, skip: 0, rename: 0, inject: 0, conflict: 0, ambiguous: 1 },
     };
     const output = formatManifest(manifest);
-    assert.ok(output.includes('Suggested: convoke'));
+    assert.ok(output.includes('Suggested: bmad-odoo'));
     assert.ok(output.includes('source: folder-default'));
     assert.ok(output.includes('REVIEW SUGGESTION'));
     assert.ok(!output.includes('ACTION REQUIRED: Specify initiative for this file'));

@@ -3,16 +3,16 @@
 'use strict';
 
 /**
- * @module scripts/convoke-register-skill
+ * @module scripts/bmad-register-skill
  *
  * Story v63-2-4: interactive + non-interactive CLI for registering a custom
  * BMM-dependent skill in `_bmad/_config/bmm-dependencies.csv`. Closes the loop
  * between Story 2.2's `unregistered-custom-skill` honest-warning category and
- * operator action — operators see a warning from `convoke-doctor` and can run
+ * operator action — operators see a warning from `bmad-doctor` and can run
  * `/bmad-register-skill` (or this CLI directly) to register the skill without
  * hand-editing the CSV.
  *
- * Bin entry: `convoke-register-skill` (see package.json).
+ * Bin entry: `bmad-register-skill` (see package.json).
  *
  * Exit codes:
  *   0 — success (write committed + post-write verification passed OR skipped via --yes)
@@ -196,7 +196,7 @@ function validateInput(input, projectRoot) {
 
   // bmm_agent — warn (not error) on unrecognized agent. R1-M1: check explicit
   // BMM prefixes (not `_inferSourceModule`, which is a generic skill-name
-  // inferrer that also accepts `convoke-*`, `q-*`, `wds-*` — all non-BMM).
+  // inferrer that also accepts `bmad-*`, `q-*`, `wds-*` — all non-BMM).
   // R2-D2: dropped `bmad-agent-bme-` from the prefix list — it's a strict
   // subset of `bmad-agent-`, so inclusion was redundant.
   // R2-M2: added an exact-match allowlist for standalone BMM agents whose
@@ -347,7 +347,7 @@ function _withCsvLock(csvPath, fn) {
       if (err && err.code === 'EEXIST') {
         const lockErr = new Error(
           `Could not acquire registration lock at ${lockPath} within ${maxAttempts * retryDelayMs}ms — ` +
-          `another convoke-register-skill process may be running, or the lock is stale. ` +
+          `another bmad-register-skill process may be running, or the lock is stale. ` +
           `If no other process is registering, remove the lock file and retry: rm ${lockPath}`
         );
         lockErr.cause = err;
@@ -536,10 +536,10 @@ function promptMissingFields(partial) {
 function renderHelp() {
   const lines = [
     '',
-    chalk.bold('convoke-register-skill') + ' — register a custom BMM-dependent skill in the governance registry',
+    chalk.bold('bmad-register-skill') + ' — register a custom BMM-dependent skill in the governance registry',
     '',
     'Usage:',
-    '  convoke-register-skill --skill <name> --agent <agent> --type <type> [options]',
+    '  bmad-register-skill --skill <name> --agent <agent> --type <type> [options]',
     '',
     'Required:',
     '  --skill <name>      Skill directory name under .claude/skills/',
@@ -558,7 +558,7 @@ function renderHelp() {
     '  Pass all required flags to run non-interactively (suitable for scripts / CI).',
     '',
     'Example:',
-    '  convoke-register-skill \\',
+    '  bmad-register-skill \\',
     '    --skill my-custom-skill --agent bmad-agent-pm --type frontmatter \\',
     '    --email alice@example.com --yes',
     '',
@@ -593,7 +593,7 @@ function renderValidationIssues(result) {
  */
 async function main(argv) {
   // R2-M5: pre-scan argv for --help / -h BEFORE parseArgs. Without this,
-  // `convoke-register-skill --skill --help` would fail with "--skill requires
+  // `bmad-register-skill --skill --help` would fail with "--skill requires
   // a value (got: --help)" instead of rendering help. Help should always win
   // regardless of surrounding argv state.
   if (argv.includes('--help') || argv.includes('-h')) {
@@ -617,8 +617,8 @@ async function main(argv) {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.log(chalk.red('  ✗ Not inside a Convoke project (no _bmad/ directory found).'));
-    console.log(chalk.gray('    Run: npx -p convoke-agents convoke-install'));
+    console.log(chalk.red('  ✗ Not inside a BMAD Odoo project (no _bmad/ directory found).'));
+    console.log(chalk.gray('    Run: npx -p bmad-odoo bmad-install'));
     return 1;
   }
 
@@ -717,7 +717,7 @@ async function main(argv) {
     // downstream parsers know the verification contract wasn't exercised.
     console.log(`REGISTERED: ${tripleKey}`);
     console.log(chalk.gray('  (post-write verification skipped under --yes)'));
-    console.log(chalk.gray('  Run `convoke-doctor` for a full governance health check.'));
+    console.log(chalk.gray('  Run `bmad-doctor` for a full governance health check.'));
     return 0;
   }
 
@@ -743,12 +743,12 @@ async function main(argv) {
     // Verification failure is fail-soft — the write itself succeeded. Do NOT
     // emit the REGISTERED: marker (R1-L8): LLM parsers keying on that string
     // should only see it when the row is both written AND verified.
-    console.log(chalk.gray('  Run `convoke-doctor` for a full governance health check.'));
+    console.log(chalk.gray('  Run `bmad-doctor` for a full governance health check.'));
     return 0;
   }
 
   console.log(`REGISTERED: ${tripleKey}`);
-  console.log(chalk.gray('  Run `convoke-doctor` for a full governance health check.'));
+  console.log(chalk.gray('  Run `bmad-doctor` for a full governance health check.'));
   return 0;
 }
 

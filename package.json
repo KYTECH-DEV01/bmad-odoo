@@ -1,5 +1,5 @@
 {
-  "name": "convoke-agents",
+  "name": "bmad-odoo",
   "version": "4.0.0-rc.1",
   "description": "Agent teams for complex systems, compatible with BMad Method",
   "main": "index.js",
@@ -22,19 +22,19 @@
     "src/"
   ],
   "bin": {
-    "convoke-install-vortex": "scripts/install-vortex-agents.js",
-    "convoke-install-gyre": "scripts/install-gyre-agents.js",
-    "convoke-install": "scripts/install-all-agents.js",
-    "convoke-update": "scripts/update/convoke-update.js",
-    "convoke-version": "scripts/update/convoke-version.js",
-    "convoke-migrate": "scripts/update/convoke-migrate.js",
-    "convoke-doctor": "scripts/convoke-doctor.js",
-    "convoke-register-skill": "scripts/convoke-register-skill.js",
-    "convoke-validate-marketplace": "scripts/audit/validate-marketplace.js",
-    "convoke-audit-skill-dirs": "scripts/audit/audit-skill-dirs.js",
-    "convoke-migrate-artifacts": "scripts/migrate-artifacts.js",
-    "convoke-portfolio": "scripts/lib/portfolio/portfolio-engine.js",
-    "convoke-export": "scripts/portability/convoke-export.js"
+    "bmad-install-vortex": "scripts/install-vortex-agents.js",
+    "bmad-install-gyre": "scripts/install-gyre-agents.js",
+    "bmad-install": "scripts/install-all-agents.js",
+    "bmad-update": "scripts/update/bmad-update.js",
+    "bmad-version": "scripts/update/bmad-version.js",
+    "bmad-migrate": "scripts/update/bmad-migrate.js",
+    "bmad-doctor": "scripts/bmad-doctor.js",
+    "bmad-register-skill": "scripts/bmad-register-skill.js",
+    "bmad-validate-marketplace": "scripts/audit/validate-marketplace.js",
+    "bmad-audit-skill-dirs": "scripts/audit/audit-skill-dirs.js",
+    "bmad-migrate-artifacts": "scripts/migrate-artifacts.js",
+    "bmad-portfolio": "scripts/lib/portfolio/portfolio-engine.js",
+    "bmad-export": "scripts/portability/bmad-export.js"
   },
   "scripts": {
     "install:agents": "node scripts/install-all-agents.js",
@@ -51,10 +51,10 @@
     "badges:check": "npm run badges && git diff --exit-code docs/badges.json",
     "prepublishOnly": "npm run badges:check",
     "archive": "node scripts/archive.js",
-    "check": "node scripts/convoke-check.js"
+    "check": "node scripts/bmad-check.js"
   },
   "keywords": [
-    "convoke-agents",
+    "bmad-odoo",
     "bmad-enhanced",
     "bmad",
     "agents",
@@ -71,22 +71,22 @@
     "product-strategy",
     "ai-agents"
   ],
-  "author": "Convoke Contributors",
+  "author": "BMAD Odoo Contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amalik/convoke-agents.git"
+    "url": "git+https://github.com/KYTECH-DEV01/bmad-odoo.git"
   },
   "bugs": {
-    "url": "https://github.com/amalik/convoke-agents/issues"
+    "url": "https://github.com/KYTECH-DEV01/bmad-odoo/issues"
   },
-  "homepage": "https://github.com/amalik/convoke-agents#readme",
+  "homepage": "https://github.com/KYTECH-DEV01/bmad-odoo#readme",
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "convoke-agents": "^3.2.0",
+
     "fs-extra": "^11.3.3",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",

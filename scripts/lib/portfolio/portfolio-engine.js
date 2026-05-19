@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Convoke Portfolio Engine — scan → parse → infer → sort → format → output.
+ * BMAD Odoo Portfolio Engine — scan → parse → infer → sort → format → output.
  * Read-only: no git writes, no file modifications.
  *
  * @module portfolio-engine
@@ -70,22 +70,22 @@ function _scanCorpus(corpus, taxonomy) {
  * non-initiative prefix.
  */
 const STORY_PREFIX_MAP = Object.freeze({
-  ag: 'convoke',     // Artifact Governance — platform-level work
+  ag: 'bmad-odoo',     // Artifact Governance — platform-level work
   tf: 'loom',        // Team Factory → Loom
-  p2: 'convoke',     // Phase 2 — platform stabilization
-  p3: 'convoke',     // Phase 3 — Convoke rename
+  p2: 'bmad-odoo',     // Phase 2 — platform stabilization
+  p3: 'bmad-odoo',     // Phase 3 — BMAD Odoo rename
   enh: 'enhance',    // Enhance module
-  sp: 'convoke',     // Skill Portability — platform-level
+  sp: 'bmad-odoo',     // Skill Portability — platform-level
 });
 
 /**
  * Folder defaults for the portfolio engine. Mirrors the migration suggester:
- * `planning-artifacts` is for cross-cutting convoke platform artifacts.
+ * `planning-artifacts` is for cross-cutting bmad-odoo platform artifacts.
  * Other dirs (`vortex-artifacts`, `implementation-artifacts`) are heterogeneous
  * — no safe default, so they fall through to subsequent inference layers.
  */
 const PORTFOLIO_FOLDER_DEFAULT_MAP = Object.freeze({
-  'planning-artifacts': 'convoke'
+  'planning-artifacts': 'bmad-odoo'
 });
 
 /**
@@ -97,7 +97,7 @@ const PORTFOLIO_FOLDER_DEFAULT_MAP = Object.freeze({
  *      → 'filename-prefix'
  *   4. parent directory name (e.g. `gyre-artifacts/`) → 'parent-dir'
  *   5. story-key prefix mapping (e.g. `tf-2-10-...` → loom) → 'story-prefix'
- *   6. folder default (e.g. `planning-artifacts/` → convoke) → 'folder-default'
+ *   6. folder default (e.g. `planning-artifacts/` → bmad-odoo) → 'folder-default'
  *
  * @param {Object} fileInfo - File descriptor with filename and dir
  * @param {string} content - Already-loaded file content
@@ -178,7 +178,7 @@ function attributeFile(fileInfo, content, frontmatter, taxonomy) {
   }
 
   // Step 6: Folder default — last resort for cross-cutting platform artifacts
-  // (e.g. `planning-artifacts/architecture.md` → convoke)
+  // (e.g. `planning-artifacts/architecture.md` → bmad-odoo)
   if (fileInfo.dir && Object.prototype.hasOwnProperty.call(PORTFOLIO_FOLDER_DEFAULT_MAP, fileInfo.dir)) {
     const defaultInit = PORTFOLIO_FOLDER_DEFAULT_MAP[fileInfo.dir];
     if (defaultInit) {
@@ -427,7 +427,7 @@ async function generatePortfolio(projectRoot, options = {}) {
 
 function printHelp() {
   console.log(`
-Usage: convoke-portfolio [options]
+Usage: bmad-portfolio [options]
 
 Generate a portfolio view of all initiatives from artifact analysis.
 
@@ -441,10 +441,10 @@ Options:
   --help, -h           Show this help
 
 Examples:
-  convoke-portfolio                       Default terminal view
-  convoke-portfolio --markdown            Markdown output for chat/docs
-  convoke-portfolio --sort last-activity  Sort by most recent activity
-  convoke-portfolio --show-unattributed   See why each unattributed file was skipped
+  bmad-portfolio                       Default terminal view
+  bmad-portfolio --markdown            Markdown output for chat/docs
+  bmad-portfolio --sort last-activity  Sort by most recent activity
+  bmad-portfolio --show-unattributed   See why each unattributed file was skipped
 `);
 }
 
@@ -458,7 +458,7 @@ async function main() {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.error('Error: Not in a Convoke project. Could not find _bmad/ directory.');
+    console.error('Error: Not in a BMAD Odoo project. Could not find _bmad/ directory.');
     process.exit(1);
   }
 
@@ -547,7 +547,7 @@ async function main() {
     if (result.summary.attributableButUngoverned > 0) {
       console.log(
         `${result.summary.attributableButUngoverned} files attributable to existing initiatives ` +
-        `but ungoverned — run convoke-migrate-artifacts to govern them`
+        `but ungoverned — run bmad-migrate-artifacts to govern them`
       );
     }
 

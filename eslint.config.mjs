@@ -51,7 +51,7 @@ export default [
       "scripts/install-all-agents.js",
       "scripts/install-emma.js",
       "scripts/install-wade.js",
-      "scripts/portability/convoke-export.js",
+      "scripts/portability/bmad-export.js",
       "scripts/portability/seed-catalog-repo.js"
     ],
     rules: {

@@ -2,7 +2,7 @@
 name: 'step-c-02-gather'
 description: 'Interactively gather initial intakes (unqualified findings) for the new lifecycle backlog'
 nextStepFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/steps-c/step-c-03-qualify.md'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/backlog-format-spec.md'
 advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.md'
 partyModeWorkflow: '{project-root}/_bmad/core/workflows/bmad-party-mode/workflow.md'

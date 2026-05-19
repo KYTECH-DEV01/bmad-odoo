@@ -307,10 +307,10 @@ describe('suggestInitiative', () => {
   // Git step is rate-limited and silently fails on non-tracked files, so it does not interfere.
   const fakeRoot = '/tmp/fake-suggest-root';
 
-  it('A — folder default: planning-artifacts → convoke', () => {
+  it('A — folder default: planning-artifacts → bmad-odoo', () => {
     const content = '# Some Document\n\nNo initiative keywords here.';
     const result = suggestInitiative('some-doc.md', 'planning-artifacts', content, taxonomy, fakeRoot);
-    assert.equal(result.initiative, 'convoke');
+    assert.equal(result.initiative, 'bmad-odoo');
     assert.equal(result.source, 'folder-default');
     assert.equal(result.confidence, 'low');
   });
@@ -331,7 +331,7 @@ describe('suggestInitiative', () => {
   });
 
   it('D — priority: content beats folder default', () => {
-    // File in planning-artifacts (would default to convoke) but content mentions gyre
+    // File in planning-artifacts (would default to bmad-odoo) but content mentions gyre
     const content = '# Gyre Pilot Plan\n\nNotes.';
     const result = suggestInitiative('pilot-plan.md', 'planning-artifacts', content, taxonomy, fakeRoot);
     assert.equal(result.initiative, 'gyre');
@@ -388,7 +388,7 @@ describe('suggestInitiative', () => {
   });
 
   it('FOLDER_DEFAULT_MAP exposes the canonical defaults', () => {
-    assert.equal(FOLDER_DEFAULT_MAP['planning-artifacts'], 'convoke');
+    assert.equal(FOLDER_DEFAULT_MAP['planning-artifacts'], 'bmad-odoo');
     assert.equal(FOLDER_DEFAULT_MAP['gyre-artifacts'], 'gyre');
     assert.equal(FOLDER_DEFAULT_MAP['vortex-artifacts'], null);
   });

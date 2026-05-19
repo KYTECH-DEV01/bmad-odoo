@@ -83,7 +83,7 @@ describe('Validate Exports (sp-4-2)', () => {
     it('Test 2: catches planted forbidden string', () => {
       fixtureDir = makeTmpDir();
       // Create minimal root files
-      fs.writeFileSync(path.join(fixtureDir, 'README.md'), '# Convoke Skills Catalog\n');
+      fs.writeFileSync(path.join(fixtureDir, 'README.md'), '# BMAD Odoo Skills Catalog\n');
       fs.writeFileSync(path.join(fixtureDir, 'LICENSE'), 'MIT License\n');
       fs.writeFileSync(path.join(fixtureDir, 'CONTRIBUTING.md'), 'auto-generated\n');
       // Create a skill with a forbidden string
@@ -109,7 +109,7 @@ describe('Validate Exports (sp-4-2)', () => {
 
     it('Test 3: catches missing persona section', () => {
       fixtureDir = makeTmpDir();
-      fs.writeFileSync(path.join(fixtureDir, 'README.md'), '# Convoke Skills Catalog\n');
+      fs.writeFileSync(path.join(fixtureDir, 'README.md'), '# BMAD Odoo Skills Catalog\n');
       fs.writeFileSync(path.join(fixtureDir, 'LICENSE'), 'MIT License\n');
       fs.writeFileSync(path.join(fixtureDir, 'CONTRIBUTING.md'), 'auto-generated\n');
       const skillDir = path.join(fixtureDir, 'no-persona');

@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 /**
- * convoke-export.js — Story sp-2-3
+ * bmad-export.js — Story sp-2-3
  *
  * CLI entry point for the Tier 1 skill exporter. Wraps `exportSkill()` from
  * sp-2-2's export-engine.js, writes per-skill `instructions.md` + `README.md`
  * to disk, and reports success/failure with stable grep-friendly lines.
  *
  * Usage:
- *   convoke-export <skill-name>           # single skill, default output
- *   convoke-export <skill-name> --output <dir>
- *   convoke-export --tier 1               # batch all standalone skills
- *   convoke-export --all                  # alias for --tier 1 (sp-2-3)
- *   convoke-export --tier 1 --dry-run     # preview without writing
- *   convoke-export --help
+ *   bmad-export <skill-name>           # single skill, default output
+ *   bmad-export <skill-name> --output <dir>
+ *   bmad-export --tier 1               # batch all standalone skills
+ *   bmad-export --all                  # alias for --tier 1 (sp-2-3)
+ *   bmad-export --tier 1 --dry-run     # preview without writing
+ *   bmad-export --help
  *
  * The CLI is read-only on the source tree — only the --output directory
  * (or the default ./exported-skills/) is written.
@@ -111,10 +111,10 @@ function parseArgs(argv) {
 
 function printHelp() {
   const lines = [
-    'Usage: convoke-export <skill-name> [options]',
-    '       convoke-export --tier <N> [options]',
-    '       convoke-export --all [options]',
-    '       convoke-export --help',
+    'Usage: bmad-export <skill-name> [options]',
+    '       bmad-export --tier <N> [options]',
+    '       bmad-export --all [options]',
+    '       bmad-export --help',
     '',
     'Description:',
     '  Export a BMAD skill (Tier 1 standalone or Tier 2 light-deps) to a portable',
@@ -151,16 +151,16 @@ function printHelp() {
     '',
     'Examples:',
     '  Example: single skill, default output',
-    '    convoke-export bmad-brainstorming',
+    '    bmad-export bmad-brainstorming',
     '',
     '  Example: single skill, custom output',
-    '    convoke-export bmad-brainstorming --output ./out',
+    '    bmad-export bmad-brainstorming --output ./out',
     '',
     '  Example: batch tier 1, dry-run preview',
-    '    convoke-export --tier 1 --dry-run',
+    '    bmad-export --tier 1 --dry-run',
     '',
     '  Example: batch all (standalone + light-deps)',
-    '    convoke-export --all',
+    '    bmad-export --all',
     '',
   ];
   process.stdout.write(lines.join('\n'));

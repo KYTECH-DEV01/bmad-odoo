@@ -137,7 +137,7 @@ describe('i97-1.1 — Migration Tooling Foundation Scaffolded — load-test (AC8
           projectRoot: PROJECT_ROOT,
           agentRoleName: 'contextualization-expert',
           fixtureRoot: path.join(PROJECT_ROOT, 'tests/migration/personality-preservation/fixtures'),
-          rubricPath: path.join(PROJECT_ROOT, '_bmad-output/planning-artifacts/convoke-spec-personality-preservation-rubric.md'),
+          rubricPath: path.join(PROJECT_ROOT, '_bmad-output/planning-artifacts/bmad-spec-personality-preservation-rubric.md'),
           mode: 'unknown-mode',
         }),
         /Invalid mode: expected 'capture' or 'verify', got 'unknown-mode'/,
@@ -151,7 +151,7 @@ describe('i97-1.1 — Migration Tooling Foundation Scaffolded — load-test (AC8
           projectRoot: PROJECT_ROOT,
           agentRoleName: 'contextualization-expert',
           fixtureRoot: path.join(PROJECT_ROOT, 'tests/migration/personality-preservation/fixtures'),
-          rubricPath: path.join(PROJECT_ROOT, '_bmad-output/planning-artifacts/convoke-spec-personality-preservation-rubric.md'),
+          rubricPath: path.join(PROJECT_ROOT, '_bmad-output/planning-artifacts/bmad-spec-personality-preservation-rubric.md'),
           // mode intentionally omitted
         }),
         /Invalid mode/,
@@ -192,7 +192,7 @@ describe('i97-1.1 — Migration Tooling Foundation Scaffolded — load-test (AC8
       // project state.
       const { setupTmpDir } = require('../../scripts/migration/format-conversion/fixtures/tmpDir-setup');
       const fsx = require('fs-extra');
-      const { tmpDir, cleanup } = setupTmpDir({ prefix: 'convoke-i97-loadtest-' });
+      const { tmpDir, cleanup } = setupTmpDir({ prefix: 'bmad-odoo-i97-loadtest-' });
       try {
         const docPath = path.join(tmpDir, 'tests', 'sample.md');
         fsx.ensureDirSync(path.dirname(docPath));

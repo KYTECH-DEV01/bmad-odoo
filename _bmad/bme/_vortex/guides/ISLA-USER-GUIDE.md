@@ -2,7 +2,7 @@
 
 **Agent:** Isla (discovery-empathy-expert)
 **Version:** 1.5.0
-**Module:** Convoke (bme) - Vortex Pattern
+**Module:** BMAD Odoo (bme) - Vortex Pattern
 **Last Updated:** 2026-02-20
 
 ---
@@ -168,14 +168,14 @@ Select **[CH] Chat** to discuss:
 
 **How to fix:**
 1. Check if `_bmad/bme/_vortex/config.yaml` exists
-2. If missing: `npx convoke-install-vortex`
+2. If missing: `npx bmad-install-vortex`
 
 ### Error: "Cannot load discovery workflow"
 
 **How to fix:**
 1. Check workflow files exist in `_bmad/bme/_vortex/workflows/`
-2. Run `npx convoke-doctor` to diagnose
-3. If missing: `npx convoke-install-vortex`
+2. Run `npx bmad-doctor` to diagnose
+3. If missing: `npx bmad-install-vortex`
 
 ---
 
@@ -198,7 +198,7 @@ When a participant's voice changes, they lean forward, or they hesitate — that
 ## Credits
 
 **Agent:** Isla (discovery-empathy-expert)
-**Module:** Convoke (bme)
+**Module:** BMAD Odoo (bme)
 **Submodule:** Vortex Pattern (`_vortex`)
 **Stream:** Empathize (Stream 2)
 **Version:** 1.5.0

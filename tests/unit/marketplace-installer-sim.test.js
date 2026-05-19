@@ -29,7 +29,7 @@ describe('marketplace-installer-sim: U1 — parses manifest + materializes all p
   const expectedIds = getExpectedCanonicalIds();
 
   before(async () => {
-    destRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u1-'));
+    destRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u1-'));
     await marketplaceInstall(destRoot, { sourceRepo: PACKAGE_ROOT });
   });
 
@@ -140,7 +140,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
   // brittleness if one test fails mid-write.
 
   async function makeBadRepo(label, manifestContent) {
-    const repo = await fs.mkdtemp(path.join(os.tmpdir(), `convoke-sim-u3-${label}-`));
+    const repo = await fs.mkdtemp(path.join(os.tmpdir(), `bmad-sim-u3-${label}-`));
     await fs.ensureDir(path.join(repo, '.claude-plugin'));
     await fs.writeFile(
       path.join(repo, '.claude-plugin/marketplace.json'),
@@ -152,7 +152,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
 
   it('throws when plugins is missing', async () => {
     const repo = await makeBadRepo('a', { name: 'broken' });
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u3a-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u3a-dest-'));
     try {
       await assert.rejects(
         () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -166,7 +166,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
 
   it('throws when plugins[0].skills is missing', async () => {
     const repo = await makeBadRepo('b', { plugins: [{ name: 'x' }] });
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u3b-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u3b-dest-'));
     try {
       await assert.rejects(
         () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -180,7 +180,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
 
   it('throws when plugins[0].skills is an empty array', async () => {
     const repo = await makeBadRepo('c', { plugins: [{ name: 'x', skills: [] }] });
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u3c-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u3c-dest-'));
     try {
       await assert.rejects(
         () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -200,7 +200,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
         { name: 'second', skills: 'not-an-array' }
       ]
     });
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u3d-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u3d-dest-'));
     try {
       await assert.rejects(
         () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -217,7 +217,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
     const repo = await makeBadRepo('e', {
       plugins: [{ name: 'x', skills: ['./does/not/exist'] }]
     });
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-u3e-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-u3e-dest-'));
     try {
       await assert.rejects(
         () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -237,7 +237,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
       const repo = await makeBadRepo('h1-' + badSkill.replace(/\W/g, '_'), {
         plugins: [{ name: 'x', skills: [badSkill] }]
       });
-      const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-r2h1-dest-'));
+      const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-r2h1-dest-'));
       try {
         await assert.rejects(
           () => marketplaceInstall(dest, { sourceRepo: repo }),
@@ -264,7 +264,7 @@ describe('marketplace-installer-sim: U3 — throws on malformed manifest', () =>
     // Materialize the source dir for plugins[0]'s declared path.
     await fs.ensureDir(path.join(repo, 'skill-one'));
     await fs.writeFile(path.join(repo, 'skill-one', 'SKILL.md'), '# stub', 'utf8');
-    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-sim-r2m7-dest-'));
+    const dest = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-sim-r2m7-dest-'));
     try {
       // Should NOT throw — null plugin is skipped, plugins[0] installs.
       await marketplaceInstall(dest, { sourceRepo: repo });

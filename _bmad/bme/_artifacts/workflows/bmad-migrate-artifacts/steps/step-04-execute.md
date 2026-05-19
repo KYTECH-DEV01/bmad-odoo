@@ -100,7 +100,7 @@ Build the schema-versioned envelope:
 }
 ```
 
-Write it to the **OS temp directory** (NOT under `_bmad-output/`, which would otherwise be picked up by the next migration scan as an artifact and could end up committed). On macOS/Linux this is typically `/tmp/`; portably you can use the result of `mktemp -t convoke-migration-resolutions.json`. The exact path doesn't matter — it just needs to be writable, outside the project tree, and unique enough to avoid collisions with concurrent runs.
+Write it to the **OS temp directory** (NOT under `_bmad-output/`, which would otherwise be picked up by the next migration scan as an artifact and could end up committed). On macOS/Linux this is typically `/tmp/`; portably you can use the result of `mktemp -t bmad-migration-resolutions.json`. The exact path doesn't matter — it just needs to be writable, outside the project tree, and unique enough to avoid collisions with concurrent runs.
 
 Capture the chosen path as `{{resolutionFilePath}}`.
 

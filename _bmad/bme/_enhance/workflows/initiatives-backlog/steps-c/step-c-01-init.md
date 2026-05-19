@@ -2,7 +2,7 @@
 name: 'step-c-01-init'
 description: 'Check for existing lifecycle backlog, warn on overwrite, initialize new session using format spec + lifecycle process spec'
 nextStepFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/steps-c/step-c-02-gather.md'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/backlog-format-spec.md'
 processFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/lifecycle-process-spec.md'
 workflowFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md'
@@ -96,7 +96,7 @@ Display:
 > A new lifecycle backlog will be generated at `{outputFile}`.
 >
 > **What will be created:**
-> - Frontmatter (initiative: convoke, artifact_type: note, ...)
+> - Frontmatter (initiative: bmad-odoo, artifact_type: note, ...)
 > - Part 1: Lifecycle Process (semi-static, from lifecycle-process-spec.md)
 > - Part 2: Backlog (empty lane tables — §2.1 Intakes, §2.2 Bug, §2.3 Fast, §2.4 Initiative, §2.5 Absorbed/Archived)
 > - Appendix: Initiative Details (empty)

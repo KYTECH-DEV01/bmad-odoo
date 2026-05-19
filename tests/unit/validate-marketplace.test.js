@@ -34,14 +34,14 @@ const VORTEX_AGENTS = [
 
 function defaultMarketplace(skillPaths = VORTEX_AGENTS.map(a => `./_bmad/bme/_vortex/agents/${a}`)) {
   return {
-    name: 'convoke',
+    name: 'bmad-odoo',
     owner: { name: 'Amalik Amriou' },
     license: 'MIT',
-    repository: 'https://github.com/amalik/convoke-agents',
+    repository: 'https://github.com/KYTECH-DEV01/bmad-odoo',
     keywords: ['bmad', 'discovery', 'vortex', 'product-discovery', 'innovation'],
     plugins: [
       {
-        name: 'convoke-vortex',
+        name: 'bmad-odoo-vortex',
         source: './',
         description: 'Vortex Framework — 7-stream product discovery for IT transformation consultants.',
         version: pkg.version,
@@ -55,8 +55,8 @@ function defaultMarketplace(skillPaths = VORTEX_AGENTS.map(a => `./_bmad/bme/_vo
 function defaultModuleYaml() {
   return {
     code: 'bme',
-    name: 'Convoke: Vortex Discovery Framework',
-    header: 'Convoke — Vortex Discovery Framework',
+    name: 'BMAD Odoo: Vortex Discovery Framework',
+    header: 'BMAD Odoo — Vortex Discovery Framework',
     subheader: '7 AI agents for product discovery based on the Shiftup Innovation Vortex',
     description: 'Domain-specialized agent teams for structured product discovery',
     default_selected: false,
@@ -86,7 +86,7 @@ async function seedMarketplaceFixture(tmpDir, variants = {}) {
     if (variants.malformedJson) {
       await fs.writeFile(
         path.join(tmpDir, '.claude-plugin/marketplace.json'),
-        '{ "name": "convoke", "plugins": [{ "name": "foo", } ] }', // trailing comma
+        '{ "name": "bmad-odoo", "plugins": [{ "name": "foo", } ] }', // trailing comma
         'utf8'
       );
     } else {
@@ -140,7 +140,7 @@ async function seedMarketplaceFixture(tmpDir, variants = {}) {
   // 4. package.json (required by checkVersionDrift)
   await fs.writeFile(
     path.join(tmpDir, 'package.json'),
-    JSON.stringify({ name: 'convoke-agents', version: variants.pkgVersion || pkg.version }, null, 2),
+    JSON.stringify({ name: 'bmad-odoo', version: variants.pkgVersion || pkg.version }, null, 2),
     'utf8'
   );
 }
@@ -535,9 +535,9 @@ describe('validate-marketplace CLI (Story v63-3-1)', () => {
         );
       }
 
-      // Run refreshInstallation — simulating the `convoke-update` upgrade
+      // Run refreshInstallation — simulating the `bmad-update` upgrade
       // path on a 3.x install (note: this test invokes refreshInstallation
-      // directly; the real flow routes through convoke-update's detector
+      // directly; the real flow routes through bmad-update's detector
       // first, which is intentionally out of scope here).
       await refreshInstallation(tmpDir, { backupGuides: false, verbose: false });
     });
@@ -604,15 +604,15 @@ describe('validate-marketplace CLI (Story v63-3-1)', () => {
   });
 
   // ── Test 18: plugins[0].name invariant ──
-  it('plugins[0].name != "convoke-vortex" → exit 1', async () => {
+  it('plugins[0].name != "bmad-odoo-vortex" → exit 1', async () => {
     const tmpDir = await createTempDir('bmad-mp-');
     try {
       const marketplace = defaultMarketplace();
-      marketplace.plugins[0].name = 'convoke-wrong';
+      marketplace.plugins[0].name = 'bmad-odoo-wrong';
       await seedMarketplaceFixture(tmpDir, { marketplace });
       const { exitCode, stdout } = await runScript(SCRIPT_PATH, [], { cwd: tmpDir });
       assert.equal(exitCode, 1);
-      assert.ok(stdout.includes('plugins[0].name') && stdout.includes('convoke-vortex'),
+      assert.ok(stdout.includes('plugins[0].name') && stdout.includes('bmad-odoo-vortex'),
         `expected plugin name error; got:\n${stdout}`);
     } finally {
       await fs.remove(tmpDir);

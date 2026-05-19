@@ -182,7 +182,7 @@ describe('bootstrapTaxonomy', () => {
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-test-'));
     await fs.ensureDir(path.join(tmpDir, '_bmad', '_config'));
   });
 
@@ -224,7 +224,7 @@ describe('bootstrapTaxonomy', () => {
   });
 
   it('creates _config directory if absent', async () => {
-    const bareDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-bare-'));
+    const bareDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-bare-'));
     await fs.ensureDir(path.join(bareDir, '_bmad'));
     // _config does not exist yet
 
@@ -259,7 +259,7 @@ describe('NFR22 taxonomy error handling', () => {
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-nfr22-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-nfr22-'));
     await fs.ensureDir(path.join(tmpDir, '_bmad', '_config'));
   });
 

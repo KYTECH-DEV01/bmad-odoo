@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 /**
- * Shared utilities for the Convoke update system.
+ * Shared utilities for the BMAD Odoo update system.
  * Single source of truth for version, comparison, project detection.
  */
 

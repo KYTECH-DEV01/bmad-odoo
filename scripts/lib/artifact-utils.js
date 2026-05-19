@@ -1,5 +1,5 @@
 /**
- * Shared artifact utilities for the Convoke governance system.
+ * Shared artifact utilities for the BMAD Odoo governance system.
  * Consumed by: migrate-artifacts.js, portfolio-engine.js, archive.js
  *
  * @module artifact-utils
@@ -126,7 +126,7 @@ function readTaxonomy(projectRoot) {
   if (!fs.existsSync(configPath)) {
     throw new Error(
       `Taxonomy config not found at ${configPath}. ` +
-      'Run convoke-migrate-artifacts or convoke-update to create it.'
+      'Run bmad-migrate-artifacts or bmad-update to create it.'
     );
   }
 
@@ -461,14 +461,14 @@ function inferInitiative(remainder, taxonomy) {
 
 /**
  * Folder-default map for initiative inference.
- * - planning-artifacts → convoke (platform-level artifacts default to convoke)
+ * - planning-artifacts → bmad-odoo (platform-level artifacts default to bmad-odoo)
  * - vortex-artifacts → null (Vortex spans multiple initiatives, no safe default)
  * - gyre-artifacts → gyre (all gyre-artifacts/* belong to gyre)
  *
  * @type {Object<string, string|null>}
  */
 const FOLDER_DEFAULT_MAP = Object.freeze({
-  'planning-artifacts': 'convoke',
+  'planning-artifacts': 'bmad-odoo',
   'vortex-artifacts': null,
   'gyre-artifacts': 'gyre'
 });
@@ -1838,7 +1838,7 @@ async function resolveAmbiguous(manifest, taxonomy, _projectRoot, options = {}) 
  * {
  *   "schemaVersion": 1,
  *   "resolutions": {
- *     "dir/file.md": { "action": "rename", "initiative": "convoke" },
+ *     "dir/file.md": { "action": "rename", "initiative": "bmad-odoo" },
  *     "dir/other.md": { "action": "skip" }
  *   }
  * }
@@ -2017,14 +2017,14 @@ function generateGovernanceADR(date, migrationStats = {}, taxonomy) {
 
 **Status:** ACCEPTED
 **Date:** ${date}
-**Decision Makers:** Convoke migration tool
+**Decision Makers:** BMAD Odoo migration tool
 **Supersedes:** adr-repo-organization-conventions-2026-03-22.md
 
 ---
 
 ## Context
 
-The project accumulated artifacts across multiple initiatives (Vortex, Gyre, Forge, Helm, Enhance, Loom, Convoke) using inconsistent naming conventions. Files like \`prd-gyre.md\`, \`architecture-gyre.md\`, and \`hc2-problem-definition-gyre-2026-03-21.md\` followed different patterns, making it difficult to identify which initiative owned each artifact and to build automated tooling on top of the artifact structure.
+The project accumulated artifacts across multiple initiatives (Vortex, Gyre, Forge, Helm, Enhance, Loom, BMAD Odoo) using inconsistent naming conventions. Files like \`prd-gyre.md\`, \`architecture-gyre.md\`, and \`hc2-problem-definition-gyre-2026-03-21.md\` followed different patterns, making it difficult to identify which initiative owned each artifact and to build automated tooling on top of the artifact structure.
 
 ## Decision
 

@@ -6,7 +6,7 @@ main_config: '{project-root}/_bmad/bmm/config.yaml'
 
 **Goal:** Show the operator a portfolio view of all initiatives through a guided 3-step conversation: scan & present → interactive exploration → actionable recommendations. The skill wraps `scripts/lib/portfolio/portfolio-engine.js` so the operator gets context, drill-down options, and recommendations instead of a static markdown dump.
 
-**Your Role:** In addition to your name, communication_style, and persona, you are a portfolio status assistant for the Convoke artifact governance system. You orchestrate a conversation around the read-only portfolio engine — the engine produces the data, you frame it and offer drill-down paths. You never mutate the repo. When the operator picks an exploration option, you re-invoke the engine with different flags and present the new output verbatim. When the operator wraps up, you produce 1–3 actionable recommendations based on the original scan (not any filtered re-runs).
+**Your Role:** In addition to your name, communication_style, and persona, you are a portfolio status assistant for the BMAD Odoo artifact governance system. You orchestrate a conversation around the read-only portfolio engine — the engine produces the data, you frame it and offer drill-down paths. You never mutate the repo. When the operator picks an exploration option, you re-invoke the engine with different flags and present the new output verbatim. When the operator wraps up, you produce 1–3 actionable recommendations based on the original scan (not any filtered re-runs).
 
 ---
 
@@ -65,7 +65,7 @@ Verify that `_bmad/_config/taxonomy.yaml` exists. If it does NOT exist, display:
 
 > 🚨 **Taxonomy missing**
 >
-> The artifact governance taxonomy file is not yet bootstrapped. The portfolio engine requires it to attribute artifacts to initiatives. Run `bmad-migrate-artifacts` (or `convoke-update`) to create it.
+> The artifact governance taxonomy file is not yet bootstrapped. The portfolio engine requires it to attribute artifacts to initiatives. Run `bmad-migrate-artifacts` (or `bmad-update`) to create it.
 >
 > Once the taxonomy exists, run this skill again.
 

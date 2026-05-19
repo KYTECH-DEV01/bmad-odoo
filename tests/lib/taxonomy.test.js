@@ -17,7 +17,7 @@ describe('readTaxonomy — integration with real taxonomy.yaml', () => {
   before(() => {
     projectRoot = findProjectRoot();
     if (!projectRoot) {
-      throw new Error('Cannot find project root — run tests from within the Convoke repo');
+      throw new Error('Cannot find project root — run tests from within the BMAD Odoo repo');
     }
   });
 
@@ -32,7 +32,7 @@ describe('readTaxonomy — integration with real taxonomy.yaml', () => {
     const config = readTaxonomy(projectRoot);
     assert.equal(config.initiatives.platform.length, 8);
     assert.deepEqual(config.initiatives.platform, [
-      'vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'convoke',
+      'vortex', 'gyre', 'bmm', 'forge', 'helm', 'enhance', 'loom', 'bmad-odoo',
     ]);
   });
 
@@ -66,7 +66,7 @@ describe('readTaxonomy — integration with real taxonomy.yaml', () => {
     const config = readTaxonomy(projectRoot);
     assert.ok(
       config.artifact_types.includes('covenant'),
-      'covenant must be in artifact_types — used for commitment/rights documents (e.g., Convoke Operator Covenant). ' +
+      'covenant must be in artifact_types — used for commitment/rights documents (e.g., BMAD Odoo Operator Covenant). ' +
       'Qualifier test: (1) expresses commitments/rights binding multiple parties, ' +
       '(2) compliance is testable/auditable against explicit criteria.'
     );

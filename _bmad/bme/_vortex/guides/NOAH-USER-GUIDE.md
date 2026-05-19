@@ -2,7 +2,7 @@
 
 **Agent:** Noah (production-intelligence-specialist)
 **Version:** 1.6.0
-**Module:** Convoke (bme) - Vortex Pattern
+**Module:** BMAD Odoo (bme) - Vortex Pattern
 **Last Updated:** 2026-02-26
 
 ---
@@ -218,14 +218,14 @@ Select **[CH] Chat** to discuss:
 
 **How to fix:**
 1. Check if `_bmad/bme/_vortex/config.yaml` exists
-2. If missing: `npx convoke-install-vortex`
+2. If missing: `npx bmad-install-vortex`
 
 ### Error: "Workflow Error: Cannot load signal interpretation workflow"
 
 **How to fix:**
 1. Check workflow files exist in `_bmad/bme/_vortex/workflows/`
-2. Run `npx convoke-doctor` to diagnose
-3. If missing: `npx convoke-install-vortex`
+2. Run `npx bmad-doctor` to diagnose
+3. If missing: `npx bmad-install-vortex`
 
 ---
 
@@ -248,7 +248,7 @@ Noah produces prioritized, evidence-based signal reports. Noah does not tell you
 ## Credits
 
 **Agent:** Noah (production-intelligence-specialist)
-**Module:** Convoke (bme)
+**Module:** BMAD Odoo (bme)
 **Submodule:** Vortex Pattern (`_vortex`)
 **Stream:** Sensitize (Stream 6)
 **Version:** 1.6.0

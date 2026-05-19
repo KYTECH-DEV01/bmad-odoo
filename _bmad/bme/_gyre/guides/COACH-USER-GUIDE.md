@@ -165,7 +165,7 @@ You don't have to review everything in one session. Coach supports deferral — 
 
 - **Agent:** Coach (Review Coach)
 - **Module:** Gyre Pattern v1.0.0
-- **Pattern:** Convoke Agent Architecture
+- **Pattern:** BMAD Odoo Agent Architecture
 
 ---
 

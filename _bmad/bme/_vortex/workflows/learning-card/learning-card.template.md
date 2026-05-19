@@ -174,6 +174,6 @@ version: 1.0
 
 ---
 
-**Created with:** Convoke v2.0.0 - Vortex Pattern (Systematize Stream)
+**Created with:** BMAD Odoo v2.0.0 - Vortex Pattern (Systematize Stream)
 **Agent:** Max (Learning & Decision Expert)
 **Workflow:** learning-card

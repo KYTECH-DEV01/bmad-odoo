@@ -224,7 +224,7 @@ describe('hasMigrationBeenApplied', () => {
   let configPath;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-reg-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-reg-'));
     configPath = path.join(tmpDir, 'config.yaml');
   });
 

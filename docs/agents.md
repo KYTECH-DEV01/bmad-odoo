@@ -1,6 +1,6 @@
 # Agent Guide
 
-Detailed reference for all Convoke team agents — their workflows, positioning, and how they work together.
+Detailed reference for all BMAD Odoo team agents — their workflows, positioning, and how they work together.
 
 ## Teams at a Glance
 
@@ -354,7 +354,7 @@ These journeys show how practitioners move through the Vortex in practice.
 
 *You want to add a custom agent to the Vortex.*
 
-**Use BMB (BMAD Module Builder)** — the recommended way to extend Convoke. Run `/bmad-bmb-agent` to create a new agent through a guided process, or `/bmad-bmb-module` for a complete module with multiple agents and workflows. See the [extension guidance FAQ](faq.md#how-do-i-add-a-custom-agent-or-module) for details.
+**Use BMB (BMAD Module Builder)** — the recommended way to extend BMAD Odoo. Run `/bmad-bmb-agent` to create a new agent through a guided process, or `/bmad-bmb-module` for a complete module with multiple agents and workflows. See the [extension guidance FAQ](faq.md#how-do-i-add-a-custom-agent-or-module) for details.
 
 **Under the hood,** BMB generates the 4 components every agent needs:
 

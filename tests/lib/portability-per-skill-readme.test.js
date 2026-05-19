@@ -17,7 +17,7 @@ const { findProjectRoot } = require('../../scripts/update/lib/utils');
 // no leaked engine placeholders.
 
 const projectRoot = findProjectRoot();
-const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'convoke-export.js');
+const CLI_PATH = path.join(projectRoot, 'scripts', 'portability', 'bmad-export.js');
 
 function runCli(args) {
   return spawnSync('node', [CLI_PATH, ...args], {

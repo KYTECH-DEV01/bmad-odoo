@@ -14,13 +14,13 @@ const {
 
 const pkg = require('../../package.json');
 
-const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/convoke-register-skill.js');
+const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/bmad-register-skill.js');
 const CSV_REL = '_bmad/_config/bmm-dependencies.csv';
 
 // ─── Fixture helpers ─────────────────────────────────────────────
 
 /**
- * Seed a test fixture per the Task 4.3 4-step pattern: Convoke install +
+ * Seed a test fixture per the Task 4.3 4-step pattern: BMAD Odoo install +
  * optional CSV pre-state + dummy skill directory under `.claude/skills/`.
  *
  * @param {string} tmpDir
@@ -53,11 +53,11 @@ function csvIn(tmpDir) {
 }
 
 // Import _internal exports for unit-level tests (validation, buildRow, etc.).
-const { _internal } = require('../../scripts/convoke-register-skill');
+const { _internal } = require('../../scripts/bmad-register-skill');
 
 // ─── Tests ───────────────────────────────────────────────────────
 
-describe('convoke-register-skill CLI (Story v63-2-4)', () => {
+describe('bmad-register-skill CLI (Story v63-2-4)', () => {
 
   // ── AC8 case 1: non-interactive happy path (empty CSV → 1 data row) ──
   it('non-interactive happy path: empty CSV + valid flags → exit 0 with row appended', async () => {
@@ -274,7 +274,7 @@ describe('convoke-register-skill CLI (Story v63-2-4)', () => {
       assert.equal(exitCode, 0);
       // Success path renders the check hint when verification passed.
       assert.ok(
-        stdout.includes('Run `convoke-doctor`'),
+        stdout.includes('Run `bmad-doctor`'),
         `expected post-write verification success path; got:\n${stdout}`,
       );
       // Row present in CSV via direct intersection.
@@ -596,7 +596,7 @@ describe('convoke-register-skill CLI (Story v63-2-4)', () => {
         SCRIPT_PATH, ['--skill', '--help'], { cwd: tmpDir, timeout: 5000 }
       );
       assert.equal(exitCode, 0, 'help should short-circuit with exit 0');
-      assert.ok(stdout.includes('convoke-register-skill — register'),
+      assert.ok(stdout.includes('bmad-register-skill — register'),
         `expected help banner; got:\n${stdout}`);
       assert.ok(!stdout.includes('requires a value'),
         `help must win over parse error; got:\n${stdout}`);

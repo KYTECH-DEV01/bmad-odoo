@@ -6,7 +6,7 @@
  * metadata/formatting. Thin adapter principle: adapters add packaging,
  * NOT content modifications.
  *
- * This is a module (no CLI entry point). Called from convoke-export.js's
+ * This is a module (no CLI entry point). Called from bmad-export.js's
  * runSingle() after writing instructions.md and README.md.
  */
 

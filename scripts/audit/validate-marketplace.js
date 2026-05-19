@@ -10,7 +10,7 @@
  * (submit marketplace registry PR) — operators must run this cleanly before
  * opening the PR to `bmad-plugins-marketplace`.
  *
- * Bin entry: `convoke-validate-marketplace` (see package.json).
+ * Bin entry: `bmad-validate-marketplace` (see package.json).
  *
  * Scope distinction (Story v63-3-2 AC7): this tool is marketplace-submission-
  * scoped (the 7 Vortex paths from `marketplace.json.skills[]`). For full-tree
@@ -42,7 +42,7 @@ const { AGENT_IDS } = require('../update/lib/agent-registry');
 
 const MARKETPLACE_REL = '.claude-plugin/marketplace.json';
 const MODULE_YAML_REL = '_bmad/bme/_vortex/module.yaml';
-const EXPECTED_PLUGIN_NAME = 'convoke-vortex';
+const EXPECTED_PLUGIN_NAME = 'bmad-odoo-vortex';
 const EXPECTED_MODULE_CODE = 'bme';
 const REQUIRED_TOP_FIELDS = ['name', 'owner', 'license', 'repository', 'keywords', 'plugins'];
 const REQUIRED_PLUGIN_FIELDS = ['name', 'source', 'description', 'version', 'author', 'skills'];
@@ -343,10 +343,10 @@ function checkVersionDrift(marketplaceVersion, pkgVersion) {
 
 function renderHelp() {
   console.log('');
-  console.log(chalk.bold('convoke-validate-marketplace') + ' — pre-submission validator for BMAD marketplace metadata');
+  console.log(chalk.bold('bmad-validate-marketplace') + ' — pre-submission validator for BMAD marketplace metadata');
   console.log('');
   console.log('Usage:');
-  console.log('  convoke-validate-marketplace [options]');
+  console.log('  bmad-validate-marketplace [options]');
   console.log('');
   console.log('Options:');
   console.log('  --verbose, -v   Print per-check pass/fail with info lines.');
@@ -435,8 +435,8 @@ function main(argv) {
 
   const projectRoot = findProjectRoot();
   if (!projectRoot) {
-    console.log(chalk.red('  ✗ Not inside a Convoke project (no _bmad/ directory found).'));
-    console.log(chalk.gray('    Run: npx -p convoke-agents convoke-install'));
+    console.log(chalk.red('  ✗ Not inside a BMAD Odoo project (no _bmad/ directory found).'));
+    console.log(chalk.gray('    Run: npx -p bmad-odoo bmad-install'));
     return 1;
   }
 

@@ -1,10 +1,10 @@
 # BMAD Method Compatibility Guide
 
-**Convoke** works standalone or as an extension of the **BMAD Method**. This document explains the relationship, compatibility behavior, and update strategy.
+**BMAD Odoo** works standalone or as an extension of the **BMAD Method**. This document explains the relationship, compatibility behavior, and update strategy.
 
 ---
 
-## Relationship Between BMAD Method and Convoke
+## Relationship Between BMAD Method and BMAD Odoo
 
 ### Architecture
 
@@ -21,7 +21,7 @@
                       │ extends
                       │
 ┌─────────────────────────────────────────────────┐
-│           Convoke (Extension Package)            │
+│           BMAD Odoo (Extension Package)            │
 │                                                  │
 │  Vortex — Product Discovery (7 agents)          │
 │  - Emma, Isla, Mila, Liam, Wade, Noah, Max      │
@@ -36,12 +36,12 @@
 
 ### Key Principle
 
-**Convoke works standalone — BMAD Method is optional.**
+**BMAD Odoo works standalone — BMAD Method is optional.**
 
-- Convoke creates the `_bmad/` directory automatically if missing
-- If BMAD Method is already installed, Convoke detects it and logs confirmation
+- BMAD Odoo creates the `_bmad/` directory automatically if missing
+- If BMAD Method is already installed, BMAD Odoo detects it and logs confirmation
 - If BMAD Method is not installed, the installer warns but proceeds in standalone mode
-- No npm dependency on BMAD Method — Convoke is fully self-contained
+- No npm dependency on BMAD Method — BMAD Odoo is fully self-contained
 
 ---
 
@@ -50,22 +50,22 @@
 ### Standard Installation (Standalone)
 
 ```bash
-npm install convoke-agents
-npx -p convoke-agents convoke-install-vortex
+npm install bmad-odoo
+npx -p bmad-odoo bmad-install-vortex
 ```
 
 ### With Existing BMAD Method
 
 ```bash
-# If BMAD Method is already installed, Convoke detects it automatically
-npm install convoke-agents
-npx -p convoke-agents convoke-install-vortex
+# If BMAD Method is already installed, BMAD Odoo detects it automatically
+npm install bmad-odoo
+npx -p bmad-odoo bmad-install-vortex
 # Installer logs: "✓ BMAD Method configuration found"
 ```
 
 ### What Gets Installed
 
-**Convoke creates:**
+**BMAD Odoo creates:**
 ```
 your-project/
 └── _bmad/
@@ -96,7 +96,7 @@ your-project/
 
 ### Current Version
 
-**Convoke v3.0.0**
+**BMAD Odoo v3.0.0**
 - Compatible with: BMAD Method v1.x (optional — works standalone)
 - Creates `_bmad/` directory automatically if missing
 - Optional detection: BMAD Method config (bmad.yaml in _bmad/_config/)
@@ -106,7 +106,7 @@ your-project/
 
 ### Detection Logic
 
-Convoke installers check:
+BMAD Odoo installers check:
 
 1. **Required:** `_bmad/` directory exists
    - If missing: Created automatically by the installer
@@ -125,8 +125,8 @@ Convoke installers check:
 
 **Your Responsibility:**
 - Monitor BMAD Method releases
-- Test Convoke compatibility with new BMAD versions
-- Update Convoke if breaking changes occur
+- Test BMAD Odoo compatibility with new BMAD versions
+- Update BMAD Odoo if breaking changes occur
 
 **Recommended Process:**
 
@@ -135,34 +135,34 @@ Convoke installers check:
    # Install new BMAD Method version
    cd bmad && git pull && npm install
 
-   # Test Convoke agents
+   # Test BMAD Odoo agents
    cat _bmad/bme/_vortex/agents/contextualization-expert.md
    # Verify Emma still works
 
    # Run diagnostics to check all 7 agents
-   npx -p convoke-agents convoke-doctor
+   npx -p bmad-odoo bmad-doctor
    ```
 
 2. **If agents break:**
    - Identify breaking changes in BMAD Method
-   - Update Convoke agents/workflows
-   - Increment Convoke version
+   - Update BMAD Odoo agents/workflows
+   - Increment BMAD Odoo version
    - Update compatibility documentation
 
 3. **If agents work:**
    - Update compatibility matrix below
-   - No Convoke changes needed
+   - No BMAD Odoo changes needed
 
 ---
 
 ## Compatibility Matrix
 
-| Convoke Version | Compatible BMAD Method Versions | Notes |
+| BMAD Odoo Version | Compatible BMAD Method Versions | Notes |
 |----------------------|--------------------------------|-------|
 | 3.0.0                | 1.x (optional — works standalone) | Team Factory extensions, multi-team docs-audit, extension validator |
 | 2.4.0                | 1.x (optional — works standalone) | Enhance module, Gyre team (4 agents), Team Factory, skill validator |
 | 2.3.x                | 1.x (optional — works standalone) | Enhance module, skills architecture |
-| 2.0.0                | 1.x (optional — works standalone) | Product renamed to Convoke, CLI commands: `convoke-*` |
+| 2.0.0                | 1.x (optional — works standalone) | Product renamed to BMAD Odoo, CLI commands: `bmad-*` |
 | 1.6.4                | 1.x (optional — works standalone) | 7 Vortex agents, 22 workflows, Compass routing |
 | 1.6.0                | 1.x (optional — works standalone) | Added Mila, Liam, Noah; HC contracts; Compass routing |
 | 1.5.x                | 1.x (optional — works standalone) | Added Isla and Max, test hardening |
@@ -180,12 +180,12 @@ Convoke installers check:
 
 **Example:** BMAD moves from `_bmad/` to `bmad/`
 
-**Impact:** Convoke installers will fail (can't find `_bmad/`)
+**Impact:** BMAD Odoo installers will fail (can't find `_bmad/`)
 
 **Solution:**
 1. Update all installer scripts to check for new path
 2. Support both old and new paths during transition
-3. Release Convoke patch with updated paths
+3. Release BMAD Odoo patch with updated paths
 4. Document minimum BMAD Method version
 
 ---
@@ -200,7 +200,7 @@ Convoke installers check:
 1. Convert all agent definitions to new format
 2. Update workflow files if format changes
 3. Update templates if needed
-4. Release Convoke major version bump
+4. Release BMAD Odoo major version bump
 5. Document breaking change and migration path
 
 ---
@@ -209,13 +209,13 @@ Convoke installers check:
 
 **Example:** BMAD changes `config.yaml` structure
 
-**Impact:** Convoke config.yaml becomes invalid
+**Impact:** BMAD Odoo config.yaml becomes invalid
 
 **Solution:**
 1. Update installer config generation
 2. Migrate existing configs (provide migration script)
 3. Test with both old and new BMAD versions
-4. Release Convoke patch
+4. Release BMAD Odoo patch
 5. Document minimum BMAD Method version
 
 ---
@@ -224,7 +224,7 @@ Convoke installers check:
 
 ### Semantic Versioning
 
-Convoke follows semver:
+BMAD Odoo follows semver:
 
 - **Major (X.0.0):** Breaking changes (requires user action)
 - **Minor (1.X.0):** New agents, features (backward compatible)
@@ -233,7 +233,7 @@ Convoke follows semver:
 ### When to Bump Versions
 
 **Major version bump (e.g., 1.x → 2.0):**
-- BMAD Method breaking change requires Convoke updates
+- BMAD Method breaking change requires BMAD Odoo updates
 - Agent architecture fundamentally changes
 - Incompatible with previous BMAD Method versions
 
@@ -256,23 +256,23 @@ Convoke follows semver:
 When new BMAD Method version releases:
 
 - [ ] Install new BMAD Method version
-- [ ] Run `npx -p convoke-agents convoke-install-vortex`
+- [ ] Run `npx -p bmad-odoo bmad-install-vortex`
 - [ ] Verify all files copied correctly
 - [ ] Activate Emma: `cat _bmad/bme/_vortex/agents/contextualization-expert.md`
 - [ ] Test Emma workflow: Type `LP` (Lean Persona) and complete all steps
 - [ ] Activate Mila (or another recent agent): `cat _bmad/bme/_vortex/agents/research-convergence-specialist.md`
-- [ ] Run `npx -p convoke-agents convoke-doctor` to verify all 7 agents and 22 workflows
+- [ ] Run `npx -p bmad-odoo bmad-doctor` to verify all 7 agents and 22 workflows
 - [ ] Verify artifacts generated correctly
 - [ ] Check for errors or warnings
 - [ ] Update compatibility matrix if successful
 
 ### Automated Testing
 
-Convoke includes automated test coverage:
+BMAD Odoo includes automated test coverage:
 
 - **P0 activation tests:** Verify all 7 agents activate correctly (642 assertions)
 - **Content correctness tests:** Validate voice consistency, handoff contracts, Compass routing
-- **CLI tests:** convoke-update.js (92.91% coverage), convoke-version.js (95.52% coverage)
+- **CLI tests:** bmad-update.js (92.91% coverage), bmad-version.js (95.52% coverage)
 - **Docs audit:** Programmatic stale-reference, broken-link, and broken-path detection across 16 user-facing files
 - **Total:** 293 tests, 0 failures, CI-integrated
 
@@ -305,7 +305,7 @@ Convoke includes automated test coverage:
 
 ## Recommendations
 
-### For Convoke Maintainers
+### For BMAD Odoo Maintainers
 
 1. **Monitor BMAD Method releases:**
    - Watch BMAD Method repository
@@ -313,7 +313,7 @@ Convoke includes automated test coverage:
    - Update compatibility matrix
 
 2. **Maintain clear separation:**
-   - Never include BMAD Method code in Convoke
+   - Never include BMAD Method code in BMAD Odoo
    - Always check for BMAD Method presence
    - Document dependencies clearly
 
@@ -330,17 +330,17 @@ Convoke includes automated test coverage:
 ### For Users
 
 1. **Install directly:**
-   - Run `npm install convoke-agents && npx -p convoke-agents convoke-install-vortex`
+   - Run `npm install bmad-odoo && npx -p bmad-odoo bmad-install-vortex`
    - No prerequisite installation needed
    - BMAD Method is optional — installer handles both cases
 
 2. **If using both packages:**
    - Check compatibility matrix before updating either
-   - Test Convoke after updating BMAD Method
+   - Test BMAD Odoo after updating BMAD Method
    - Report compatibility issues
 
 3. **Stay informed:**
-   - Watch for Convoke release notes
+   - Watch for BMAD Odoo release notes
    - Check compatibility guide before updating
    - Report bugs or compatibility issues
 
@@ -350,7 +350,7 @@ Convoke includes automated test coverage:
 
 **Key Points:**
 
-✅ Convoke works standalone — no BMAD Method required
+✅ BMAD Odoo works standalone — no BMAD Method required
 ✅ If BMAD Method is present, the installer detects and logs it
 ✅ Installers create `_bmad/` automatically if missing
 ✅ Compatibility should be tested if using both together
@@ -358,13 +358,13 @@ Convoke includes automated test coverage:
 
 **For Maintainers:**
 
-- Maintain Convoke agents separately from BMAD Method
+- Maintain BMAD Odoo agents separately from BMAD Method
 - Test compatibility if BMAD Method releases breaking changes
 - Update compatibility matrix when verified
 
 **For Users:**
 
-- Install with `npm install convoke-agents && npx -p convoke-agents convoke-install-vortex`
+- Install with `npm install bmad-odoo && npx -p bmad-odoo bmad-install-vortex`
 - No prerequisite installation needed
 - If using BMAD Method alongside, check compatibility matrix before updating either package
 

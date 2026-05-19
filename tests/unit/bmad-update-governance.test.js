@@ -13,10 +13,10 @@ const {
   PACKAGE_ROOT,
 } = require('../helpers');
 
-const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/update/convoke-update.js');
+const SCRIPT_PATH = path.join(PACKAGE_ROOT, 'scripts/update/bmad-update.js');
 
 // R1-L4: extract fixture version as a named constant. All integration-style
-// tests in this file spawn convoke-update against a pre-4.0 installation so
+// tests in this file spawn bmad-update against a pre-4.0 installation so
 // the migration chain exercises the upgrade path. 1.4.1 chains through
 // 1.4.x → 1.5.0 → 1.6.0 → 1.7.0 → 2.0.0 → 3.1.0 → 4.0.0 — verified by R1
 // Edge-hunter chain walk. If registry evolution ever breaks the chain from
@@ -38,8 +38,8 @@ const REFRESH_ONLY_FIXTURE = '2.5.0';
 }
 
 /**
- * Spawn convoke-update with piped stdin. Mirror of the inline helper in
- * convoke-update.test.js — kept local to avoid cross-test coupling.
+ * Spawn bmad-update with piped stdin. Mirror of the inline helper in
+ * bmad-update.test.js — kept local to avoid cross-test coupling.
  */
 function runScriptWithInput(script, args, input, opts = {}) {
   const cwd = opts.cwd || PACKAGE_ROOT;
@@ -70,7 +70,7 @@ function runScriptWithInput(script, args, input, opts = {}) {
 
 // ─── Story v63-2-3: post-upgrade governance gate tests ─────────────
 
-describe('convoke-update governance gate (Story v63-2-3)', () => {
+describe('bmad-update governance gate (Story v63-2-3)', () => {
   // ── AC7 case 1: governance header renders after successful update (upgrade path) ──
 
   it('emits governance section header on successful upgrade-path update', async () => {
@@ -102,7 +102,7 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
       // REFRESH_ONLY_FIXTURE (2.5.0) has no migration-registry entry matching
       // `2.5.x`, so `migrations.length === 0` and `assessUpdate` returns
       // `refresh-only` instead of `upgrade`. This exercises call-site #1 at
-      // convoke-update.js line 207 (after `runRefreshOnly`), which the
+      // bmad-update.js line 207 (after `runRefreshOnly`), which the
       // FIXTURE_VERSION path doesn't touch. Closes the Round 1 L5 coverage
       // gap. The invariant is pinned by the assertion at the top of this
       // file (R2-L1).
@@ -216,7 +216,7 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
 
   // ── AC7 case 6: governance link hint present when findings exist ──
 
-  it('includes "Run `convoke-doctor`" hint when softWarnings are surfaced', async () => {
+  it('includes "Run `bmad-doctor`" hint when softWarnings are surfaced', async () => {
     const tmpDir = await createTempDir('bmad-gov-');
     try {
       await createInstallation(tmpDir, FIXTURE_VERSION);
@@ -227,13 +227,13 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
       // is absent. Check both: if warning surfaced, hint must follow.
       if (stdout.includes('governance warning(s) surfaced')) {
         assert.ok(
-          stdout.includes('Run `convoke-doctor`'),
+          stdout.includes('Run `bmad-doctor`'),
           `hint missing after governance warnings; got:\n${stdout}`,
         );
       } else {
         // All-clean — hint should NOT appear per AC5.
         assert.ok(
-          !stdout.includes('Run `convoke-doctor`'),
+          !stdout.includes('Run `bmad-doctor`'),
           `hint must not appear on all-clean summary; got:\n${stdout}`,
         );
       }
@@ -245,7 +245,7 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
   // ── AC7 case 7 (R1-H1 rewrite): direct helper test — gate-throw-tolerance ──
   //
   // Round 1 found the previous CLI-spawn-based test was broken: spawning
-  // convoke-update after removing `.claude/skills/` didn't exercise the
+  // bmad-update after removing `.claude/skills/` didn't exercise the
   // fail-soft catch because `refreshInstallation` recreates the directory
   // before the gate runs. The scan couldn't throw. Test passed on incidental
   // string matches in other output, not on the intended path.
@@ -255,24 +255,24 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
   // to force `scanBmmDependencies` to throw, then assert the helper emits
   // the yellow fail-soft warning and returns without rethrowing.
   it('R1-H1: _runPostUpgradeGate catches checkBmmDependencies throws and does NOT rethrow', async () => {
-    const { _internal } = require('../../scripts/update/convoke-update');
+    const { _internal } = require('../../scripts/update/bmad-update');
     const { _runPostUpgradeGate } = _internal;
 
     // Story 2.2's `checkBmmDependencies` catches its own scan errors and
     // returns structured findings. To exercise `_runPostUpgradeGate`'s OUTER
-    // catch — which handles invocation-throw (contract drift in convoke-doctor
+    // catch — which handles invocation-throw (contract drift in bmad-doctor
     // or unexpected internal errors in the check function) — we stub
     // `checkBmmDependencies` via require.cache so it throws directly.
     //
     // Scope-of-coverage note (R2-M1): this test covers the POST-LOAD contract-
     // drift / invocation-throw path. It does NOT cover actual cold-load
-    // failure of convoke-doctor (syntax error, missing transitive dep) — the
+    // failure of bmad-doctor (syntax error, missing transitive dep) — the
     // pre-require at the next line warms the cache, so the gate's lazy-require
     // succeeds and sees the stubbed exports. Cold-load failure is covered
     // implicitly by the outer catch being shaped the same way; a dedicated
     // test would need a module-level mock framework not yet in use here.
-    require('../../scripts/convoke-doctor');
-    const doctorModulePath = require.resolve('../../scripts/convoke-doctor');
+    require('../../scripts/bmad-doctor');
+    const doctorModulePath = require.resolve('../../scripts/bmad-doctor');
     const cached = require.cache[doctorModulePath];
     const original = cached.exports.checkBmmDependencies;
     cached.exports.checkBmmDependencies = () => {
@@ -331,7 +331,7 @@ describe('convoke-update governance gate (Story v63-2-3)', () => {
   // soft and hard rows and asserts the summary line reports BOTH counts,
   // not just softWarnCount.
   it('R1-M1: summary math includes hardFailCount when both soft + hard findings exist', async () => {
-    const { _internal } = require('../../scripts/update/convoke-update');
+    const { _internal } = require('../../scripts/update/bmad-update');
     const { _printPostUpgradeGate } = _internal;
 
     const originalLog = console.log;

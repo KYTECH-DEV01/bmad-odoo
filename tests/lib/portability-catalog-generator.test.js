@@ -75,7 +75,7 @@ describe('Catalog Generator (sp-3-1)', () => {
   it('Test 1: stdout mode produces valid markdown with title and Carson', () => {
     const result = runCatalog();
     assert.equal(result.status, 0);
-    assert.ok(result.stdout.includes('# Convoke Skills Catalog'));
+    assert.ok(result.stdout.includes('# BMAD Odoo Skills Catalog'));
     assert.ok(result.stdout.includes('Carson'));
 
     // At least 4 intent section headings
@@ -94,7 +94,7 @@ describe('Catalog Generator (sp-3-1)', () => {
 
     const content = fs.readFileSync(tmpFile, 'utf8');
     assert.ok(content.length > 0);
-    assert.ok(content.includes('# Convoke Skills Catalog'));
+    assert.ok(content.includes('# BMAD Odoo Skills Catalog'));
   });
 
   it('Test 3: all 6 standalone intent categories present', () => {

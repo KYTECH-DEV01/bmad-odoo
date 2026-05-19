@@ -33,7 +33,7 @@ const PM_MD = `<agent>
 </agent>`;
 
 async function setupTempProject() {
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-yaml-pres-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-yaml-pres-'));
   await createValidInstallation(tmpDir);
   // pm.md so the Enhance menu patch doesn't error
   const pmDir = path.join(tmpDir, '_bmad/bmm/agents');
@@ -158,7 +158,7 @@ describe('ag-7-1: config-merger.mergeConfig + writeConfig preserve comments', ()
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-merger-pres-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-merger-pres-'));
     silenceConsole();
   });
 
@@ -229,7 +229,7 @@ describe('ag-7-1: appendConfigAgent + appendConfigWorkflow preserve comments', (
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-appender-pres-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-appender-pres-'));
     // Initialize a git repo so checkDirtyTree doesn't fire
     const { execSync } = require('child_process');
     execSync('git init -q', { cwd: tmpDir });
@@ -336,7 +336,7 @@ describe('ag-7-1: writeConfig self-heals when called with a bare object on an ex
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-self-heal-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-self-heal-'));
     silenceConsole();
   });
 

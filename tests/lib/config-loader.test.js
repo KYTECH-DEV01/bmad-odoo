@@ -11,7 +11,7 @@ const { mockExecFileSync } = require('../mock-cp');
 const LOADER_PATH = '../../scripts/update/lib/config-loader';
 
 function makeTmpProject() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'convoke-config-loader-'));
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'bmad-odoo-config-loader-'));
 }
 
 function writeConfig(projectRoot, moduleSubpath, yamlContent) {
@@ -113,8 +113,8 @@ describe('loadModuleConfig — v4 load path (direct YAML)', () => {
         assert.match(err.message, /Config not found/);
         assert.match(err.message, /_bmad\/bme\/_vortex\/config\.yaml/,
           'error should include the missing file path');
-        assert.match(err.message, /convoke-install/,
-          'error should instruct to run convoke-install');
+        assert.match(err.message, /bmad-install/,
+          'error should instruct to run bmad-install');
         return true;
       }
     );
@@ -206,7 +206,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
     assert.equal(warnCalls.length >= 1, true, 'expected at least one console.warn call');
     assert.match(warnCalls[0].arguments[0], /\[DEPRECATED\]/);
     assert.match(warnCalls[0].arguments[0], /bmad-init/);
-    assert.match(warnCalls[0].arguments[0], /convoke-update/);
+    assert.match(warnCalls[0].arguments[0], /bmad-update/);
     assert.match(warnCalls[0].arguments[0], /4\.1/);
 
     // Verify subprocess invoked with expected arg shape
@@ -241,7 +241,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
         assert.match(err.message, /Legacy bmad-init fallback failed/);
         assert.match(err.message, /exit 1/);
         assert.match(err.message, /missing_module/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         return true;
       }
     );
@@ -255,7 +255,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
       () => loadModuleConfig(tmp, 'bme/_vortex'),
       (err) => {
         assert.match(err.message, /non-JSON stdout/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         return true;
       }
     );
@@ -283,7 +283,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
       () => loadModuleConfig(tmp, 'bme/_vortex'),
       (err) => {
         assert.match(err.message, /python3 not found on PATH/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         return true;
       }
     );
@@ -301,7 +301,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
       () => loadModuleConfig(tmp, 'bme/_vortex'),
       (err) => {
         assert.match(err.message, /exceeded 30s timeout/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         return true;
       }
     );
@@ -319,7 +319,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
       () => loadModuleConfig(tmp, 'bme/_vortex'),
       (err) => {
         assert.match(err.message, /killed by signal SIGKILL/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         // Must NOT claim "exceeded 30s timeout" — that's SIGTERM only
         assert.ok(!/30s timeout/.test(err.message),
           'SIGKILL should not be misreported as a timeout');
@@ -338,7 +338,7 @@ describe('loadModuleConfig — v3 backwards-compat fallback (WR8)', () => {
       (err) => {
         assert.match(err.message, /script missing/);
         assert.match(err.message, /bmad_init\.py/);
-        assert.match(err.message, /convoke-update/);
+        assert.match(err.message, /bmad-update/);
         return true;
       }
     );

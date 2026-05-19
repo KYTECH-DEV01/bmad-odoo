@@ -12,7 +12,7 @@ const configMerger = require('./config-merger');
 const { AGENTS, AGENT_IDS, WORKFLOW_NAMES, GYRE_AGENTS, GYRE_AGENT_FILES, GYRE_AGENT_IDS, GYRE_WORKFLOW_NAMES, EXTRA_BME_AGENTS } = require('./agent-registry');
 
 /**
- * Refresh Installation for Convoke
+ * Refresh Installation for BMAD Odoo
  *
  * Copies latest agent files, workflows, config, and user guides from the
  * package to the project. Called ONCE after all migration deltas have run,
@@ -271,7 +271,7 @@ async function refreshInstallation(projectRoot, options = {}) {
 
       // Build the <item> tag
       const entryPath = `{project-root}/_bmad/bme/_enhance/${workflow.entry}`;
-      const itemTag = `    <item cmd="IB or fuzzy match on ${patchName}" exec="${entryPath}">[IB] 📦 Initiatives Backlog (Convoke Enhance)</item>`;
+      const itemTag = `    <item cmd="IB or fuzzy match on ${patchName}" exec="${entryPath}">[IB] 📦 Initiatives Backlog (BMAD Odoo Enhance)</item>`;
 
       // Find insertion anchor: prefer </menu>, fallback to last <item>
       const menuCloseIdx = agentContent.lastIndexOf('</menu>');

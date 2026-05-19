@@ -1,7 +1,7 @@
 ---
 name: 'step-r-03-update'
 description: 'Apply rescores in-place to lane tables, re-sort touched lanes, update Change Log, present completion summary'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 templateFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/templates/backlog-format-spec.md'
 workflowFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/workflow.md'
 ---

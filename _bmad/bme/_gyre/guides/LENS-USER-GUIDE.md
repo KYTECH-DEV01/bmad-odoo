@@ -174,7 +174,7 @@ The findings depend on Atlas's capabilities model. If the model includes irrelev
 
 - **Agent:** Lens (Readiness Analyst)
 - **Module:** Gyre Pattern v1.0.0
-- **Pattern:** Convoke Agent Architecture
+- **Pattern:** BMAD Odoo Agent Architecture
 
 ---
 

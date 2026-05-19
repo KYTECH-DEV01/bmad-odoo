@@ -45,7 +45,7 @@ function checkPrerequisites(projectRoot) {
   if (fs.existsSync(bmadConfigPath)) {
     console.log(`${GREEN}  ✓${RESET} BMAD Method configuration found`);
   } else {
-    console.log(`${YELLOW}  ⚠${RESET} BMAD Method not detected (Convoke will install standalone)`);
+    console.log(`${YELLOW}  ⚠${RESET} BMAD Method not detected (BMAD Odoo will install standalone)`);
   }
 
   console.log(`${GREEN}  ✓${RESET} Prerequisites met`);

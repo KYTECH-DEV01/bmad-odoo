@@ -10,7 +10,7 @@ describe('mergeTaxonomy', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-tax-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-tax-'));
     await fs.ensureDir(path.join(tmpDir, '_bmad', '_config'));
   });
 
@@ -19,7 +19,7 @@ describe('mergeTaxonomy', () => {
   });
 
   it('creates taxonomy.yaml with platform defaults when absent', async () => {
-    const freshDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-fresh-'));
+    const freshDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-fresh-'));
     await fs.ensureDir(path.join(freshDir, '_bmad'));
 
     const result = await mergeTaxonomy(freshDir);
@@ -74,7 +74,7 @@ describe('mergeTaxonomy', () => {
   });
 
   it('promotes user initiative matching platform ID (FR42)', async () => {
-    const promoteDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-promo-'));
+    const promoteDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-promo-'));
     await fs.ensureDir(path.join(promoteDir, '_bmad', '_config'));
     const configPath = path.join(promoteDir, '_bmad', '_config', 'taxonomy.yaml');
 
@@ -108,7 +108,7 @@ describe('mergeTaxonomy', () => {
   });
 
   it('is idempotent — running twice produces same result', async () => {
-    const idempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-idem-'));
+    const idempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-idem-'));
     await fs.ensureDir(path.join(idempDir, '_bmad'));
 
     // First run: create
@@ -136,7 +136,7 @@ describe('2.0.x-to-3.1.0 migration', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-mig-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-mig-'));
     await fs.ensureDir(path.join(tmpDir, '_bmad'));
   });
 

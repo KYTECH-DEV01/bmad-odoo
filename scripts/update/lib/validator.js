@@ -10,7 +10,7 @@ const { countUserDataFiles } = require('./utils');
 const { AGENT_IDS, WORKFLOW_NAMES, WAVE3_WORKFLOW_NAMES, EXTRA_BME_AGENTS, EXTRA_BME_AGENT_IDS } = require('./agent-registry');
 
 /**
- * Validator for Convoke
+ * Validator for BMAD Odoo
  * Verifies installation integrity post-migration
  */
 
@@ -219,7 +219,7 @@ async function validateManifest(projectRoot) {
 
     const manifestContent = fs.readFileSync(manifestPath, 'utf8');
 
-    // Check for all Convoke agents (Vortex/Gyre IDs and standalone bme agents)
+    // Check for all BMAD Odoo agents (Vortex/Gyre IDs and standalone bme agents)
     const missingFromManifest = AGENT_IDS.filter(id => !manifestContent.includes(id));
     const missingExtras = EXTRA_BME_AGENT_IDS.filter(id => !manifestContent.includes(`bmad-agent-bme-${id}`));
 

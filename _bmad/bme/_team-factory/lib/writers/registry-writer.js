@@ -13,7 +13,7 @@ const { toKebab, deriveWorkflowName } = require('../utils/naming-utils');
  * Protocol: stage → validate → check → apply → verify → rollback
  *
  * This is the ONLY writer that uses the full protocol because agent-registry.js
- * is a shared file consumed by refresh-installation, validator, convoke-doctor,
+ * is a shared file consumed by refresh-installation, validator, bmad-doctor,
  * installer, index.js, and migration-runner.
  *
  * @param {Object} specData - Parsed team spec with agents enriched with persona fields

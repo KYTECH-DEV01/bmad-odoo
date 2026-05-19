@@ -1,6 +1,6 @@
 # Testing
 
-Overview of the Convoke automated test suite, CI pipeline, and agent validation results.
+Overview of the BMAD Odoo automated test suite, CI pipeline, and agent validation results.
 
 ---
 
@@ -30,9 +30,9 @@ Zero-dependency test runner using `node:test`.
 |-------|-------|---------------|
 | fresh-install | 9 | `refreshInstallation` end-to-end (all 7 agents) |
 | upgrade | 22 | v1.0.x, v1.3.x, v1.4.x upgrade paths to v1.5.0 |
-| cli-entry-points | 8 | `index.js`, `convoke-version`, `convoke-update`, `convoke-doctor` |
+| cli-entry-points | 8 | `index.js`, `bmad-version`, `bmad-update`, `bmad-doctor` |
 | installer-e2e | 7 | `install-vortex-agents` CLI end-to-end, idempotency |
-| convoke-doctor | 7 | Negative paths: no project, missing config, invalid YAML, missing agents, stale lock, version mismatch |
+| bmad-doctor | 7 | Negative paths: no project, missing config, invalid YAML, missing agents, stale lock, version mismatch |
 
 ### Running Tests
 
@@ -123,8 +123,8 @@ Same infrastructure validation as Isla. Content correctness validated by P0 cont
 
 Gyre agents are markdown-only (no JS code beyond installation scripts). Test coverage focuses on:
 
-- **Installation validation** — `convoke-install-gyre` creates correct directory structure, all 4 agents and 7 workflows present
-- **Doctor validation** — `convoke-doctor` checks Gyre agents, workflows, config, and contracts
+- **Installation validation** — `bmad-install-gyre` creates correct directory structure, all 4 agents and 7 workflows present
+- **Doctor validation** — `bmad-doctor` checks Gyre agents, workflows, config, and contracts
 - **Refresh validation** — `refreshInstallation` handles Gyre module alongside Vortex
 - **Agent activation** — P0 content tests for voice consistency, persona accuracy, workflow activation
 
@@ -136,8 +136,8 @@ Infrastructure tests (registry, config-merger, validator) cover Gyre through the
 
 | Module | Coverage | Notes |
 |--------|----------|-------|
-| `convoke-update.js` | 29% | CLI orchestration — low ROI for unit testing |
-| `convoke-version.js` | 56% | CLI branch coverage |
+| `bmad-update.js` | 29% | CLI orchestration — low ROI for unit testing |
+| `bmad-version.js` | 56% | CLI branch coverage |
 | `1.0.x-to-1.3.0.js` | 37% | Legacy migration apply logic |
 
 ---

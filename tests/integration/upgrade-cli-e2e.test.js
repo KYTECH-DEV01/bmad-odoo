@@ -5,8 +5,8 @@
 // Existing `tests/integration/upgrade.test.js` covers the LIBRARY API
 // (`refreshInstallation()`) across simulated v1.0.x / v1.3.x / v1.4.x / v1.7.x
 // installs. `tests/integration/cli-entry-points.test.js` runs
-// `convoke-update --dry-run` once as a smoke test. The gap this suite closes:
-// the real `convoke-update` CLI actually applying migrations + refresh, with
+// `bmad-update --dry-run` once as a smoke test. The gap this suite closes:
+// the real `bmad-update` CLI actually applying migrations + refresh, with
 // full post-state verification of every expected artifact class.
 //
 // Scope deferrals (see `_bmad-output/implementation-artifacts/deferred-work.md`
@@ -34,12 +34,12 @@ const {
 } = require('../../scripts/update/lib/agent-registry');
 
 const pkg = require('../../package.json');
-const UPDATE_SCRIPT = path.join(PACKAGE_ROOT, 'scripts/update/convoke-update.js');
+const UPDATE_SCRIPT = path.join(PACKAGE_ROOT, 'scripts/update/bmad-update.js');
 
 // Old-version fixture: simulate a v1.7.x install (all 7 Vortex agents, 22
 // workflows, pre-rename config shape). Mirrors the fixture in
 // tests/integration/upgrade.test.js so we share the boundary case: v1.7 → 3.x
-// spans the BMAD-Enhanced → Convoke rename + the 2.0 / 3.0 / 3.1 migrations.
+// spans the BMAD-Enhanced → BMAD Odoo rename + the 2.0 / 3.0 / 3.1 migrations.
 async function seedV17Install(tmpDir) {
   const vortexDir = path.join(tmpDir, '_bmad/bme/_vortex');
   const agentsDir = path.join(vortexDir, 'agents');
@@ -139,11 +139,11 @@ async function assertPostUpgradeState(tmpDir) {
   );
 }
 
-describe('convoke-update CLI end-to-end (T3) — v1.7.x fixture → current', () => {
+describe('bmad-update CLI end-to-end (T3) — v1.7.x fixture → current', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-t3-upgrade-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-t3-upgrade-'));
     await seedV17Install(tmpDir);
   });
 
@@ -156,7 +156,7 @@ describe('convoke-update CLI end-to-end (T3) — v1.7.x fixture → current', ()
     assert.equal(
       exitCode,
       0,
-      `convoke-update --yes must exit 0\nstdout:\n${stdout}\nstderr:\n${stderr}`
+      `bmad-update --yes must exit 0\nstdout:\n${stdout}\nstderr:\n${stderr}`
     );
     assert.ok(
       stdout.includes('successfully') || stdout.includes('completed'),
@@ -169,11 +169,11 @@ describe('convoke-update CLI end-to-end (T3) — v1.7.x fixture → current', ()
   });
 });
 
-describe('convoke-update CLI end-to-end (T3) — refresh-only path (already-current)', () => {
+describe('bmad-update CLI end-to-end (T3) — refresh-only path (already-current)', () => {
   let tmpDir;
 
   before(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-t3-refresh-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-t3-refresh-'));
     // Seed a fresh install by running the CLI once. An already-current project
     // with no migration deltas should fall through to the refresh-only branch
     // on the second invocation.
@@ -191,7 +191,7 @@ describe('convoke-update CLI end-to-end (T3) — refresh-only path (already-curr
     assert.equal(
       exitCode,
       0,
-      `second convoke-update must exit 0\nstdout:\n${stdout}\nstderr:\n${stderr}`
+      `second bmad-update must exit 0\nstdout:\n${stdout}\nstderr:\n${stderr}`
     );
     // Accept any of the three non-error terminal states: up-to-date,
     // refresh-only completed, or a clean re-run through migrations.

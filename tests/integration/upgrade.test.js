@@ -140,7 +140,7 @@ describe('Upgrade from v1.3.x (simulated)', () => {
     const path = versionDetector.getMigrationPath('1.3.8', pkg.version);
     if (pkg.version !== '1.3.8') {
       assert.equal(path.type, 'upgrade-needed');
-      // v2.0.0 introduced a breaking migration (product rename BMAD-Enhanced → Convoke)
+      // v2.0.0 introduced a breaking migration (product rename BMAD-Enhanced → BMAD Odoo)
       assert.equal(path.breaking, true);
     } else {
       assert.equal(path.type, 'up-to-date');

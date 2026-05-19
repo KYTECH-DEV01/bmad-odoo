@@ -17,7 +17,7 @@ const MINIMAL_PM_MD = `<agent>
 </agent>`;
 
 async function setupArtifactsTestDir() {
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-art-inst-'));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-art-inst-'));
   await createValidInstallation(tmpDir);
 
   // pm.md so the Enhance block (which runs in parallel) doesn't warn-loudly

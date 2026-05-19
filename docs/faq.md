@@ -1,12 +1,12 @@
 # FAQ
 
-Common questions about Convoke, Vortex, and Gyre.
+Common questions about BMAD Odoo, Vortex, and Gyre.
 
 ---
 
 ### How is this different from BMAD core agents?
 
-**Convoke handles discovery, validation, and readiness. BMAD Core handles implementation.**
+**BMAD Odoo handles discovery, validation, and readiness. BMAD Core handles implementation.**
 
 | Phase | Agents | Question answered |
 |-------|--------|------------------|
@@ -124,7 +124,7 @@ Each includes step files and validation.
 
 **Use BMB (BMAD Module Builder) — not manual file editing.**
 
-Convoke includes three builder agents specifically for extending the system:
+BMAD Odoo includes three builder agents specifically for extending the system:
 
 | Builder | Slash Command | What it creates |
 |---------|---------------|-----------------|
@@ -191,7 +191,7 @@ Gyre creates a `.gyre/` directory in your project root to store analysis artifac
 
 ### Can I use Gyre standalone?
 
-Yes. Install Gyre independently with `npx -p convoke-agents convoke-install-gyre`. Gyre works without Vortex, BMAD Core, or any other module.
+Yes. Install Gyre independently with `npx -p bmad-odoo bmad-install-gyre`. Gyre works without Vortex, BMAD Core, or any other module.
 
 ---
 

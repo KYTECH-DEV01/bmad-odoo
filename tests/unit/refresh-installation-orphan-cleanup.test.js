@@ -264,7 +264,7 @@ describe('ag-7-4: cleanupOrphanWorkflowWrappers — non-standalone Artifacts nam
     // Strategy 2 correctly removes it because:
     //   - knownArtifactsNames contains "bmad-internal-tool" (all Artifacts names tracked)
     //   - currentWrappers does NOT contain it (only standalone:true workflows are in the union)
-    // This is intentional: the name is Convoke-owned, and the directory shouldn't exist.
+    // This is intentional: the name is BMAD Odoo-owned, and the directory shouldn't exist.
     await seedSkillsDir(skillsDir, ['bmad-internal-tool']);
     const currentWrappers = new Set(); // no standalone workflows
     const knownArtifactsNames = new Set(['bmad-internal-tool']); // non-standalone, but known

@@ -64,7 +64,7 @@ HALT for input.
 
 **`[1]` — Explain initiative**
 
-1. Ask: `"Which initiative? (e.g. gyre, forge, helm, convoke)"` and HALT.
+1. Ask: `"Which initiative? (e.g. gyre, forge, helm, bmad-odoo)"` and HALT.
 2. On response, validate the initiative is one shown in `{{scanOutput}}`'s table. If not, reply `"Initiative '{name}' not in current portfolio. Try one of: {list}."` and re-ask.
 3. Shell out to: `node scripts/lib/portfolio/portfolio-engine.js --markdown --verbose`
 4. The verbose flag adds an `--- Inference Trace ---` block at the bottom showing per-initiative `phase: ... (source, confidence) | status: ...`

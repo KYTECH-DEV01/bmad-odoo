@@ -1,12 +1,12 @@
 {
-  "name": "convoke",
+  "name": "bmad-odoo",
   "owner": { "name": "Amalik Amriou" },
   "license": "MIT",
-  "repository": "https://github.com/amalik/convoke-agents",
+  "repository": "https://github.com/KYTECH-DEV01/bmad-odoo",
   "keywords": ["bmad", "discovery", "vortex", "product-discovery", "innovation"],
   "plugins": [
     {
-      "name": "convoke-vortex",
+      "name": "bmad-odoo-vortex",
       "source": "./",
       "description": "Vortex Framework — 7-stream product discovery for IT transformation consultants.",
       "version": "4.0.0",

@@ -62,6 +62,6 @@ version: 1.0
 
 ---
 
-**Created with:** Convoke v2.0.0 - Vortex Pattern (Contextualize Stream)
+**Created with:** BMAD Odoo v2.0.0 - Vortex Pattern (Contextualize Stream)
 **Agent:** Emma (Contextualization Expert)
 **Workflow:** contextualize-scope

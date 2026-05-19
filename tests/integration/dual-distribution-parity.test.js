@@ -23,7 +23,7 @@ function readMarketplace() {
 }
 
 const auditScript = path.join(PACKAGE_ROOT, 'scripts/audit/audit-skill-dirs.js');
-const DEBUG = process.env.DEBUG?.split(/[\s,]+/).includes('convoke:parity');
+const DEBUG = process.env.DEBUG?.split(/[\s,]+/).includes('bmad-odoo:parity');
 
 // AC6 + Decision 4: perf-budget skip + surface (R1-M1).
 // node:test doesn't allow before() to skip downstream it() blocks retroactively;
@@ -72,7 +72,7 @@ function firstDifferingOffset(a, b) {
 
 /**
  * R2-M4: derive the FULL list of declared skillRels across every plugin.
- * Convoke's marketplace.json has only `plugins[0]` today, but the simulator
+ * BMAD Odoo's marketplace.json has only `plugins[0]` today, but the simulator
  * iterates `plugins[*].skills` (per Decision 2 v2). The parity tests must
  * cover the same surface — using `plugins[0].skills` would leave
  * `plugins[1+]` skills installed but never byte-checked.
@@ -152,15 +152,15 @@ describe('Dual-distribution parity (FR22)', () => {
     const start = Date.now();
     marketplace = readMarketplace();
 
-    sandboxA = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-parity-npm-'));
-    sandboxB = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-parity-mkt-'));
+    sandboxA = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-parity-npm-'));
+    sandboxB = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-parity-mkt-'));
     await fs.ensureDir(path.join(sandboxA, '_bmad'));
 
     // Sandbox A: npm-standalone install via direct refreshInstallation API call
-    // (per AC2 — NOT shelling out to convoke-install CLI; installer-e2e covers CLI).
+    // (per AC2 — NOT shelling out to bmad-install CLI; installer-e2e covers CLI).
     await refreshInstallation(sandboxA, { backupGuides: false, verbose: false });
 
-    // Sandbox B: simulated-marketplace install via Convoke-side simulator
+    // Sandbox B: simulated-marketplace install via BMAD Odoo-side simulator
     // (replicates BMAD's marketplace install END STATE per Decision 2 v2).
     await marketplaceInstall(sandboxB, { sourceRepo: PACKAGE_ROOT });
 
@@ -242,7 +242,7 @@ describe('Dual-distribution parity (FR22)', () => {
     if (perfExceeded) { t.skip(`AC6 perf budget exceeded — ${perfDiagnostic}`); return; }
     const allSkillRels = allDeclaredSkillRels(marketplace);
     for (const skillRel of allSkillRels) {
-      const sandboxBPrime = await fs.mkdtemp(path.join(os.tmpdir(), 'convoke-parity-mkt-prime-'));
+      const sandboxBPrime = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-odoo-parity-mkt-prime-'));
       try {
         await fs.copy(sandboxB, sandboxBPrime);
         const canonicalId = canonicalIdForSkillRel(skillRel);

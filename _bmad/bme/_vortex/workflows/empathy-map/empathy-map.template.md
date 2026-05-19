@@ -133,7 +133,7 @@ status: DRAFT
 ---
 
 **Created by:** {creator-name}
-**Created with:** Isla (discovery-empathy-expert) - Convoke v2.0.0
+**Created with:** Isla (discovery-empathy-expert) - BMAD Odoo v2.0.0
 **Date:** {creation-date}
 **Version:** 1.0
 **Status:** {status}

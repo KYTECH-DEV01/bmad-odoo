@@ -4,7 +4,7 @@
 /**
  * @module scripts/audit/reference-integrity
  *
- * Mechanical reference-integrity check for the Convoke project tree.
+ * Mechanical reference-integrity check for the BMAD Odoo project tree.
  * Implements FR24–25 + NFR10–12 of I97 (BMAD v6.3+ Source Format Adoption).
  * Authored by Story i97-1.1 (Migration Tooling Foundation Scaffolded).
  *
@@ -41,9 +41,9 @@
  *   3. Retrospective citations in `_bmad-output/implementation-artifacts/
  *      *-retro-*.md`
  *   4. Audit report citations in `_bmad-output/planning-artifacts/
- *      convoke-report-*-audit-*.md`
+ *      bmad-report-*-audit-*.md`
  *   5. Compliance Checklist file references in
- *      `_bmad-output/planning-artifacts/convoke-spec-covenant-compliance-
+ *      `_bmad-output/planning-artifacts/bmad-spec-covenant-compliance-
  *      checklist.md`
  *
  * **`{{...}}` template-placeholder filter** (formalized in AC4 amendment
@@ -79,11 +79,11 @@ const COVERAGE_SCOPES = {
   },
   auditReports: {
     description: 'Audit report citations',
-    globs: ['_bmad-output/planning-artifacts/convoke-report-*-audit-*.md'],
+    globs: ['_bmad-output/planning-artifacts/bmad-report-*-audit-*.md'],
   },
   complianceChecklist: {
     description: 'Compliance Checklist file references',
-    globs: ['_bmad-output/planning-artifacts/convoke-spec-covenant-compliance-checklist.md'],
+    globs: ['_bmad-output/planning-artifacts/bmad-spec-covenant-compliance-checklist.md'],
   },
 };
 
@@ -514,7 +514,7 @@ function _walkDir(rootDir, suffixFilter) {
 
 function _printUsage() {
   process.stdout.write([
-    'reference-integrity — mechanical cross-reference check for the Convoke project tree',
+    'reference-integrity — mechanical cross-reference check for the BMAD Odoo project tree',
     '',
     'Usage:',
     '  node scripts/audit/reference-integrity.js                # full project scan',
@@ -528,7 +528,7 @@ function _printUsage() {
     '  2 — invocation error (invalid arg)',
     '',
     'Implements FR24–25 + NFR10–12 of I97. See',
-    '  _bmad-output/planning-artifacts/convoke-arch-bmad-v63-source-format-adoption.md (§ D4)',
+    '  _bmad-output/planning-artifacts/bmad-arch-bmad-v63-source-format-adoption.md (§ D4)',
     'for the architectural context.',
     '',
   ].join('\n'));

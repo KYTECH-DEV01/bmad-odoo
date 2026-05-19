@@ -2,7 +2,7 @@
 name: 'step-t-01-ingest'
 description: 'Accept text input — review transcript, meeting notes, or any findings source'
 nextStepFile: '{project-root}/_bmad/bme/_enhance/workflows/initiatives-backlog/steps-t/step-t-02-extract.md'
-outputFile: '{planning_artifacts}/convoke-note-initiative-lifecycle-backlog.md'
+outputFile: '{planning_artifacts}/bmad-note-initiative-lifecycle-backlog.md'
 ---
 
 # Step 1: Ingest Review Findings

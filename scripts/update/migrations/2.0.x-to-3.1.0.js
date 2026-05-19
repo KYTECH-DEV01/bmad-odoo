@@ -16,7 +16,7 @@ module.exports = {
     return {
       actions: [
         'Create or merge _bmad/_config/taxonomy.yaml with platform defaults',
-        'Add 8 platform initiative IDs (vortex, gyre, bmm, forge, helm, enhance, loom, convoke)',
+        'Add 8 platform initiative IDs (vortex, gyre, bmm, forge, helm, enhance, loom, bmad-odoo)',
         'Add 21 artifact type identifiers',
         'Add 6 historical name aliases for migration',
         'Promote any user initiative IDs that match new platform IDs'

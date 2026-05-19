@@ -5,7 +5,7 @@ const yaml = require('js-yaml');
 
 
 /**
- * Migration Registry for Convoke
+ * Migration Registry for BMAD Odoo
  *
  * APPEND-ONLY: Add new migrations at the bottom. Never edit old entries.
  * No toVersion needed - target is always the current package version at runtime.
@@ -65,7 +65,7 @@ const MIGRATIONS = [
     name: '1.7.x-to-2.0.0',
     fromVersion: '1.7.x',
     breaking: true,
-    description: 'Product rename: BMAD-Enhanced -> Convoke. CLI commands renamed from bmad-* to convoke-*. _bmad/ directory preserved.',
+    description: 'Product rename: BMAD-Enhanced -> BMAD Odoo. CLI commands renamed from bmad-* to bmad-*. _bmad/ directory preserved.',
     module: null
   },
   {
@@ -86,7 +86,7 @@ const MIGRATIONS = [
     name: '3.3.x-to-4.0.0',
     fromVersion: '3.3.x',
     breaking: true,
-    description: 'v6.3 direct-load migration: rewrites 18 upstream-BMAD SKILL.md activation blocks from bmad-init invocation to v4 direct-YAML-load pattern. Marks bmad-init deprecated. Validates via convoke-doctor diff.',
+    description: 'v6.3 direct-load migration: rewrites 18 upstream-BMAD SKILL.md activation blocks from bmad-init invocation to v4 direct-YAML-load pattern. Marks bmad-init deprecated. Validates via bmad-doctor diff.',
     module: null
   },
   // Parallel entry points to 4.0.0 for 3.1.x and 3.2.x users (same module

@@ -14,7 +14,7 @@ If the user provided a path in their invocation, use it. Otherwise ask:
 
 > This will generate a complete catalog repository staging directory with all exportable skills (Tier 1 + Tier 2), platform adapters, and the catalog README.
 >
-> **Where should I create the staging directory?** (e.g., `/tmp/convoke-catalog` or `./catalog-staging`)
+> **Where should I create the staging directory?** (e.g., `/tmp/bmad-catalog` or `./catalog-staging`)
 >
 > Note: The directory must not already exist or must be empty.
 
@@ -43,7 +43,7 @@ node scripts/portability/seed-catalog-repo.js --output <path>
 > ```
 > cd <path>
 > git init && git add -A && git commit -m "Initial catalog seed"
-> gh repo create convoke-skills-catalog --public --source=. --push
+> gh repo create bmad-skills-catalog --public --source=. --push
 > ```
 >
 > Or run `/bmad-validate-exports` to verify the output first.

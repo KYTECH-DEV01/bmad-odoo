@@ -33,7 +33,7 @@ describe('postinstall: fresh project (no _bmad)', () => {
   it('suggests install command on fresh project', async () => {
     const { stdout } = await runScript(postinstallScript, [], { cwd: tmpDir });
     assert.ok(
-      stdout.includes('convoke-install') || stdout.includes('install'),
+      stdout.includes('bmad-install') || stdout.includes('install'),
       'should suggest install command'
     );
   });
@@ -95,10 +95,10 @@ describe('postinstall: older installation detected', () => {
     await fs.remove(tmpDir);
   });
 
-  it('detects upgrade and suggests convoke-update', async () => {
+  it('detects upgrade and suggests bmad-update', async () => {
     const { exitCode, stdout } = await runScript(postinstallScript, [], { cwd: tmpDir });
     assert.equal(exitCode, 0);
     assert.ok(stdout.includes('UPGRADE') || stdout.includes('upgrade'), 'should detect upgrade');
-    assert.ok(stdout.includes('convoke-update'), 'should suggest convoke-update');
+    assert.ok(stdout.includes('bmad-update'), 'should suggest bmad-update');
   });
 });

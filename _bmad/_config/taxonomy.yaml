@@ -6,7 +6,7 @@
 # and historical name aliases used by the governance system.
 
 # Initiative IDs
-# - platform: Read-only. Updated by Convoke releases. Do not edit manually.
+# - platform: Read-only. Updated by BMAD Odoo releases. Do not edit manually.
 # - user: Operator-managed. Add custom initiative IDs here (one per line).
 #   Rules: lowercase alphanumeric with optional dashes, no spaces, no special characters.
 initiatives:
@@ -18,7 +18,7 @@ initiatives:
     - helm
     - enhance
     - loom
-    - convoke
+    - bmad-odoo
   user: []
 
 # Artifact type identifiers
@@ -53,7 +53,7 @@ artifact_types:
   #   (2) Compliance with the document is testable/auditable against explicit criteria
   # Distinct from 'spec' (implementation-focused) in metabolic rate and audience:
   # covenants evolve slowly as principles; specs evolve tactically with code.
-  # First planned example: the Convoke Operator Covenant (convoke-covenant-operator.md),
+  # First planned example: the BMAD Odoo Operator Covenant (bmad-covenant-operator.md),
   # to be authored in oc-1-4-covenant-authoring. Until then, this type has no files.
   - covenant
 

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 /**
- * Convoke – Vortex Pattern
+ * BMAD Odoo – Vortex Pattern
  * Product discovery through Contextualize, Empathize, Externalize, and Systematize streams.
  *
  * This is a CLI-first package. Use the bin commands:
- *   npx -p convoke-agents convoke-install-vortex  – Install all Vortex agents (primary)
- *   npx -p convoke-agents convoke-install        – Install all agents (umbrella alias)
- *   npx -p convoke-agents convoke-update          – Check for and apply updates
- *   npx -p convoke-agents convoke-version         – Show installed vs latest version
- *   npx -p convoke-agents convoke-doctor          – Diagnose installation issues
+ *   npx -p bmad-odoo bmad-install-vortex  – Install all Vortex agents (primary)
+ *   npx -p bmad-odoo bmad-install        – Install all agents (umbrella alias)
+ *   npx -p bmad-odoo bmad-update          – Check for and apply updates
+ *   npx -p bmad-odoo bmad-version         – Show installed vs latest version
+ *   npx -p bmad-odoo bmad-doctor          – Diagnose installation issues
  *
  * @license MIT
  */
@@ -45,11 +45,11 @@ if (require.main === module) {
   }
   console.log('');
   console.log(`${GREEN}Commands:${RESET}`);
-  console.log(`  ${CYAN}npx -p convoke-agents convoke-install-vortex${RESET}  Install all Vortex agents`);
-  console.log(`  ${CYAN}npx -p convoke-agents convoke-install${RESET}         Install all agents ${GRAY}(alias)${RESET}`);
-  console.log(`  ${CYAN}npx -p convoke-agents convoke-update${RESET}          Check for updates`);
-  console.log(`  ${CYAN}npx -p convoke-agents convoke-version${RESET}         Show version info`);
-  console.log(`  ${CYAN}npx -p convoke-agents convoke-doctor${RESET}          Diagnose issues`);
+  console.log(`  ${CYAN}npx -p bmad-odoo bmad-install-vortex${RESET}  Install all Vortex agents`);
+  console.log(`  ${CYAN}npx -p bmad-odoo bmad-install${RESET}         Install all agents ${GRAY}(alias)${RESET}`);
+  console.log(`  ${CYAN}npx -p bmad-odoo bmad-update${RESET}          Check for updates`);
+  console.log(`  ${CYAN}npx -p bmad-odoo bmad-version${RESET}         Show version info`);
+  console.log(`  ${CYAN}npx -p bmad-odoo bmad-doctor${RESET}          Diagnose issues`);
   console.log('');
 }
 

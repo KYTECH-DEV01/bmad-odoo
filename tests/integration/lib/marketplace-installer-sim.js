@@ -4,16 +4,16 @@
 /**
  * @module tests/integration/lib/marketplace-installer-sim
  *
- * Convoke-side simulator of BMAD's marketplace install END STATE for the
+ * BMAD Odoo-side simulator of BMAD's marketplace install END STATE for the
  * dual-distribution parity test (Story v63-3-4 / FR22).
  *
- * Replicates what BMAD's installer would produce for a Convoke marketplace
+ * Replicates what BMAD's installer would produce for a BMAD Odoo marketplace
  * install — NOT the full installer choreography. Models only the file-
  * materialization step that affects user experience: SKILL.md content
  * landing in IDE-target dirs.
  *
  * Why simulator over real PluginResolver: BMAD does not ship a local CLI for
- * community-module install (Story v63-3-3 DEF-SPIKE 4). Convoke replicates
+ * community-module install (Story v63-3-3 DEF-SPIKE 4). BMAD Odoo replicates
  * BMAD's documented contract via direct source-read at @HEAD 2026-04-25
  * (see Story v63-3-4 Decision 2 v2).
  *
@@ -21,15 +21,15 @@
  * BMAD's actual filter at `tools/installer/ide/_config-driven.js:171-178`
  * (verified @HEAD 2026-04-25) covers `.DS_Store`/`Thumbs.db`/`desktop.ini`
  * basenames + dot-prefix-except-`.gitkeep` + `~`/`.swp`/`.swo`/`.bak` suffixes.
- * Convoke adds `/node_modules/` as a defensive path-relative exclusion (per
- * R1-H1: when Convoke is npm-installed under `node_modules/convoke-agents`,
+ * BMAD Odoo adds `/node_modules/` as a defensive path-relative exclusion (per
+ * R1-H1: when BMAD Odoo is npm-installed under `node_modules/bmad-odoo`,
  * the absolute source path includes `/node_modules/` and would otherwise
  * filter out every file). The path-relative scoping ensures the exclusion
  * only fires when `node_modules/` appears INSIDE a skill dir — not when the
  * sourceRepo itself happens to live under `node_modules/`.
  *
  * Verified against `bmad-code-org/BMAD-METHOD@HEAD` 2026-04-25:
- *   - tools/installer/modules/plugin-resolver.js (Strategy 5 fallback for Convoke)
+ *   - tools/installer/modules/plugin-resolver.js (Strategy 5 fallback for BMAD Odoo)
  *   - tools/installer/core/installer.js (line 91: _cleanupSkillDirs removes _bmad/<id>/)
  *   - tools/installer/core/manifest-generator.js (line 143: canonicalId = path.basename(skillDir))
  *   - tools/installer/ide/_config-driven.js (line 171-178: filter list mirrored above)
