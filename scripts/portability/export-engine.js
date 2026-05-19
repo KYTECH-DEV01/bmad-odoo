@@ -1080,7 +1080,7 @@ function exportSkill(skillName, projectRoot, _options = {}) {
   ];
   // Framework-only notice for pipeline skills (not fully portable)
   if (skillRow.tier === 'pipeline') {
-    parts.push('> **⚠️ Framework-only skill.** This skill depends on the full BMAD Odoo installation and cannot run standalone. It\'s included in the catalog for discoverability. Install BMAD Odoo from [bmad-odoo](https://github.com/KYTECH-DEV01/bmad-odoo) to use it.');
+    parts.push('> **⚠️ Framework-only skill.** This skill depends on the full BMAD Odoo installation and cannot run standalone. It\'s included in the catalog for discoverability. Install BMAD Odoo from [bmad-odoo](https://github.com/phamdungtk/bmad-odoo) to use it.');
     parts.push('');
   }
   parts.push(

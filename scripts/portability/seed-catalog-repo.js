@@ -56,13 +56,13 @@ SOFTWARE.
 
 const CONTRIBUTING_MD = `# Contributing
 
-The skills in this repository are **auto-generated** from the main [BMAD Odoo](https://github.com/KYTECH-DEV01/bmad-odoo) repository. They are regenerated on each release.
+The skills in this repository are **auto-generated** from the main [BMAD Odoo](https://github.com/phamdungtk/bmad-odoo) repository. They are regenerated on each release.
 
 ## Important
 
 - **Do not edit skill files directly.** Your changes will be overwritten on the next regeneration.
 - To improve a skill's content, contribute to the source skill in the main BMAD Odoo repo.
-- To request a new skill or report an issue, [open an issue](https://github.com/KYTECH-DEV01/bmad-odoo/issues) on the main repo.
+- To request a new skill or report an issue, [open an issue](https://github.com/phamdungtk/bmad-odoo/issues) on the main repo.
 
 ## How skills are generated
 

@@ -10,10 +10,10 @@
               Agent teams for Odoo development
 ```
 
-[![Teams](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.teams&label=teams&color=blueviolet)](#teams)
-[![Agents](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.agents&label=agents&color=brightgreen)](docs/agents.md)
-[![Workflows](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.workflows&label=workflows&color=success)](docs/agents.md)
-[![Skills](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/KYTECH-DEV01/bmad-odoo/main/docs/badges.json&query=$.skills&label=skills&color=orange)](_bmad/_config/skill-manifest.csv)
+[![Teams](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/docs/badges.json&query=$.teams&label=teams&color=blueviolet)](#teams)
+[![Agents](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/docs/badges.json&query=$.agents&label=agents&color=brightgreen)](docs/agents.md)
+[![Workflows](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/docs/badges.json&query=$.workflows&label=workflows&color=success)](docs/agents.md)
+[![Skills](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/phamdungtk/bmad-odoo/main/docs/badges.json&query=$.skills&label=skills&color=orange)](_bmad/_config/skill-manifest.csv)
 [![Version](https://img.shields.io/npm/v/bmad-odoo?color=blue&label=version)](https://www.npmjs.com/package/bmad-odoo)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 

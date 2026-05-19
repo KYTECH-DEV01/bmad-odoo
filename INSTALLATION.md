@@ -63,7 +63,7 @@ npx -p bmad-odoo bmad-install-gyre     # Production Readiness (4 agents)
 For contributors or developers who want to modify agents or contribute to the project. This sets up a development environment — not an end-user installation.
 
 ```bash
-git clone https://github.com/KYTECH-DEV01/bmad-odoo.git
+git clone https://github.com/phamdungtk/bmad-odoo.git
 cd bmad-odoo
 npm install
 ```

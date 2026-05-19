@@ -362,7 +362,7 @@ async function createErrorLog(projectRoot, fromVersion, toVersion, error, backup
     backupMetadata ? `Backup: ${backupMetadata.backup_dir}` : 'No backup created',
     backupMetadata ? 'Status: ROLLED BACK' : 'Status: FAILED (no backup)',
     '',
-    'Please report this issue at: https://github.com/KYTECH-DEV01/bmad-odoo/issues'
+    'Please report this issue at: https://github.com/phamdungtk/bmad-odoo/issues'
   ].join('\n');
 
   await fs.writeFile(logFile, logContent, 'utf8');

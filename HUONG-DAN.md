@@ -1,7 +1,7 @@
 # 📘 BMAD Odoo — Hướng dẫn Tổng quan & Sử dụng
 
 > **Phiên bản:** 4.0.0-rc.1 · **BMAD Method:** v6.3  
-> **Repo:** [github.com/KYTECH-DEV01/bmad-odoo](https://github.com/KYTECH-DEV01/bmad-odoo)
+> **Repo:** [github.com/phamdungtk/bmad-odoo](https://github.com/phamdungtk/bmad-odoo)
 
 ---
 

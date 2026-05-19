@@ -761,7 +761,7 @@ describe('bmad-update CLI (main)', () => {
       );
       assert.ok(stdout.includes('BREAKING CHANGES'), 'should display breaking changes warning');
       assert.ok(
-        stdout.includes('https://github.com/KYTECH-DEV01/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'),
+        stdout.includes('https://github.com/phamdungtk/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'),
         'should link the migration guide from breaking-changes output for 3.x→4.0 upgrade'
       );
     } finally {

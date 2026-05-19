@@ -37,7 +37,7 @@ function defaultMarketplace(skillPaths = VORTEX_AGENTS.map(a => `./_bmad/bme/_vo
     name: 'bmad-odoo',
     owner: { name: 'Amalik Amriou' },
     license: 'MIT',
-    repository: 'https://github.com/KYTECH-DEV01/bmad-odoo',
+    repository: 'https://github.com/phamdungtk/bmad-odoo',
     keywords: ['bmad', 'discovery', 'vortex', 'product-discovery', 'innovation'],
     plugins: [
       {

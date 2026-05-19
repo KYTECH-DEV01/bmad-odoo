@@ -75,12 +75,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KYTECH-DEV01/bmad-odoo.git"
+    "url": "git+https://github.com/phamdungtk/bmad-odoo.git"
   },
   "bugs": {
-    "url": "https://github.com/KYTECH-DEV01/bmad-odoo/issues"
+    "url": "https://github.com/phamdungtk/bmad-odoo/issues"
   },
-  "homepage": "https://github.com/KYTECH-DEV01/bmad-odoo#readme",
+  "homepage": "https://github.com/phamdungtk/bmad-odoo#readme",
   "engines": {
     "node": ">=18.0.0"
   },

@@ -26,5 +26,5 @@ This validation workflow will be available alongside the lean-persona workflow i
 ## Questions?
 
 For questions or to request early access:
-- GitHub Issues: https://github.com/KYTECH-DEV01/bmad-odoo/issues
+- GitHub Issues: https://github.com/phamdungtk/bmad-odoo/issues
 - Tag with: `workflow:lean-persona` and `v1.2.0`

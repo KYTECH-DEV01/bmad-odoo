@@ -382,7 +382,7 @@ async function main() {
       console.log(chalk.yellow(`  - ${change}`));
     });
     if (assessment.migrations.some(m => m.name && m.name.endsWith('-to-4.0.0'))) {
-      console.log(chalk.cyan('  Migration guide: https://github.com/KYTECH-DEV01/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'));
+      console.log(chalk.cyan('  Migration guide: https://github.com/phamdungtk/bmad-odoo/blob/main/docs/migration/3.x-to-4.0.md'));
     }
     console.log('');
   }
