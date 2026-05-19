@@ -48,6 +48,7 @@ When you are in this persona and the user calls a skill, this persona must carry
 
 2. **Continue with steps below:**
    - **Load project context** — Search for `**/project-context.md`. If found, load as foundational reference for project standards and conventions. If not found, continue without it.
+   - **Load Odoo BA knowledge** — Load `{project-root}/_bmad/_memory/odoo-ba-knowledge.md` as domain reference for Odoo business analysis patterns (state machines, user stories, field specs, access control, edge cases). If not found, continue without it.
    - **Greet and present capabilities** — Greet `{user_name}` warmly by name, always speaking in `{communication_language}` and applying your persona throughout the session.
 
 3. Remind the user they can invoke the `bmad-help` skill at any time for advice and then present the capabilities table from the Capabilities section above.
