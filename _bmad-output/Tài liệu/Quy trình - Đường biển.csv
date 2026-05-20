@@ -1,0 +1,68 @@
+QUY TRÌNH VẬN HÀNH THEO TERM,,,,EXW,,,,FOB,,,,CIF
+,,B1,Khách hàng,Yêu cầu  dịch vụ,,B1,Khách hàng,Yêu cầu  dịch vụ,,B1,Khách hàng,Yêu cầu  dịch vụ
+,,B2,CS,Tiếp nhận ,,B2,CS,Tiếp nhận ,,B2,CS,Tiếp nhận 
+,,B3,CS,Gửi thông tin cho chứng từ đường biên,,B3,CS,Gửi thông tin cho chứng từ đường biên,,B3,CS,Gửi thông tin cho chứng từ đường biên
+,,B4,Chứng từ đường biển,"Lẩy đủ thông tin : Hàng hóa gì? Term? Ai xuất, ai nhập?",,B4,Chứng từ đường biển,"Lẩy đủ thông tin : Hàng hóa gì? Term? Ai xuất, ai nhập?",,B4,Chứng từ đường biển,"Lẩy đủ thông tin : Hàng hóa gì? Term? Ai xuất, ai nhập?"
+,,B5,Chứng từ đường biển,Đủ thông tin: Gửi cho thông tin cho FWD,,B5,Chứng từ đường biển,Đủ thông tin: Gửi cho thông tin cho FWD,,B5,Chứng từ đường biển,Đủ thông tin: Gửi cho thông tin cho FWD
+,,B6,Chứng từ đường biển,Check xuất nhập ,,B6,Chứng từ đường biển,Check nhập ,,B6,FWD,Báo giá các dịch vụ theo term
+,,B7,FWD,Báo giá các dịch vụ theo term,,B7,FWD,Báo giá các dịch vụ theo term,,B7,Chứng từ đường biển,Nhận báo và làm báo giá theo form
+,,B8,Chứng từ đường biển,Nhận báo và làm báo giá theo form,,B8,Chứng từ đường biển,Nhận báo và làm báo giá theo form,,B8,Chứng từ đường biển,Báo giá cho CS
+,,B9,Chứng từ đường biển,Báo giá cho CS,,B9,Chứng từ đường biển,Báo giá cho CS,,B9,CS,Nhận báo giá và báo khách
+,,B10,CS,Nhận báo giá và báo khách,,B10,CS,Nhận báo giá và báo khách,,B10,Khách hàng,"Đồng ý >>>
+Không đồng ý >>> đàm phán với CS"
+,,B11,Khách hàng,"Đồng ý >>>
+Không đồng ý >>> đàm phán với CS",,B11,Khách hàng,"Đồng ý >>>
+Không đồng ý >>> đàm phán với CS",,B11,CS,"Đồng ý >>> phản hồi với chứng từ biển
+Không đồng ý >>> Trao đổi TBP CS"
+,,B12,CS,"Đồng ý >>> phản hồi với chứng từ biển
+Không đồng ý >>> Trao đổi TBP CS",,B12,CS,"Đồng ý >>> phản hồi với chứng từ biển
+Không đồng ý >>> Trao đổi TBP CS",,B12,Trưởng BP CS,Đàm phán giá với chứng từ biển  
+,,B13,Trưởng BP CS,Đàm phán giá với chứng từ biển  ,,B13,Trưởng BP CS,Đàm phán giá với chứng từ biển  ,,B13,Chứng từ đường biển,"Lấy thông tin hàng hóa, INV, PL, thông tin liên lạc của xưởng"
+,,B14,Chứng từ đường biển,"Lấy thông tin hàng hóa, INV, PL, thông tin liên lạc của xưởng
+Check tem phụ, tem nhãn",,B14,Chứng từ đường biển,"Lấy thông tin hàng hóa, INV, PL, thông tin liên lạc của xưởng",,B14,Chứng từ đường biển,Gửi TBP vận hành chốt
+,,B15,Chứng từ đường biển,Gửi TBP chứng từ chốt,,B15,Chứng từ đường biển,Gửi TBP vận hành chốt,,B15,TBP vận hành,Phản hồi chốt
+,,B16,TBP chứng từ,Phản hồi chốt,,B16,TBP vận hành,Phản hồi chốt,,B16,Chứng từ đường biển,Gửi thông tin và báo FWD book cont
+,,B17,Chứng từ đường biển,Gửi thông tin và báo FWD book cont,,B17,Chứng từ đường biển,Gửi thông tin và báo FWD book cont,,B17,FWD,Book cont
+,,B18,Chứng từ đường biển,Gửi thông tin cho khai báo TQ,,B18,FWD,Book cont,,B18,FWD,Phản hồi với CT đường biển về trạng thái
+,,B19,Khai báo TQ,"Gửi INV, PL, khai báo tiếng Trung cho FWD",,B19,FWD,Phản hồi với CT đường biển về trạng thái,,B19,Chứng từ đường biển,Cập nhật trạng thái tàu cho CS
+,,B20,FWD,Book cont,,B20,Chứng từ đường biển,Xác nhận lại với FWD và nhận được booking PDF,,B20,CS,Cập nhật trạng thái tàu cho khách
+,,B21,FWD,Phản hồi với CT đường biển về trạng thái,,B21,FWD,Gửi HBL nháp cho chứng từ đường biển,,B21,Chứng từ đường biển,Nhận AN ( 1-2 ngày trc ngày tàu dự kiến ) 
+,,B22,Chứng từ đường biển,"Xác nhận lại với FWD và nhận được booking PDF
+Xác nhận thời gian load hàng",,B22,Chứng từ đường biển,Kiểm tả và xác nhận HBL,,B22,Chứng từ đường biển,Xác nhận AN và debit note
+,,,FWD,Gửi HBL nháp cho chứng từ đường biển,,,Chứng từ đường biển,Chờ tàu chạy ,,B23,FWD,Gửi hóa đơn phí khai báo đầu + chặng cuối đầu Việt Nam
+,,B23,Chứng từ đường biển,Kiểm tra và xác nhận HBL,,B23,Chứng từ đường biển,HBL onboard và báo trạng thái cho CS,,B24,Chứng từ đường biển,Báo khách truyền tờ khai
+,,B24,Chứng từ đường biển,Chờ tàu chạy ,,B24,Chứng từ đường biển,"Giục CS báo xưởng làm CO
+Check CO",,B25,Chứng từ đường biển,Chờ tàu cập và chờ tiếp nhận
+,,B25,Chứng từ đường biển,HBL onboard và báo trạng thái cho CS,,B25,Chứng từ đường biển,Update trạng thái tàu cho CS,,B26,Tiếp nhận HQ,Tiếp nhận tờ khai 
+,,B26,Chứng từ đường biển,Làm CO,,B26,Chứng từ đường biển,Nhận AN ( 1-2 ngày trc ngày tàu dự kiến ) ,,B27,Chứng từ đường biển,"Luồng tk vàng: Đóng thuế
+Luồng đỏ: kiểm hàng >>> xử lý phát sinh"
+,,B27,Chứng từ đường biển,Update trạng thái tàu cho CS,,B27,Chứng từ đường biển,Xác nhận AN và debit note,,B28,Chứng từ đường biển,Xin địa chỉ trả hàng của KH
+,,B28,Chứng từ đường biển,Nhận AN ( 1-2 ngày trc ngày tàu dự kiến ) ,,B28,FWD,Gửi hóa đơn vcqt và lcc Việt Nam,,B29,Chứng từ đường biển,Lấy tờ khai thông quan và gửi BCT hoàn chỉnh cho kế toán
+,,B29,Chứng từ đường biển,Xác nhận AN và debit note,,B29,Chứng từ đường biển,Giục kế toán TQ thanh toán phí khai báo xuất khẩu,,B30,Chứng từ đường biển,Gửi báo giá 3 cho kế toán chi phí
+,,B30,FWD,Gửi hóa đơn vcqt và lcc Việt Nam,,B30,FWD,Làm release,,B31,TBP vận hành,Xin xác nhận giao cont
+,,B31,Chứng từ đường biển,Giục kế toán TQ thanh toán phí khai báo xuất khẩu,,B31,Chứng từ đường biển,Làm BCT khai báo nhập,,B32,,
+,,B32,FWD,Làm release,,B32,Chứng từ đường biển,Gửi FWD lên tờ khai nháp,,B33,FWD,Gọi xe và giao hàng cho khách
+,,B33,Chứng từ đường biển,Làm BCT khai báo nhập,,B33,FWD,Gửi tk nháp cho Chứng từ đường biển,,B34,Chứng từ đường biển,Phát sinh: kết hợp với FWD xử lý
+,,B34,Chứng từ đường biển,Gửi FWD lên tờ khai nháp,,B34,Chứng từ đường biển,Gửi CS file hàng và tờ khai nháp,,B35,Chứng từ đường biển,Báo Cs hàng giao thành công
+,,B35,FWD,Gửi tk nháp cho Chứng từ đường biển,,B35,CS,"Oki >>> truyền chính thức
+Không oki >>> sửa tờ khai",,B36,Khách hàng,Xác nhận nhận hàng thành công
+,,B36,Chứng từ đường biển,Gửi CS file hàng và tờ khai nháp,,B36,Chứng từ đường biển,Báo FWD truyền chính thức,,,,
+,,B37,CS,"Oki >>> truyền chính thức
+Không oki >>> sửa tờ khai",,B37,FWD,Truyền tk chính thức,,,,
+,,B38,Chứng từ đường biển,Báo FWD truyền chính thức,,B38,Chứng từ đường biển,Chờ tàu cập và chờ tiếp nhận,,,,
+,,B39,FWD,Truyền tk chính thức,,B39,Tiếp nhận HQ,Tiếp nhận tờ khai ,,,,
+,,B40,Chứng từ đường biển,Chờ tàu cập và chờ tiếp nhận,,B40,Chứng từ đường biển,"Luồng tk vàng: Đóng thuế
+Luồng đỏ: kiểm hàng >>> xử lý phát sinh",,,,
+,,B41,Tiếp nhận HQ,Tiếp nhận tờ khai ,,B41,Chứng từ đường biển,Báo CS để khách hàng nạp thuế ,,,,
+,,B42,Chứng từ đường biển,"Luồng tk vàng: Đóng thuế
+Luồng đỏ: kiểm hàng >>> xử lý phát sinh",,B42,Chứng từ đường biển,Đóng thuế ( thông quan ),,,,
+,,B43,Chứng từ đường biển,Báo CS để khách hàng nạp thuế ,,B43,Chứng từ đường biển,Xin địa chỉ trả hàng của KH,,,,
+,,B44,Chứng từ đường biển,Đóng thuế ( thông quan ),,B44,Chứng từ đường biển,Lấy tờ khai thông quan và gửi BCT hoàn chỉnh cho kế toán,,,,
+,,B45,Chứng từ đường biển,Xin địa chỉ trả hàng của KH,,B45,Chứng từ đường biển,Gửi báo giá 3 cho kế toán chi phí,,,,
+,,B46,Chứng từ đường biển,Lấy tờ khai thông quan và gửi BCT hoàn chỉnh cho kế toán,,B46,FWD,Gọi xe và giao hàng cho khách,,,,
+,,B47,Chứng từ đường biển,Gửi báo giá 3 cho kế toán chi phí,,B47,TBP vận hành,Xin xác nhận giao cont,,,,
+,,B48,FWD,Gọi xe và giao hàng cho khách,,B48,Chứng từ đường biển,Phát sinh: kết hợp với FWD xử lý,,,,
+,,B49,TBP vận hành,Xin xác nhận giao cont,,B49,Chứng từ đường biển,Báo Cs hàng giao thành công,,,,
+,,B50,Chứng từ đường biển,Phát sinh: kết hợp với FWD xử lý,,B50,Khách hàng,Xác nhận nhận hàng thành công,,,,
+,,B51,Chứng từ đường biển,Báo Cs hàng giao thành công,,,,,,,,
+,,B52,Khách hàng,Xác nhận nhận hàng thành công,,,,,,,,

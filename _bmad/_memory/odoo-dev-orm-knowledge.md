@@ -477,3 +477,441 @@ Trước khi viết BẤT KỲ method Odoo nào, kiểm tra:
 - [ ] **Column ẩn** — `column_invisible="True"` trong tree
 - [ ] **SQL constraints** — ưu tiên hơn Python constraints
 - [ ] **Logging** — `_logger.info()` ở guard + milestone
+
+---
+
+# PHẦN II: KIẾN THỨC DEV CUSTOM DPT
+
+> Tài liệu bổ sung cho Dev khi viết code trên hệ thống DPT — dịch vụ xuất nhập khẩu, logistics.
+
+---
+
+## 12. Model Registry — Danh sách Model Custom
+
+### 12.1 Model Mới (không inherit)
+
+| Model | Module | Mô tả |
+|-------|--------|--------|
+| `dpt.service.management` | `dpt_service_management` | Danh mục dịch vụ XNK |
+| `dpt.service.management.steps` | `dpt_service_management` | Bước xử lý dịch vụ |
+| `dpt.service.management.required.fields` | `dpt_service_management` | Trường bắt buộc theo dịch vụ |
+| `dpt.service.management.type` | `dpt_service_management` | Loại dịch vụ |
+| `dpt.service.combo` | `dpt_service_management` | Gói combo dịch vụ |
+| `dpt.sale.order.fields` | `dpt_sale_management` | Dynamic fields trên SO |
+| `dpt.sale.order.fields.selection` | `dpt_service_management` | Giá trị selection cho dynamic fields |
+| `dpt.sale.service.management` | `dpt_sale_management` | Dịch vụ gắn trên SO |
+| `dpt.sale.order.service.combo` | `dpt_sale_management` | Combo gắn trên SO |
+| `dpt.contract.management` | `dpt_contract_management` | Quản lý hợp đồng |
+| `dpt.contract.management.line` | `dpt_contract_management` | Chi tiết hợp đồng (file, template) |
+| `dpt.contract.type` | `dpt_contract_management` | Loại hợp đồng |
+| `dpt.contract.config` | `dpt_contract_management` | Cấu hình template HĐ |
+| `dpt.legal.entity.config` | `dpt_contract_management` | Cấu hình pháp nhân |
+| `dpt.contract.product.line` | `dpt_contract_management` | Chi tiết hàng hóa HĐ |
+| `dpt.export.import` | `dpt_export_import` | Tờ khai hải quan |
+| `dpt.export.import.line` | `dpt_export_import` | Dòng tờ khai |
+| `dpt.export.import.gate` | `dpt_export_import` | Cửa khẩu |
+| `dpt.product.brand` | `dpt_export_import` | Nhãn hiệu sản phẩm |
+| `dpt.product.model` | `dpt_export_import` | Model sản phẩm |
+| `dpt.product.description` | `dpt_export_import` | Mô tả sản phẩm HQ |
+| `dpt.shipping.slip` | `dpt_shipping` | Phiếu vận chuyển |
+| `dpt.shipping.slip.lot.quant` | `dpt_shipping` | Nhóm kiện trên phiếu VC |
+| `dpt.vehicle.stage` | `dpt_shipping` | Trạng thái xe container |
+| `dpt.vehicle.stage.log` | `dpt_shipping` | Log thay đổi stage xe |
+| `dpt.okr.node` | `dpt_okr` | Node OKR |
+| `dpt.todo` | `dpt_todo` | Todo list |
+| `dpt.ai.agent` | `dpt_ai` | AI Agent config |
+| `dpt.ai.chat` | `dpt_ai` | AI Chat session |
+| `dpt.ai.tool` | `dpt_ai` | AI Tool definitions |
+| `dpt.service.discount.policy` | `dpt_sale_discount` | Chính sách chiết khấu |
+| `dpt.service.discount.tier` | `dpt_sale_discount` | Tier chiết khấu |
+| `purchase.order.line.package` | `dpt_stock_management` | Package lines trên PO/Picking |
+| `zalo.oa.template` | `dpt_zalo_oa` | Template Zalo OA |
+
+### 12.2 Model Inherit Chính
+
+| Model gốc | Module inherit | Thay đổi chính |
+|-----------|----------------|----------------|
+| `sale.order` | `dpt_sale_management` | +service_combo_ids, +sale_service_ids, +fields_ids, +locked, +legal_entity, state extended |
+| `sale.order` | `dpt_settlement` | +create_invoice(), +_get_invoiced() |
+| `sale.order` | `dpt_shipping` | +shipping liên kết |
+| `purchase.order` | `dpt_purchase_management` | +package_line_ids |
+| `stock.picking` | `dpt_stock_management` | +packing_lot_name, +sale_purchase_id, +is_main_incoming |
+| `stock.warehouse` | `dpt_stock_management` | +is_main_incoming_warehouse, +is_tq_transit_warehouse, etc. |
+| `res.currency` | `dpt_currency_management` | +category, +category_code, +legal_entity |
+| `res.partner` | `dpt_res_partner` | +vendor_partner_ids, +dpt_type_of_partner, +dpt_gender, +legal_entity |
+| `account.payment` | `dpt_account_payment_v2` | +payment flow, risk control |
+| `helpdesk.ticket` | `dpt_helpdesk_ticket` | +sale_id liên kết |
+| `approval.request` | multiple | +contract_id, +combo_id |
+
+---
+
+## 13. Patterns Code DPT — Thực tế từ Codebase
+
+### 13.1 SO Locked Pattern — Write Guard
+
+```python
+# ✅ Pattern chuẩn DPT: kiểm tra locked trước khi write
+def write(self, vals):
+    if not self.env.context.get('bypass_locked'):
+        bypass_fields = self.get_bypass_locked_fields()
+        if any(field for field in vals.keys() if field not in bypass_fields):
+            for order in self:
+                if order.locked:
+                    raise ValidationError(_(
+                        "Đơn hàng %s đang bị khóa. Vui lòng mở khóa trước khi chỉnh sửa."
+                    ) % order.name)
+    return super().write(vals)
+
+# ✅ Bypass locked khi cần (ví dụ: cập nhật từ tờ khai)
+sale_order.with_context(bypass_locked=True).write({...})
+
+# ✅ Unlock → Modify → Lock lại
+sale_order.action_unlock()
+sale_order.write({...})
+sale_order.action_lock()
+```
+
+### 13.2 Dynamic Fields Generation Pattern
+
+```python
+# ✅ Pattern: Tự sinh fields từ service/combo
+def _generate_fields_from_services(self):
+    """Tự động tạo fields_ids từ sale_service_ids và service_combo_ids"""
+    fields_dict = {}
+    
+    # Xử lý dịch vụ
+    for sale_service in self.sale_service_ids:
+        if not sale_service.service_id:
+            continue
+        for req_field in sale_service.service_id.required_fields_ids:
+            field_key = (req_field.id, sale_service.service_id.id, 'service')
+            rec = self._create_field_record(req_field, sale_service, 'service', ...)
+            if rec:
+                fields_dict[field_key] = rec
+    
+    # Xử lý combo
+    for combo in self.service_combo_ids:
+        if not combo.combo_id:
+            continue
+        for req_field in combo.combo_id.required_fields_ids:
+            field_key = (req_field.id, combo.combo_id.id, 'combo')
+            rec = self._create_field_record(req_field, combo, 'combo', ...)
+            if rec:
+                fields_dict[field_key] = rec
+    
+    # Rebuild fields_ids
+    if fields_dict:
+        sorted_vals = sorted(fields_dict.values(), key=lambda x: x["sequence"], reverse=True)
+        self.fields_ids = [(5, 0, 0)]  # Xóa hết
+        self.fields_ids = [(0, 0, item) for item in sorted_vals]
+```
+
+### 13.3 Shipping Stage Enforcement Pattern
+
+```python
+# ✅ Pattern: Kiểm tra thứ tự stage trong shipping slip write()
+def write(self, vals):
+    # Lưu stage trước khi write
+    stage_before = {
+        r.id: (r.vehicle_country, r.cn_vehicle_stage_id, ...)
+        for r in self
+    }
+    res = super().write(vals)
+    
+    for record in self:
+        country, cn_before, vn_before, last_vn_before = stage_before.get(record.id)
+        
+        if country == 'chinese':
+            current_stage_id = cn_before
+            next_stage_id = record.cn_vehicle_stage_id
+            
+            if current_stage_id == next_stage_id:
+                continue
+            
+            # Guard: không skip stage
+            if current_stage_id and next_stage_id:
+                between = self.env['dpt.vehicle.stage'].search_count([
+                    ('country', '=', 'chinese'),
+                    ('sequence', '>', current_stage_id.sequence),
+                    ('sequence', '<', next_stage_id.sequence),
+                    ('can_bypass', '!=', True)
+                ])
+                if between:
+                    raise ValidationError('Vui lòng cập nhật trạng thái theo đúng thứ tự')
+                    
+                # Guard: không quay lại
+                if next_stage_id.sequence < current_stage_id.sequence:
+                    raise ValidationError('Không được phép quay trở lại trạng thái trước đó')
+            
+            # Log stage change
+            self.env['dpt.vehicle.stage.log'].create({...})
+    
+    return res
+```
+
+### 13.4 Tax Sync Pattern (Tờ khai → SO)
+
+```python
+# ✅ Pattern: Cập nhật thuế từ tờ khai vào dịch vụ SO
+def update_tax_to_sale_order(self):
+    self.ensure_one()
+    
+    # Guard: phải có SO
+    if not self.sale_ids:
+        return notification('warning', 'Tờ khai không liên kết SO')
+    
+    # Guard: chỉ lấy dòng valid
+    valid_lines = self.line_ids.filtered(
+        lambda l: l.state != 'draft' and l.sale_id and l.sale_id in self.sale_ids
+    )
+    
+    for sale_order in sale_orders:
+        # Unlock nếu cần
+        if sale_order.locked:
+            locked_orders[sale_order.id] = True
+            sale_order.action_unlock()
+        
+        # Tìm hoặc tạo dịch vụ thuế
+        vat_services = sale_order.sale_service_ids.filtered(
+            lambda s: s.service_id.is_vat_service
+        )
+        if not vat_services:
+            vat_service = self.env['dpt.service.management'].search(
+                [('is_vat_service', '=', True)], limit=1
+            )
+            # Auto-create...
+        
+        # Tính và update
+        total_vat = sum(eligible_lines.mapped('dpt_amount_tax_vat_customer'))
+        vat_services[0].write({'price': total_vat, 'compute_value': 1.0})
+        
+        # Lock lại
+        if locked_orders.get(sale_order.id):
+            sale_order.action_lock()
+```
+
+### 13.5 Service Code Generation Pattern
+
+```python
+# ✅ Pattern: Tạo mã tự động
+@api.model
+def create(self, vals):
+    if vals.get('code', 'NEW') == 'NEW':
+        vals['code'] = self._generate_service_code()
+    rec = super().create(vals)
+    rec.action_create_product_id()  # Auto-create linked product
+    return rec
+
+def _generate_service_code(self):
+    sequence = self.env['ir.sequence'].next_by_code('dpt.service.management') or '00'
+    return f'{sequence}'
+
+# Pattern cho shipping slip:
+def _generate_service_code(self):
+    date_str = fields.Datetime.now().strftime('%d%m%y')
+    code = self.vehicle_id.code if self.vehicle_id else 'C'
+    prefix = f"{code}/{date_str}"
+    num_shipping = self.env['dpt.shipping.slip'].sudo().search_count(
+        [('name', 'ilike', prefix + '/%'), ('id', '!=', self.id)])
+    return f'{prefix}/{(num_shipping + 1):02d}'
+```
+
+### 13.6 Approval Integration Pattern
+
+```python
+# ✅ Pattern: Tạo approval request từ model nghiệp vụ
+def action_submit_approval(self):
+    self.ensure_one()
+    
+    # Guard: phải có dữ liệu
+    if not self.service_ids:
+        raise UserError(_('Không thể gửi phê duyệt khi chưa có dịch vụ nào.'))
+    
+    # Guard: không tạo trùng
+    if self.approval_id and self.approval_id.request_status != 'refused':
+        raise UserError(_('Đã tồn tại yêu cầu phê duyệt.'))
+    
+    # Guard: phải có cấu hình
+    approval_type = self.env['approval.category'].search(
+        [('sequence_code', '=', 'SCM')], limit=1
+    )
+    if not approval_type:
+        raise UserError(_('Chưa cấu hình loại phê duyệt.'))
+    
+    # Happy Path: tạo approval
+    vals = {
+        'name': _('Phê duyệt: %s') % self.name,
+        'category_id': approval_type.id,
+        'date': fields.Datetime.now(),
+        'request_owner_id': self.env.user.id,
+        'reference': f'dpt.service.combo,{self.id}',
+        'combo_id': self.id,
+    }
+    approval_request = self.env['approval.request'].create(vals)
+    approval_request.action_confirm()
+    
+    self.write({
+        'state': 'pending',
+        'approval_id': approval_request.id,
+    })
+```
+
+---
+
+## 14. SQL Patterns DPT
+
+### 14.1 Direct SQL cho Performance
+
+```python
+# ✅ Pattern: Bulk update bằng SQL khi ORM quá chậm
+self.env.cr.execute("""
+    UPDATE stock_picking sp
+    SET total_weight = COALESCE(s.tw, 0),
+        total_volume = COALESCE(s.tv, 0)
+    FROM (
+        SELECT picking_id,
+            SUM(CEIL(ROUND((weight * quantity)::numeric, 2))) as tw,
+            SUM(CEIL(ROUND((volume * quantity * 100)::numeric, 4)) / 100) as tv
+        FROM purchase_order_line_package
+        WHERE picking_id IN %s
+        GROUP BY picking_id
+    ) s
+    WHERE sp.id = s.picking_id
+""", [tuple(picking_ids.ids)])
+picking_ids.invalidate_recordset(['total_weight', 'total_volume'])
+```
+
+### 14.2 Delete Move Lines bằng SQL
+
+```python
+# ✅ Pattern: Xóa move lines trước khi tạo mới
+move_ids = transfer_picking.move_ids_without_package.ids
+if move_ids:
+    self.env.cr.execute("""
+        DELETE FROM stock_move_line 
+        WHERE move_id IN %s
+    """, [tuple(move_ids)])
+    transfer_picking.move_ids_without_package.invalidate_recordset(['move_line_ids'])
+```
+
+---
+
+## 15. Cron Jobs DPT
+
+| Module | Method | Mô tả |
+|--------|--------|--------|
+| `dpt_service_management` | `dpt.service.combo._cron_check_expired_combos()` | Tự động hết hạn combo |
+| `dpt_contract_management` | `dpt.contract.management._cron_auto_set_expired()` | Tự động hết hạn hợp đồng |
+| `dpt_account_payment_v2` | (cron_data.xml) | Thanh toán tự động |
+
+---
+
+## 16. Context Flags DPT
+
+| Context Key | Mô tả | Module |
+|-------------|--------|--------|
+| `bypass_locked` | Bỏ qua check locked khi write SO | `dpt_sale_management` |
+| `skip_sync_shipping_to_ticket` | Không sync stage khi update shipping | `dpt_shipping` |
+| `skip_sync_ticket_to_shipping` | Không sync stage khi update ticket | `dpt_shipping` |
+| `skip_move_line_in_confirm` | Bỏ qua tạo move_line khi confirm picking | `dpt_shipping` |
+| `creating_tq_ctq_transfer` | Bypass validate khi tạo phiếu Container TQ | `dpt_shipping` |
+| `mail_notrack` | Tắt tracking mail (tăng tốc) | Common |
+| `mail_create_nolog` | Tắt tạo log note khi create | Common |
+| `tracking_disable` | Tắt tracking thay đổi trường | Common |
+
+---
+
+## 17. Anti-patterns DPT — Lỗi thường gặp
+
+### 17.1 ❌ Quên check locked
+
+```python
+# ❌ Sai — write trực tiếp không check locked
+sale_order.write({'sale_service_ids': [...]})
+
+# ✅ Đúng — hoặc dùng bypass context hoặc unlock/lock
+sale_order.with_context(bypass_locked=True).write({...})
+# hoặc
+sale_order.action_unlock()
+sale_order.write({...})
+sale_order.action_lock()
+```
+
+### 17.2 ❌ Tuple cũ trong M2M (vẫn còn trong codebase)
+
+```python
+# ❌ Vẫn còn trong shipping slip — CẦN REFACTOR
+item.out_picking_ids = [(6, 0, out_picking_ids.ids)]
+
+# ✅ Nên dùng Command API
+item.out_picking_ids = [Command.set(out_picking_ids.ids)]
+```
+
+### 17.3 ❌ f-string trong _() 
+
+```python
+# ❌ Vẫn còn trong codebase — CẦN SỬA
+raise UserError(f"Vui lòng xác nhận phiếu {picking.name}")
+
+# ✅ Đúng
+raise UserError(_(
+    "Vui lòng xác nhận phiếu %(name)s", name=picking.name
+))
+```
+
+### 17.4 ❌ Hardcode chuỗi tiếng Việt không _()
+
+```python
+# ❌ Vẫn còn nhiều nơi
+raise ValidationError("Vui lòng cấu hình kho chuyển phía Trung Quốc")
+
+# ✅ Đúng
+raise ValidationError(_("Vui lòng cấu hình kho chuyển phía Trung Quốc"))
+```
+
+### 17.5 ❌ create() không có @api.model_create_multi
+
+```python
+# ❌ Trong dpt_service_management
+@api.model
+def create(self, vals):
+    ...
+
+# ✅ Đúng Odoo 17
+@api.model_create_multi
+def create(self, vals_list):
+    for vals in vals_list:
+        ...
+    return super().create(vals_list)
+```
+
+---
+
+## 18. Quy tắc Naming Convention DPT
+
+| Thành phần | Pattern | Ví dụ |
+|-----------|---------|-------|
+| Module name | `dpt_{domain}_{subdomain}` | `dpt_sale_management` |
+| Model name | `dpt.{domain}.{entity}` | `dpt.service.management` |
+| Field name | snake_case tiếng Anh | `legal_entity`, `declaration_type` |
+| Selection key | lowercase + underscore | `'draft'`, `'wait_approve'`, `'container_tq'` |
+| Sequence code | Module-specific | `dpt.service.management`, `dpt.service.combo` |
+| Approval code | UPPERCASE | `'SCM'`, `'PHEDUYETTATOANDUKIEN'` |
+| Boolean flags | `is_{description}` | `is_vat_service`, `is_main_incoming` |
+
+---
+
+## 19. Lean Code Checklist — DPT Extension
+
+Ngoài checklist chuẩn (Section 11), thêm:
+
+- [ ] **Check locked** — `bypass_locked` context khi write SO
+- [ ] **Legal entity** — Pháp nhân đúng cho currency rate lookup
+- [ ] **Context flags** — `skip_sync_*`, `mail_notrack` khi batch operation
+- [ ] **Invalidate recordset** — Sau mọi raw SQL update
+- [ ] **Approval category** — Kiểm tra `sequence_code` tồn tại trước khi tạo request
+- [ ] **Stage sequence** — Enforce thứ tự khi update vehicle stage
+- [ ] **Service flags** — `is_vat_service`, `is_import_tax_service` dùng đúng
+- [ ] **Warehouse flags** — `is_main_incoming_warehouse`, `is_tq_transit_warehouse`
+- [ ] **Tuple cũ → Command API** — Refactor khi touch file
+- [ ] **f-string → _() format** — Refactor khi touch file
