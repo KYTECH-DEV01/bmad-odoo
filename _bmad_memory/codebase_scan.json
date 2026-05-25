@@ -1,11 +1,11 @@
 {
-  "scan_timestamp": "2026-05-20T09:12:31.450943",
+  "scan_timestamp": "2026-05-25T10:53:32.208869",
   "repos": [
     {
       "name": "Odoo-DPT",
       "path": "d:\\Odoo\\Odoo-DPT",
-      "module_count": 84,
-      "model_count": 510
+      "module_count": 96,
+      "model_count": 607
     },
     {
       "name": "Odoo-DX",
@@ -20,10 +20,10 @@
       "model_count": 31
     }
   ],
-  "total_modules": 87,
-  "total_models": 554,
-  "total_fields": 4463,
-  "total_methods": 2645,
+  "total_modules": 99,
+  "total_models": 651,
+  "total_fields": 5217,
+  "total_methods": 3094,
   "state_machines": [
     {
       "model": "auditlog.rule",
@@ -68,6 +68,15 @@
         "cancelled"
       ],
       "source": "dpt_cost_allocation\\models\\cost_allocation.py"
+    },
+    {
+      "model": "dpt.cost.line",
+      "module": "dpt_cost_management",
+      "states": [
+        "draft",
+        "planned"
+      ],
+      "source": "dpt_cost_management\\models\\dpt_cost_line.py"
     },
     {
       "model": "dpt.reseller.users",
@@ -134,6 +143,7 @@
       "states": [
         "draft",
         "customer_approved",
+        "invoice_issued",
         "pending_approval",
         "approved",
         "internal_signed",
@@ -141,6 +151,15 @@
         "cancelled"
       ],
       "source": "dpt_document_management\\models\\dpt_sale_order_document.py"
+    },
+    {
+      "model": "dpt.expense.allocation",
+      "module": "dpt_expense",
+      "states": [
+        "draft",
+        "allocated"
+      ],
+      "source": "dpt_expense\\models\\dpt_expense_allocation.py"
     },
     {
       "model": "dpt.export",
@@ -201,6 +220,152 @@
         "cancelled"
       ],
       "source": "dpt_export_import\\models\\export_import_line.py"
+    },
+    {
+      "model": "dpt.fund.audit",
+      "module": "dpt_fund_management",
+      "states": [
+        "draft",
+        "audited",
+        "adjusted",
+        "approved"
+      ],
+      "source": "dpt_fund_management\\models\\fund_audit.py"
+    },
+    {
+      "model": "dpt.fund.transaction",
+      "module": "dpt_fund_management",
+      "states": [
+        "draft",
+        "confirmed",
+        "posted"
+      ],
+      "source": "dpt_fund_management\\models\\fund_transaction.py"
+    },
+    {
+      "model": "dpt.fund.transaction.export.wizard",
+      "module": "dpt_fund_management",
+      "states": [
+        "draft",
+        "done"
+      ],
+      "source": "dpt_fund_management\\models\\fund_transaction_export_wizard.py"
+    },
+    {
+      "model": "dpt.fund.transfer",
+      "module": "dpt_fund_management",
+      "states": [
+        "draft",
+        "pending",
+        "received",
+        "cancelled"
+      ],
+      "source": "dpt_fund_management\\models\\fund_transfer.py"
+    },
+    {
+      "model": "dpt.pending.transfer",
+      "module": "dpt_fund_management",
+      "states": [
+        "pending",
+        "received",
+        "lost",
+        "cancelled"
+      ],
+      "source": "dpt_fund_management\\models\\pending_transfer.py"
+    },
+    {
+      "model": "dpt.project.eval.member.sheet",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "submitted"
+      ],
+      "source": "dpt_hr_hiring\\models\\eval_member_sheet.py"
+    },
+    {
+      "model": "dpt.project.eval.session",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "voting",
+        "project_eval",
+        "member_eval",
+        "done",
+        "cancelled"
+      ],
+      "source": "dpt_hr_hiring\\models\\eval_session.py"
+    },
+    {
+      "model": "dpt.project.eval.sheet",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "submitted"
+      ],
+      "source": "dpt_hr_hiring\\models\\eval_sheet.py"
+    },
+    {
+      "model": "dpt.hr.company.strategy",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "review",
+        "approved"
+      ],
+      "source": "dpt_hr_hiring\\models\\hr_company_strategy.py"
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "review",
+        "approved"
+      ],
+      "source": "dpt_hr_hiring\\models\\hr_department_strategy.py"
+    },
+    {
+      "model": "dpt.hr.hiring.decision",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "submitted",
+        "approved",
+        "rejected"
+      ],
+      "source": "dpt_hr_hiring\\models\\hr_hiring_decision.py"
+    },
+    {
+      "model": "dpt.project.phase",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "in_progress",
+        "done"
+      ],
+      "source": "dpt_hr_hiring\\models\\project_phase.py"
+    },
+    {
+      "model": "dpt.project.risk",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "open",
+        "mitigated",
+        "occurred",
+        "closed"
+      ],
+      "source": "dpt_hr_hiring\\models\\project_risk.py"
+    },
+    {
+      "model": "dpt.hr.strategy.feedback",
+      "module": "dpt_hr_hiring",
+      "states": [
+        "draft",
+        "submitted",
+        "responded",
+        "done"
+      ],
+      "source": "dpt_hr_hiring\\models\\strategy_feedback.py"
     },
     {
       "model": "dpt.import.history",
@@ -340,6 +505,7 @@
       "model": "dpt.tax.refund.profile",
       "module": "dpt_tax_refund",
       "states": [
+        "deposit_factory",
         "paid_factory",
         "invoice_issued",
         "customs_cleared",
@@ -413,6 +579,25 @@
         "archived"
       ],
       "source": "eqp_backup\\models\\backup_server.py"
+    },
+    {
+      "model": "account.posting",
+      "module": "ev_account_posting",
+      "states": [
+        "draft",
+        "posted"
+      ],
+      "source": "ev_account_posting\\models\\account_posting.py"
+    },
+    {
+      "model": "otp.verification",
+      "module": "sttl_otp_login",
+      "states": [
+        "verified",
+        "unverified",
+        "rejected"
+      ],
+      "source": "sttl_otp_login\\models\\otp_verification.py"
     },
     {
       "model": "dpt.ai.agent",
@@ -621,6 +806,21 @@
       "repo": "Odoo-DPT"
     },
     {
+      "module": "dpt_attendance_face_recognition",
+      "name": "Attendance Face Recognition",
+      "depends": [
+        "base_setup",
+        "hr_attendance",
+        "hr"
+      ],
+      "models": [
+        "hr.attendance",
+        "hr.employee",
+        "res.config.settings"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
       "module": "dpt_base_district",
       "name": "Base District",
       "depends": [
@@ -690,6 +890,38 @@
         "dpt.export.import.line",
         "purchase.order",
         "purchase.order.line"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "dpt_cost_management",
+      "name": "DPT Cost Management",
+      "depends": [
+        "base",
+        "account",
+        "sale",
+        "product",
+        "hr",
+        "dpt_service_management",
+        "dpt_service_pricelist",
+        "dpt_sale_management",
+        "dpt_shipping",
+        "dpt_export_import"
+      ],
+      "models": [
+        "dpt.cost.line.allocation",
+        "dpt.cost.line",
+        "dpt.cost.management",
+        "dpt.cost.stage",
+        "dpt.export",
+        "dpt.export.import",
+        "dpt.sale.order.fields",
+        "dpt.service.management.required.fields",
+        "dpt.shipping.slip",
+        "product.pricelist",
+        "mail.message",
+        "product.pricelist.item",
+        "sale.order"
       ],
       "repo": "Odoo-DPT"
     },
@@ -850,6 +1082,23 @@
       "repo": "Odoo-DPT"
     },
     {
+      "module": "dpt_customer_debt",
+      "name": "DPT Customer Debt Management",
+      "depends": [
+        "sale",
+        "account",
+        "contacts",
+        "dpt_res_partner",
+        "dpt_security"
+      ],
+      "models": [
+        "customer.debt.report",
+        "res.partner",
+        "sale.order"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
       "module": "dpt_document_management",
       "name": "DPT Document Management",
       "depends": [
@@ -868,6 +1117,31 @@
         "dpt.cancel.document.wizard",
         "dpt.sign.sale.document.wizard",
         "dpt.sign.sale.document.wizard.certificate"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "dpt_expense",
+      "name": "DPT Expense",
+      "depends": [
+        "base",
+        "account",
+        "hr_expense",
+        "dpt_shipping",
+        "purchase",
+        "dpt_purchase_management",
+        "dpt_service_management",
+        "dpt_account_custom"
+      ],
+      "models": [
+        "account.move",
+        "dpt.expense.allocation",
+        "dpt.service.combo",
+        "dpt.service.management",
+        "purchase.order",
+        "sale.order",
+        "uom.uom",
+        "dpt.create.account.expense.wizard"
       ],
       "repo": "Odoo-DPT"
     },
@@ -931,6 +1205,29 @@
       "repo": "Odoo-DPT"
     },
     {
+      "module": "dpt_fund_management",
+      "name": "DPT Fund Management",
+      "depends": [
+        "base",
+        "mail",
+        "account",
+        "web"
+      ],
+      "models": [
+        "dpt.bank.transaction.import.wizard",
+        "dpt.exchange.rate",
+        "dpt.fund.account",
+        "dpt.fund.audit",
+        "dpt.fund.audit.line",
+        "dpt.fund.dashboard",
+        "dpt.fund.transaction",
+        "dpt.fund.transaction.export.wizard",
+        "dpt.fund.transfer",
+        "dpt.pending.transfer"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
       "module": "dpt_helpdesk_ticket",
       "name": "DPT Helpdesk Ticket",
       "depends": [
@@ -989,6 +1286,7 @@
         "dpt.attendance.report",
         "dpt.attendance.report.line",
         "hr.attendance",
+        "res.config.settings",
         "resource.calendar"
       ],
       "repo": "Odoo-DPT"
@@ -1006,6 +1304,55 @@
         "hr.employee",
         "hr.employee.public",
         "hr.job"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "dpt_hr_hiring",
+      "name": "DPT HR Hiring AI",
+      "depends": [
+        "base",
+        "hr",
+        "mail",
+        "dpt_ai",
+        "dpt_security",
+        "hr_recruitment",
+        "hr_recruitment_skills",
+        "project",
+        "approvals"
+      ],
+      "models": [
+        "dpt.ai.agent",
+        "dpt.ai.provider.config",
+        "approval.request",
+        "dpt.hr.company.okr",
+        "dpt.hr.department.okr",
+        "dpt.project.eval.board.member",
+        "dpt.project.eval.criteria",
+        "dpt.project.eval.criteria.set",
+        "dpt.project.eval.member.sheet",
+        "dpt.project.eval.score.line",
+        "dpt.project.eval.session",
+        "dpt.project.eval.sheet",
+        "dpt.project.eval.vote",
+        "hr.applicant",
+        "dpt.hr.bias.term",
+        "dpt.hr.company.strategy",
+        "dpt.hr.competency",
+        "hr.department",
+        "dpt.hr.department.strategy",
+        "dpt.hr.hiring.decision",
+        "dpt.hr.interview.question",
+        "hr.job",
+        "dpt.hr.skill.map",
+        "dpt.project.okr",
+        "dpt.project.phase",
+        "project.project",
+        "dpt.project.ptda",
+        "dpt.project.risk",
+        "project.task",
+        "dpt.strategy.dashboard",
+        "dpt.hr.strategy.feedback"
       ],
       "repo": "Odoo-DPT"
     },
@@ -1069,6 +1416,19 @@
         "hr.interview.criterion",
         "hr.interview.evaluation",
         "hr.interview.evaluation.line"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "dpt_landing_page",
+      "name": "DPT Landing Page",
+      "depends": [
+        "base",
+        "web"
+      ],
+      "models": [
+        "dpt.landing.page.data",
+        "dpt.landing.page.data.note"
       ],
       "repo": "Odoo-DPT"
     },
@@ -1282,6 +1642,7 @@
         "sale"
       ],
       "models": [
+        "dpt.service.management",
         "purchase.order",
         "purchase.order.line.package",
         "sale.order",
@@ -1483,6 +1844,7 @@
       ],
       "models": [
         "dpt.sale.service.management",
+        "dpt.service.combo",
         "dpt.service.management",
         "hr.department",
         "dpt.partner.required.fields",
@@ -1589,12 +1951,14 @@
         "dpt_sale_management",
         "dpt_export_import",
         "dpt_account_payment_v2",
+        "dpt_credit_management",
         "dpt_account_payment_request"
       ],
       "models": [
         "account.payment",
         "dpt.export.import",
         "dpt.export.import.line",
+        "dpt.payment.sale.allocation.line",
         "sale.order",
         "stock.picking"
       ],
@@ -1722,7 +2086,8 @@
         "dpt_stock_management",
         "dpt_export_import",
         "stock",
-        "dpt_security"
+        "dpt_security",
+        "queue_job"
       ],
       "models": [
         "dpt.shipping.slip",
@@ -1786,6 +2151,7 @@
       "models": [
         "account.move",
         "account.move.line",
+        "dpt.export",
         "dpt.export.line",
         "dpt.sale.order.fields",
         "dpt.service.management",
@@ -1878,6 +2244,25 @@
       "models": [
         "sign.pdf.wizard",
         "usb.token.signing"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "dpt_vn_accounting_report",
+      "name": "DPT Báo cáo Kế toán VN",
+      "depends": [
+        "account_reports",
+        "dpt_credit_management",
+        "dpt_account_report_filter_account"
+      ],
+      "models": [
+        "account.account",
+        "dpt.b01.balance.sheet.handler",
+        "dpt.b02.income.statement.handler",
+        "dpt.b03.cash.flow.handler",
+        "dpt.receivable.report.handler",
+        "res.partner",
+        "dpt.trial.balance.report.handler"
       ],
       "repo": "Odoo-DPT"
     },
@@ -1975,6 +2360,20 @@
         "backup.server",
         "res.company",
         "res.config.settings"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "ev_account_posting",
+      "name": "Account Posting",
+      "depends": [
+        "account",
+        "mail"
+      ],
+      "models": [
+        "account.posting",
+        "account.posting.line",
+        "account.posting.config"
       ],
       "repo": "Odoo-DPT"
     },
@@ -2078,12 +2477,61 @@
       "repo": "Odoo-DPT"
     },
     {
+      "module": "password_reset_manager",
+      "name": "Password Reset Manager",
+      "depends": [
+        "auth_signup",
+        "web"
+      ],
+      "models": [
+        "res.users"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
       "module": "prt_report_attachment_preview",
       "name": "Open PDF Reports and PDF Attachments in Browser",
       "depends": [
         "web"
       ],
       "models": [],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "queue_job",
+      "name": "Job Queue",
+      "depends": [
+        "mail",
+        "base_sparse_field",
+        "web"
+      ],
+      "models": [
+        "base",
+        "ir.model.fields",
+        "queue.job",
+        "queue.job.channel",
+        "queue.job.function",
+        "queue.job.lock",
+        "queue.jobs.to.cancelled",
+        "queue.jobs.to.done",
+        "queue.requeue.job"
+      ],
+      "repo": "Odoo-DPT"
+    },
+    {
+      "module": "sttl_otp_login",
+      "name": "Email OTP Authentication",
+      "depends": [
+        "base",
+        "mail",
+        "web",
+        "website",
+        "auth_signup"
+      ],
+      "models": [
+        "otp.verification",
+        "res.users"
+      ],
       "repo": "Odoo-DPT"
     },
     {
@@ -2415,6 +2863,11 @@
       "module": "dpt_export_import"
     },
     {
+      "model": "dpt.fund.audit",
+      "method": "action_approve",
+      "module": "dpt_fund_management"
+    },
+    {
       "model": "helpdesk.ticket",
       "method": "action_view_approval_request",
       "module": "dpt_helpdesk_ticket"
@@ -2440,6 +2893,11 @@
       "module": "dpt_hr_attendance_report"
     },
     {
+      "model": "dpt.attendance.claim.line",
+      "method": "action_approve_line",
+      "module": "dpt_hr_attendance_report"
+    },
+    {
       "model": "dpt.attendance.report",
       "method": "_compute_approval_count",
       "module": "dpt_hr_attendance_report"
@@ -2453,6 +2911,41 @@
       "model": "dpt.attendance.report.line",
       "method": "_check_approved_leave",
       "module": "dpt_hr_attendance_report"
+    },
+    {
+      "model": "approval.request",
+      "method": "action_approve",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.company.strategy",
+      "method": "action_approve",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.company.strategy",
+      "method": "action_view_approval",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "method": "action_approve",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "method": "action_view_approval",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.hiring.decision",
+      "method": "action_approve",
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "method": "action_approve_board",
+      "module": "dpt_hr_hiring"
     },
     {
       "model": "okr.node",
@@ -2931,6 +3424,20 @@
       "method_count": 3
     },
     {
+      "model": "dpt.cost.line.allocation",
+      "module": "dpt_cost_management",
+      "description": "DPT Cost Allocation Line (Phân bổ chi phí về đơn)",
+      "field_count": 21,
+      "method_count": 4
+    },
+    {
+      "model": "dpt.cost.stage",
+      "module": "dpt_cost_management",
+      "description": "DPT Cost Stage (Chặng)",
+      "field_count": 5,
+      "method_count": 1
+    },
+    {
       "model": "dpt.reseller.users",
       "module": "dpt_create_user",
       "description": "Reseller users",
@@ -3155,6 +3662,13 @@
       "method_count": 1
     },
     {
+      "model": "customer.debt.report",
+      "module": "dpt_customer_debt",
+      "description": "Customer Debt Report",
+      "field_count": 17,
+      "method_count": 4
+    },
+    {
       "model": "dpt.cancel.document.wizard",
       "module": "dpt_document_management",
       "description": "Wizard hủy chứng từ",
@@ -3176,6 +3690,13 @@
       "method_count": 0
     },
     {
+      "model": "dpt.create.account.expense.wizard",
+      "module": "dpt_expense",
+      "description": "Wizard Tạo hóa đơn",
+      "field_count": 2,
+      "method_count": 1
+    },
+    {
       "model": "dpt.product.description.label.config",
       "module": "dpt_export_import",
       "description": "Cấu hình nhãn mô tả sản phẩm",
@@ -3195,6 +3716,34 @@
       "description": "Wizard Xác nhận phê duyệt giá",
       "field_count": 9,
       "method_count": 3
+    },
+    {
+      "model": "dpt.bank.transaction.import.wizard",
+      "module": "dpt_fund_management",
+      "description": "Wizard Import Giao Dịch Ngân Hàng",
+      "field_count": 17,
+      "method_count": 11
+    },
+    {
+      "model": "dpt.fund.audit.line",
+      "module": "dpt_fund_management",
+      "description": "Chi tiết kiểm kê quỹ",
+      "field_count": 4,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.fund.dashboard",
+      "module": "dpt_fund_management",
+      "description": "Fund Management Dashboard",
+      "field_count": 12,
+      "method_count": 10
+    },
+    {
+      "model": "dpt.fund.transaction.export.wizard",
+      "module": "dpt_fund_management",
+      "description": "Wizard Export Giao Dịch Quỹ",
+      "field_count": 10,
+      "method_count": 4
     },
     {
       "model": "dpt.helpdesk.combo.line",
@@ -3235,8 +3784,8 @@
       "model": "dpt.attendance.claim.line",
       "module": "dpt_hr_attendance_report",
       "description": "Chi tiết giải trình chấm công",
-      "field_count": 10,
-      "method_count": 1
+      "field_count": 11,
+      "method_count": 3
     },
     {
       "model": "dpt.attendance.report.line",
@@ -3244,6 +3793,125 @@
       "description": "Chi tiết chấm công theo ngày",
       "field_count": 19,
       "method_count": 4
+    },
+    {
+      "model": "dpt.hr.company.okr",
+      "module": "dpt_hr_hiring",
+      "description": "OKR Công ty",
+      "field_count": 13,
+      "method_count": 5
+    },
+    {
+      "model": "dpt.hr.department.okr",
+      "module": "dpt_hr_hiring",
+      "description": "OKR Phòng ban",
+      "field_count": 15,
+      "method_count": 6
+    },
+    {
+      "model": "dpt.project.eval.board.member",
+      "module": "dpt_hr_hiring",
+      "description": "Thành viên Hội đồng Đánh giá",
+      "field_count": 4,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.project.eval.criteria",
+      "module": "dpt_hr_hiring",
+      "description": "Tiêu chí Đánh giá",
+      "field_count": 6,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.project.eval.criteria.set",
+      "module": "dpt_hr_hiring",
+      "description": "Bộ Tiêu chí Đánh giá",
+      "field_count": 5,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.project.eval.member.sheet",
+      "module": "dpt_hr_hiring",
+      "description": "Phiếu Đánh giá Thành viên Dự án",
+      "field_count": 7,
+      "method_count": 3
+    },
+    {
+      "model": "dpt.project.eval.score.line",
+      "module": "dpt_hr_hiring",
+      "description": "Dòng Điểm Đánh giá",
+      "field_count": 9,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.project.eval.sheet",
+      "module": "dpt_hr_hiring",
+      "description": "Phiếu Đánh giá Dự án",
+      "field_count": 6,
+      "method_count": 3
+    },
+    {
+      "model": "dpt.project.eval.vote",
+      "module": "dpt_hr_hiring",
+      "description": "Phiếu Bỏ phiếu HĐGTĐ",
+      "field_count": 7,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.hr.bias.term",
+      "module": "dpt_hr_hiring",
+      "description": "Từ ngữ Thiên vị",
+      "field_count": 5,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.hr.competency",
+      "module": "dpt_hr_hiring",
+      "description": "Năng lực Tuyển dụng",
+      "field_count": 13,
+      "method_count": 1
+    },
+    {
+      "model": "dpt.hr.interview.question",
+      "module": "dpt_hr_hiring",
+      "description": "Câu hỏi Phỏng vấn",
+      "field_count": 9,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.hr.skill.map",
+      "module": "dpt_hr_hiring",
+      "description": "Ánh xạ Kỹ năng Ngầm",
+      "field_count": 5,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.project.okr",
+      "module": "dpt_hr_hiring",
+      "description": "OKR Dự án (PM Master)",
+      "field_count": 7,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.project.phase",
+      "module": "dpt_hr_hiring",
+      "description": "Giai đoạn Dự án (PM Master)",
+      "field_count": 11,
+      "method_count": 2
+    },
+    {
+      "model": "dpt.project.risk",
+      "module": "dpt_hr_hiring",
+      "description": "Rủi ro Dự án (PM Master)",
+      "field_count": 8,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.strategy.dashboard",
+      "module": "dpt_hr_hiring",
+      "description": "Dashboard OKR Chiến lược",
+      "field_count": 3,
+      "method_count": 5
     },
     {
       "model": "dpt.import.brand",
@@ -3292,7 +3960,21 @@
       "module": "dpt_interview_evaluation",
       "description": "Chi tiết điểm phỏng vấn",
       "field_count": 6,
-      "method_count": 4
+      "method_count": 3
+    },
+    {
+      "model": "dpt.landing.page.data",
+      "module": "dpt_landing_page",
+      "description": null,
+      "field_count": 6,
+      "method_count": 0
+    },
+    {
+      "model": "dpt.landing.page.data.note",
+      "module": "dpt_landing_page",
+      "description": null,
+      "field_count": 2,
+      "method_count": 0
     },
     {
       "model": "dpt.export.dntt.wizard",
@@ -3362,7 +4044,7 @@
       "module": "dpt_sale_approvals",
       "description": "Snapshot dịch vụ cho yêu cầu phê duyệt giá",
       "field_count": 23,
-      "method_count": 3
+      "method_count": 4
     },
     {
       "model": "dpt.approval.sale.price",
@@ -3582,6 +4264,13 @@
       "method_count": 1
     },
     {
+      "model": "dpt.payment.sale.allocation.line",
+      "module": "dpt_sale_value_allocation",
+      "description": "Payment sale allocation line",
+      "field_count": 6,
+      "method_count": 2
+    },
+    {
       "model": "dpt.sddk.reconcile.wizard",
       "module": "dpt_sddk_reconcile",
       "description": "Wizard tạo bút toán SDDK và đối soát công nợ",
@@ -3676,7 +4365,7 @@
       "model": "dpt.tax.refund.create.wizard",
       "module": "dpt_tax_refund",
       "description": "Wizard Tạo hồ sơ hoàn thuế",
-      "field_count": 2,
+      "field_count": 3,
       "method_count": 2
     },
     {
@@ -3755,6 +4444,13 @@
       "description": "Zalo Template for ZNS",
       "field_count": 4,
       "method_count": 3
+    },
+    {
+      "model": "account.posting.line",
+      "module": "ev_account_posting",
+      "description": null,
+      "field_count": 12,
+      "method_count": 1
     },
     {
       "model": "ks_custom_report.ks_column",
@@ -3921,6 +4617,41 @@
       "model": "ks_dashboard_ninja.fetch_key",
       "module": "ks_dashboard_ninja",
       "description": "Fetch API key",
+      "field_count": 3,
+      "method_count": 1
+    },
+    {
+      "model": "queue.job.channel",
+      "module": "queue_job",
+      "description": "Job Channels",
+      "field_count": 5,
+      "method_count": 5
+    },
+    {
+      "model": "queue.job.function",
+      "module": "queue_job",
+      "description": "Job Functions",
+      "field_count": 7,
+      "method_count": 19
+    },
+    {
+      "model": "queue.job.lock",
+      "module": "queue_job",
+      "description": "Queue Job Lock",
+      "field_count": 1,
+      "method_count": 0
+    },
+    {
+      "model": "queue.requeue.job",
+      "module": "queue_job",
+      "description": "Wizard to requeue a selection of jobs",
+      "field_count": 1,
+      "method_count": 2
+    },
+    {
+      "model": "otp.verification",
+      "module": "sttl_otp_login",
+      "description": "Otp Verification",
       "field_count": 3,
       "method_count": 1
     },
@@ -4206,7 +4937,7 @@
       ],
       "module": "dpt_absolute_customer",
       "added_fields": [
-        "name_cn"
+        "name_other_languages"
       ],
       "added_methods": []
     },
@@ -4239,7 +4970,8 @@
         "vendor_partner_ids",
         "vendor_evidence_file",
         "vendor_evidence",
-        "chinese_name"
+        "chinese_name",
+        "dpt_contact_partner_name"
       ],
       "added_methods": [
         "action_view_partner_approvals",
@@ -4266,7 +4998,8 @@
         "bank_branch",
         "swift_code",
         "vendor_evidence",
-        "vendor_evidence_file"
+        "vendor_evidence_file",
+        "acc_holder_name"
       ],
       "added_methods": []
     },
@@ -4902,6 +5635,43 @@
       "added_methods": []
     },
     {
+      "model": "hr.attendance",
+      "inherits": [
+        "hr.attendance"
+      ],
+      "module": "dpt_attendance_face_recognition",
+      "added_fields": [
+        "is_face_recognition",
+        "checkin_image",
+        "checkout_image"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "hr.employee",
+      "inherits": [
+        "hr.employee"
+      ],
+      "module": "dpt_attendance_face_recognition",
+      "added_fields": [
+        "dpt_face_detected",
+        "dpt_face_count",
+        "dpt_face_detection_error"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "res.config.settings",
+      "inherits": [
+        "res.config.settings"
+      ],
+      "module": "dpt_attendance_face_recognition",
+      "added_fields": [
+        "is_face_recognition"
+      ],
+      "added_methods": []
+    },
+    {
       "model": "res.partner",
       "inherits": [
         "res.partner"
@@ -4956,6 +5726,7 @@
         "user_id",
         "type",
         "legal_entity",
+        "exporter_chinese_name",
         "partner_id",
         "parent_partner_id",
         "allowed_invoice_partner_ids",
@@ -5020,8 +5791,7 @@
         "legal_entity_email",
         "legal_entity_bank_account",
         "factory_company_name",
-        "tax_refund_payment_term",
-        "delivery_time",
+        "payment_term_note",
         "factory_info",
         "contract_product_line_ids",
         "type_code",
@@ -5045,7 +5815,8 @@
         "action_cancel",
         "action_reset_to_draft",
         "write",
-        "unlink"
+        "unlink",
+        "action_export_xnk_cny_xlsx"
       ]
     },
     {
@@ -5211,6 +5982,213 @@
       "added_methods": [
         "write"
       ]
+    },
+    {
+      "model": "dpt.cost.line",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "name",
+        "cost_id",
+        "product_id",
+        "object_type",
+        "stage_ids",
+        "sale_id",
+        "shipping_slip_id",
+        "export_import_id",
+        "export_id",
+        "partner_id",
+        "pricelist_id",
+        "pricelist_item_id",
+        "fields_ids",
+        "quantity",
+        "uom_id",
+        "currency_id",
+        "company_currency_id",
+        "rate_date",
+        "exchange_rate",
+        "unit_price",
+        "amount",
+        "amount_company_currency",
+        "state",
+        "manual_input",
+        "allocation_line_ids",
+        "account_move_id"
+      ],
+      "added_methods": [
+        "create",
+        "unlink",
+        "action_compute_price_from_pricelist",
+        "action_set_planned",
+        "action_set_draft",
+        "write"
+      ]
+    },
+    {
+      "model": "dpt.cost.management",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin",
+        "utm.mixin"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "code",
+        "name",
+        "stage_ids",
+        "department_id",
+        "object_type",
+        "service_id",
+        "description",
+        "active",
+        "required_fields_ids",
+        "pricelist_item_ids",
+        "allow_edit_without_approval",
+        "product_id",
+        "account_id",
+        "journal_id"
+      ],
+      "added_methods": [
+        "create",
+        "name_get"
+      ]
+    },
+    {
+      "model": "dpt.export",
+      "inherits": [
+        "dpt.export"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_line_ids",
+        "fields_ids",
+        "total_cost",
+        "chargeable_density"
+      ],
+      "added_methods": [
+        "action_recompute_cost_allocations"
+      ]
+    },
+    {
+      "model": "dpt.export.import",
+      "inherits": [
+        "dpt.export.import"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_line_ids",
+        "fields_ids",
+        "total_cost",
+        "chargeable_density"
+      ],
+      "added_methods": [
+        "action_recompute_cost_allocations"
+      ]
+    },
+    {
+      "model": "dpt.sale.order.fields",
+      "inherits": [
+        "dpt.sale.order.fields"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_line_id",
+        "cost_id",
+        "shipping_slip_id",
+        "export_import_id",
+        "export_id"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.service.management.required.fields",
+      "inherits": [
+        "dpt.service.management.required.fields"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_id",
+        "default_compute_from"
+      ],
+      "added_methods": [
+        "get_default_value"
+      ]
+    },
+    {
+      "model": "dpt.shipping.slip",
+      "inherits": [
+        "dpt.shipping.slip"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_line_ids",
+        "fields_ids",
+        "total_cost",
+        "chargeable_density"
+      ],
+      "added_methods": [
+        "action_recompute_cost_allocations"
+      ]
+    },
+    {
+      "model": "product.pricelist",
+      "inherits": [
+        "product.pricelist"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_item_ids"
+      ],
+      "added_methods": [
+        "onchange_partner_get_cost"
+      ]
+    },
+    {
+      "model": "mail.message",
+      "inherits": [
+        "mail.message"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [],
+      "added_methods": [
+        "create"
+      ]
+    },
+    {
+      "model": "product.pricelist.item",
+      "inherits": [
+        "product.pricelist.item"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_id"
+      ],
+      "added_methods": [
+        "onchange_cost_get_root_information",
+        "create",
+        "write",
+        "unlink"
+      ]
+    },
+    {
+      "model": "sale.order",
+      "inherits": [
+        "sale.order"
+      ],
+      "module": "dpt_cost_management",
+      "added_fields": [
+        "cost_line_ids",
+        "cost_allocation_ids",
+        "total_direct_cost",
+        "total_allocated_cost",
+        "total_cost",
+        "gross_profit",
+        "gross_margin_pct"
+      ],
+      "added_methods": []
     },
     {
       "model": "account.move",
@@ -5923,6 +6901,34 @@
       ]
     },
     {
+      "model": "res.partner",
+      "inherits": [
+        "res.partner"
+      ],
+      "module": "dpt_customer_debt",
+      "added_fields": [
+        "total_debt",
+        "due_debt",
+        "overdue_debt",
+        "upcoming_due_debt",
+        "can_view_debt"
+      ],
+      "added_methods": [
+        "action_view_customer_debt_report"
+      ]
+    },
+    {
+      "model": "sale.order",
+      "inherits": [
+        "sale.order"
+      ],
+      "module": "dpt_customer_debt",
+      "added_fields": [
+        "debt_amount"
+      ],
+      "added_methods": []
+    },
+    {
       "model": "approval.request",
       "inherits": [
         "approval.request"
@@ -5990,6 +6996,7 @@
       "added_methods": [
         "create",
         "action_customer_approve",
+        "action_invoice_issued",
         "action_create_approval_request",
         "action_view_approval_requests",
         "action_internal_sign_manual",
@@ -6030,6 +7037,111 @@
       "added_methods": [
         "action_view_documents"
       ]
+    },
+    {
+      "model": "account.move",
+      "inherits": [
+        "account.move"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "expense_allocation_id"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.expense.allocation",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "name",
+        "currency_id",
+        "main_currency_id",
+        "total_expense",
+        "purchase_order_ids",
+        "shipping_ids",
+        "sale_ids",
+        "state",
+        "allocation_move_ids",
+        "allocation_move_count"
+      ],
+      "added_methods": [
+        "compute_total_expense",
+        "unlink",
+        "action_allocate",
+        "action_view_invoice"
+      ]
+    },
+    {
+      "model": "dpt.service.combo",
+      "inherits": [
+        "dpt.service.combo"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "use_for_allocate_expense"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.service.management",
+      "inherits": [
+        "dpt.service.management"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "use_for_allocate_expense"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "purchase.order",
+      "inherits": [
+        "purchase.order"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "shipping_slip_ids",
+        "order_expense_ids",
+        "total_order_expense_ids",
+        "expense_allocation_count",
+        "expense_move_count"
+      ],
+      "added_methods": [
+        "action_view_expense_allocation",
+        "action_view_expense_account_move",
+        "action_create_expense_allocation",
+        "action_popup_create_account_move"
+      ]
+    },
+    {
+      "model": "sale.order",
+      "inherits": [
+        "sale.order"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "expense_amount_total",
+        "allocated_amount_total"
+      ],
+      "added_methods": [
+        "compute_expense_amount_total",
+        "compute_allocated_amount_total"
+      ]
+    },
+    {
+      "model": "uom.uom",
+      "inherits": [
+        "uom.uom"
+      ],
+      "module": "dpt_expense",
+      "added_fields": [
+        "use_for_allocate_expense"
+      ],
+      "added_methods": []
     },
     {
       "model": "approval.request",
@@ -6151,7 +7263,8 @@
         "is_locked",
         "risk_reason",
         "image",
-        "legal_entity"
+        "legal_entity",
+        "picking_count"
       ],
       "added_methods": [
         "action_export_excel",
@@ -6165,7 +7278,8 @@
         "action_cancel",
         "action_unlock",
         "action_lock",
-        "onchange_description_get_chinese"
+        "onchange_description_get_chinese",
+        "action_view_main_incoming_picking"
       ]
     },
     {
@@ -6737,6 +7851,189 @@
       ]
     },
     {
+      "model": "dpt.exchange.rate",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "date",
+        "from_currency_id",
+        "to_currency_id",
+        "rate",
+        "inverse_rate",
+        "vietinbank_buy",
+        "vietinbank_sell",
+        "vietinbank_transfer",
+        "margin",
+        "source",
+        "is_active",
+        "notes",
+        "transaction_ids",
+        "transfer_ids"
+      ],
+      "added_methods": [
+        "action_activate",
+        "action_deactivate",
+        "get_latest_rate",
+        "name_get"
+      ]
+    },
+    {
+      "model": "dpt.fund.account",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "code",
+        "fund_type",
+        "currency_id",
+        "account_id",
+        "balance",
+        "is_active",
+        "transaction_ids",
+        "transfer_from_ids",
+        "transfer_to_ids",
+        "transaction_count",
+        "total_income",
+        "total_expense",
+        "last_transaction_date",
+        "available_balance",
+        "account_type",
+        "account_number",
+        "bank_name"
+      ],
+      "added_methods": [
+        "action_import_transactions",
+        "get_balance_in_currency",
+        "action_view_transactions",
+        "action_view_income_transactions",
+        "action_view_expense_transactions",
+        "action_export_transactions",
+        "create",
+        "name_get"
+      ]
+    },
+    {
+      "model": "dpt.fund.audit",
+      "inherits": [
+        "mail.thread"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "audit_date",
+        "auditor_id",
+        "fund_account_id",
+        "book_balance",
+        "actual_balance",
+        "difference",
+        "difference_type",
+        "reason",
+        "adjustment_needed",
+        "state",
+        "audit_line_ids",
+        "adjustment_entry_id"
+      ],
+      "added_methods": [
+        "action_audit",
+        "action_create_adjustment",
+        "action_approve"
+      ]
+    },
+    {
+      "model": "dpt.fund.transaction",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "date",
+        "fund_account_id",
+        "transaction_type",
+        "amount",
+        "currency_id",
+        "state",
+        "import_source",
+        "import_reference",
+        "debit_account_id",
+        "credit_account_id",
+        "journal_entry_id",
+        "exchange_rate_id",
+        "original_currency_id",
+        "original_amount"
+      ],
+      "added_methods": [
+        "action_confirm",
+        "action_post",
+        "action_view_journal_entry",
+        "create"
+      ]
+    },
+    {
+      "model": "dpt.fund.transfer",
+      "inherits": [
+        "mail.thread"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "date",
+        "from_fund_id",
+        "to_fund_id",
+        "amount",
+        "from_currency_id",
+        "to_currency_id",
+        "exchange_rate_id",
+        "converted_amount",
+        "bank_fee",
+        "actual_received",
+        "description",
+        "state",
+        "debit_transaction_id",
+        "credit_transaction_id",
+        "pending_transfer_id"
+      ],
+      "added_methods": [
+        "action_send_transfer",
+        "action_confirm_received"
+      ]
+    },
+    {
+      "model": "dpt.pending.transfer",
+      "inherits": [
+        "mail.thread"
+      ],
+      "module": "dpt_fund_management",
+      "added_fields": [
+        "name",
+        "transfer_id",
+        "amount",
+        "currency_id",
+        "date_sent",
+        "date_received",
+        "expected_date",
+        "days_pending",
+        "is_overdue",
+        "state",
+        "bank_reference",
+        "bank_fee",
+        "notes"
+      ],
+      "added_methods": [
+        "action_mark_received",
+        "action_mark_lost",
+        "check_overdue_transfers"
+      ]
+    },
+    {
       "model": "dpt.sale.service.management",
       "inherits": [
         "dpt.sale.service.management"
@@ -6759,6 +8056,7 @@
       "module": "dpt_helpdesk_ticket",
       "added_fields": [
         "is_done_stage",
+        "is_cancel_stage",
         "is_duyet_giao_hang",
         "is_hoan_thanh",
         "is_bill_hoan_thanh",
@@ -6919,7 +8217,8 @@
         "dpt_out_zone_status",
         "dpt_out_office_id",
         "dpt_out_distance",
-        "dpt_is_violation"
+        "dpt_is_violation",
+        "dpt_is_auto_checkout"
       ],
       "added_methods": []
     },
@@ -7022,6 +8321,7 @@
       ],
       "added_methods": [
         "action_generate",
+        "get_penalty_rates",
         "action_submit",
         "action_reset_draft",
         "action_open_approvals",
@@ -7037,6 +8337,18 @@
       "module": "dpt_hr_attendance_report",
       "added_fields": [
         "dpt_is_late"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "res.config.settings",
+      "inherits": [
+        "res.config.settings"
+      ],
+      "module": "dpt_hr_attendance_report",
+      "added_fields": [
+        "dpt_late_penalty_rate",
+        "dpt_missing_ci_penalty_rate"
       ],
       "added_methods": []
     },
@@ -7150,6 +8462,441 @@
         "onchange_department_id",
         "name_get",
         "name_search"
+      ]
+    },
+    {
+      "model": "dpt.ai.agent",
+      "inherits": [
+        "dpt.ai.agent"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "prompt_template",
+        "prompt_description"
+      ],
+      "added_methods": [
+        "get_formatted_prompt",
+        "execute_with_template"
+      ]
+    },
+    {
+      "model": "dpt.ai.provider.config",
+      "inherits": [
+        "dpt.ai.provider.config"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [],
+      "added_methods": [
+        "call_chat_completion"
+      ]
+    },
+    {
+      "model": "approval.request",
+      "inherits": [
+        "approval.request"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [],
+      "added_methods": [
+        "action_approve"
+      ]
+    },
+    {
+      "model": "dpt.project.eval.session",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "project_id",
+        "name",
+        "session_type",
+        "state",
+        "date_start",
+        "date_end",
+        "project_criteria_set_id",
+        "member_criteria_set_id",
+        "board_member_ids",
+        "vote_ids",
+        "total_votes",
+        "approve_votes",
+        "reject_votes",
+        "abstain_votes",
+        "vote_result",
+        "project_sheet_ids",
+        "target_employee_ids",
+        "member_sheet_ids",
+        "reject_reason",
+        "conclusion",
+        "avg_project_score"
+      ],
+      "added_methods": [
+        "action_start",
+        "action_close_voting",
+        "action_close_project_eval",
+        "action_finalize",
+        "action_cancel"
+      ]
+    },
+    {
+      "model": "hr.applicant",
+      "inherits": [
+        "hr.applicant"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "cv_file",
+        "cv_filename",
+        "cv_content",
+        "cv_review_state",
+        "cv_score",
+        "cv_grade",
+        "cv_recommendation",
+        "functional_score",
+        "core_score",
+        "functional_analysis",
+        "core_analysis",
+        "red_flags",
+        "strengths",
+        "implicit_skills",
+        "cv_verify_questions",
+        "cv_ai_raw_response",
+        "interview_kit_state",
+        "interview_date",
+        "interviewer_ids",
+        "icebreaker_questions",
+        "technical_questions",
+        "competency_questions",
+        "cross_validation_questions",
+        "candidate_questions_section",
+        "interviewer_notes",
+        "bars_technical",
+        "bars_culture",
+        "bars_overall",
+        "interview_kit_ai_raw",
+        "validation_feedback",
+        "hiring_decision_id"
+      ],
+      "added_methods": [
+        "create",
+        "write",
+        "action_analyze_cv",
+        "action_schedule_interview",
+        "action_create_interview_kit",
+        "action_mark_interview_ready",
+        "action_complete_interview",
+        "action_validate_feedback",
+        "action_create_decision"
+      ]
+    },
+    {
+      "model": "dpt.hr.company.strategy",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "name",
+        "company_id",
+        "active",
+        "state",
+        "approval_id",
+        "approved_date",
+        "approved_by",
+        "vision",
+        "mission",
+        "core_values",
+        "okr_ids",
+        "key_challenges",
+        "hiring_priorities",
+        "year",
+        "notes",
+        "todo_ids",
+        "todo_count",
+        "feedback_ids",
+        "feedback_count",
+        "default_working_hours",
+        "default_work_location",
+        "default_work_mode",
+        "default_insurance",
+        "default_leave_policy",
+        "default_bonus_policy",
+        "default_other_benefits",
+        "default_company_culture",
+        "contact_email",
+        "contact_phone"
+      ],
+      "added_methods": [
+        "action_submit_review",
+        "action_approve",
+        "action_reset_draft",
+        "action_view_approval",
+        "action_view_feedback",
+        "action_generate_todos",
+        "write",
+        "action_view_todos",
+        "action_ai_cascade_departments"
+      ]
+    },
+    {
+      "model": "hr.department",
+      "inherits": [
+        "hr.department"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "strategy_ids",
+        "active_strategy_id"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "name",
+        "department_id",
+        "active",
+        "state",
+        "approval_id",
+        "approved_date",
+        "approved_by",
+        "okr_ids",
+        "skill_gaps",
+        "headcount_plan",
+        "company_strategy_id",
+        "company_okr_ids",
+        "company_okr_quarter_filter",
+        "department_okr_quarter_filter",
+        "filtered_company_okr_ids",
+        "year",
+        "filtered_department_okr_ids",
+        "core_competency_ids",
+        "functional_competency_ids",
+        "department_vision",
+        "vision_alignment",
+        "strategic_tactics",
+        "allocation_rationale",
+        "key_initiatives",
+        "kpi_targets",
+        "notes",
+        "todo_ids",
+        "todo_count",
+        "feedback_ids",
+        "feedback_count"
+      ],
+      "added_methods": [
+        "action_submit_review",
+        "action_approve",
+        "action_reset_draft",
+        "action_view_approval",
+        "action_add_department_okr",
+        "action_view_feedback",
+        "action_generate_todos",
+        "action_view_todos",
+        "write"
+      ]
+    },
+    {
+      "model": "dpt.hr.hiring.decision",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "applicant_id",
+        "candidate_name",
+        "job_id",
+        "cv_score",
+        "interview_bars_technical",
+        "interview_bars_culture",
+        "interview_bars_overall",
+        "final_score",
+        "interview_feedback",
+        "decision",
+        "reasoning",
+        "state",
+        "offer_salary",
+        "currency_id",
+        "offer_start_date",
+        "offer_notes"
+      ],
+      "added_methods": [
+        "action_submit",
+        "action_approve",
+        "action_generate_summary"
+      ]
+    },
+    {
+      "model": "hr.job",
+      "inherits": [
+        "hr.job"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "jd_state",
+        "level",
+        "department_strategy_id",
+        "strategic_alignment",
+        "summary",
+        "responsibilities",
+        "requirements",
+        "preferred",
+        "report_to",
+        "direct_reports",
+        "collaborates_with",
+        "salary_range",
+        "bonus_policy",
+        "insurance",
+        "leave_policy",
+        "other_benefits",
+        "working_hours",
+        "work_mode",
+        "company_culture",
+        "work_location",
+        "career_path",
+        "training_programs",
+        "growth_opportunities",
+        "contact_email",
+        "contact_phone",
+        "headcount",
+        "gender_requirement",
+        "age_requirement",
+        "employment_type",
+        "deadline",
+        "core_competency_ids",
+        "functional_competency_ids",
+        "department_competency_ids",
+        "ai_generated_content",
+        "bias_removed",
+        "applicant_count"
+      ],
+      "added_methods": [
+        "action_load_company_defaults",
+        "action_generate_with_ai",
+        "action_publish_jd",
+        "action_close_jd",
+        "action_view_applicants",
+        "action_download_jd"
+      ]
+    },
+    {
+      "model": "project.project",
+      "inherits": [
+        "project.project"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "manager_department_id",
+        "company_strategy_id",
+        "department_strategy_id",
+        "todo_priority",
+        "todo_deadline",
+        "todo_accept_criteria",
+        "todo_kpi_link",
+        "okr_origin_level",
+        "company_okr_id",
+        "department_okr_id",
+        "tactic_origin",
+        "phase_ids",
+        "risk_ids",
+        "project_okr_ids",
+        "ptda_ids",
+        "department_scope",
+        "estimated_duration_days",
+        "estimated_budget",
+        "estimated_mandays",
+        "estimated_headcount",
+        "lead_role_required",
+        "risk_impact_level",
+        "project_level",
+        "level_override",
+        "level_override_reason",
+        "approval_state",
+        "reject_reason",
+        "eval_session_ids",
+        "eval_session_count",
+        "strategy_changed",
+        "strategy_change_note"
+      ],
+      "added_methods": [
+        "create",
+        "action_resume_from_hold",
+        "action_submit_board",
+        "action_approve_board",
+        "action_reject_board",
+        "action_back_to_draft",
+        "action_pause",
+        "action_resume",
+        "action_mark_done",
+        "action_request_acceptance",
+        "action_view_eval_sessions",
+        "action_generate_tasks_and_assign"
+      ]
+    },
+    {
+      "model": "dpt.project.ptda",
+      "inherits": [
+        "mail.thread"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "project_id",
+        "employee_id",
+        "phase_id",
+        "participation_rate",
+        "phase_completion",
+        "phase_weight",
+        "ptda_score",
+        "note"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "project.task",
+      "inherits": [
+        "project.task"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "skill_score",
+        "workload_score",
+        "alignment_score",
+        "total_ai_score"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.hr.strategy.feedback",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "dpt_hr_hiring",
+      "added_fields": [
+        "name",
+        "employee_id",
+        "date",
+        "topic",
+        "content",
+        "response",
+        "company_strategy_id",
+        "department_strategy_id",
+        "state"
+      ],
+      "added_methods": [
+        "create",
+        "action_submit",
+        "action_respond",
+        "action_done",
+        "action_draft"
       ]
     },
     {
@@ -7895,6 +9642,17 @@
       ]
     },
     {
+      "model": "dpt.service.management",
+      "inherits": [
+        "dpt.service.management"
+      ],
+      "module": "dpt_purchase_stock",
+      "added_fields": [
+        "purchase_product_id"
+      ],
+      "added_methods": []
+    },
+    {
       "model": "purchase.order",
       "inherits": [
         "purchase.order"
@@ -7937,7 +9695,7 @@
       ],
       "added_methods": [
         "get_vehicle_stage_timeline",
-        "get_vehicle_stage_timeline_json",
+        "get_vehicle_stage_timeline_report",
         "recompute_weight_volume",
         "action_show_main_incoming_picking",
         "action_show_transfer"
@@ -7954,14 +9712,18 @@
         "map_sale_datetime",
         "sale_mapping_time",
         "customer_id",
-        "outgoing_sale_ids"
+        "outgoing_sale_ids",
+        "service_purchase_order_id",
+        "need_create_update_po"
       ],
       "added_methods": [
+        "constrains_picking_create_po",
         "constrains_picking",
         "write",
         "create",
         "onchange_get_detail",
-        "onchange_partner_outgoing_picking"
+        "onchange_partner_outgoing_picking",
+        "action_create_po"
       ]
     },
     {
@@ -8549,6 +10311,7 @@
       "added_fields": [
         "sale_id",
         "service_id",
+        "tax_id",
         "is_allow_price_adjustment",
         "description",
         "qty",
@@ -8562,10 +10325,14 @@
         "price_cny",
         "currency_id",
         "currency_conversion_id",
+        "amount_untaxed",
+        "amount_tax",
+        "amount_total",
+        "amount_tax_conversion",
         "amount_total_conversion",
+        "amount_total_after_tax_conversion",
         "currency_cny_id",
         "department_id",
-        "amount_total",
         "sequence",
         "pricelist_item_id",
         "price_in_pricelist",
@@ -8601,6 +10368,17 @@
         "onchange_uom_id",
         "copy_to_sale_order"
       ]
+    },
+    {
+      "model": "dpt.service.combo",
+      "inherits": [
+        "dpt.service.combo"
+      ],
+      "module": "dpt_sale_management",
+      "added_fields": [
+        "disable_price_locking_on_actual"
+      ],
+      "added_methods": []
     },
     {
       "model": "dpt.service.management",
@@ -9029,7 +10807,7 @@
       "added_fields": [
         "total_interest_pool",
         "remaining_interest",
-        "bulk_sale_ids"
+        "sale_allocation_line_ids"
       ],
       "added_methods": [
         "action_post"
@@ -9070,6 +10848,7 @@
         "allocation_rate",
         "allocation_usd_value",
         "allocation_declared_price",
+        "discounted_product_value",
         "revenue_after_import_price",
         "revenue_service_invoice",
         "declared_rate_diff",
@@ -9090,11 +10869,16 @@
       ],
       "module": "dpt_sale_value_allocation",
       "added_fields": [
+        "is_arrived_vn",
         "is_interest_frozen",
         "allocated_interest",
-        "source_payment_ids"
+        "source_payment_line_ids",
+        "source_payment_line_count",
+        "source_payment_ids",
+        "discount_period"
       ],
       "added_methods": [
+        "action_view_source_payment_lines",
         "write",
         "update_product_value_in_cny",
         "action_view_declared_price_calculation",
@@ -9247,6 +11031,7 @@
         "employee_id",
         "cost_account_id",
         "revenue_account_id",
+        "tax_id",
         "steps_count",
         "description",
         "currency_id",
@@ -9561,6 +11346,7 @@
         "all_simple_condition"
       ],
       "added_methods": [
+        "compute_price_for_context",
         "onchange_compute_price",
         "onchange_service",
         "create",
@@ -9772,7 +11558,8 @@
         "is_other",
         "gate_other",
         "is_customer_pickup",
-        "is_in_delivery"
+        "is_in_delivery",
+        "queue_status"
       ],
       "added_methods": [
         "compute_non_finish_transfer",
@@ -10243,6 +12030,17 @@
       "added_methods": []
     },
     {
+      "model": "dpt.export",
+      "inherits": [
+        "dpt.export"
+      ],
+      "module": "dpt_tax_refund",
+      "added_fields": [],
+      "added_methods": [
+        "action_cleared"
+      ]
+    },
+    {
       "model": "dpt.export.line",
       "inherits": [
         "dpt.export.line"
@@ -10322,6 +12120,8 @@
         "sale_id",
         "partner_id",
         "export_import_id",
+        "export_id",
+        "clearance_date_export",
         "profile_type",
         "employee_cs_id",
         "supplier_id",
@@ -10334,6 +12134,7 @@
         "valid_product_ids",
         "product_id",
         "tax_refund_rate",
+        "invoice_vat",
         "export_line_ids",
         "amount_customer_in",
         "invoice_amount_after_vat",
@@ -10353,9 +12154,12 @@
         "export_line_count"
       ],
       "added_methods": [
+        "compute_export_import_id",
+        "compute_export_id",
         "compute_financial",
         "compute_service_fee_customer",
         "create",
+        "action_paid_full_factory",
         "action_invoice_issued",
         "action_customs_cleared",
         "action_submitted",
@@ -10462,9 +12266,12 @@
       "module": "dpt_tax_refund_contract",
       "added_fields": [
         "tax_refund_rate",
-        "invoice_number_tq"
+        "invoice_number_tq",
+        "invoice_vat"
       ],
-      "added_methods": []
+      "added_methods": [
+        "action_open_create_profile_wizard"
+      ]
     },
     {
       "model": "dpt.contract.product.line",
@@ -10504,8 +12311,7 @@
         "contract_quantity",
         "contract_unit_price",
         "contract_total_amount",
-        "tax_refund_payment_term",
-        "delivery_time",
+        "payment_term_note",
         "factory_info"
       ],
       "added_methods": []
@@ -10720,6 +12526,74 @@
         "note",
         "stage_id"
       ],
+      "added_methods": []
+    },
+    {
+      "model": "account.account",
+      "inherits": [
+        "account.account"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [
+        "active"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.b01.balance.sheet.handler",
+      "inherits": [
+        "account.report.custom.handler"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.b02.income.statement.handler",
+      "inherits": [
+        "account.report.custom.handler"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.b03.cash.flow.handler",
+      "inherits": [
+        "account.report.custom.handler"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.receivable.report.handler",
+      "inherits": [
+        "account.report.custom.handler"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [],
+      "added_methods": []
+    },
+    {
+      "model": "res.partner",
+      "inherits": [
+        "res.partner"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [
+        "receivable_note",
+        "receivable_team"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "dpt.trial.balance.report.handler",
+      "inherits": [
+        "account.report.custom.handler"
+      ],
+      "module": "dpt_vn_accounting_report",
+      "added_fields": [],
       "added_methods": []
     },
     {
@@ -11075,6 +12949,55 @@
       "added_methods": []
     },
     {
+      "model": "account.posting",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "ev_account_posting",
+      "added_fields": [
+        "name",
+        "account_date",
+        "date",
+        "description",
+        "state",
+        "company_id",
+        "journal_id",
+        "account_move_id",
+        "line_ids"
+      ],
+      "added_methods": [
+        "action_compute",
+        "action_post",
+        "check_balance",
+        "action_cancel",
+        "create",
+        "unlink"
+      ]
+    },
+    {
+      "model": "account.posting.config",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "ev_account_posting",
+      "added_fields": [
+        "name",
+        "account_from",
+        "account_to",
+        "active",
+        "type",
+        "description",
+        "sequence",
+        "company_id"
+      ],
+      "added_methods": [
+        "create",
+        "write"
+      ]
+    },
+    {
       "model": "hr.employee",
       "inherits": [
         "hr.employee"
@@ -11240,6 +13163,125 @@
       "added_methods": [
         "Open_wizard"
       ]
+    },
+    {
+      "model": "res.users",
+      "inherits": [
+        "res.users"
+      ],
+      "module": "password_reset_manager",
+      "added_fields": [
+        "must_change_password"
+      ],
+      "added_methods": [
+        "create",
+        "write"
+      ]
+    },
+    {
+      "model": "base",
+      "inherits": [
+        "base"
+      ],
+      "module": "queue_job",
+      "added_fields": [],
+      "added_methods": [
+        "with_delay",
+        "delayable"
+      ]
+    },
+    {
+      "model": "ir.model.fields",
+      "inherits": [
+        "ir.model.fields"
+      ],
+      "module": "queue_job",
+      "added_fields": [
+        "ttype"
+      ],
+      "added_methods": []
+    },
+    {
+      "model": "queue.job",
+      "inherits": [
+        "mail.thread",
+        "mail.activity.mixin"
+      ],
+      "module": "queue_job",
+      "added_fields": [
+        "uuid",
+        "graph_uuid",
+        "user_id",
+        "company_id",
+        "name",
+        "model_name",
+        "method_name",
+        "graph_jobs_count",
+        "func_string",
+        "state",
+        "priority",
+        "exc_name",
+        "exc_message",
+        "exc_info",
+        "result",
+        "date_created",
+        "date_started",
+        "date_enqueued",
+        "date_done",
+        "exec_time",
+        "date_cancelled",
+        "eta",
+        "retry",
+        "max_retries",
+        "channel_method_name",
+        "job_function_id",
+        "channel",
+        "identity_key",
+        "worker_pid"
+      ],
+      "added_methods": [
+        "init",
+        "create",
+        "write",
+        "open_related_action",
+        "open_graph_jobs",
+        "button_done",
+        "button_cancelled",
+        "requeue",
+        "autovacuum",
+        "related_action_open_record"
+      ]
+    },
+    {
+      "model": "queue.jobs.to.cancelled",
+      "inherits": [
+        "queue.requeue.job"
+      ],
+      "module": "queue_job",
+      "added_fields": [],
+      "added_methods": [
+        "set_cancelled"
+      ]
+    },
+    {
+      "model": "queue.jobs.to.done",
+      "inherits": [
+        "queue.requeue.job"
+      ],
+      "module": "queue_job",
+      "added_fields": [],
+      "added_methods": [
+        "set_done"
+      ]
+    },
+    {
+      "model": "res.users",
+      "inherits": [
+        "res.users"
+      ],
+      "module": "sttl_otp_login",
+      "added_fields": [],
+      "added_methods": []
     },
     {
       "model": "stock.picking",
@@ -11780,14 +13822,17 @@
     }
   ],
   "context_flags": [
+    "_job_edit_sentinel",
     "active_id",
     "active_ids",
+    "active_model",
     "auditlog_disabled",
     "business_context",
     "bypass_calculate_price",
     "bypass_lock",
     "bypass_locked",
     "bypass_log",
+    "cancel_stage_update",
     "certificates",
     "check_price",
     "confirm",
@@ -11796,6 +13841,7 @@
     "creating_tq_ctq_transfer",
     "current_id",
     "default_agent_id",
+    "default_partner_id",
     "default_product_id",
     "default_product_template_id",
     "default_session_id",
@@ -11803,13 +13849,15 @@
     "dpt_sale_management",
     "entities",
     "force_user_ids_update",
+    "from_cost",
     "from_pricelist",
     "from_task_dashboard",
     "get_data_from_incoming",
     "gridstack_config",
     "iae_sync_from_declaration",
     "import_file",
-    "is_auto_freeze",
+    "install_mode",
+    "job_uuid",
     "js_rpc_call_from_okr_node_hierarchy",
     "ksDateFilterEndDate",
     "ksDateFilterSelection",
@@ -11872,9 +13920,19 @@
       "module": "dpt_absolute_customer"
     },
     {
+      "model": "dpt.cost.line",
+      "method": "_sync_allocation_lines",
+      "module": "dpt_cost_management"
+    },
+    {
       "model": "dpt.reseller.users",
       "method": "write",
       "module": "dpt_create_user"
+    },
+    {
+      "model": "customer.debt.report",
+      "method": "init",
+      "module": "dpt_customer_debt"
     },
     {
       "model": "dpt.sale.service.management",
@@ -11898,7 +13956,12 @@
     },
     {
       "model": "dpt.shipping.slip",
-      "method": "action_create_stock_transfer",
+      "method": "_action_create_stock_transfer",
+      "module": "dpt_shipping"
+    },
+    {
+      "model": "dpt.shipping.slip",
+      "method": "_create_shipping_receive_job",
       "module": "dpt_shipping"
     },
     {
@@ -11910,6 +13973,66 @@
       "model": "stock.picking",
       "method": "create_in_transfer_picking",
       "module": "dpt_shipping"
+    },
+    {
+      "model": "dpt.b01.balance.sheet.handler",
+      "method": "_query_balance_at_date",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.b02.income.statement.handler",
+      "method": "_query_account_totals",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.b03.cash.flow.handler",
+      "method": "_query_cash_flows",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.b03.cash.flow.handler",
+      "method": "_query_cash_balance",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.receivable.report.handler",
+      "method": "_get_opening_balance",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.receivable.report.handler",
+      "method": "_get_period_movements",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.receivable.report.handler",
+      "method": "_get_overdue_amounts",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.receivable.report.handler",
+      "method": "_get_weighted_avg_payment_days",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.trial.balance.report.handler",
+      "method": "_query_opening_balance",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "dpt.trial.balance.report.handler",
+      "method": "_query_period_movements",
+      "module": "dpt_vn_accounting_report"
+    },
+    {
+      "model": "account.posting",
+      "method": "_compute_value",
+      "module": "ev_account_posting"
+    },
+    {
+      "model": "account.posting",
+      "method": "check_balance",
+      "module": "ev_account_posting"
     },
     {
       "model": "res.users",
@@ -11952,6 +14075,16 @@
       "module": "ks_dashboard_ninja"
     },
     {
+      "model": "queue.job",
+      "method": "init",
+      "module": "queue_job"
+    },
+    {
+      "model": "res.users",
+      "method": "_login",
+      "module": "sttl_otp_login"
+    },
+    {
       "model": "dpt.ai.agent",
       "method": "init",
       "module": "dpt_ai"
@@ -11971,7 +14104,7 @@
     {
       "model": "dpt.sale.order.document",
       "module": "dpt_document_management",
-      "guard_count": 30
+      "guard_count": 31
     },
     {
       "model": "res.partner",
@@ -11989,14 +14122,19 @@
       "guard_count": 27
     },
     {
-      "model": "account.payment",
-      "module": "dpt_account_payment_v2",
-      "guard_count": 23
-    },
-    {
       "model": "dpt.contract.management",
       "module": "dpt_contract_management",
-      "guard_count": 23
+      "guard_count": 24
+    },
+    {
+      "model": "account.payment",
+      "module": "dpt_account_payment_v2",
+      "guard_count": 21
+    },
+    {
+      "model": "hr.applicant",
+      "module": "dpt_hr_hiring",
+      "guard_count": 21
     },
     {
       "model": "dpt.ai.provider.config",
@@ -12019,14 +14157,14 @@
       "guard_count": 19
     },
     {
+      "model": "dpt.shipping.slip",
+      "module": "dpt_shipping",
+      "guard_count": 17
+    },
+    {
       "model": "dpt.sddk.reconcile.wizard",
       "module": "dpt_sddk_reconcile",
       "guard_count": 16
-    },
-    {
-      "model": "dpt.shipping.slip",
-      "module": "dpt_shipping",
-      "guard_count": 14
     },
     {
       "model": "telegram.bot",
@@ -12041,6 +14179,11 @@
     {
       "model": "approval.request",
       "module": "dpt_account_payment_v2",
+      "guard_count": 12
+    },
+    {
+      "model": "dpt.cost.line",
+      "module": "dpt_cost_management",
       "guard_count": 12
     },
     {
@@ -12089,9 +14232,24 @@
       "guard_count": 10
     },
     {
+      "model": "dpt.bank.transaction.import.wizard",
+      "module": "dpt_fund_management",
+      "guard_count": 9
+    },
+    {
       "model": "dpt.sale.order.learning.session",
       "module": "dpt_sale_order_learning",
       "guard_count": 9
+    },
+    {
+      "model": "dpt.fund.transaction",
+      "module": "dpt_fund_management",
+      "guard_count": 8
+    },
+    {
+      "model": "project.project",
+      "module": "dpt_hr_hiring",
+      "guard_count": 8
     },
     {
       "model": "hr.job",
@@ -12106,6 +14264,11 @@
     {
       "model": "dpt.reconcile.by.so.wizard",
       "module": "dpt_credit_management",
+      "guard_count": 7
+    },
+    {
+      "model": "okr.node",
+      "module": "dpt_okr",
       "guard_count": 7
     },
     {
@@ -12131,11 +14294,6 @@
     {
       "model": "dpt.leave.termination.balance",
       "module": "dpt_leave_management",
-      "guard_count": 6
-    },
-    {
-      "model": "okr.node",
-      "module": "dpt_okr",
       "guard_count": 6
     },
     {
@@ -12194,6 +14352,11 @@
       "guard_count": 5
     },
     {
+      "model": "dpt.ai.provider.config",
+      "module": "dpt_hr_hiring",
+      "guard_count": 5
+    },
+    {
       "model": "hr.employee",
       "module": "dpt_leave_management",
       "guard_count": 5
@@ -12206,6 +14369,11 @@
     {
       "model": "dpt.sale.order.learning.peer.evaluation",
       "module": "dpt_sale_order_learning",
+      "guard_count": 5
+    },
+    {
+      "model": "sale.order",
+      "module": "dpt_sale_value_allocation",
       "guard_count": 5
     },
     {
@@ -12239,18 +14407,28 @@
       "guard_count": 4
     },
     {
+      "model": "dpt.fund.account",
+      "module": "dpt_fund_management",
+      "guard_count": 4
+    },
+    {
       "model": "helpdesk.ticket",
       "module": "dpt_helpdesk_ticket",
       "guard_count": 4
     },
     {
-      "model": "sale.order",
-      "module": "dpt_sale_approvals",
+      "model": "dpt.hr.company.strategy",
+      "module": "dpt_hr_hiring",
       "guard_count": 4
     },
     {
-      "model": "dpt.sale.service.management",
-      "module": "dpt_sale_management",
+      "model": "hr.job",
+      "module": "dpt_hr_hiring",
+      "guard_count": 4
+    },
+    {
+      "model": "sale.order",
+      "module": "dpt_sale_approvals",
       "guard_count": 4
     },
     {
@@ -12334,6 +14512,11 @@
       "guard_count": 3
     },
     {
+      "model": "dpt.fund.audit",
+      "module": "dpt_fund_management",
+      "guard_count": 3
+    },
+    {
       "model": "dpt.office.location",
       "module": "dpt_hr_attendance_gps",
       "guard_count": 3
@@ -12344,8 +14527,18 @@
       "guard_count": 3
     },
     {
+      "model": "dpt.shipping.slip",
+      "module": "dpt_sale_iae_split",
+      "guard_count": 3
+    },
+    {
       "model": "dpt.export.import.line",
       "module": "dpt_sale_iae_split",
+      "guard_count": 3
+    },
+    {
+      "model": "dpt.sale.service.management",
+      "module": "dpt_sale_management",
       "guard_count": 3
     },
     {
@@ -12419,6 +14612,11 @@
       "guard_count": 2
     },
     {
+      "model": "product.pricelist.item",
+      "module": "dpt_cost_management",
+      "guard_count": 2
+    },
+    {
       "model": "dpt.credit.config",
       "module": "dpt_credit_management",
       "guard_count": 2
@@ -12434,6 +14632,11 @@
       "guard_count": 2
     },
     {
+      "model": "dpt.expense.allocation",
+      "module": "dpt_expense",
+      "guard_count": 2
+    },
+    {
       "model": "dpt.product.description.line",
       "module": "dpt_export_import",
       "guard_count": 2
@@ -12444,23 +14647,43 @@
       "guard_count": 2
     },
     {
+      "model": "dpt.exchange.rate",
+      "module": "dpt_fund_management",
+      "guard_count": 2
+    },
+    {
       "model": "sale.order",
       "module": "dpt_helpdesk_ticket",
       "guard_count": 2
     },
     {
-      "model": "hr.interview.evaluation.line",
-      "module": "dpt_interview_evaluation",
+      "model": "dpt.ai.agent",
+      "module": "dpt_hr_hiring",
+      "guard_count": 2
+    },
+    {
+      "model": "dpt.hr.company.okr",
+      "module": "dpt_hr_hiring",
+      "guard_count": 2
+    },
+    {
+      "model": "dpt.hr.department.okr",
+      "module": "dpt_hr_hiring",
+      "guard_count": 2
+    },
+    {
+      "model": "dpt.project.eval.session",
+      "module": "dpt_hr_hiring",
+      "guard_count": 2
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "module": "dpt_hr_hiring",
       "guard_count": 2
     },
     {
       "model": "res.partner",
       "module": "dpt_res_partner",
-      "guard_count": 2
-    },
-    {
-      "model": "dpt.shipping.slip",
-      "module": "dpt_sale_iae_split",
       "guard_count": 2
     },
     {
@@ -12509,6 +14732,11 @@
       "guard_count": 2
     },
     {
+      "model": "dpt.shipping.split.wizard",
+      "module": "dpt_shipping",
+      "guard_count": 2
+    },
+    {
       "model": "picking.split.package.line",
       "module": "dpt_shipping",
       "guard_count": 2
@@ -12521,6 +14749,11 @@
     {
       "model": "stock.warehouse",
       "module": "dpt_stock_management",
+      "guard_count": 2
+    },
+    {
+      "model": "dpt.contract.management",
+      "module": "dpt_tax_refund_contract",
       "guard_count": 2
     },
     {
@@ -12614,6 +14847,16 @@
       "guard_count": 1
     },
     {
+      "model": "dpt.cost.line.allocation",
+      "module": "dpt_cost_management",
+      "guard_count": 1
+    },
+    {
+      "model": "dpt.service.management.required.fields",
+      "module": "dpt_cost_management",
+      "guard_count": 1
+    },
+    {
       "model": "account.payment",
       "module": "dpt_credit_management",
       "guard_count": 1
@@ -12634,6 +14877,26 @@
       "guard_count": 1
     },
     {
+      "model": "dpt.fund.transaction.export.wizard",
+      "module": "dpt_fund_management",
+      "guard_count": 1
+    },
+    {
+      "model": "dpt.fund.transfer",
+      "module": "dpt_fund_management",
+      "guard_count": 1
+    },
+    {
+      "model": "dpt.pending.transfer",
+      "module": "dpt_fund_management",
+      "guard_count": 1
+    },
+    {
+      "model": "dpt.hr.strategy.feedback",
+      "module": "dpt_hr_hiring",
+      "guard_count": 1
+    },
+    {
       "model": "hr.leave",
       "module": "dpt_hr_leave",
       "guard_count": 1
@@ -12645,6 +14908,11 @@
     },
     {
       "model": "hr.interview.evaluation",
+      "module": "dpt_interview_evaluation",
+      "guard_count": 1
+    },
+    {
+      "model": "hr.interview.evaluation.line",
       "module": "dpt_interview_evaluation",
       "guard_count": 1
     },
@@ -12709,7 +14977,7 @@
       "guard_count": 1
     },
     {
-      "model": "sale.order",
+      "model": "dpt.payment.sale.allocation.line",
       "module": "dpt_sale_value_allocation",
       "guard_count": 1
     },
@@ -12744,11 +15012,6 @@
       "guard_count": 1
     },
     {
-      "model": "dpt.shipping.split.wizard",
-      "module": "dpt_shipping",
-      "guard_count": 1
-    },
-    {
       "model": "stock.picking",
       "module": "dpt_stock_management",
       "guard_count": 1
@@ -12769,6 +15032,11 @@
       "guard_count": 1
     },
     {
+      "model": "account.posting",
+      "module": "ev_account_posting",
+      "guard_count": 1
+    },
+    {
       "model": "ks_dashboard_ninja.item_action",
       "module": "ks_dashboard_ninja",
       "guard_count": 1
@@ -12781,6 +15049,11 @@
     {
       "model": "ks_dashboard_ninja.fetch_key",
       "module": "ks_dashboard_ninja",
+      "guard_count": 1
+    },
+    {
+      "model": "res.users",
+      "module": "password_reset_manager",
       "guard_count": 1
     },
     {
@@ -13273,6 +15546,17 @@
       "module": "dpt_cost_allocation"
     },
     {
+      "model": "dpt.cost.management",
+      "field": "object_type",
+      "keys": [
+        "order",
+        "shipping_slip",
+        "export_import",
+        "export"
+      ],
+      "module": "dpt_cost_management"
+    },
+    {
       "model": "dpt.reseller.users",
       "field": "state_users",
       "keys": [
@@ -13687,6 +15971,42 @@
       "module": "dpt_custom_lead"
     },
     {
+      "model": "customer.debt.report",
+      "field": "payment_state",
+      "keys": [
+        "not_paid",
+        "in_payment",
+        "paid",
+        "partial",
+        "reversed",
+        "invoicing_legacy"
+      ],
+      "module": "dpt_customer_debt"
+    },
+    {
+      "model": "customer.debt.report",
+      "field": "debt_status",
+      "keys": [
+        "current",
+        "upcoming",
+        "due",
+        "overdue"
+      ],
+      "module": "dpt_customer_debt"
+    },
+    {
+      "model": "customer.debt.report",
+      "field": "move_type",
+      "keys": [
+        "out_invoice",
+        "in_invoice",
+        "out_refund",
+        "in_refund",
+        "payment"
+      ],
+      "module": "dpt_customer_debt"
+    },
+    {
       "model": "dpt.sale.order.document",
       "field": "document_type",
       "keys": [
@@ -13724,6 +16044,15 @@
         "select_position"
       ],
       "module": "dpt_document_management"
+    },
+    {
+      "model": "dpt.create.account.expense.wizard",
+      "field": "type",
+      "keys": [
+        "expense_allocation",
+        "expense_invoice"
+      ],
+      "module": "dpt_expense"
     },
     {
       "model": "dpt.export",
@@ -13901,6 +16230,128 @@
       "module": "dpt_export_import"
     },
     {
+      "model": "dpt.bank.transaction.import.wizard",
+      "field": "date_format",
+      "keys": [
+        "dd/mm/yyyy",
+        "mm/dd/yyyy",
+        "yyyy-mm-dd",
+        "dd-mm-yyyy"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.bank.transaction.import.wizard",
+      "field": "import_status",
+      "keys": [
+        "draft",
+        "preview",
+        "done",
+        "error"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.exchange.rate",
+      "field": "source",
+      "keys": [
+        "manual",
+        "vietinbank",
+        "system"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.account",
+      "field": "fund_type",
+      "keys": [
+        "vn",
+        "china",
+        "intermediate"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.account",
+      "field": "account_type",
+      "keys": [
+        "bank",
+        "cash",
+        "investment",
+        "other"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.audit",
+      "field": "difference_type",
+      "keys": [
+        "surplus",
+        "shortage",
+        "match"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.audit.line",
+      "field": "denomination",
+      "keys": [
+        "500000",
+        "200000",
+        "100000",
+        "50000",
+        "20000",
+        "10000",
+        "5000",
+        "2000",
+        "1000",
+        "500",
+        "200",
+        "100"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.transaction",
+      "field": "transaction_type",
+      "keys": [
+        "income",
+        "expense"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.transaction",
+      "field": "import_source",
+      "keys": [
+        "manual",
+        "bank_excel",
+        "api"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.transaction.export.wizard",
+      "field": "transaction_type",
+      "keys": [
+        "all",
+        "income",
+        "expense"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
+      "model": "dpt.fund.transaction.export.wizard",
+      "field": "state_filter",
+      "keys": [
+        "all",
+        "draft",
+        "posted",
+        "cancelled"
+      ],
+      "module": "dpt_fund_management"
+    },
+    {
       "model": "helpdesk.team",
       "field": "team_group",
       "keys": [
@@ -14013,6 +16464,439 @@
         "no"
       ],
       "module": "dpt_hr_custom"
+    },
+    {
+      "model": "dpt.hr.department.okr",
+      "field": "quarter",
+      "keys": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.eval.board.member",
+      "field": "role",
+      "keys": [
+        "president",
+        "director",
+        "member"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.eval.criteria.set",
+      "field": "eval_type",
+      "keys": [
+        "project",
+        "member"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.eval.session",
+      "field": "session_type",
+      "keys": [
+        "approval",
+        "acceptance"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.eval.session",
+      "field": "vote_result",
+      "keys": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.eval.vote",
+      "field": "vote",
+      "keys": [
+        "approve",
+        "reject",
+        "abstain"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "cv_review_state",
+      "keys": [
+        "draft",
+        "analyzing",
+        "reviewed",
+        "interview_scheduled",
+        "rejected"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "cv_grade",
+      "keys": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "cv_recommendation",
+      "keys": [
+        "pass",
+        "fail",
+        "consider",
+        "transfer"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "interview_kit_state",
+      "keys": [
+        "draft",
+        "generated",
+        "ready",
+        "completed"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "bars_technical",
+      "keys": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "bars_culture",
+      "keys": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.applicant",
+      "field": "bars_overall",
+      "keys": [
+        "strong_no",
+        "no",
+        "lean_no",
+        "lean_yes",
+        "yes",
+        "strong_yes"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.bias.term",
+      "field": "category",
+      "keys": [
+        "gender",
+        "age",
+        "hype",
+        "discrimination",
+        "appearance",
+        "economic",
+        "other"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.company.strategy",
+      "field": "default_work_mode",
+      "keys": [
+        "onsite",
+        "hybrid",
+        "remote"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.competency",
+      "field": "type",
+      "keys": [
+        "core",
+        "functional",
+        "department"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "field": "company_okr_quarter_filter",
+      "keys": [
+        "all",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.department.strategy",
+      "field": "department_okr_quarter_filter",
+      "keys": [
+        "all",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.hiring.decision",
+      "field": "decision",
+      "keys": [
+        "hire",
+        "reject",
+        "more_rounds",
+        "pending"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.interview.question",
+      "field": "category",
+      "keys": [
+        "behavioral",
+        "situational",
+        "technical",
+        "culture"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.interview.question",
+      "field": "level",
+      "keys": [
+        "all",
+        "junior",
+        "mid",
+        "senior",
+        "lead"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.job",
+      "field": "jd_state",
+      "keys": [
+        "draft",
+        "ai_generated",
+        "review",
+        "published",
+        "closed"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.job",
+      "field": "level",
+      "keys": [
+        "junior",
+        "mid",
+        "senior",
+        "lead"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.job",
+      "field": "work_mode",
+      "keys": [
+        "onsite",
+        "hybrid",
+        "remote"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.job",
+      "field": "gender_requirement",
+      "keys": [
+        "any",
+        "male",
+        "female"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "hr.job",
+      "field": "employment_type",
+      "keys": [
+        "fulltime",
+        "parttime",
+        "contract",
+        "intern"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.skill.map",
+      "field": "category",
+      "keys": [
+        "tech",
+        "office",
+        "design",
+        "pm",
+        "marketing",
+        "logistics",
+        "finance",
+        "other"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "todo_priority",
+      "keys": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "okr_origin_level",
+      "keys": [
+        "company",
+        "department"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "department_scope",
+      "keys": [
+        "cross_dept",
+        "in_dept",
+        "in_team"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "lead_role_required",
+      "keys": [
+        "manager",
+        "team_leader",
+        "senior",
+        "staff"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "risk_impact_level",
+      "keys": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "project_level",
+      "keys": [
+        "level_1",
+        "level_2",
+        "level_3",
+        "level_4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "level_override",
+      "keys": [
+        "level_1",
+        "level_2",
+        "level_3",
+        "level_4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "project.project",
+      "field": "approval_state",
+      "keys": [
+        "draft",
+        "info_pending",
+        "on_hold",
+        "pending_board",
+        "rejected",
+        "approved",
+        "paused",
+        "done",
+        "cancelled"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.risk",
+      "field": "risk_level",
+      "keys": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.project.risk",
+      "field": "probability",
+      "keys": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.strategy.dashboard",
+      "field": "quarter_filter",
+      "keys": [
+        "all",
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "module": "dpt_hr_hiring"
+    },
+    {
+      "model": "dpt.hr.strategy.feedback",
+      "field": "topic",
+      "keys": [
+        "clarity",
+        "feasibility",
+        "support",
+        "other"
+      ],
+      "module": "dpt_hr_hiring"
     },
     {
       "model": "hr.leave.type",
@@ -14743,6 +17627,16 @@
     },
     {
       "model": "sale.order",
+      "field": "discount_period",
+      "keys": [
+        "month",
+        "quarter",
+        "none"
+      ],
+      "module": "dpt_sale_value_allocation"
+    },
+    {
+      "model": "sale.order",
       "field": "report_template_selection",
       "keys": [
         "template1",
@@ -14914,6 +17808,17 @@
         "container_tq",
         "container_vn",
         "last_delivery_vn"
+      ],
+      "module": "dpt_shipping"
+    },
+    {
+      "model": "dpt.shipping.slip",
+      "field": "queue_status",
+      "keys": [
+        "waiting",
+        "running",
+        "done",
+        "error"
       ],
       "module": "dpt_shipping"
     },
@@ -15103,6 +18008,16 @@
         "text"
       ],
       "module": "eqp_backup"
+    },
+    {
+      "model": "account.posting.config",
+      "field": "type",
+      "keys": [
+        "debit",
+        "credit",
+        "balance"
+      ],
+      "module": "ev_account_posting"
     },
     {
       "model": "mail.message",

@@ -483,6 +483,8 @@ Trước khi viết BẤT KỲ method Odoo nào, kiểm tra:
 # PHẦN II: KIẾN THỨC DEV CUSTOM DPT
 
 > Tài liệu bổ sung cho Dev khi viết code trên hệ thống DPT — dịch vụ xuất nhập khẩu, logistics.
+>
+> `scan_timestamp: 2026-05-25T10:53:32`
 
 ---
 
@@ -524,8 +526,32 @@ Trước khi viết BẤT KỲ method Odoo nào, kiểm tra:
 | `dpt.ai.tool` | `dpt_ai` | AI Tool definitions |
 | `dpt.service.discount.policy` | `dpt_sale_discount` | Chính sách chiết khấu |
 | `dpt.service.discount.tier` | `dpt_sale_discount` | Tier chiết khấu |
+| `dpt.service.discount.policy.line` | `dpt_sale_discount` | Dòng chiết khấu theo service |
 | `purchase.order.line.package` | `dpt_stock_management` | Package lines trên PO/Picking |
 | `zalo.oa.template` | `dpt_zalo_oa` | Template Zalo OA |
+| `dpt.cost.management` | `dpt_cost_management` | Quản lý chi phí đơn hàng |
+| `dpt.cost.line` | `dpt_cost_management` | Dòng chi phí (draft → planned) |
+| `dpt.cost.line.allocation` | `dpt_cost_management` | Phân bổ chi phí vào SO |
+| `dpt.cost.stage` | `dpt_cost_management` | Chặng chi phí |
+| `dpt.cost.allocation` | `dpt_cost_allocation` | Phân bổ chi phí XHĐ |
+| `dpt.cost.allocation.line` | `dpt_cost_allocation` | Chi tiết dòng phân bổ |
+| `dpt.credit.policy` | `dpt_credit_management` | Chính sách tín dụng |
+| `dpt.credit.config` | `dpt_credit_management` | Cấu hình tín dụng |
+| `dpt.grace.request` | `dpt_credit_management` | Yêu cầu gia hạn nợ |
+| `dpt.late.interest.line` | `dpt_credit_management` | Dòng lãi chậm |
+| `dpt.debt.alert.engine` | `dpt_credit_management` | Engine cảnh báo công nợ |
+| `dpt.sale.order.document` | `dpt_document_management` | Chứng từ SO |
+| `dpt.expense.allocation` | `dpt_expense` | Phân bổ chi phí dịch vụ |
+| `dpt.fund.account` | `dpt_fund_management` | Tài khoản quỹ |
+| `dpt.fund.transaction` | `dpt_fund_management` | Giao dịch quỹ |
+| `dpt.fund.transfer` | `dpt_fund_management` | Chuyển khoản nội bộ |
+| `dpt.fund.audit` | `dpt_fund_management` | Kiểm toán quỹ |
+| `dpt.fund.dashboard` | `dpt_fund_management` | Dashboard quỹ |
+| `dpt.payment.sale.allocation.line` | `dpt_sale_value_allocation` | Dòng phân bổ DNTT gộp |
+| `dpt.policy.notification` | `dpt_crm_contacts` | Thông báo chính sách KH |
+| `usb.token.signing` | `dpt_usb_token_signing` | Ký số USB token |
+| `dpt.import.line` | `dpt_import_declaration` | Dòng tờ khai NK |
+| `dpt.import.history` | `dpt_import_declaration` | Lịch sử import |
 
 ### 12.2 Model Inherit Chính
 
@@ -539,7 +565,12 @@ Trước khi viết BẤT KỲ method Odoo nào, kiểm tra:
 | `stock.warehouse` | `dpt_stock_management` | +is_main_incoming_warehouse, +is_tq_transit_warehouse, etc. |
 | `res.currency` | `dpt_currency_management` | +category, +category_code, +legal_entity |
 | `res.partner` | `dpt_res_partner` | +vendor_partner_ids, +dpt_type_of_partner, +dpt_gender, +legal_entity |
+| `sale.order` | `dpt_sale_value_allocation` | +source_payment_ids, +sale_allocation_line_ids, +revenue_payment compute |
+| `sale.order` | `dpt_sale_deposit` | +deposit_ids, +deposit_count, +deposit_amount_total |
+| `sale.order` | `dpt_cost_management` | +cost_line_ids, cost management integration |
+| `sale.order` | `dpt_credit_management` | +credit policy checks, debt alerts |
 | `account.payment` | `dpt_account_payment_v2` | +payment flow, risk control |
+| `account.payment` | `dpt_sale_value_allocation` | +sale_allocation_line_ids (DNTT gộp) |
 | `helpdesk.ticket` | `dpt_helpdesk_ticket` | +sale_id liên kết |
 | `approval.request` | multiple | +contract_id, +combo_id |
 
@@ -811,10 +842,24 @@ if move_ids:
 | Context Key | Mô tả | Module |
 |-------------|--------|--------|
 | `bypass_locked` | Bỏ qua check locked khi write SO | `dpt_sale_management` |
+| `bypass_lock` | Biến thể của bypass_locked | `dpt_sale_management` |
+| `bypass_calculate_price` | Bỏ qua tính giá tự động | `dpt_sale_management` |
+| `bypass_log` | Bỏ qua ghi log | Various |
 | `skip_sync_shipping_to_ticket` | Không sync stage khi update shipping | `dpt_shipping` |
 | `skip_sync_ticket_to_shipping` | Không sync stage khi update ticket | `dpt_shipping` |
 | `skip_move_line_in_confirm` | Bỏ qua tạo move_line khi confirm picking | `dpt_shipping` |
 | `creating_tq_ctq_transfer` | Bypass validate khi tạo phiếu Container TQ | `dpt_shipping` |
+| `skip_code_regeneration` | Không tạo lại mã tự động | Various |
+| `skip_combo_log` | Bỏ qua log thay đổi combo | `dpt_sale_management` |
+| `skip_iae_log` | Bỏ qua log thay đổi tờ khai | `dpt_export_import` |
+| `skip_service_log` | Bỏ qua log thay đổi dịch vụ | `dpt_sale_management` |
+| `skip_so_sync` | Không sync SO khi update liên kết | Various |
+| `skip_po_sync` | Không sync PO khi update liên kết | Various |
+| `skip_ticket_sync` | Không sync ticket khi update | `dpt_helpdesk_ticket` |
+| `skip_update_ticket_line` | Không cập nhật ticket line | `dpt_helpdesk_ticket` |
+| `skip_wait_confirm_log` | Bỏ qua log chờ xác nhận | `dpt_export_import` |
+| `skip_peer_review_check` | Bỏ qua kiểm tra peer review | `dpt_sale_order_learning` |
+| `force_user_ids_update` | Bắt buộc cập nhật user_ids | Various |
 | `mail_notrack` | Tắt tracking mail (tăng tốc) | Common |
 | `mail_create_nolog` | Tắt tạo log note khi create | Common |
 | `tracking_disable` | Tắt tracking thay đổi trường | Common |

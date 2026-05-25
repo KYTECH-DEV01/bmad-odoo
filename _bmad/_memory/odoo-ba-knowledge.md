@@ -209,6 +209,8 @@ CIF = FOB + Cước vận chuyển quốc tế (Freight) + Phí bảo hiểm (In
 # PHẦN II: KIẾN THỨC NGHIỆP VỤ CUSTOM DPT
 
 > Tài liệu bổ sung dành cho hệ thống ERP custom của DPT — công ty dịch vụ xuất nhập khẩu, logistics, và ủy thác thương mại.
+>
+> `scan_timestamp: 2026-05-25T10:53:32`
 
 ---
 
@@ -218,7 +220,7 @@ CIF = FOB + Cước vận chuyển quốc tế (Freight) + Phí bảo hiểm (In
 
 | Repo | Vai trò | Số module |
 |------|---------|-----------|
-| `Odoo-DPT` | Module nghiệp vụ chính | ~80 module (60+ `dpt_*`) |
+| `Odoo-DPT` | Module nghiệp vụ chính | 96 module (70+ `dpt_*`) |
 | `Odoo-DX` | Module mở rộng (Table Import, Telegram) | 2 module |
 | `dpt-ai-agent` | AI Agent tích hợp Odoo | 1 module (`dpt_ai`) |
 | `odoo` | Odoo CE 17 (base) | Framework |
@@ -251,13 +253,21 @@ CIF = FOB + Cước vận chuyển quốc tế (Freight) + Phí bảo hiểm (In
 | **Đào tạo** | `dpt_website_slides_training` | `training.session`, `training.assessment` | E-learning + đánh giá |
 | **Partner** | `dpt_res_partner` | `res.partner` (inherit) | Partner mở rộng: vendor, legal entity |
 | **Portal** | `dpt_theme_website` | `portal.mixin` (inherit) | Portal khách hàng |
-| **Phân bổ** | `dpt_sale_value_allocation` | `sale.order` (inherit) | Phân bổ giá trị SO vào export/import lines |
-| **Chi phí** | `dpt_cost_allocation` | — | Phân bổ chi phí XHĐ |
+| **Phân bổ** | `dpt_sale_value_allocation` | `sale.order` (inherit), `dpt.payment.sale.allocation.line` | Phân bổ giá trị SO vào export/import lines + DNTT gộp |
+| **Chi phí XHĐ** | `dpt_cost_allocation` | `dpt.cost.allocation`, `dpt.cost.allocation.line` | Phân bổ chi phí XHĐ (draft → allocated → cancelled) |
+| **Quản lý chi phí** | `dpt_cost_management` | `dpt.cost.management`, `dpt.cost.line`, `dpt.cost.stage` | Quản lý chi phí đơn hàng, phân bổ cost line vào SO |
+| **Tín dụng** | `dpt_credit_management` | `dpt.credit.policy`, `dpt.grace.request`, `dpt.late.interest.line` | Quản lý tín dụng, gia hạn, lãi chậm |
+| **Chứng từ** | `dpt_document_management` | `dpt.sale.order.document` | Quản lý chứng từ SO (ký, phê duyệt, thu hồi) |
+| **Chi phí DV** | `dpt_expense` | `dpt.expense.allocation` | Phân bổ chi phí dịch vụ vào invoice |
+| **Quỹ** | `dpt_fund_management` | `dpt.fund.transaction`, `dpt.fund.transfer`, `dpt.fund.audit` | Quản lý quỹ tiền mặt, chuyển khoản nội bộ |
+| **Đặt cọc** | `dpt_sale_deposit` | `sale.order` (inherit), `account.payment` | Quản lý cọc SO (inbound payment) |
+| **CRM nâng cao** | `dpt_crm_contacts` | `crm.lead` (inherit), `dpt.policy.notification` | CRM contacts mở rộng, policy notification |
+| **Tờ khai NK** | `dpt_import_declaration` | `dpt.import.line`, `dpt.import.history` | Import declaration batch |
 | **Báo cáo** | `dpt_sales_report`, `dpt_purchase_report`, `dpt_payment_report` | — | Báo cáo tùy chỉnh |
 | **Bảo mật** | `dpt_security` | — | Nhóm quyền custom DPT |
-| **Học tập SO** | `dpt_sale_order_learning` | `learning.session`, `learning.peer.review` | Đào tạo qua đơn hàng thực tế |
+| **Học tập SO** | `dpt_sale_order_learning` | `dpt.sale.order.learning.session`, `dpt.sale.order.learning.peer.review` | Đào tạo qua đơn hàng thực tế |
 | **Phê duyệt hàng loạt** | `dpt_bulk_approval` | — | Phê duyệt nhiều yêu cầu cùng lúc |
-| **Ký số USB** | `dpt_usb_token_signing` | — | Ký PDF bằng USB token |
+| **Ký số USB** | `dpt_usb_token_signing` | `usb.token.signing` | Ký PDF bằng USB token (draft → signed → failed) |
 
 ### 11.3 Dependency Graph — Chuỗi phụ thuộc chính
 
@@ -381,6 +391,60 @@ delivery_slip_type:
 ```
 
 Stage phải đi theo thứ tự sequence, không được quay lại.
+
+### 12.6 Chính sách tín dụng (dpt.credit.policy)
+
+```
+States: draft → submitted → approved → waiting_signature → signed → active → cancelled/rejected
+```
+
+### 12.7 Gia hạn nợ (dpt.grace.request)
+
+```
+States: draft → submitted → approved → active → expired/done/cancelled
+```
+
+### 12.8 Chứng từ SO (dpt.sale.order.document)
+
+```
+States: draft → customer_approved → invoice_issued → pending_approval → approved → internal_signed → recovered → cancelled
+```
+
+### 12.9 Quỹ - Giao dịch (dpt.fund.transaction)
+
+```
+States: draft → confirmed → posted
+```
+
+### 12.10 Quỹ - Chuyển khoản (dpt.fund.transfer)
+
+```
+States: draft → pending → received → cancelled
+```
+
+### 12.11 Hồ sơ hoàn thuế (dpt.tax.refund.profile)
+
+```
+States: deposit_factory → paid_factory → invoice_issued → customs_cleared → submitted → declared → received → refunded → cancel
+```
+
+### 12.12 Chính sách chiết khấu (dpt.service.discount.policy)
+
+```
+States: draft → submitted → approved → paused → expired → cancelled/rejected
+```
+
+### 12.13 Phân bổ chi phí (dpt.cost.allocation)
+
+```
+States: draft → allocated → cancelled
+```
+
+### 12.14 Chi phí dòng (dpt.cost.line)
+
+```
+States: draft → planned
+```
 
 ---
 
@@ -540,6 +604,10 @@ DPT sử dụng `approvals` module (Enterprise) mở rộng.
 | 10 | Khách hàng chưa có giới tính? | Warning trên HĐ khi chọn invoice_partner |
 | 11 | Dynamic fields bị mất khi thay đổi dịch vụ? | `_generate_fields_from_services()` rebuild từ service/combo |
 | 12 | Phiếu vận chuyển chặng cuối không có lot_quant? | `_constrains_get_lot_quant()` auto tạo từ ticket |
+| 13 | DNTT gộp (source_payment_ids) không hiện trong stat button? | Gộp `payment_ids \| source_payment_ids` trong domain action |
+| 14 | Credit policy hết hạn nhưng chưa cancelled? | Cron auto-expire hoặc manual cancel |
+| 15 | Fund transfer pending nhưng chưa received? | Check `state == 'pending'` trước khi tạo transfer mới |
+| 16 | Cost allocation trùng cho cùng SO+EI line? | SQL constraint hoặc check trước allocate |
 
 ---
 

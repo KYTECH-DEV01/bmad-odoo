@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biz Spine v5 — Kỳ Tốc Order Lifecycle (Contract Anatomy Lens · 14 aspects · 8 entities) · 2026-05-22</title>
+  <style>
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      background: #F8F7F4;
+      color: #1A1916;
+      line-height: 1.5;
+    }
+    header { max-width: 1820px; margin: 0 auto 24px; }
+    h1 { font-size: 26px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.02em; }
+    h2 { font-size: 18px; font-weight: 600; margin: 0 0 12px; }
+    h3 { font-size: 15px; font-weight: 700; margin: 0 0 8px; }
+    .subtitle { font-size: 14px; color: #5F5E5A; margin: 0; }
+    .draft-tag {
+      display: inline-block; background: #FAEEDA; color: #633806;
+      font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-left: 10px;
+    }
+    code { background: #F1EFE8; padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
+
+    /* ===== Meta fact ===== */
+    .meta-fact {
+      max-width: 1820px; margin: 0 auto 16px; background: #FCFBF8;
+      border-left: 4px solid #3B6D11; padding: 16px 20px; border-radius: 0 8px 8px 0;
+    }
+    .meta-fact p { margin: 4px 0; font-size: 14px; }
+    .meta-fact strong { color: #27500A; }
+    .meta-fact blockquote {
+      margin: 8px 0 4px; padding: 6px 12px;
+      border-left: 3px solid #185FA5; background: #F0F6FC;
+      font-style: italic; color: #0C447C; font-size: 13.5px;
+    }
+
+    /* ===== Framework derivation panel ===== */
+    .framework-panel {
+      max-width: 1820px; margin: 0 auto 20px; background: #FBF8F1;
+      border: 1.5px solid #854F0B; border-radius: 10px; padding: 18px 22px;
+    }
+    .framework-panel h2 {
+      margin: 0 0 8px; font-size: 16px; color: #633806;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .framework-panel p { font-size: 13.5px; margin: 6px 0; color: #3D3C39; }
+    .framework-panel .mapping {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+      margin-top: 12px;
+    }
+    .framework-panel .mapping .cell {
+      background: white; border-radius: 6px; padding: 10px 12px;
+      border-left: 4px solid;
+    }
+    .framework-panel .mapping .cell .law { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #5F5E5A; font-weight: 700; }
+    .framework-panel .mapping .cell .biz { font-size: 14px; font-weight: 700; margin-top: 2px; }
+    .framework-panel .mapping .cell .desc { font-size: 11.5px; color: #5F5E5A; margin-top: 2px; }
+    .cell.cat-content { border-left-color: #3B6D11; }
+    .cell.cat-content .biz { color: #27500A; }
+    .cell.cat-terms { border-left-color: #854F0B; }
+    .cell.cat-terms .biz { color: #633806; }
+    .cell.cat-execution { border-left-color: #185FA5; }
+    .cell.cat-execution .biz { color: #0C447C; }
+    .cell.cat-money { border-left-color: #534AB7; }
+    .cell.cat-money .biz { color: #3C3489; }
+    .cell.cat-governance { border-left-color: #A32D2D; }
+    .cell.cat-governance .biz { color: #791F1F; }
+
+    /* ===== Canvas card ===== */
+    .canvas {
+      max-width: 1820px; margin: 0 auto 20px; background: white;
+      border: 1px solid #E5E3DC; border-radius: 12px; padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+    .canvas h2.section-title {
+      margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #27500A;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .canvas .section-sub {
+      margin: 0 0 14px; font-size: 13px; color: #5F5E5A;
+    }
+    svg { display: block; margin: 0 auto; height: auto; }
+
+    /* ===== Info grid for legends / tables ===== */
+    .info-grid {
+      max-width: 1820px; margin: 0 auto 20px;
+      display: grid; grid-template-columns: 1.1fr 1.5fr; gap: 20px;
+    }
+    .info-grid.three-col {
+      grid-template-columns: 1fr 1.2fr 1fr;
+    }
+    .panel {
+      background: white; border: 1px solid #E5E3DC; border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .panel.tone-biz { border-top: 4px solid #3B6D11; }
+    .panel.tone-biz h2 { color: #27500A; }
+    .panel.tone-doc { border-top: 4px solid #534AB7; }
+    .panel.tone-doc h2 { color: #3C3489; }
+    .panel.tone-fin { border-top: 4px solid #A32D2D; }
+    .panel.tone-fin h2 { color: #791F1F; }
+    .panel.tone-locked { border-top: 4px solid #185FA5; }
+    .panel.tone-locked h2 { color: #0C447C; }
+    .panel.tone-open { border-top: 4px solid #854F0B; }
+    .panel.tone-open h2 { color: #633806; }
+    .panel ul, .panel ol { margin: 6px 0 0; padding-left: 20px; font-size: 13.5px; color: #3D3C39; }
+    .panel li { margin-bottom: 5px; }
+
+    /* ===== Aspects table ===== */
+    table.aspect-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      margin-top: 4px;
+    }
+    table.aspect-table th {
+      text-align: left; font-weight: 700; font-size: 11.5px;
+      color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 8px 8px; border-bottom: 2px solid #E5E3DC;
+    }
+    table.aspect-table td {
+      padding: 8px 8px; vertical-align: top; border-bottom: 1px solid #F1EFE8;
+    }
+    .aspect-code {
+      display: inline-block; font-weight: 700; font-size: 12px;
+      padding: 2px 8px; border-radius: 4px; min-width: 32px; text-align: center; color: white;
+    }
+    .cat-tag {
+      display: inline-block; font-size: 10.5px; font-weight: 700;
+      padding: 1px 7px; border-radius: 3px; letter-spacing: 0.04em;
+    }
+    .cat-content { background: #EAF3DE; color: #27500A; }
+    .cat-terms { background: #FAEEDA; color: #633806; }
+    .cat-execution { background: #E6F1FB; color: #0C447C; }
+    .cat-money { background: #EEEDFE; color: #3C3489; }
+    .cat-governance { background: #FCEBEB; color: #791F1F; }
+
+    /* ===== Legend rows ===== */
+    .legend-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 5px 0; font-size: 13px;
+    }
+    .legend-swatch {
+      width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .legend-line {
+      width: 36px; height: 0; border-top: 2px solid #1A1916; flex-shrink: 0;
+    }
+    .legend-line.dashed { border-top-style: dashed; }
+    .legend-line.dotted { border-top-style: dotted; }
+
+    footer {
+      max-width: 1820px; margin: 24px auto 0; font-size: 12px;
+      color: #8B8A85; text-align: center;
+    }
+
+    /* ===== SVG style helpers ===== */
+    .e-label { font-family: inherit; font-size: 13px; font-weight: 700; fill: #1A1916; }
+    .e-sub { font-family: inherit; font-size: 10.5px; fill: #5F5E5A; }
+    .phase-label { font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .step-label { font-family: inherit; font-size: 10.5px; fill: #3D3C39; }
+    .small { font-family: inherit; font-size: 10px; fill: #5F5E5A; }
+    .arrow-label { font-family: inherit; font-size: 10.5px; font-weight: 600; }
+    .order-state { font-family: inherit; font-size: 10.5px; font-weight: 700; fill: #1A1916; }
+    .cat-band-label { font-family: inherit; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /*
+      ===========================================================
+      Palette v5 — 5 hue families per Contract Anatomy Lens
+      ===========================================================
+      Entity colors (8 entities — Tax Authority added in v5):
+        KH          #185FA5 / bg #E6F1FB
+        Ky Toc      #3B6D11 / bg #EAF3DE
+        CN Vendor   #5F5E5A / bg #F1EFE8
+        Export Ag.  #854F0B / bg #FAEEDA
+        CN WH       #6E5A8E / bg #ECE7F5
+        Custom      #A32D2D / bg #FCEBEB
+        Tax Auth.   #9B2C5A / bg #FAE8F0  (NEW v5)
+        VN WH       #2F7A6E / bg #DEEFEC
+        Don hang    #1A1916 (ink) / bg #FFF3D6
+
+      Aspect colors (14 aspects · 5 categories):
+        CONTENT (green family)
+          C1 #3B6D11  Goods
+          C2 #6BAA2B  Services
+        TERMS (amber family)
+          T1 #854F0B  Pricing
+          T2 #B5641B  Consignment
+          T3 #E0902F  SLA / Lead time
+        EXECUTION (blue family)
+          X1 #0C447C  Procurement
+          X2 #185FA5  Logistics
+          X3 #4A87C5  Customs
+        MONEY (purple family)
+          M1 #3C3489  Cash flow & Settlement
+          M2 #534AB7  Tax Outbound (VAT VN)
+          M3 #7A72D0  Tax Inbound (hoan thue VAT TQ)
+          M4 #A6A0E4  Debt Tracking
+        GOVERNANCE (red family)
+          G1 #A32D2D  Compliance (proactive)
+          G2 #C85650  Risk (reactive)  (NEW v5)
+    */
+
+    /* Aspect color helpers */
+    .a-C1 { stroke: #3B6D11; fill: #3B6D11; }
+    .a-C2 { stroke: #6BAA2B; fill: #6BAA2B; }
+    .a-T1 { stroke: #854F0B; fill: #854F0B; }
+    .a-T2 { stroke: #B5641B; fill: #B5641B; }
+    .a-T3 { stroke: #E0902F; fill: #E0902F; }
+    .a-X1 { stroke: #0C447C; fill: #0C447C; }
+    .a-X2 { stroke: #185FA5; fill: #185FA5; }
+    .a-X3 { stroke: #4A87C5; fill: #4A87C5; }
+    .a-M1 { stroke: #3C3489; fill: #3C3489; }
+    .a-M2 { stroke: #534AB7; fill: #534AB7; }
+    .a-M3 { stroke: #7A72D0; fill: #7A72D0; }
+    .a-M4 { stroke: #A6A0E4; fill: #A6A0E4; }
+    .a-G1 { stroke: #A32D2D; fill: #A32D2D; }
+    .a-G2 { stroke: #C85650; fill: #C85650; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <h1>
+      Biz Spine v5 — Kỳ Tốc Order Lifecycle (Contract Anatomy Lens · 14 aspects · 8 entities)
+      <span class="draft-tag">Draft v5 · 2026-05-22</span>
+    </h1>
+    <p class="subtitle">
+      Đơn hàng = trung tâm · 8 đối tượng nói chung 1 ngôn ngữ · <strong>14 aspects</strong> trong <strong>5 nhóm MECE</strong> (Contract Anatomy Lens) ·
+      timeline mềm 4 phase · Initiative <code>2026-05-21__odoo-biz-refactor</code>
+    </p>
+  </header>
+
+  <section class="meta-fact">
+    <p><strong>Insight v5:</strong> 5 nhóm aspect <em>MECE by construction</em> — derive từ <strong>Contract Anatomy</strong> (Object · Terms · Performance · Consideration · Remedies). Mọi interaction trong supply chain Kỳ Tốc đều fit chính xác 1 trong 5 nhóm này.</p>
+    <blockquote>"Categorization phải MECE — không trùng, không sót. Contract anatomy là lens chuẩn." — Manh, 2026-05-22</blockquote>
+    <p><strong>Khác biệt v4 → v5:</strong> (1) Tax Authority thêm explicit entity lane #8 (1 type · 2 instances TQ+VN). (2) G1 split → G1 Compliance + G2 Risk (14 aspects). (3) T3 SLA simplified to single commitment render. (4) Kỳ Tốc lane: capability-based model note (vertical mgmt × horizontal execution). (5) Q23-Q30 confirmed badges added.</p>
+    <p><strong>Scope:</strong> D1 (object map) + D2 (aspects) + D3 (interactions với timeline mềm). D4 (sub-entities/carriers) + D5 (operational tasks) deferred.</p>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== FRAMEWORK DERIVATION PANEL ===== -->
+  <!-- =================================================================== -->
+  <section class="framework-panel">
+    <h2>Khung phân loại — Contract Anatomy Lens</h2>
+    <p>
+      5 nhóm aspect được derive trực tiếp từ <strong>cấu trúc cứng của một hợp đồng</strong> (Contract Anatomy) — một khung phân loại đã được kiểm chứng trong luật hợp đồng &amp; commercial law: mỗi quan hệ giao dịch giữa 2 bên đều có 5 thành tố tách biệt. Áp dụng vào supply chain Kỳ Tốc, đây là partition <strong>MECE by construction</strong>: mọi interaction giữa 8 đối tượng đều thuộc <em>chính xác 1</em> trong 5 nhóm.
+    </p>
+    <p style="font-size: 12.5px; color: #5F5E5A;">
+      Cross-reference: <code>pyramid-model</code> skill · reference <code>06_aspect_lens_framework.md</code> (đang draft song song).
+    </p>
+    <div class="mapping">
+      <div class="cell cat-content">
+        <div class="law">Object</div>
+        <div class="biz">CONTENT</div>
+        <div class="desc">Đối tượng giao dịch là gì? — Hàng hóa &amp; dịch vụ.</div>
+      </div>
+      <div class="cell cat-terms">
+        <div class="law">Terms</div>
+        <div class="biz">TERMS</div>
+        <div class="desc">Điều khoản giao dịch — giá, phương thức, SLA.</div>
+      </div>
+      <div class="cell cat-execution">
+        <div class="law">Performance</div>
+        <div class="biz">EXECUTION</div>
+        <div class="desc">Thực thi nghĩa vụ — mua, vận chuyển, thông quan.</div>
+      </div>
+      <div class="cell cat-money">
+        <div class="law">Consideration</div>
+        <div class="biz">MONEY</div>
+        <div class="desc">Đối ứng — dòng tiền, thuế, công nợ.</div>
+      </div>
+      <div class="cell cat-governance">
+        <div class="law">Remedies &amp; Oversight</div>
+        <div class="biz">GOVERNANCE</div>
+        <div class="desc">Giám sát &amp; chế tài — compliance, risk, claim.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== SECTION A — D1 OBJECT MAP (8 entities) ===== -->
+  <!-- =================================================================== -->
+  <section class="canvas">
+    <h2 class="section-title">Section A · D1 — Object Map</h2>
+    <p class="section-sub">
+      8 đối tượng quay quanh <strong>đơn hàng</strong>. Mỗi đối tượng "nói ngôn ngữ đơn hàng" — họ trao đổi/hành động dựa trên các trường thông tin của đơn.
+      <em>(v5: thêm Tax Authority — explicit entity #8.)</em>
+    </p>
+
+    <svg viewBox="0 0 1600 620" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="dotA" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <circle cx="4" cy="4" r="3" fill="#5F5E5A"/>
+        </marker>
+      </defs>
+
+      <!-- Central đơn hàng -->
+      <g>
+        <circle cx="800" cy="270" r="110" fill="#FFF3D6" stroke="#854F0B" stroke-width="3"/>
+        <circle cx="800" cy="270" r="92" fill="none" stroke="#854F0B" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+        <text x="800" y="252" text-anchor="middle" font-size="22" font-weight="800" fill="#1A1916">ĐƠN HÀNG</text>
+        <text x="800" y="276" text-anchor="middle" font-size="11" fill="#633806" font-weight="600">"sản phẩm core"</text>
+        <text x="800" y="296" text-anchor="middle" font-size="10.5" fill="#5F5E5A">container tích hợp dịch vụ</text>
+        <text x="800" y="312" text-anchor="middle" font-size="10.5" fill="#5F5E5A">(charged + internal)</text>
+      </g>
+
+      <!-- 1. KH (top-left) -->
+      <g>
+        <line x1="690" y1="220" x2="290" y2="100" stroke="#185FA5" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="170" y="60" width="240" height="80" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+        <text x="290" y="92" text-anchor="middle" class="e-label">KH (Khách hàng)</text>
+        <text x="290" y="112" text-anchor="middle" class="e-sub">cá nhân / tổ chức</text>
+        <text x="290" y="128" text-anchor="middle" class="e-sub">đầu cuối nhu cầu &amp; thanh toán</text>
+      </g>
+
+      <!-- 2. Kỳ Tốc (top) — Delta 4: capability-based -->
+      <g>
+        <line x1="800" y1="160" x2="800" y2="100" stroke="#3B6D11" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="610" y="20" width="380" height="80" rx="10" fill="#EAF3DE" stroke="#3B6D11" stroke-width="2.5"/>
+        <text x="800" y="52" text-anchor="middle" class="e-label">KỲ TỐC (Orchestrator)</text>
+        <text x="800" y="72" text-anchor="middle" class="e-sub">DPT VINA HOLDINGS · pháp nhân</text>
+        <text x="800" y="88" text-anchor="middle" class="e-sub">vertical domain mgmt × horizontal full-stack execution</text>
+      </g>
+
+      <!-- 3. CN Vendor (top-right) -->
+      <g>
+        <line x1="910" y1="220" x2="1310" y2="100" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="1190" y="60" width="240" height="80" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="2"/>
+        <text x="1310" y="92" text-anchor="middle" class="e-label">CN Vendor</text>
+        <text x="1310" y="112" text-anchor="middle" class="e-sub">NCC / NSX Trung Quốc</text>
+        <text x="1310" y="128" text-anchor="middle" class="e-sub">nguồn hàng &amp; thu tiền</text>
+      </g>
+
+      <!-- 4. Export / Tax Agency (right) -->
+      <g>
+        <line x1="918" y1="270" x2="1340" y2="270" stroke="#854F0B" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="1230" y="230" width="320" height="80" rx="10" fill="#FAEEDA" stroke="#854F0B" stroke-width="2.5"/>
+        <text x="1390" y="262" text-anchor="middle" class="e-label">Export / Tax Agency</text>
+        <text x="1390" y="282" text-anchor="middle" class="e-sub">1 entity type · nhiều instances (501, 502, Alice...)</text>
+        <text x="1390" y="298" text-anchor="middle" class="e-sub">đầu xuất TQ + hoàn thuế VAT (cứng 2 chức năng)</text>
+      </g>
+
+      <!-- 5. CN Warehouse (bottom-right) -->
+      <g>
+        <line x1="900" y1="335" x2="1290" y2="440" stroke="#6E5A8E" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="1180" y="400" width="240" height="80" rx="10" fill="#ECE7F5" stroke="#6E5A8E" stroke-width="2"/>
+        <text x="1300" y="432" text-anchor="middle" class="e-label">Kho TQ (CN WH)</text>
+        <text x="1300" y="452" text-anchor="middle" class="e-sub">gom · đóng gói · xuất</text>
+        <text x="1300" y="468" text-anchor="middle" class="e-sub">điểm tập kết hàng đầu xuất</text>
+      </g>
+
+      <!-- 6. Custom (bottom-center-right) -->
+      <g>
+        <line x1="830" y1="380" x2="950" y2="440" stroke="#A32D2D" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="830" y="440" width="330" height="80" rx="10" fill="#FCEBEB" stroke="#A32D2D" stroke-width="2"/>
+        <text x="995" y="472" text-anchor="middle" class="e-label">Custom (Hải quan)</text>
+        <text x="995" y="492" text-anchor="middle" class="e-sub">1 entity type · 2 instances: CK xuất (TQ) + CK nhập (VN)</text>
+        <text x="995" y="508" text-anchor="middle" class="e-sub">cấp phép thông quan</text>
+      </g>
+
+      <!-- 7. Tax Authority (NEW v5 — bottom-center-left) -->
+      <g>
+        <line x1="740" y1="375" x2="580" y2="440" stroke="#9B2C5A" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="400" y="440" width="370" height="80" rx="10" fill="#FAE8F0" stroke="#9B2C5A" stroke-width="2"/>
+        <text x="585" y="467" text-anchor="middle" class="e-label">Tax Authority (Cơ quan thuế)</text>
+        <text x="585" y="487" text-anchor="middle" class="e-sub">1 entity type · 2 instances: TQ + VN</text>
+        <text x="585" y="507" text-anchor="middle" class="e-sub">thu thuế · hoàn thuế · regulatory</text>
+      </g>
+
+      <!-- 8. VN Warehouse (bottom-left) -->
+      <g>
+        <line x1="700" y1="335" x2="310" y2="440" stroke="#2F7A6E" stroke-width="1.5" marker-end="url(#dotA)" opacity="0.7"/>
+        <rect x="170" y="440" width="240" height="80" rx="10" fill="#DEEFEC" stroke="#2F7A6E" stroke-width="2"/>
+        <text x="290" y="472" text-anchor="middle" class="e-label">Kho VN (VN WH)</text>
+        <text x="290" y="492" text-anchor="middle" class="e-sub">nhập · tất toán · last-mile</text>
+        <text x="290" y="508" text-anchor="middle" class="e-sub">điểm kết hàng đầu nhập</text>
+      </g>
+
+      <!-- Caption -->
+      <text x="800" y="570" text-anchor="middle" font-size="11.5" font-style="italic" fill="#5F5E5A">
+        Mỗi đường nối = "nói ngôn ngữ đơn hàng" — đối tượng trao đổi/hành động dựa trên trường thông tin của đơn.
+      </text>
+      <text x="800" y="588" text-anchor="middle" font-size="10.5" font-style="italic" fill="#9B2C5A">
+        v5: Tax Authority thêm explicit — 1 logical type, 2 instances (CN + VN) — cùng pattern như Custom.
+      </text>
+    </svg>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== SECTION B — D2 ASPECTS (14 aspects · 5 categories) ===== -->
+  <!-- =================================================================== -->
+  <section class="canvas">
+    <h2 class="section-title">Section B · D2 — 14 Aspects trong 5 nhóm MECE</h2>
+    <p class="section-sub">
+      Đơn hàng có <strong>14 đặc tính</strong> chia theo <strong>5 nhóm MECE</strong> (Contract Anatomy Lens). Mỗi aspect là driver cho một bộ interaction trong Section C.
+      Mỗi nhóm có background tint riêng; trong cùng nhóm dùng các sub-shade.
+    </p>
+
+    <svg viewBox="0 0 1820 740" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ===== 5 Category band backgrounds ===== -->
+      <!-- CONTENT band (top-left, green) -->
+      <rect x="20" y="40" width="540" height="240" rx="14" fill="#EAF3DE" opacity="0.35" stroke="#3B6D11" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="40" y="62" class="cat-band-label" fill="#27500A">Content · Object</text>
+      <text x="40" y="76" font-size="10" font-style="italic" fill="#3B6D11">Đối tượng giao dịch (2 aspects)</text>
+
+      <!-- TERMS band (top-right, amber) -->
+      <rect x="1260" y="40" width="540" height="240" rx="14" fill="#FAEEDA" opacity="0.4" stroke="#854F0B" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="1280" y="62" class="cat-band-label" fill="#633806">Terms · Điều khoản</text>
+      <text x="1280" y="76" font-size="10" font-style="italic" fill="#854F0B">Giá · UT · SLA (3 aspects)</text>
+
+      <!-- EXECUTION band (right-middle, blue) -->
+      <rect x="1260" y="300" width="540" height="240" rx="14" fill="#E6F1FB" opacity="0.4" stroke="#185FA5" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="1280" y="322" class="cat-band-label" fill="#0C447C">Execution · Performance</text>
+      <text x="1280" y="336" font-size="10" font-style="italic" fill="#185FA5">Thực thi (3 aspects)</text>
+
+      <!-- MONEY band (bottom-left, purple) -->
+      <rect x="20" y="300" width="640" height="280" rx="14" fill="#EEEDFE" opacity="0.4" stroke="#534AB7" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="40" y="322" class="cat-band-label" fill="#3C3489">Money · Consideration</text>
+      <text x="40" y="336" font-size="10" font-style="italic" fill="#534AB7">Dòng tiền · thuế · công nợ (4 aspects)</text>
+
+      <!-- GOVERNANCE band (bottom-right, red) — expanded for 2 chips -->
+      <rect x="700" y="600" width="420" height="130" rx="14" fill="#FCEBEB" opacity="0.4" stroke="#A32D2D" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="720" y="622" class="cat-band-label" fill="#791F1F">Governance · Remedies &amp; Oversight</text>
+      <text x="720" y="636" font-size="10" font-style="italic" fill="#A32D2D">Cross-cutting (2 aspects)</text>
+
+      <!-- ===== Central đơn hàng ===== -->
+      <g>
+        <circle cx="910" cy="380" r="108" fill="#FFF3D6" stroke="#854F0B" stroke-width="3"/>
+        <text x="910" y="368" text-anchor="middle" font-size="22" font-weight="800" fill="#1A1916">ĐƠN HÀNG</text>
+        <text x="910" y="390" text-anchor="middle" font-size="11" fill="#633806" font-weight="600">14 aspects · 5 nhóm MECE</text>
+        <text x="910" y="408" text-anchor="middle" font-size="10.5" fill="#5F5E5A">các "đặc tính" drive interactions</text>
+      </g>
+
+      <!-- ===== CONTENT chips (C1, C2) — top-left band ===== -->
+      <g>
+        <line x1="810" y1="335" x2="380" y2="130" stroke="#3B6D11" stroke-width="1.3" opacity="0.5"/>
+        <rect x="60" y="100" width="280" height="60" rx="30" fill="#EAF3DE" stroke="#3B6D11" stroke-width="2"/>
+        <text x="92" y="128" font-size="13" font-weight="800" fill="#27500A">C1</text>
+        <text x="200" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Goods · Hàng hóa</text>
+        <text x="200" y="144" text-anchor="middle" font-size="10.5" fill="#3B6D11">attrs · phân loại (TT/ĐB/HC) · packaging</text>
+      </g>
+      <g>
+        <line x1="800" y1="365" x2="380" y2="220" stroke="#6BAA2B" stroke-width="1.3" opacity="0.5"/>
+        <rect x="60" y="190" width="280" height="60" rx="30" fill="#F0F8DC" stroke="#6BAA2B" stroke-width="2"/>
+        <text x="92" y="218" font-size="13" font-weight="800" fill="#3B6D11">C2</text>
+        <text x="200" y="218" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Services · Dịch vụ</text>
+        <text x="200" y="234" text-anchor="middle" font-size="10.5" fill="#3B6D11">catalog applied · combo · charged?</text>
+      </g>
+
+      <!-- ===== TERMS chips (T1, T2, T3) — top-right band ===== -->
+      <g>
+        <line x1="1010" y1="335" x2="1440" y2="120" stroke="#854F0B" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="92" width="280" height="56" rx="28" fill="#FAEEDA" stroke="#854F0B" stroke-width="2"/>
+        <text x="1330" y="120" font-size="13" font-weight="800" fill="#633806">T1</text>
+        <text x="1440" y="120" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Pricing · Giá + FX</text>
+        <text x="1440" y="135" text-anchor="middle" font-size="10.5" fill="#854F0B">đơn giá · FX · điều kiện thay đổi</text>
+      </g>
+      <g>
+        <line x1="1020" y1="360" x2="1440" y2="200" stroke="#B5641B" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="172" width="280" height="56" rx="28" fill="#FCEEDC" stroke="#B5641B" stroke-width="2"/>
+        <text x="1330" y="200" font-size="13" font-weight="800" fill="#B5641B">T2</text>
+        <text x="1440" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Consignment · Ủy thác</text>
+        <text x="1440" y="215" text-anchor="middle" font-size="10.5" fill="#B5641B">2 đầu · đầu xuất · đầu nhập · không UT</text>
+      </g>
+      <g>
+        <line x1="1020" y1="390" x2="1440" y2="270" stroke="#E0902F" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="244" width="280" height="56" rx="28" fill="#FCF3E0" stroke="#E0902F" stroke-width="2"/>
+        <text x="1330" y="272" font-size="13" font-weight="800" fill="#B5641B">T3</text>
+        <text x="1440" y="272" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">SLA · Lead time</text>
+        <text x="1440" y="287" text-anchor="middle" font-size="10.5" fill="#B5641B">cam kết t/g giao với KH</text>
+      </g>
+
+      <!-- ===== EXECUTION chips (X1, X2, X3) — right-middle band ===== -->
+      <g>
+        <line x1="1020" y1="400" x2="1440" y2="370" stroke="#0C447C" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="342" width="280" height="56" rx="28" fill="#DCE9F5" stroke="#0C447C" stroke-width="2"/>
+        <text x="1330" y="370" font-size="13" font-weight="800" fill="#0C447C">X1</text>
+        <text x="1440" y="370" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Procurement · Mua hộ</text>
+        <text x="1440" y="385" text-anchor="middle" font-size="10.5" fill="#0C447C">có NCC riêng / mua hộ + vendor mgmt</text>
+      </g>
+      <g>
+        <line x1="1020" y1="420" x2="1440" y2="445" stroke="#185FA5" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="418" width="280" height="56" rx="28" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+        <text x="1330" y="446" font-size="13" font-weight="800" fill="#185FA5">X2</text>
+        <text x="1440" y="446" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Logistics · VC + Kho</text>
+        <text x="1440" y="461" text-anchor="middle" font-size="10.5" fill="#185FA5">VC quốc tế · kho · last-mile</text>
+      </g>
+      <g>
+        <line x1="1010" y1="440" x2="1440" y2="520" stroke="#4A87C5" stroke-width="1.3" opacity="0.5"/>
+        <rect x="1300" y="494" width="280" height="56" rx="28" fill="#EAF2FB" stroke="#4A87C5" stroke-width="2"/>
+        <text x="1330" y="522" font-size="13" font-weight="800" fill="#185FA5">X3</text>
+        <text x="1440" y="522" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Customs · Chứng từ + thông quan</text>
+        <text x="1440" y="537" text-anchor="middle" font-size="10.5" fill="#185FA5">tờ khai · luồng · 2 cửa khẩu</text>
+      </g>
+
+      <!-- ===== MONEY chips (M1, M2, M3, M4) — bottom-left band ===== -->
+      <g>
+        <line x1="820" y1="425" x2="490" y2="370" stroke="#3C3489" stroke-width="1.3" opacity="0.5"/>
+        <rect x="60" y="342" width="300" height="56" rx="28" fill="#EEEDFE" stroke="#3C3489" stroke-width="2"/>
+        <text x="92" y="370" font-size="13" font-weight="800" fill="#3C3489">M1</text>
+        <text x="210" y="370" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Cash flow &amp; Settlement</text>
+        <text x="210" y="385" text-anchor="middle" font-size="10.5" fill="#3C3489">tạm ứng · TT NCC · tất toán</text>
+      </g>
+      <g>
+        <line x1="820" y1="445" x2="490" y2="430" stroke="#534AB7" stroke-width="1.3" opacity="0.5"/>
+        <rect x="60" y="418" width="300" height="56" rx="28" fill="#F0EFFE" stroke="#534AB7" stroke-width="2"/>
+        <text x="92" y="446" font-size="13" font-weight="800" fill="#534AB7">M2</text>
+        <text x="210" y="446" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Tax Outbound · Hóa đơn VN</text>
+        <text x="210" y="461" text-anchor="middle" font-size="10.5" fill="#534AB7">VAT đầu ra Kỳ Tốc → KH</text>
+      </g>
+      <g>
+        <line x1="820" y1="465" x2="490" y2="490" stroke="#7A72D0" stroke-width="1.3" opacity="0.5"/>
+        <rect x="60" y="494" width="300" height="56" rx="28" fill="#F4F3FE" stroke="#7A72D0" stroke-width="2"/>
+        <text x="92" y="522" font-size="13" font-weight="800" fill="#3C3489">M3</text>
+        <text x="210" y="522" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Tax Inbound · Hoàn VAT TQ</text>
+        <text x="210" y="537" text-anchor="middle" font-size="10.5" fill="#3C3489">async · cost optimization input</text>
+      </g>
+      <g>
+        <line x1="490" y1="550" x2="820" y2="475" stroke="#A6A0E4" stroke-width="1.3" opacity="0.5"/>
+        <rect x="380" y="494" width="280" height="56" rx="28" fill="#FAF9FE" stroke="#A6A0E4" stroke-width="2"/>
+        <text x="410" y="522" font-size="13" font-weight="800" fill="#534AB7">M4</text>
+        <text x="520" y="522" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Debt Tracking · Công nợ</text>
+        <text x="520" y="537" text-anchor="middle" font-size="10.5" fill="#534AB7">KH · vendor · agency · aging</text>
+      </g>
+
+      <!-- ===== GOVERNANCE chips (G1, G2) — bottom band (2 chips) ===== -->
+      <g>
+        <line x1="880" y1="488" x2="850" y2="640" stroke="#A32D2D" stroke-width="1.3" opacity="0.5"/>
+        <rect x="720" y="644" width="280" height="50" rx="25" fill="#FCEBEB" stroke="#A32D2D" stroke-width="2"/>
+        <text x="750" y="672" font-size="13" font-weight="800" fill="#A32D2D">G1</text>
+        <text x="860" y="664" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Compliance</text>
+        <text x="860" y="680" text-anchor="middle" font-size="10.5" fill="#A32D2D">regulatory monitor · proactive</text>
+      </g>
+      <g>
+        <line x1="940" y1="488" x2="970" y2="700" stroke="#C85650" stroke-width="1.3" opacity="0.5"/>
+        <rect x="820" y="700" width="280" height="50" rx="25" fill="#FCECEA" stroke="#C85650" stroke-width="2"/>
+        <text x="850" y="728" font-size="13" font-weight="800" fill="#C85650">G2</text>
+        <text x="960" y="720" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1916">Risk</text>
+        <text x="960" y="736" text-anchor="middle" font-size="10.5" fill="#C85650">claim · dispute · reactive risk mgmt</text>
+      </g>
+
+      <!-- Caption -->
+      <text x="910" y="730" text-anchor="middle" font-size="11.5" font-style="italic" fill="#5F5E5A">
+        5 background tints = 5 nhóm MECE · 14 chips = 14 aspect · sub-shade trong cùng family. Color coding xuyên suốt Section C.
+      </text>
+    </svg>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== SECTION C — D3 SEQUENCE DIAGRAM (8 lanes · 14 aspects) ===== -->
+  <!-- =================================================================== -->
+  <section class="canvas">
+    <h2 class="section-title">Section C · D3 — Multi-aspect interaction sequence</h2>
+    <p class="section-sub">
+      8 lanes đối tượng · timeline mềm 4 phase (Pre-order · Execution (parallel) · Closing · Async tail) ·
+      interactions mã hoá màu theo aspect (14 màu, 5 family) · đường nét: <em>solid</em> = trình tự cứng,
+      <em>dashed</em> = trình tự mềm/parallel-capable, <em>dotted</em> = async/long-running.
+    </p>
+
+    <!--
+      Lane y-coordinates (v5 — 8 lanes):
+        Đơn hàng bus     y =  60
+        KH               y = 135
+        Kỳ Tốc           y = 205
+        CN Vendor        y = 275
+        Export Agency    y = 345
+        CN WH            y = 415
+        Custom           y = 485
+        Tax Authority    y = 555  (NEW)
+        VN WH            y = 625
+
+      X grid (time):
+        Pre-order   :  200 - 490
+        Execution   :  495 - 1195
+        Closing     : 1200 - 1395
+        Async tail  : 1400 - 1680
+    -->
+
+    <svg viewBox="0 0 1700 780" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Aspect arrowheads — 14 colors -->
+        <marker id="m-C1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#3B6D11"/></marker>
+        <marker id="m-C2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#6BAA2B"/></marker>
+        <marker id="m-T1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#854F0B"/></marker>
+        <marker id="m-T2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#B5641B"/></marker>
+        <marker id="m-T3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#E0902F"/></marker>
+        <marker id="m-X1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#0C447C"/></marker>
+        <marker id="m-X2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#185FA5"/></marker>
+        <marker id="m-X3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#4A87C5"/></marker>
+        <marker id="m-M1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#3C3489"/></marker>
+        <marker id="m-M2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#534AB7"/></marker>
+        <marker id="m-M3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#7A72D0"/></marker>
+        <marker id="m-M4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#A6A0E4"/></marker>
+        <marker id="m-G1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#A32D2D"/></marker>
+        <marker id="m-G2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#C85650"/></marker>
+      </defs>
+
+      <!-- ===== Phase background zones ===== -->
+      <rect x="200" y="40" width="290" height="685" fill="#FAFAF6" stroke="#E5E3DC" stroke-width="1"/>
+      <rect x="495" y="40" width="700" height="685" fill="#FBF8F1" stroke="#854F0B" stroke-width="1" stroke-dasharray="6,4" opacity="0.85"/>
+      <rect x="1200" y="40" width="190" height="685" fill="#F4F2EC" stroke="#E5E3DC" stroke-width="1"/>
+      <rect x="1395" y="40" width="290" height="685" fill="#FDF7F7" stroke="#A32D2D" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/>
+
+      <!-- Phase labels (top) -->
+      <text x="345" y="32" text-anchor="middle" class="phase-label" fill="#5F5E5A">Pre-order (Sales)</text>
+      <text x="845" y="32" text-anchor="middle" class="phase-label" fill="#854F0B">Execution · parallel-capable</text>
+      <text x="1295" y="32" text-anchor="middle" class="phase-label" fill="#5F5E5A">Closing</text>
+      <text x="1540" y="32" text-anchor="middle" class="phase-label" fill="#A32D2D">Async tail (tax refund · aging)</text>
+
+      <!-- ===== Order bus (lifecycle 8 states) ===== -->
+      <line x1="200" y1="60" x2="1680" y2="60" stroke="#854F0B" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+      <text x="155" y="64" text-anchor="end" font-size="11" font-weight="700" fill="#854F0B">Đơn hàng</text>
+      <text x="155" y="78" text-anchor="end" font-size="9.5" fill="#5F5E5A">(state bus)</text>
+
+      <g><circle cx="240" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="240" y="50" text-anchor="middle" class="order-state">Quote</text></g>
+      <g><circle cx="380" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="380" y="50" text-anchor="middle" class="order-state">Order</text></g>
+      <g><circle cx="470" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="470" y="50" text-anchor="middle" class="order-state">Paid (cọc)</text></g>
+      <g><circle cx="700" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="700" y="50" text-anchor="middle" class="order-state">Shipping</text></g>
+      <g><circle cx="1020" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="1020" y="50" text-anchor="middle" class="order-state">Cleared</text></g>
+      <g><circle cx="1240" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="1240" y="50" text-anchor="middle" class="order-state">Settled</text></g>
+      <g><circle cx="1340" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="1340" y="50" text-anchor="middle" class="order-state">Delivered</text></g>
+      <g><circle cx="1540" cy="60" r="5" fill="#FFF3D6" stroke="#854F0B" stroke-width="1.5"/><text x="1540" y="50" text-anchor="middle" class="order-state">Closed</text></g>
+
+      <!-- ===== Lane backgrounds (8 lanes) ===== -->
+      <rect x="200" y="115" width="1480" height="45" fill="#F7FAFD" opacity="0.5"/>
+      <rect x="200" y="185" width="1480" height="45" fill="#F5FAEB" opacity="0.5"/>
+      <rect x="200" y="255" width="1480" height="45" fill="#FAFAF7" opacity="0.5"/>
+      <rect x="200" y="325" width="1480" height="45" fill="#FDF7EB" opacity="0.5"/>
+      <rect x="200" y="395" width="1480" height="45" fill="#F8F5FC" opacity="0.5"/>
+      <rect x="200" y="465" width="1480" height="45" fill="#FDF1F1" opacity="0.5"/>
+      <rect x="200" y="535" width="1480" height="45" fill="#FDF3F7" opacity="0.5"/>
+      <rect x="200" y="605" width="1480" height="45" fill="#EFF7F5" opacity="0.5"/>
+
+      <!-- ===== Lane labels (left) — 8 lanes ===== -->
+      <g><rect x="20" y="120" width="170" height="32" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/><text x="105" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">KH</text><text x="105" y="152" text-anchor="middle" font-size="9.5" fill="#185FA5">khách hàng</text></g>
+      <g><rect x="20" y="190" width="170" height="32" rx="6" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.5"/><text x="105" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A">KỲ TỐC</text><text x="105" y="222" text-anchor="middle" font-size="9.5" fill="#3B6D11">orchestrator · capability-based</text></g>
+      <g><rect x="20" y="260" width="170" height="32" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1.5"/><text x="105" y="280" text-anchor="middle" font-size="12" font-weight="700" fill="#3D3C39">CN Vendor</text><text x="105" y="292" text-anchor="middle" font-size="9.5" fill="#5F5E5A">NCC TQ</text></g>
+      <g><rect x="20" y="330" width="170" height="32" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.5"/><text x="105" y="350" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">Export / Tax Ag.</text><text x="105" y="362" text-anchor="middle" font-size="9.5" fill="#854F0B">501 · 502 · Alice</text></g>
+      <g><rect x="20" y="400" width="170" height="32" rx="6" fill="#ECE7F5" stroke="#6E5A8E" stroke-width="1.5"/><text x="105" y="420" text-anchor="middle" font-size="12" font-weight="700" fill="#4A3A6E">Kho TQ</text><text x="105" y="432" text-anchor="middle" font-size="9.5" fill="#6E5A8E">CN warehouse</text></g>
+      <g><rect x="20" y="470" width="170" height="32" rx="6" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1.5"/><text x="105" y="490" text-anchor="middle" font-size="12" font-weight="700" fill="#791F1F">Custom</text><text x="105" y="502" text-anchor="middle" font-size="9.5" fill="#A32D2D">CK xuất + CK nhập</text></g>
+      <g><rect x="20" y="540" width="170" height="32" rx="6" fill="#FAE8F0" stroke="#9B2C5A" stroke-width="1.5"/><text x="105" y="560" text-anchor="middle" font-size="12" font-weight="700" fill="#7A1E46">Tax Authority</text><text x="105" y="572" text-anchor="middle" font-size="9.5" fill="#9B2C5A">TQ + VN</text></g>
+      <g><rect x="20" y="610" width="170" height="32" rx="6" fill="#DEEFEC" stroke="#2F7A6E" stroke-width="1.5"/><text x="105" y="630" text-anchor="middle" font-size="12" font-weight="700" fill="#205C53">Kho VN</text><text x="105" y="642" text-anchor="middle" font-size="9.5" fill="#2F7A6E">VN warehouse</text></g>
+
+      <!-- Lane center lines (8 lanes) -->
+      <line x1="200" y1="135" x2="1680" y2="135" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="205" x2="1680" y2="205" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="275" x2="1680" y2="275" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="345" x2="1680" y2="345" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="415" x2="1680" y2="415" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="485" x2="1680" y2="485" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="555" x2="1680" y2="555" stroke="#D5D3CC" stroke-width="0.8"/>
+      <line x1="200" y1="625" x2="1680" y2="625" stroke="#D5D3CC" stroke-width="0.8"/>
+
+      <!-- Phase divider verticals -->
+      <line x1="495" y1="100" x2="495" y2="670" stroke="#854F0B" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+      <line x1="1195" y1="100" x2="1195" y2="670" stroke="#5F5E5A" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+      <line x1="1395" y1="100" x2="1395" y2="670" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+      <!-- ====================================================== -->
+      <!-- ====== PRE-ORDER PHASE ======= -->
+      <!-- ====================================================== -->
+
+      <!-- i1 — KH ↔ Kỳ Tốc: Tư vấn (C2) -->
+      <line x1="220" y1="135" x2="260" y2="205" stroke="#6BAA2B" stroke-width="2" marker-end="url(#m-C2)"/>
+      <text x="220" y="172" class="arrow-label" fill="#3B6D11">C2 tư vấn</text>
+
+      <!-- i2 — Kỳ Tốc → KH: báo giá (T1) -->
+      <line x1="280" y1="205" x2="320" y2="135" stroke="#854F0B" stroke-width="2" marker-end="url(#m-T1)"/>
+      <text x="290" y="172" class="arrow-label" fill="#854F0B">T1 báo giá</text>
+
+      <!-- i3 — KH → Kỳ Tốc: chọn ủy thác (T2) -->
+      <line x1="350" y1="135" x2="380" y2="205" stroke="#B5641B" stroke-width="2" marker-end="url(#m-T2)"/>
+      <text x="350" y="172" class="arrow-label" fill="#B5641B">T2 chọn UT</text>
+
+      <!-- i4 — Kỳ Tốc nội bộ: cam kết SLA (T3) — self-loop -->
+      <path d="M 410 200 q 20 -25 40 0" fill="none" stroke="#E0902F" stroke-width="1.8" marker-end="url(#m-T3)"/>
+      <text x="430" y="178" text-anchor="middle" class="arrow-label" fill="#B5641B">T3 cam kết SLA</text>
+
+      <!-- i5 — KH → Kỳ Tốc: tạm ứng cọc (M1) -->
+      <line x1="445" y1="135" x2="470" y2="205" stroke="#3C3489" stroke-width="2" marker-end="url(#m-M1)"/>
+      <text x="445" y="172" class="arrow-label" fill="#3C3489">M1 tạm ứng</text>
+
+      <!-- i5b — Branch cấn trừ: Export Ag → Kỳ Tốc (M1 dashed) -->
+      <line x1="455" y1="345" x2="475" y2="220" stroke="#3C3489" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#m-M1)" opacity="0.8"/>
+      <text x="455" y="292" class="arrow-label" fill="#3C3489" transform="rotate(-65 455 292)">M1 cấn trừ (branch)</text>
+
+      <!-- ====================================================== -->
+      <!-- ====== EXECUTION PHASE ====== -->
+      <!-- ====================================================== -->
+
+      <!-- i6 — KH ↔ Kỳ Tốc: mua hộ hay tự (X1) -->
+      <line x1="520" y1="135" x2="540" y2="205" stroke="#0C447C" stroke-width="2" marker-end="url(#m-X1)"/>
+      <text x="510" y="172" class="arrow-label" fill="#0C447C">X1 mua hộ?</text>
+
+      <!-- i7 — Kỳ Tốc → CN Vendor: đặt hàng (X1) -->
+      <line x1="560" y1="220" x2="585" y2="275" stroke="#0C447C" stroke-width="2" marker-end="url(#m-X1)"/>
+      <text x="552" y="250" class="arrow-label" fill="#0C447C">X1 đặt hàng</text>
+
+      <!-- i8 — Kỳ Tốc → Export Ag: lệnh TT (M1) -->
+      <line x1="595" y1="220" x2="625" y2="345" stroke="#3C3489" stroke-width="2" marker-end="url(#m-M1)"/>
+      <text x="590" y="285" class="arrow-label" fill="#3C3489">M1 lệnh TT</text>
+
+      <!-- i9 — Export Ag → CN Vendor: pay (M1) -->
+      <line x1="640" y1="345" x2="640" y2="290" stroke="#3C3489" stroke-width="2" marker-end="url(#m-M1)"/>
+      <text x="645" y="320" class="arrow-label" fill="#3C3489">M1 pay vendor</text>
+
+      <!-- i10 — CN Vendor → Kho TQ: giao hàng (C1) -->
+      <line x1="670" y1="290" x2="700" y2="415" stroke="#3B6D11" stroke-width="2" marker-end="url(#m-C1)"/>
+      <text x="665" y="358" class="arrow-label" fill="#3B6D11">C1 giao kho TQ</text>
+
+      <!-- i11 — Kỳ Tốc → Kho TQ: kéo hàng (opt) (X2 dashed) -->
+      <line x1="700" y1="220" x2="755" y2="415" stroke="#185FA5" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#m-X2)"/>
+      <text x="695" y="320" class="arrow-label" fill="#185FA5" transform="rotate(-70 695 320)">X2 kéo hàng (opt)</text>
+
+      <!-- i12 — Kho TQ internal box (C1 + X2 self) -->
+      <rect x="790" y="405" width="120" height="20" rx="4" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.2"/>
+      <text x="850" y="419" text-anchor="middle" font-size="10" font-weight="600" fill="#27500A">C1·X2 đóng gói · gom</text>
+
+      <!-- i13 — Kỳ Tốc → Custom: đẩy tờ khai (X3) -->
+      <line x1="910" y1="220" x2="935" y2="485" stroke="#4A87C5" stroke-width="2" marker-end="url(#m-X3)"/>
+      <text x="855" y="370" class="arrow-label" fill="#4A87C5" transform="rotate(-78 855 370)">X3 đẩy tờ khai</text>
+
+      <!-- i14 — Kho TQ → Custom: lên CK xuất (X2) -->
+      <line x1="940" y1="415" x2="970" y2="485" stroke="#185FA5" stroke-width="2" marker-end="url(#m-X2)"/>
+      <text x="935" y="455" class="arrow-label" fill="#185FA5">X2 lên CK xuất</text>
+
+      <!-- i15 — Custom internal (X3) -->
+      <rect x="985" y="478" width="190" height="20" rx="4" fill="#EAF2FB" stroke="#4A87C5" stroke-width="1.2"/>
+      <text x="1080" y="491" text-anchor="middle" font-size="10" font-weight="600" fill="#0C447C">X3 xuất TQ → nhập VN · phân luồng</text>
+
+      <!-- i16 — Custom → Kho VN: thông quan + VC nội địa (X2) — VN WH at y=625 -->
+      <line x1="1170" y1="485" x2="1190" y2="625" stroke="#185FA5" stroke-width="2" marker-end="url(#m-X2)"/>
+      <text x="1162" y="560" class="arrow-label" fill="#185FA5">X2 nội địa</text>
+
+      <!-- i17 — Kỳ Tốc ↔ Custom: monitor compliance (G1 dashed) -->
+      <line x1="970" y1="220" x2="990" y2="485" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#m-G1)" opacity="0.85"/>
+      <text x="945" y="370" class="arrow-label" fill="#A32D2D" transform="rotate(-83 945 370)">G1 monitor compliance</text>
+
+      <!-- Delta 3: i18 (T3 SLA monitor throughout) REMOVED — T3 = single commitment only -->
+
+      <!-- ====================================================== -->
+      <!-- ====== CLOSING PHASE ====== -->
+      <!-- ====================================================== -->
+
+      <!-- i19 — Kho VN → Kỳ Tốc: tất toán cost (M1) — VN WH at y=625 -->
+      <line x1="1220" y1="625" x2="1245" y2="220" stroke="#3C3489" stroke-width="2" marker-end="url(#m-M1)"/>
+      <text x="1180" y="430" class="arrow-label" fill="#3C3489" transform="rotate(-86 1180 430)">M1 tất toán cost</text>
+
+      <!-- i20 — Kỳ Tốc → Tax Authority VN (M2): hóa đơn VAT VN -->
+      <line x1="1260" y1="205" x2="1270" y2="555" stroke="#534AB7" stroke-width="2" marker-end="url(#m-M2)"/>
+      <text x="1240" y="400" class="arrow-label" fill="#534AB7" transform="rotate(-88 1240 400)">M2 hóa đơn VN</text>
+      <!-- M2 Tax Authority VN → KH (regulatory flow) -->
+      <line x1="1275" y1="555" x2="1280" y2="148" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#m-M2)" opacity="0.7"/>
+      <text x="1282" y="350" class="arrow-label" fill="#534AB7" transform="rotate(-88 1282 350)">M2 via Tax Auth VN</text>
+
+      <!-- i21 — KH → Kỳ Tốc: thanh toán cuối (M1) -->
+      <line x1="1295" y1="135" x2="1305" y2="205" stroke="#3C3489" stroke-width="2" marker-end="url(#m-M1)"/>
+      <text x="1295" y="172" class="arrow-label" fill="#3C3489">M1 thanh toán cuối</text>
+
+      <!-- i22 — Kho VN → KH: giao chặng cuối (X2) — VN WH at y=625 -->
+      <line x1="1340" y1="625" x2="1370" y2="135" stroke="#185FA5" stroke-width="2" marker-end="url(#m-X2)"/>
+      <text x="1338" y="385" class="arrow-label" fill="#185FA5" transform="rotate(-89 1338 385)">X2 last-mile</text>
+
+      <!-- i23 — Kỳ Tốc → KH: ghi nhận công nợ (M4) -->
+      <line x1="1310" y1="220" x2="1320" y2="148" stroke="#A6A0E4" stroke-width="1.8" marker-end="url(#m-M4)" opacity="0.9"/>
+      <text x="1316" y="180" class="arrow-label" fill="#534AB7">M4 ghi nợ</text>
+
+      <!-- ====================================================== -->
+      <!-- ====== ASYNC TAIL ====== -->
+      <!-- ====================================================== -->
+
+      <!-- i24 — Export Ag → Kỳ Tốc: hoàn thuế VAT TQ (M3 dotted) -->
+      <line x1="1430" y1="345" x2="1470" y2="220" stroke="#7A72D0" stroke-width="2" stroke-dasharray="1,4" marker-end="url(#m-M3)"/>
+      <text x="1422" y="290" class="arrow-label" fill="#7A72D0" transform="rotate(-72 1422 290)">M3 hoàn VAT TQ</text>
+
+      <!-- i25 — Kỳ Tốc → KH: chia / cấn trừ next-order (M3 dotted) -->
+      <line x1="1500" y1="205" x2="1540" y2="135" stroke="#7A72D0" stroke-width="2" stroke-dasharray="1,4" marker-end="url(#m-M3)"/>
+      <text x="1510" y="172" class="arrow-label" fill="#7A72D0">M3 chia / cấn trừ</text>
+
+      <!-- i26 — CN Tax Authority → Export Ag: refund flow (M3 dotted) — now explicit via Tax Authority lane -->
+      <line x1="1610" y1="555" x2="1450" y2="345" stroke="#7A72D0" stroke-width="1.5" stroke-dasharray="1,4" marker-end="url(#m-M3)" opacity="0.7"/>
+      <text x="1555" y="445" class="arrow-label" fill="#7A72D0" transform="rotate(-58 1555 445)">M3 refund via Agency</text>
+
+      <!-- i27 — M4 aging long-tail (dotted) -->
+      <line x1="1490" y1="220" x2="1490" y2="345" stroke="#A6A0E4" stroke-width="1.5" stroke-dasharray="1,4" opacity="0.7"/>
+      <text x="1495" y="285" class="arrow-label" fill="#534AB7">M4 aging</text>
+
+      <!-- i28 — G2 claim/dispute long-tail (dotted) — now G2 color -->
+      <line x1="1560" y1="220" x2="1560" y2="490" stroke="#C85650" stroke-width="1.5" stroke-dasharray="1,3" marker-end="url(#m-G2)" opacity="0.55"/>
+      <text x="1568" y="358" class="arrow-label" fill="#C85650">G2 claim / dispute</text>
+
+      <!-- Caption / footer hint -->
+      <text x="845" y="720" text-anchor="middle" font-size="11" font-style="italic" fill="#854F0B">
+        Vùng Execution = parallel-capable: ~10 interaction (X1·M1·C1·X2·X3·G1) chồng/xen kẽ sau quote-confirmed → trước thông quan.
+      </text>
+      <text x="1540" y="720" text-anchor="middle" font-size="11" font-style="italic" fill="#A32D2D">
+        Async tail: M3 hoàn thuế · M4 aging · G2 dispute — long after delivery.
+      </text>
+    </svg>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== LEGEND ===== -->
+  <!-- =================================================================== -->
+  <section class="info-grid three-col">
+
+    <!-- Entities legend -->
+    <div class="panel tone-biz">
+      <h2>Entities (8)</h2>
+      <div class="legend-row"><span class="legend-swatch" style="background:#E6F1FB; border-color:#185FA5;"></span><strong style="color:#0C447C;">KH</strong> — khách hàng</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#EAF3DE; border-color:#3B6D11;"></span><strong style="color:#27500A;">Kỳ Tốc</strong> — orchestrator · capability-based</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#F1EFE8; border-color:#5F5E5A;"></span><strong style="color:#3D3C39;">CN Vendor</strong> — NCC/NSX TQ</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#FAEEDA; border-color:#854F0B;"></span><strong style="color:#633806;">Export/Tax Agency</strong> — n instances</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#ECE7F5; border-color:#6E5A8E;"></span><strong style="color:#4A3A6E;">Kho TQ</strong> — CN warehouse</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#FCEBEB; border-color:#A32D2D;"></span><strong style="color:#791F1F;">Custom</strong> — 2 instances (CK xuất + CK nhập)</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#FAE8F0; border-color:#9B2C5A;"></span><strong style="color:#7A1E46;">Tax Authority</strong> — 2 instances (TQ + VN)</div>
+      <div class="legend-row"><span class="legend-swatch" style="background:#DEEFEC; border-color:#2F7A6E;"></span><strong style="color:#205C53;">Kho VN</strong> — VN warehouse</div>
+    </div>
+
+    <!-- Aspects legend -->
+    <div class="panel tone-doc">
+      <h2>Aspects (14) — 5 nhóm MECE</h2>
+      <div style="margin-bottom: 6px;">
+        <div style="font-size:11.5px; font-weight:700; color:#27500A; margin-bottom:4px;">CONTENT (Object)</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#3B6D11; border:none;"></span>C1 Goods · Hàng hóa</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#6BAA2B; border:none;"></span>C2 Services · Dịch vụ</div>
+      </div>
+      <div style="margin-bottom: 6px;">
+        <div style="font-size:11.5px; font-weight:700; color:#633806; margin-bottom:4px;">TERMS (Điều khoản)</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#854F0B; border:none;"></span>T1 Pricing · Giá + FX</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#B5641B; border:none;"></span>T2 Consignment · Ủy thác</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#E0902F; border:none;"></span>T3 SLA · Lead time</div>
+      </div>
+      <div style="margin-bottom: 6px;">
+        <div style="font-size:11.5px; font-weight:700; color:#0C447C; margin-bottom:4px;">EXECUTION (Performance)</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#0C447C; border:none;"></span>X1 Procurement · Mua hộ</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#185FA5; border:none;"></span>X2 Logistics · VC + kho</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#4A87C5; border:none;"></span>X3 Customs · thông quan</div>
+      </div>
+      <div style="margin-bottom: 6px;">
+        <div style="font-size:11.5px; font-weight:700; color:#3C3489; margin-bottom:4px;">MONEY (Consideration)</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#3C3489; border:none;"></span>M1 Cash flow &amp; Settlement</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#534AB7; border:none;"></span>M2 Tax Outbound · VAT VN</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#7A72D0; border:none;"></span>M3 Tax Inbound · hoàn VAT TQ</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#A6A0E4; border:none;"></span>M4 Debt Tracking · công nợ</div>
+      </div>
+      <div>
+        <div style="font-size:11.5px; font-weight:700; color:#791F1F; margin-bottom:4px;">GOVERNANCE (Remedies) — 2 aspects</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#A32D2D; border:none;"></span>G1 Compliance (regulatory · proactive)</div>
+        <div class="legend-row"><span class="legend-swatch" style="background:#C85650; border:none;"></span>G2 Risk (claim · dispute · reactive)</div>
+      </div>
+    </div>
+
+    <!-- Visual conventions legend -->
+    <div class="panel tone-locked">
+      <h2>Visual conventions</h2>
+      <div class="legend-row"><span class="legend-line"></span><strong>Solid</strong> — trình tự cứng (hard sequence)</div>
+      <div class="legend-row"><span class="legend-line dashed"></span><strong>Dashed</strong> — trình tự mềm · parallel · branch</div>
+      <div class="legend-row"><span class="legend-line dotted"></span><strong>Dotted</strong> — async / long-running</div>
+      <div class="legend-row" style="margin-top:8px;">
+        <span class="legend-swatch" style="background:#FFF3D6; border-color:#854F0B;"></span>
+        <strong>Đơn hàng state bus</strong> — 8 states top row
+      </div>
+      <div class="legend-row">
+        <span class="legend-swatch" style="background:#FBF8F1; border-color:#854F0B;"></span>
+        <strong>Vùng Execution</strong> — dashed border = parallel
+      </div>
+      <div class="legend-row">
+        <span class="legend-swatch" style="background:#FDF7F7; border-color:#A32D2D;"></span>
+        <strong>Vùng Async tail</strong> — dotted border = async
+      </div>
+      <p style="font-size: 11.5px; color: #5F5E5A; margin-top: 10px;">
+        Palette: 5 hue families (CONTENT green · TERMS amber · EXECUTION blue · MONEY purple · GOVERNANCE red), với sub-shade trong cùng family.
+      </p>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== ASPECTS DETAIL TABLE ===== -->
+  <!-- =================================================================== -->
+  <section class="info-grid" style="grid-template-columns: 1fr;">
+    <div class="panel tone-doc">
+      <h2>Aspects detail — 14 aspects · 5 nhóm MECE</h2>
+      <table class="aspect-table">
+        <thead>
+          <tr>
+            <th style="width:55px;">Code</th>
+            <th style="width:210px;">Aspect</th>
+            <th style="width:130px;">Nhóm</th>
+            <th style="width:330px;">Mô tả</th>
+            <th>Entities involved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- CONTENT -->
+          <tr>
+            <td><span class="aspect-code" style="background:#3B6D11;">C1</span></td>
+            <td>Goods · Hàng hóa</td>
+            <td><span class="cat-tag cat-content">Content</span></td>
+            <td>Attrs hàng hóa: phân loại (thông thường / đặc biệt / hạn chế), spec, packaging, HS code logical.</td>
+            <td>CN Vendor → Kho TQ → Custom → Kho VN → KH</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#6BAA2B;">C2</span></td>
+            <td>Services · Dịch vụ</td>
+            <td><span class="cat-tag cat-content">Content</span></td>
+            <td>Catalog dịch vụ Kỳ Tốc applied vào đơn — combo, charged vs internal coordination, scope.</td>
+            <td>KH ↔ Kỳ Tốc</td>
+          </tr>
+          <!-- TERMS -->
+          <tr>
+            <td><span class="aspect-code" style="background:#854F0B;">T1</span></td>
+            <td>Pricing · Giá + FX</td>
+            <td><span class="cat-tag cat-terms">Terms</span></td>
+            <td>Đơn giá dịch vụ, FX policy, điều kiện điều chỉnh giá.</td>
+            <td>KH ↔ Kỳ Tốc</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#B5641B;">T2</span></td>
+            <td>Consignment · Ủy thác</td>
+            <td><span class="cat-tag cat-terms">Terms</span></td>
+            <td>4 phương thức: UT 2 đầu · UT đầu xuất · UT đầu nhập · không UT. Quyết định pháp nhân đứng tên.</td>
+            <td>KH ↔ Kỳ Tốc ↔ Export Agency</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#E0902F;">T3</span></td>
+            <td>SLA · Lead time</td>
+            <td><span class="cat-tag cat-terms">Terms</span></td>
+            <td>Cam kết thời gian giao với KH (single commitment aspect). Internal monitoring deferred to D4 operational level.</td>
+            <td>KH ↔ Kỳ Tốc (commitment)</td>
+          </tr>
+          <!-- EXECUTION -->
+          <tr>
+            <td><span class="aspect-code" style="background:#0C447C;">X1</span></td>
+            <td>Procurement · Mua hộ</td>
+            <td><span class="cat-tag cat-execution">Execution</span></td>
+            <td>KH có NCC riêng hay cần mua hộ; vendor selection &amp; quản lý; đặt hàng từ NCC TQ.</td>
+            <td>KH ↔ Kỳ Tốc ↔ CN Vendor</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#185FA5;">X2</span></td>
+            <td>Logistics · VC + Kho</td>
+            <td><span class="cat-tag cat-execution">Execution</span></td>
+            <td>Kéo hàng (opt) · DV kho TQ · VC quốc tế · VC nội địa · last-mile. Sub-entities (carrier) deferred D4.</td>
+            <td>Kho TQ → Custom → Kho VN → KH</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#4A87C5;">X3</span></td>
+            <td>Customs · Chứng từ + thông quan</td>
+            <td><span class="cat-tag cat-execution">Execution</span></td>
+            <td>Tờ khai · dòng tờ khai · giá khai mong muốn · luồng xanh/vàng/đỏ · 2 cửa khẩu (TQ xuất + VN nhập).</td>
+            <td>Kỳ Tốc ↔ Custom (2 instances) · Export Agency</td>
+          </tr>
+          <!-- MONEY -->
+          <tr>
+            <td><span class="aspect-code" style="background:#3C3489;">M1</span></td>
+            <td>Cash flow &amp; Settlement</td>
+            <td><span class="cat-tag cat-money">Money</span></td>
+            <td>Tạm ứng (CK hoặc cấn trừ hoàn thuế), TT NCC TQ, tất toán cost cuối, thanh toán cuối.</td>
+            <td>KH ↔ Kỳ Tốc ↔ Export Agency ↔ CN Vendor</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#534AB7;">M2</span></td>
+            <td>Tax Outbound · Hóa đơn VN</td>
+            <td><span class="cat-tag cat-money">Money</span></td>
+            <td>Xuất hóa đơn VAT đầu ra Kỳ Tốc → KH (sau khi tất toán). Routed through Tax Authority VN.</td>
+            <td>Kỳ Tốc ↔ Tax Authority VN ↔ KH</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#7A72D0;">M3</span></td>
+            <td>Tax Inbound · Hoàn VAT TQ</td>
+            <td><span class="cat-tag cat-money">Money</span></td>
+            <td>Hoàn thuế VAT TQ — async cost optimization input. Xuất khẩu = điều kiện cứng. CN Tax Authority → Export Agency → Kỳ Tốc.</td>
+            <td>Tax Authority TQ → Export Agency → Kỳ Tốc → KH</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#A6A0E4; color:#3C3489;">M4</span></td>
+            <td>Debt Tracking · Công nợ</td>
+            <td><span class="cat-tag cat-money">Money</span></td>
+            <td>Công nợ KH (aging), công nợ vendor TQ, số dư hoàn thuế treo trên Export Agency.</td>
+            <td>Kỳ Tốc ↔ KH · Kỳ Tốc ↔ Export Agency · Kỳ Tốc ↔ CN Vendor</td>
+          </tr>
+          <!-- GOVERNANCE — 2 aspects -->
+          <tr>
+            <td><span class="aspect-code" style="background:#A32D2D;">G1</span></td>
+            <td>Compliance</td>
+            <td><span class="cat-tag cat-governance">Governance</span></td>
+            <td>Regulatory compliance — hải quan · thuế · chứng từ. Proactive monitoring throughout execution.</td>
+            <td>Kỳ Tốc (orchestrator) ↔ Custom · Tax Authority</td>
+          </tr>
+          <tr>
+            <td><span class="aspect-code" style="background:#C85650;">G2</span></td>
+            <td>Risk</td>
+            <td><span class="cat-tag cat-governance">Governance</span></td>
+            <td>Claim · dispute · loss prevention · reactive risk mgmt. Triggered by execution exceptions.</td>
+            <td>KH ↔ Kỳ Tốc ↔ CN Vendor · Custom</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== LOCKED DECISIONS + OPEN QUESTIONS ===== -->
+  <!-- =================================================================== -->
+  <section class="info-grid">
+    <div class="panel tone-locked">
+      <h2>Locked structural decisions <span style="font-size:10.5px; color:#0C447C; font-weight:600; background:#E6F1FB; padding:1px 8px; border-radius:3px; margin-left:6px;">Q1-Q5 · Q23-Q30 confirmed</span></h2>
+      <ol>
+        <li><strong>Step 0 outside main spine.</strong> CRM lead + cây dịch vụ là background continuous setup (pre-condition) — không nằm trong spine đơn hàng.</li>
+        <li><strong>Order lifecycle starts at Quote-confirmed.</strong> Báo giá → đơn hàng là state transition trên cùng entity (không phải 2 entity tách rời). 8 states: Quote · Order · Paid · Shipping · Cleared · Settled · Delivered · Closed.</li>
+        <li><strong>S3-S9 parallel block.</strong> Vùng Execution là parallel-capable — interactions X1 · M1 · C1 · X2 · X3 · G1 có thể chạy song song/xen kẽ giữa quote-confirmed → thông quan.</li>
+        <li><strong>Tất toán BEFORE giao chặng cuối.</strong> Phải chốt cost → tất toán → xuất hóa đơn → KH thanh toán → giao chặng cuối.</li>
+        <li><strong>Tax refund cycle = async tail.</strong> M3 (hoàn VAT TQ) xảy ra long after delivery; không thuộc critical path. Separate region dotted border.</li>
+        <li><strong>5 categories MECE by construction.</strong> Derive từ Contract Anatomy Lens (Object · Terms · Performance · Consideration · Remedies). 14 aspects fit chính xác 1 trong 5 nhóm.</li>
+        <li><strong>Quality = option a (blended QA).</strong> Không tách standalone aspect cho Quality — QA nhúng trong C1 (goods QC), C2 (service QC), X2 (logistics QC).</li>
+        <li><strong>Custom = 1 entity type · 2 instances.</strong> CK xuất (TQ) và CK nhập (VN) là 2 instance của cùng pattern logical.</li>
+        <li><strong>Export Agency = 1 type · 2 chức năng cứng.</strong> Đầu xuất TQ + hoàn thuế VAT TQ (gắn cứng — xuất khẩu = điều kiện hoàn thuế).</li>
+        <li><strong>Scope v5 = D1 + D2 + D3.</strong> D4 (sub-entities/carrier) + D5 (operational tasks) deferred.</li>
+        <li><strong>Tax Authority = explicit entity lane #8.</strong> 1 logical type, 2 instances (CN + VN) — same pattern as Custom. No longer implicit ghost. (Q23)</li>
+        <li><strong>G1 split into G1 Compliance + G2 Risk.</strong> G1 = proactive regulatory monitor. G2 = reactive claim/dispute/risk. (Q25)</li>
+        <li><strong>T3 SLA = single aspect.</strong> Commitment only; internal monitoring deferred to D4. (Q26)</li>
+        <li><strong>M1 vs M4 kept separated.</strong> M1 = cash flow operational. M4 = debt tracking accounting. (Q28)</li>
+        <li><strong>Kỳ Tốc = Model 2 (capability-based).</strong> Vertical domain structure for management × horizontal full-stack execution. Not team-based decomposition. (Q30)</li>
+        <li><strong>M3 multi-cycle = deferred.</strong> Hoàn thuế VAT TQ có thể trải dài nhiều đơn (rolling balance) nhưng <em>không</em> cần visualize multi-order trong scope hiện tại — chỉ show single-order cycle. (Q27)</li>
+        <li><strong>Base aspect count = 13 OK · final = 14.</strong> 13 aspect cơ sở (C·T·X·M·G) được confirm OK; +1 từ Q25 split G1→G1+G2 → tổng 14 aspects final. (Q24)</li>
+        <li><strong>1 category được phép có nhiều aspects.</strong> Governance chứa 2 aspects (G1 Compliance + G2 Risk) — nguyên tắc: số aspect trong 1 category linh hoạt, miễn các aspect đó MECE trong category đó. (Q29)</li>
+      </ol>
+    </div>
+
+    <div class="panel tone-open">
+      <h2>Open clarifications (surfaced khi dựng v5)</h2>
+      <ol>
+        <li><strong>G1 visualization in Section B.</strong> Hiện đặt dưới đáy với 2 chips — có thể visualize "cross-cutting" tốt hơn (ví dụ border quanh toàn bộ 4 nhóm còn lại)?</li>
+        <li><strong>14 aspect colors — too noisy?</strong> Nếu reviewer thấy 14 màu noisy, có thể fallback xuống 5-màu-by-category (chỉ giữ 5 hue family, drop sub-shade) — cần CSS toggle.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- ===== FOOTER ===== -->
+  <!-- =================================================================== -->
+  <footer>
+    Source notes:
+    <code>notes/2026-05-21__biz_spine_v1_source.md</code> ·
+    <code>notes/2026-05-21__service_catalog_v1.md</code> ·
+    Style ref: <code>visualizations/pyramid_model.html</code> ·
+    Framework ref: <code>pyramid-model</code> skill · <code>06_aspect_lens_framework.md</code>
+    <br>
+    Initiative <code>2026-05-21__odoo-biz-refactor</code> · v5 entity-interaction model (Contract Anatomy Lens · 14 aspects · 8 entities · 5 nhóm MECE) · Created by COO Agent · 2026-05-22 · Draft
+  </footer>
+
+</body>
+</html>
